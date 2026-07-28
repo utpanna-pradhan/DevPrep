@@ -928,19 +928,263 @@ user = null;
 //If no other references point to that object, it becomes eligible for garbage collection
 ```
 
+# What is Scope?
+- Scope is the accessibility or visibility of variables, functions, and objects in different parts of a JavaScript program. It determines where a variable can be accessed and where it cannot.
+- Imagine every variable in a program were accessible from everywhere.
+```js
+let username = "John";
 
+function login() {
+    username = "Peter";
+}
+```
+Any function could accidentally modify any variable, making large applications difficult to maintain.
 
+Scope prevents this by limiting where variables can be accessed.
+```js
+let age = 20;
 
+function showAge() {
+    console.log(age);
+}
 
+showAge();
+//20
+//age is accessible because it is in the outer scope.
 
+function showName() {
+    let name = "John";
+}
 
+console.log(name);
+//ReferenceError: name is not defined
+//name exists only inside the function.
+```
+- Types of Scope
+├── Global Scope
 
+├── Function Scope
 
+├── Block Scope
 
+└── Lexical Scope
 
+# Global Scope
 
+- A variable declared outside all functions and blocks is in the global scope. It can be accessed from anywhere in the program.
+```js
+let country = "India";
 
+function printCountry() {
+    console.log(country);
+}
 
+console.log(country);
 
+printCountry();
+//India
+// India
+//The variable is available everywhere because it's global.
+```
+- Global Variables
+```js
+let appName = "Interview App";
+const PI = 3.14;
+var version = "1.0";
+//All are globally accessible when declared at the top level of a script.
+```
+```js
+let message = "Hello";
 
+function greet() {
+    console.log(message);
+}
 
+function welcome() {
+    console.log(message);
+}
+//Both functions can access message.
+```
+- Global Object
+```js
+console.log(window);
+//window is the global object.
+var a = 10;
+
+console.log(window.a);
+//10
+
+let b = 20;
+const c = 30;
+
+console.log(window.b);
+console.log(window.c);
+// undefined
+// undefined
+//Global var declarations become properties of window in browsers, but let and const do not.
+```
+-Problems with Global Variables
+Too many globals can cause:
+
+Variable name collisions
+Difficult debugging
+Unexpected side effects
+Hard-to-maintain code
+```js
+let count = 0;
+
+function increment() {
+    count++;
+}
+
+function reset() {
+    count = 0;
+}
+//Any code can modify count.
+```
+- Keep global variables to a minimum.
+
+Prefer keeping variables inside functions or modules.
+
+# Function Scope
+# Block Scope
+- [x] Block scope.
+- [x] Lexical scope.
+- [x] Scope chain.
+- [x] Shadowing.
+- [x] Illegal shadowing.
+- [x] Variable hoisting.
+- [x] Function hoisting.
+- [x] Hoisting with var.
+- [x] Hoisting with let.
+- [x] Hoisting with const.
+- [x] Temporal Dead Zone (TDZ).
+- [x] Redeclaration.
+- [x] Reassignment.
+
+# Why avoid var?
+
+- var is generally avoided because it is function-scoped instead of block-scoped, allows redeclaration, can lead to bugs due to hoisting, and can unintentionally become a property of the global object when declared globally in browsers.
+
+- Problem1- No Block Scope
+```js
+if (true) {
+
+    var age = 20;
+
+}
+
+console.log(age);
+//20
+//The variable leaks outside the block.
+```
+- with let -
+```js
+if (true) {
+
+    let age = 20;
+
+}
+
+console.log(age);
+//ReferenceError
+```
+
+- Problem 2 — Redeclaration
+```js
+var x = 10;
+
+var x = 20;
+
+console.log(x);
+//20
+//Allowed
+
+```
+with let
+```js
+let x = 10;
+
+let x = 20;
+//SyntaxError
+```
+- Problem 3 — Hoisting Confusion
+```js
+console.log(total);
+
+var total = 100;
+//undefined
+```
+
+With let
+```js
+console.log(total);
+
+let total = 100;
+```
+
+- [x] Variable lookup.
+
+# Strict mode.
+
+- Strict mode is a feature that enables a stricter set of rules in JavaScript. It helps detect common coding mistakes, prevents unsafe actions, and makes code more secure and easier to optimize.
+
+# "use strict".
+
+- "use strict" is a directive that enables strict mode for a script or a function. It must appear at the beginning of the script or function body.
+- Must Be First
+- It enforces stricter parsing and error handling rules, helping catch common mistakes.
+- It can help JavaScript engines optimize code better, but the main purpose is correctness and safety.
+
+``` js
+"use strict";
+
+let age = 20; 
+```
+- The entire file runs in strict mode.
+- Function-Level Strict Mode
+```js
+function demo(){
+
+    "use strict";
+
+    let age = 20;
+
+}
+//Only this function uses strict mode.
+```
+- Common Errors Prevented
+1. Accidental Globals
+```js
+"use strict";
+
+x = 10;
+//ReferenceError
+```
+
+2. Deleting Variables
+```js
+"use strict";
+
+let x = 10;
+
+delete x;
+//SyntaxError
+```
+
+3. Duplicate Parameters
+```js
+"use strict";
+
+function test(a, a){}
+//SyntaxError
+```
+- If you're using ES Modules (import/export) or JavaScript classes, strict mode is enabled automatically.
+
+```js
+// math.js
+export function add(a, b) {
+    return a + b;
+}
+//No need to write "use strict" manually.
+```
