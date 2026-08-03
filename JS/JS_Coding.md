@@ -965,3 +965,1133 @@ After completing these 10 questions, you should understand:
 - ✅ Truthy & Falsy values
 
 These concepts appear constantly in JavaScript interviews, React development, Node.js APIs, and real-world debugging.
+
+
+# JavaScript Coding Solutions
+# Module 1 (Part 2): Objects, Arrays, Functions & Debugging
+## Questions 11–28
+
+---
+
+# 11. Shopping Cart Total
+
+## 🎯 Problem
+
+Calculate the total price.
+
+```javascript
+const price = 500;
+const quantity = 3;
+```
+
+Output:
+
+```
+1500
+```
+
+---
+
+## 🧠 Thinking Process
+
+Whenever you hear **total price**, think:
+
+```
+Total = Price × Quantity
+```
+
+---
+
+## ✅ Optimized Solution
+
+```javascript
+const price = 500;
+const quantity = 3;
+
+const totalPrice = price * quantity;
+
+console.log("Total Price:", totalPrice);
+```
+
+---
+
+## 📝 Output
+
+```
+Total Price: 1500
+```
+
+---
+
+## 💼 Real World Example
+
+Every shopping website calculates:
+
+```
+Laptop × Quantity
+
+↓
+
+Total Price
+```
+
+---
+
+## ⭐ Interview Tip
+
+Store calculated values in meaningful variables.
+
+Bad
+
+```javascript
+console.log(price * quantity);
+```
+
+Better
+
+```javascript
+const totalPrice = price * quantity;
+```
+
+---
+
+# 12. Employee Information Object
+
+## 🎯 Problem
+
+Create an employee object.
+
+Properties:
+
+- name
+- age
+- salary
+- department
+
+Print each property.
+
+---
+
+## 🧠 Thinking Process
+
+Objects group related information together.
+
+Instead of
+
+```javascript
+const name = "Alex";
+const age = 25;
+const salary = 50000;
+```
+
+We use
+
+```
+Employee
+
+↓
+
+name
+age
+salary
+department
+```
+
+---
+
+## ✅ Optimized Solution
+
+```javascript
+const employee = {
+  name: "Alex",
+  age: 25,
+  salary: 50000,
+  department: "Engineering"
+};
+
+console.log(employee.name);
+console.log(employee.age);
+console.log(employee.salary);
+console.log(employee.department);
+```
+
+---
+
+## 📝 Output
+
+```
+Alex
+25
+50000
+Engineering
+```
+
+---
+
+## ⭐ Interview Tip
+
+Use **dot notation** whenever possible.
+
+```javascript
+employee.name
+```
+
+instead of
+
+```javascript
+employee["name"]
+```
+
+unless the key is dynamic.
+
+---
+
+# 13. Update Object Values
+
+## 🎯 Problem
+
+Update:
+
+```
+age → 30
+```
+
+Add
+
+```
+city → Delhi
+```
+
+---
+
+## ✅ Optimized Solution
+
+```javascript
+const user = {
+  name: "Alex",
+  age: 25
+};
+
+user.age = 30;
+
+user.city = "Delhi";
+
+console.log(user);
+```
+
+---
+
+## 📝 Output
+
+```javascript
+{
+  name: "Alex",
+  age: 30,
+  city: "Delhi"
+}
+```
+
+---
+
+## 🧠 Important Concept
+
+People often think this is illegal because of `const`.
+
+Wrong.
+
+`const` prevents changing the variable reference.
+
+It **does not** prevent changing object properties.
+
+Allowed
+
+```javascript
+user.age = 30;
+```
+
+Not allowed
+
+```javascript
+user = {};
+```
+
+---
+
+# 14. Object Property Checker
+
+## 🎯 Problem
+
+Create
+
+```javascript
+hasProperty(object,key)
+```
+
+Return
+
+```
+true
+
+or
+
+false
+```
+
+---
+
+## ✅ Optimized Solution
+
+```javascript
+function hasProperty(object, key) {
+  return object.hasOwnProperty(key);
+}
+
+const user = {
+  name: "Alex",
+  age: 25
+};
+
+console.log(hasProperty(user, "age"));
+
+console.log(hasProperty(user, "email"));
+```
+
+---
+
+## 📝 Output
+
+```
+true
+false
+```
+
+---
+
+## ⭐ Better Modern Solution
+
+```javascript
+function hasProperty(object, key) {
+  return key in object;
+}
+```
+
+The `in` operator also checks inherited properties.
+
+---
+
+# 15. Array Basics
+
+## 🎯 Problem
+
+Perform
+
+- Add fruit
+- Remove fruit
+- Print length
+- Print first element
+
+---
+
+## ✅ Optimized Solution
+
+```javascript
+const fruits = [
+  "Apple",
+  "Banana",
+  "Mango"
+];
+
+fruits.push("Orange");
+
+fruits.pop();
+
+console.log(fruits.length);
+
+console.log(fruits[0]);
+
+console.log(fruits);
+```
+
+---
+
+## 📝 Output
+
+```
+3
+
+Apple
+
+["Apple","Banana","Mango"]
+```
+
+---
+
+## 🧠 Important Methods
+
+Add
+
+```javascript
+push()
+```
+
+Remove
+
+```javascript
+pop()
+```
+
+Length
+
+```javascript
+length
+```
+
+Access
+
+```javascript
+fruits[0]
+```
+
+---
+
+# 16. Copy Object Problem
+
+## 🎯 Predict Output
+
+```javascript
+let user1 = {
+  name: "Alex"
+};
+
+let user2 = user1;
+
+user2.name = "John";
+
+console.log(user1.name);
+```
+
+---
+
+## ✅ Output
+
+```
+John
+```
+
+---
+
+## 🧠 Why?
+
+Objects are **Reference Types**.
+
+Memory
+
+```
+user1
+
+↓
+
+Object
+
+↑
+
+user2
+```
+
+Both variables point to the same object.
+
+Changing one changes the other.
+
+---
+
+## ⭐ Interview Question
+
+Primitive
+
+```
+Copied by value
+```
+
+Objects
+
+```
+Copied by reference
+```
+
+Know this extremely well.
+
+---
+
+# 17. Create Deep Copy
+
+## 🎯 Problem
+
+Create an independent copy.
+
+---
+
+## ✅ Optimized Solution
+
+```javascript
+const user = {
+  name: "Alex",
+  address: {
+    city: "Delhi"
+  }
+};
+
+const copy = structuredClone(user);
+
+copy.address.city = "Mumbai";
+
+console.log(user);
+
+console.log(copy);
+```
+
+---
+
+## 📝 Output
+
+```javascript
+user
+
+{
+ name:"Alex",
+ address:{
+   city:"Delhi"
+ }
+}
+
+copy
+
+{
+ name:"Alex",
+ address:{
+   city:"Mumbai"
+ }
+}
+```
+
+---
+
+## ⭐ Older Alternative
+
+```javascript
+const copy = JSON.parse(JSON.stringify(user));
+```
+
+Works for simple objects.
+
+Modern JavaScript prefers
+
+```javascript
+structuredClone()
+```
+
+---
+
+# 18. Compare Objects
+
+## 🎯 Problem
+
+```javascript
+const user1 = {
+  name: "Alex"
+};
+
+const user2 = {
+  name: "Alex"
+};
+```
+
+Compare them.
+
+---
+
+## ✅ Solution
+
+```javascript
+console.log(user1 == user2);
+
+console.log(user1 === user2);
+```
+
+---
+
+## 📝 Output
+
+```
+false
+
+false
+```
+
+---
+
+## 🧠 Why?
+
+Objects are compared by memory address.
+
+Memory
+
+```
+Object A
+
+≠
+
+Object B
+```
+
+Even if values look identical.
+
+---
+
+# 19. Greeting Function
+
+## 🎯 Problem
+
+Create
+
+```javascript
+greet(name)
+```
+
+---
+
+## ✅ Optimized Solution
+
+```javascript
+function greet(name) {
+  return `Hello ${name}`;
+}
+
+console.log(greet("Alex"));
+```
+
+---
+
+## 📝 Output
+
+```
+Hello Alex
+```
+
+---
+
+## ⭐ Why Return?
+
+Returning makes the function reusable.
+
+```javascript
+const message = greet("Alex");
+```
+
+---
+
+# 20. Calculator Function
+
+## 🎯 Problem
+
+Support
+
+```
++
+-
+*
+/
+```
+
+---
+
+## ✅ Optimized Solution
+
+```javascript
+function calculate(a, b, operator) {
+
+  switch (operator) {
+
+    case "+":
+      return a + b;
+
+    case "-":
+      return a - b;
+
+    case "*":
+      return a * b;
+
+    case "/":
+      return b !== 0
+        ? a / b
+        : "Cannot divide by zero";
+
+    default:
+      return "Invalid Operator";
+  }
+
+}
+
+console.log(calculate(10,5,"+"));
+```
+
+---
+
+## 📝 Output
+
+```
+15
+```
+
+---
+
+## ⭐ Interview Tip
+
+Always handle invalid input.
+
+Never assume users pass correct values.
+
+---
+
+# 21. Function Stored in Variable
+
+## 🎯 Problem
+
+Store a function in a variable.
+
+---
+
+## ✅ Optimized Solution
+
+```javascript
+const multiply = function (a, b) {
+  return a * b;
+};
+
+console.log(multiply(5,4));
+```
+
+---
+
+## 📝 Output
+
+```
+20
+```
+
+---
+
+## 🧠 Why?
+
+Functions are **First-Class Citizens**.
+
+They can be
+
+- stored
+- passed
+- returned
+
+---
+
+# 22. Pass Function as Argument
+
+## 🎯 Problem
+
+Pass a function into another function.
+
+---
+
+## ✅ Optimized Solution
+
+```javascript
+function executeFunction(fn) {
+  fn();
+}
+
+executeFunction(() => {
+  console.log("Hello");
+});
+```
+
+---
+
+## 📝 Output
+
+```
+Hello
+```
+
+---
+
+## 💼 Real World Example
+
+Button Click
+
+```javascript
+button.addEventListener(
+  "click",
+  function(){ }
+)
+```
+
+The callback is passed as an argument.
+
+---
+
+# 23. Return Function
+
+## 🎯 Problem
+
+Return a function.
+
+---
+
+## ✅ Optimized Solution
+
+```javascript
+function createMultiplier(number) {
+
+  return function(value){
+
+    return value * number;
+
+  };
+
+}
+
+const double = createMultiplier(2);
+
+console.log(double(5));
+```
+
+---
+
+## 📝 Output
+
+```
+10
+```
+
+---
+
+## ⭐ Important Concept
+
+This introduces **Closures**.
+
+Very important for React and JavaScript interviews.
+
+---
+
+# 24. Fix Undefined Value Bug
+
+## 🎯 Problem
+
+```javascript
+let age;
+
+console.log(age + 10);
+```
+
+---
+
+## 📝 Output
+
+```
+NaN
+```
+
+---
+
+## 🧠 Why?
+
+```
+undefined + 10
+
+↓
+
+Not a Number
+```
+
+---
+
+## ✅ Fix
+
+```javascript
+let age = 20;
+
+console.log(age + 10);
+```
+
+---
+
+# 25. Fix Variable Scope Bug
+
+## 🎯 Problem
+
+```javascript
+if (true){
+
+ let username = "Alex";
+
+}
+
+console.log(username);
+```
+
+---
+
+## 📝 Error
+
+```
+ReferenceError
+```
+
+---
+
+## 🧠 Why?
+
+`let`
+
+uses
+
+```
+Block Scope
+```
+
+The variable only exists inside the braces.
+
+---
+
+## ✅ Fix
+
+```javascript
+let username;
+
+if(true){
+
+  username = "Alex";
+
+}
+
+console.log(username);
+```
+
+---
+
+# 26. Fix Type Bug
+
+## 🎯 Problem
+
+```javascript
+let price = "100";
+
+let quantity = 2;
+
+console.log(price * quantity);
+```
+
+---
+
+## 📝 Output
+
+```
+200
+```
+
+---
+
+## 🧠 Is this wrong?
+
+Not exactly.
+
+JavaScript automatically converts
+
+```
+"100"
+
+↓
+
+100
+```
+
+because multiplication requires numbers.
+
+---
+
+## ⭐ Better Code
+
+```javascript
+const price = 100;
+
+const quantity = 2;
+
+console.log(price * quantity);
+```
+
+Avoid relying on automatic type coercion.
+
+---
+
+# 27. Fix Equality Bug
+
+## 🎯 Predict
+
+```javascript
+console.log(5 == "5");
+
+console.log(5 === "5");
+```
+
+---
+
+## 📝 Output
+
+```
+true
+
+false
+```
+
+---
+
+## 🧠 Why?
+
+`==`
+
+Performs type conversion.
+
+```
+5
+
+↓
+
+Number
+
+↓
+
+"5"
+
+↓
+
+Converted
+
+↓
+
+Equal
+```
+
+---
+
+`===`
+
+Checks
+
+- value
+- type
+
+Types differ.
+
+Result
+
+```
+false
+```
+
+---
+
+## ⭐ Interview Rule
+
+Always prefer
+
+```javascript
+===
+```
+
+unless you intentionally want type coercion.
+
+---
+
+# 28. Debug Object Mutation
+
+## 🎯 Problem
+
+```javascript
+const user = {
+
+  name:"Alex"
+
+}
+
+const copy = user;
+
+copy.name = "John";
+
+console.log(user);
+```
+
+---
+
+## 📝 Output
+
+```javascript
+{
+ name:"John"
+}
+```
+
+---
+
+## 🧠 Why?
+
+Both variables reference the same object in memory.
+
+```
+user
+
+↓
+
+Object
+
+↑
+
+copy
+```
+
+Changing one changes the other.
+
+---
+
+## ✅ Fix
+
+```javascript
+const copy = structuredClone(user);
+
+copy.name = "John";
+
+console.log(user);
+
+console.log(copy);
+```
+
+---
+
+# 🎯 Module Summary
+
+After completing Questions **11–28**, you should understand:
+
+- ✅ Objects
+- ✅ Object properties
+- ✅ Updating objects
+- ✅ Arrays
+- ✅ Array methods (`push`, `pop`, `length`)
+- ✅ Function declaration
+- ✅ Function expressions
+- ✅ Passing functions
+- ✅ Returning functions (Closures)
+- ✅ Object references
+- ✅ Deep copy vs shallow copy
+- ✅ Equality (`==` vs `===`)
+- ✅ Variable scope
+- ✅ Type coercion
+- ✅ Common debugging patterns
+
+These topics are foundational for React, Node.js, backend APIs, and the kind of debugging-heavy engineering work expected in roles like Alignerr.
