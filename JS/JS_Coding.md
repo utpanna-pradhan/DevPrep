@@ -4389,3 +4389,3237 @@ By solving these problems, you've covered:
 - ✅ Reading and debugging existing code
 
 These questions are the kind that appear in beginner-to-intermediate interviews and, more importantly, mirror the logic you'll implement in real applications. The syntax is the easy part. Translating vague business rules like "senior citizens get a discount except on holidays unless..." into clean code is where software engineering begins. The universe, for reasons known only to itself, calls that "requirements gathering."
+
+
+
+# Introduction to Loops
+
+Imagine you need to print:
+
+```
+1
+2
+3
+4
+5
+...
+100
+```
+
+Without loops, you would have to write:
+
+```javascript
+console.log(1);
+console.log(2);
+console.log(3);
+console.log(4);
+...
+console.log(100);
+```
+
+That would be slow, repetitive, and difficult to maintain.
+
+A **loop** allows you to execute the same block of code multiple times.
+
+The most commonly used loop is the `for` loop.
+
+### Syntax
+
+```javascript
+for (initialization; condition; update) {
+
+    // Code to repeat
+
+}
+```
+
+Example:
+
+```javascript
+for (let i = 1; i <= 5; i++) {
+    console.log(i);
+}
+```
+
+Output
+
+```
+1
+2
+3
+4
+5
+```
+
+---
+
+# 61. Print Numbers From 1 to 10
+
+## Problem
+
+Print numbers from **1 to 10**.
+
+---
+
+## Solution
+
+```javascript
+for (let i = 1; i <= 10; i++) {
+
+    console.log(i);
+
+}
+```
+
+---
+
+## Output
+
+```
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+```
+
+---
+
+## Explanation
+
+### Step 1
+
+```javascript
+let i = 1;
+```
+
+Starts the loop.
+
+---
+
+### Step 2
+
+```javascript
+i <= 10
+```
+
+Checks whether the loop should continue.
+
+---
+
+### Step 3
+
+```javascript
+i++
+```
+
+Increases `i` by 1 after each iteration.
+
+---
+
+## Dry Run
+
+| i | Printed |
+|---|----------|
+|1|1|
+|2|2|
+|3|3|
+|...|...|
+|10|10|
+|11|Loop Stops|
+
+---
+
+# 62. Print Numbers From 10 to 1
+
+## Solution
+
+```javascript
+for (let i = 10; i >= 1; i--) {
+
+    console.log(i);
+
+}
+```
+
+---
+
+## Output
+
+```
+10
+9
+8
+7
+6
+5
+4
+3
+2
+1
+```
+
+---
+
+## Explanation
+
+Instead of increasing the value:
+
+```javascript
+i++
+```
+
+we decrease it.
+
+```javascript
+i--
+```
+
+---
+
+# 63. Print Numbers Between Range
+
+## Problem
+
+Create
+
+```javascript
+printRange(start, end)
+```
+
+Example
+
+```
+5
+
+↓
+
+10
+```
+
+---
+
+## Solution
+
+```javascript
+function printRange(start, end) {
+
+    for (let i = start; i <= end; i++) {
+
+        console.log(i);
+
+    }
+
+}
+
+printRange(5, 10);
+```
+
+---
+
+## Output
+
+```
+5
+6
+7
+8
+9
+10
+```
+
+---
+
+## Real World
+
+This logic is useful for:
+
+- Pagination
+- Calendar generation
+- Date ranges
+- Reports
+- IDs
+
+---
+
+# 64. Print Even Numbers From 1 to 100
+
+## Solution (Method 1)
+
+```javascript
+for (let i = 1; i <= 100; i++) {
+
+    if (i % 2 === 0) {
+
+        console.log(i);
+
+    }
+
+}
+```
+
+---
+
+## Output
+
+```
+2
+4
+6
+8
+...
+100
+```
+
+---
+
+## Better Solution
+
+```javascript
+for (let i = 2; i <= 100; i += 2) {
+
+    console.log(i);
+
+}
+```
+
+---
+
+## Why Better?
+
+Instead of checking every number,
+
+```
+1
+
+↓
+
+2
+
+↓
+
+3
+
+↓
+
+4
+```
+
+we directly jump
+
+```
+2
+
+↓
+
+4
+
+↓
+
+6
+
+↓
+
+8
+```
+
+Less work.
+
+Faster.
+
+Cleaner.
+
+---
+
+# 65. Print Odd Numbers From 1 to 100
+
+## Solution
+
+```javascript
+for (let i = 1; i <= 100; i += 2) {
+
+    console.log(i);
+
+}
+```
+
+---
+
+## Output
+
+```
+1
+3
+5
+7
+...
+99
+```
+
+---
+
+## Alternative
+
+```javascript
+if (i % 2 !== 0)
+```
+
+also works.
+
+---
+
+# 66. Sum Numbers From 1 to N
+
+## Problem
+
+Example
+
+```
+5
+```
+
+Calculate
+
+```
+1 + 2 + 3 + 4 + 5
+```
+
+---
+
+## Solution
+
+```javascript
+function sumNumber(n) {
+
+    let sum = 0;
+
+    for (let i = 1; i <= n; i++) {
+
+        sum += i;
+
+    }
+
+    return sum;
+
+}
+
+console.log(sumNumber(5));
+```
+
+---
+
+## Output
+
+```
+15
+```
+
+---
+
+## Dry Run
+
+| i | Sum |
+|---|-----|
+|1|1|
+|2|3|
+|3|6|
+|4|10|
+|5|15|
+
+---
+
+## Important Pattern
+
+Whenever you see:
+
+```
+Find Total
+
+Find Average
+
+Find Count
+```
+
+Think:
+
+```
+Start with
+
+0
+```
+
+Then keep adding.
+
+---
+
+# 67. Find Sum of Even Numbers
+
+## Problem
+
+Find
+
+```
+2+4+6+8+10
+```
+
+---
+
+## Solution
+
+```javascript
+let sum = 0;
+
+for (let i = 2; i <= 10; i += 2) {
+
+    sum += i;
+
+}
+
+console.log(sum);
+```
+
+---
+
+## Output
+
+```
+30
+```
+
+---
+
+## Calculation
+
+```
+2
+
+↓
+
+6
+
+↓
+
+12
+
+↓
+
+20
+
+↓
+
+30
+```
+
+---
+
+# 68. Find Sum of Odd Numbers
+
+## Solution
+
+```javascript
+let sum = 0;
+
+for (let i = 1; i <= 10; i += 2) {
+
+    sum += i;
+
+}
+
+console.log(sum);
+```
+
+---
+
+## Output
+
+```
+25
+```
+
+---
+
+## Calculation
+
+```
+1
+
+↓
+
+4
+
+↓
+
+9
+
+↓
+
+16
+
+↓
+
+25
+```
+
+---
+
+# 69. Multiplication Table
+
+## Problem
+
+Input
+
+```
+5
+```
+
+Output
+
+```
+5 x 1 = 5
+
+...
+
+5 x 10 = 50
+```
+
+---
+
+## Solution
+
+```javascript
+function table(number) {
+
+    for (let i = 1; i <= 10; i++) {
+
+        console.log(`${number} x ${i} = ${number * i}`);
+
+    }
+
+}
+
+table(5);
+```
+
+---
+
+## Output
+
+```
+5 x 1 = 5
+
+5 x 2 = 10
+
+5 x 3 = 15
+
+...
+
+5 x 10 = 50
+```
+
+---
+
+## Explanation
+
+Template literals
+
+```javascript
+`${}`
+```
+
+allow you to combine text and variables cleanly.
+
+---
+
+# 70. Count Numbers in Range
+
+## Problem
+
+Input
+
+```
+10
+
+↓
+
+20
+```
+
+Output
+
+```
+11
+```
+
+---
+
+## Solution
+
+```javascript
+function countRange(start, end) {
+
+    let count = 0;
+
+    for (let i = start; i <= end; i++) {
+
+        count++;
+
+    }
+
+    return count;
+
+}
+
+console.log(countRange(10, 20));
+```
+
+---
+
+## Output
+
+```
+11
+```
+
+---
+
+## Better Solution
+
+Instead of looping:
+
+```javascript
+return end - start + 1;
+```
+
+Example
+
+```
+20 - 10 + 1
+
+↓
+
+11
+```
+
+This has **O(1)** time complexity instead of **O(n)**.
+
+---
+
+# 🎯 Concepts Practiced (61–70)
+
+After completing these questions, you now know how to:
+
+- ✅ Use the `for` loop
+- ✅ Count upward and downward
+- ✅ Iterate over ranges
+- ✅ Work with even and odd numbers
+- ✅ Accumulate values using a running total
+- ✅ Build multiplication tables
+- ✅ Count items in a range
+- ✅ Recognize opportunities to optimize loops with simple math
+
+## ⭐ Engineering Tip
+
+A common beginner mistake is reaching for a loop every time. Strong engineers ask first: *"Do I actually need to iterate?"* For example, Question 70 can be solved with a loop, but a simple formula is faster and clearer. Interviews, and jobs like Alignerr, reward that habit of thinking before coding. The CPU appreciates it too, even if it never sends thank-you notes.
+
+
+# Introduction to While Loop
+
+A **while loop** executes a block of code **as long as a condition is true**.
+
+Unlike a `for` loop, a `while` loop is useful when you **don't know beforehand how many times the loop will run**.
+
+## Syntax
+
+```javascript
+while (condition) {
+
+    // Code
+
+}
+```
+
+Example
+
+```javascript
+let i = 1;
+
+while (i <= 5) {
+
+    console.log(i);
+
+    i++;
+
+}
+```
+
+Output
+
+```
+1
+2
+3
+4
+5
+```
+
+---
+
+# 71. Print Numbers Using While Loop
+
+## Problem
+
+Print:
+
+```
+1
+2
+3
+4
+5
+```
+
+using a `while` loop.
+
+---
+
+## Solution
+
+```javascript
+let i = 1;
+
+while (i <= 5) {
+
+    console.log(i);
+
+    i++;
+
+}
+```
+
+---
+
+## Output
+
+```
+1
+2
+3
+4
+5
+```
+
+---
+
+## Dry Run
+
+| i | Printed |
+|---|---------|
+|1|1|
+|2|2|
+|3|3|
+|4|4|
+|5|5|
+|6|Loop Stops|
+
+---
+
+# 72. Countdown Timer
+
+## Problem
+
+Create
+
+```javascript
+countDown(number)
+```
+
+Input
+
+```
+5
+```
+
+Output
+
+```
+5
+4
+3
+2
+1
+0
+```
+
+---
+
+## Solution
+
+```javascript
+function countDown(number) {
+
+    while (number >= 0) {
+
+        console.log(number);
+
+        number--;
+
+    }
+
+}
+
+countDown(5);
+```
+
+---
+
+## Output
+
+```
+5
+4
+3
+2
+1
+0
+```
+
+---
+
+## Real World
+
+Countdown timers
+
+OTP expiration
+
+Auction timers
+
+Rocket launch timers
+
+All use similar logic.
+
+---
+
+# 73. Sum Numbers Using While Loop
+
+## Problem
+
+```
+1+2+3+...+10
+```
+
+Output
+
+```
+55
+```
+
+---
+
+## Solution
+
+```javascript
+function sumNumber(number) {
+
+    let sum = 0;
+
+    let i = 1;
+
+    while (i <= number) {
+
+        sum += i;
+
+        i++;
+
+    }
+
+    return sum;
+
+}
+
+console.log(sumNumber(10));
+```
+
+---
+
+## Output
+
+```
+55
+```
+
+---
+
+## Dry Run
+
+```
+sum = 0
+
+↓
+
+1
+
+↓
+
+3
+
+↓
+
+6
+
+↓
+
+10
+
+↓
+
+...
+
+↓
+
+55
+```
+
+---
+
+# 74. Reverse Number Using Loop
+
+## Problem
+
+Input
+
+```
+12345
+```
+
+Output
+
+```
+54321
+```
+
+---
+
+## Solution
+
+```javascript
+function reverseNumber(number) {
+
+    let reversed = 0;
+
+    while (number > 0) {
+
+        let digit = number % 10;
+
+        reversed = reversed * 10 + digit;
+
+        number = Math.floor(number / 10);
+
+    }
+
+    return reversed;
+
+}
+
+console.log(reverseNumber(12345));
+```
+
+---
+
+## Output
+
+```
+54321
+```
+
+---
+
+## Step-by-Step
+
+```
+12345
+
+↓
+
+Take Last Digit
+
+5
+
+↓
+
+Reverse
+
+5
+
+↓
+
+Remove Last Digit
+
+1234
+
+↓
+
+Take 4
+
+↓
+
+Reverse
+
+54
+
+↓
+
+Continue...
+```
+
+---
+
+## Important Concepts
+
+```javascript
+number % 10
+```
+
+Gets the last digit.
+
+```javascript
+Math.floor(number / 10)
+```
+
+Removes the last digit.
+
+These two operations appear in many interview questions.
+
+---
+
+# 75. Count Digits
+
+## Problem
+
+Input
+
+```
+98765
+```
+
+Output
+
+```
+5
+```
+
+---
+
+## Solution
+
+```javascript
+function countDigits(number) {
+
+    let count = 0;
+
+    while (number > 0) {
+
+        count++;
+
+        number = Math.floor(number / 10);
+
+    }
+
+    return count;
+
+}
+
+console.log(countDigits(98765));
+```
+
+---
+
+## Output
+
+```
+5
+```
+
+---
+
+## Dry Run
+
+```
+98765
+
+↓
+
+9876
+
+↓
+
+987
+
+↓
+
+98
+
+↓
+
+9
+
+↓
+
+0
+
+↓
+
+Count = 5
+```
+
+---
+
+# 76. Sum Of Digits
+
+## Problem
+
+```
+1234
+```
+
+Calculate
+
+```
+1+2+3+4
+```
+
+---
+
+## Solution
+
+```javascript
+function sumDigits(number) {
+
+    let sum = 0;
+
+    while (number > 0) {
+
+        let digit = number % 10;
+
+        sum += digit;
+
+        number = Math.floor(number / 10);
+
+    }
+
+    return sum;
+
+}
+
+console.log(sumDigits(1234));
+```
+
+---
+
+## Output
+
+```
+10
+```
+
+---
+
+## Dry Run
+
+```
+4
+
+↓
+
+3
+
+↓
+
+2
+
+↓
+
+1
+
+↓
+
+Sum
+
+10
+```
+
+---
+
+# 77. Product Of Digits
+
+## Problem
+
+```
+1234
+
+↓
+
+1×2×3×4
+```
+
+Output
+
+```
+24
+```
+
+---
+
+## Solution
+
+```javascript
+function productDigits(number) {
+
+    let product = 1;
+
+    while (number > 0) {
+
+        let digit = number % 10;
+
+        product *= digit;
+
+        number = Math.floor(number / 10);
+
+    }
+
+    return product;
+
+}
+
+console.log(productDigits(1234));
+```
+
+---
+
+## Output
+
+```
+24
+```
+
+---
+
+## Important
+
+Addition starts with
+
+```javascript
+0
+```
+
+Multiplication starts with
+
+```javascript
+1
+```
+
+Otherwise
+
+```
+0 × anything
+
+↓
+
+0
+```
+
+---
+
+# 78. Find Largest Digit
+
+## Problem
+
+Input
+
+```
+58392
+```
+
+Output
+
+```
+9
+```
+
+---
+
+## Solution
+
+```javascript
+function largestDigit(number) {
+
+    let largest = 0;
+
+    while (number > 0) {
+
+        let digit = number % 10;
+
+        if (digit > largest) {
+
+            largest = digit;
+
+        }
+
+        number = Math.floor(number / 10);
+
+    }
+
+    return largest;
+
+}
+
+console.log(largestDigit(58392));
+```
+
+---
+
+## Output
+
+```
+9
+```
+
+---
+
+## Dry Run
+
+```
+Digits
+
+2
+
+↓
+
+9
+
+↓
+
+3
+
+↓
+
+8
+
+↓
+
+5
+
+Largest
+
+9
+```
+
+---
+
+# 79. Find Smallest Digit
+
+## Problem
+
+Input
+
+```
+58392
+```
+
+Output
+
+```
+2
+```
+
+---
+
+## Solution
+
+```javascript
+function smallestDigit(number) {
+
+    let smallest = 9;
+
+    while (number > 0) {
+
+        let digit = number % 10;
+
+        if (digit < smallest) {
+
+            smallest = digit;
+
+        }
+
+        number = Math.floor(number / 10);
+
+    }
+
+    return smallest;
+
+}
+
+console.log(smallestDigit(58392));
+```
+
+---
+
+## Output
+
+```
+2
+```
+
+---
+
+## Why Start With 9?
+
+Digits range from
+
+```
+0
+
+↓
+
+9
+```
+
+Starting with the largest possible digit guarantees that the first comparison works correctly.
+
+---
+
+# 80. Check Palindrome Number
+
+## Problem
+
+Input
+
+```
+121
+```
+
+Output
+
+```
+Palindrome
+```
+
+Input
+
+```
+123
+```
+
+Output
+
+```
+Not Palindrome
+```
+
+---
+
+## Solution
+
+```javascript
+function isPalindrome(number) {
+
+    let original = number;
+
+    let reversed = 0;
+
+    while (number > 0) {
+
+        let digit = number % 10;
+
+        reversed = reversed * 10 + digit;
+
+        number = Math.floor(number / 10);
+
+    }
+
+    if (original === reversed) {
+
+        return "Palindrome";
+
+    }
+
+    return "Not Palindrome";
+
+}
+
+console.log(isPalindrome(121));
+
+console.log(isPalindrome(123));
+```
+
+---
+
+## Output
+
+```
+Palindrome
+
+Not Palindrome
+```
+
+---
+
+## Dry Run
+
+### Input
+
+```
+121
+```
+
+Reverse Process
+
+```
+1
+
+↓
+
+12
+
+↓
+
+121
+```
+
+Compare
+
+```
+Original
+
+121
+
+==
+
+Reversed
+
+121
+```
+
+Result
+
+```
+Palindrome
+```
+
+---
+
+# ⭐ Common Pattern in Questions 74–80
+
+Almost every number-based interview problem follows the same pattern:
+
+```javascript
+while (number > 0) {
+
+    let digit = number % 10;
+
+    // Process the digit
+
+    number = Math.floor(number / 10);
+
+}
+```
+
+If you truly understand these two lines:
+
+```javascript
+let digit = number % 10;
+number = Math.floor(number / 10);
+```
+
+you can solve dozens of interview problems, including:
+
+- Reverse Number
+- Sum of Digits
+- Product of Digits
+- Count Digits
+- Largest Digit
+- Smallest Digit
+- Armstrong Number
+- Palindrome Number
+- Digital Root
+- Harshad Number
+- Spy Number
+- Neon Number
+- Duck Number
+- Happy Number
+
+This tiny pattern is one of those deceptively simple tools that shows up everywhere. Learn it once, and suddenly a whole category of "hard" interview questions becomes routine. The interviewers will still nod gravely as if they summoned an ancient algorithm from the void, but underneath it's just `% 10` and integer division doing all the heavy lifting.
+
+
+# 81. Count Even Digits
+
+## Problem
+
+Input
+
+```
+123456
+```
+
+Output
+
+```
+3
+```
+
+Because:
+
+```
+2
+4
+6
+```
+
+are even digits.
+
+---
+
+## Solution
+
+```javascript
+function countEvenDigits(number) {
+
+    let count = 0;
+
+    while (number > 0) {
+
+        let digit = number % 10;
+
+        if (digit % 2 === 0) {
+
+            count++;
+
+        }
+
+        number = Math.floor(number / 10);
+
+    }
+
+    return count;
+
+}
+
+console.log(countEvenDigits(123456));
+```
+
+---
+
+## Output
+
+```
+3
+```
+
+---
+
+## Dry Run
+
+```
+Digits
+
+6 ✅
+
+5
+
+4 ✅
+
+3
+
+2 ✅
+
+1
+
+↓
+
+Count = 3
+```
+
+---
+
+# 82. Count Odd Digits
+
+## Problem
+
+Input
+
+```
+123456
+```
+
+Output
+
+```
+3
+```
+
+---
+
+## Solution
+
+```javascript
+function countOddDigits(number) {
+
+    let count = 0;
+
+    while (number > 0) {
+
+        let digit = number % 10;
+
+        if (digit % 2 !== 0) {
+
+            count++;
+
+        }
+
+        number = Math.floor(number / 10);
+
+    }
+
+    return count;
+
+}
+
+console.log(countOddDigits(123456));
+```
+
+---
+
+## Output
+
+```
+3
+```
+
+---
+
+# 83. Find Number Of Zeroes
+
+## Problem
+
+Input
+
+```
+10020030
+```
+
+Output
+
+```
+5
+```
+
+> **Note:** The question says the answer is **4**, but that's incorrect.  
+> The number **10020030** actually contains **5 zeroes**:
+>
+> ```
+> 1 0 0 2 0 0 3 0
+>     ↑ ↑   ↑ ↑   ↑
+> ```
+>
+> This is a good reminder that interview questions can contain mistakes. Verify the logic instead of blindly trusting the prompt.
+
+---
+
+## Solution
+
+```javascript
+function countZeros(number) {
+
+    let count = 0;
+
+    while (number > 0) {
+
+        let digit = number % 10;
+
+        if (digit === 0) {
+
+            count++;
+
+        }
+
+        number = Math.floor(number / 10);
+
+    }
+
+    return count;
+
+}
+
+console.log(countZeros(10020030));
+```
+
+---
+
+## Output
+
+```
+5
+```
+
+---
+
+# 84. Armstrong Number Checker
+
+## Problem
+
+Example
+
+```
+153
+```
+
+Calculation
+
+```
+1³ + 5³ + 3³
+
+↓
+
+1 + 125 + 27
+
+↓
+
+153
+```
+
+Output
+
+```
+Armstrong
+```
+
+---
+
+## Solution
+
+```javascript
+function isArmstrong(number) {
+
+    let original = number;
+
+    let sum = 0;
+
+    while (number > 0) {
+
+        let digit = number % 10;
+
+        sum += digit ** 3;
+
+        number = Math.floor(number / 10);
+
+    }
+
+    return original === sum
+        ? "Armstrong"
+        : "Not Armstrong";
+
+}
+
+console.log(isArmstrong(153));
+
+console.log(isArmstrong(123));
+```
+
+---
+
+## Output
+
+```
+Armstrong
+
+Not Armstrong
+```
+
+---
+
+## Interview Note
+
+For a generalized Armstrong number, raise each digit to the power of the **number of digits**, not always 3.
+
+Example:
+
+```
+9474
+
+↓
+
+9⁴+4⁴+7⁴+4⁴
+```
+
+---
+
+# 85. Perfect Number Checker
+
+## Problem
+
+A Perfect Number is equal to the sum of its factors (excluding itself).
+
+Example
+
+```
+28
+
+Factors
+
+1
+
+2
+
+4
+
+7
+
+14
+
+↓
+
+1+2+4+7+14
+
+↓
+
+28
+```
+
+Output
+
+```
+Perfect Number
+```
+
+---
+
+## Solution
+
+```javascript
+function isPerfect(number) {
+
+    let sum = 0;
+
+    for (let i = 1; i < number; i++) {
+
+        if (number % i === 0) {
+
+            sum += i;
+
+        }
+
+    }
+
+    return sum === number
+        ? "Perfect Number"
+        : "Not Perfect";
+
+}
+
+console.log(isPerfect(28));
+
+console.log(isPerfect(15));
+```
+
+---
+
+## Output
+
+```
+Perfect Number
+
+Not Perfect
+```
+
+---
+
+# 86. Find Factorial
+
+## Problem
+
+```
+5!
+
+↓
+
+5×4×3×2×1
+
+↓
+
+120
+```
+
+---
+
+## Solution
+
+```javascript
+function factorial(number) {
+
+    let result = 1;
+
+    for (let i = 1; i <= number; i++) {
+
+        result *= i;
+
+    }
+
+    return result;
+
+}
+
+console.log(factorial(5));
+```
+
+---
+
+## Output
+
+```
+120
+```
+
+---
+
+## Dry Run
+
+```
+1
+
+↓
+
+2
+
+↓
+
+6
+
+↓
+
+24
+
+↓
+
+120
+```
+
+---
+
+## Special Case
+
+```
+0!
+
+↓
+
+1
+```
+
+Always remember this.
+
+---
+
+# 87. Factorial Using While Loop
+
+## Solution
+
+```javascript
+function factorial(number) {
+
+    let result = 1;
+
+    let i = 1;
+
+    while (i <= number) {
+
+        result *= i;
+
+        i++;
+
+    }
+
+    return result;
+
+}
+
+console.log(factorial(5));
+```
+
+---
+
+## Output
+
+```
+120
+```
+
+---
+
+## Difference
+
+The logic is the same as the `for` loop.
+
+Only the loop syntax changes.
+
+---
+
+# 88. Print Factorials From 1 To N
+
+## Problem
+
+Input
+
+```
+5
+```
+
+Output
+
+```
+1
+2
+6
+24
+120
+```
+
+---
+
+## Solution
+
+```javascript
+function printFactorials(n) {
+
+    let factorial = 1;
+
+    for (let i = 1; i <= n; i++) {
+
+        factorial *= i;
+
+        console.log(factorial);
+
+    }
+
+}
+
+printFactorials(5);
+```
+
+---
+
+## Output
+
+```
+1
+2
+6
+24
+120
+```
+
+---
+
+## Why Is This Better?
+
+Instead of recalculating every factorial from scratch, we reuse the previous result.
+
+```
+3!
+
+↓
+
+6
+
+↓
+
+4!
+
+↓
+
+6 × 4
+
+↓
+
+24
+```
+
+Efficient and clean.
+
+---
+
+# 89. Print Fibonacci Series
+
+## Problem
+
+Input
+
+```
+10
+```
+
+Output
+
+```
+0 1 1 2 3 5 8 13 21 34
+```
+
+---
+
+## Solution
+
+```javascript
+function fibonacciSeries(n) {
+
+    let first = 0;
+
+    let second = 1;
+
+    for (let i = 1; i <= n; i++) {
+
+        console.log(first);
+
+        let next = first + second;
+
+        first = second;
+
+        second = next;
+
+    }
+
+}
+
+fibonacciSeries(10);
+```
+
+---
+
+## Output
+
+```
+0
+
+1
+
+1
+
+2
+
+3
+
+5
+
+8
+
+13
+
+21
+
+34
+```
+
+---
+
+## Dry Run
+
+```
+0
+
+1
+
+↓
+
+1
+
+↓
+
+2
+
+↓
+
+3
+
+↓
+
+5
+
+↓
+
+8
+```
+
+---
+
+## Formula
+
+```
+Next
+
+=
+
+Previous
+
++
+
+Current
+```
+
+---
+
+# 90. Find Nth Fibonacci Number
+
+## Problem
+
+Find the 7th Fibonacci number.
+
+Expected Output
+
+```
+8
+```
+
+---
+
+## Solution
+
+```javascript
+function fibonacci(n) {
+
+    let first = 0;
+
+    let second = 1;
+
+    if (n === 1) return 0;
+
+    if (n === 2) return 1;
+
+    for (let i = 3; i <= n; i++) {
+
+        let next = first + second;
+
+        first = second;
+
+        second = next;
+
+    }
+
+    return second;
+
+}
+
+console.log(fibonacci(7));
+```
+
+---
+
+## Output
+
+```
+8
+```
+
+---
+
+## Sequence
+
+| Position | Number |
+|----------|--------|
+|1|0|
+|2|1|
+|3|1|
+|4|2|
+|5|3|
+|6|5|
+|7|8|
+
+---
+
+# 🎯 Concepts Practiced (81–90)
+
+After completing these questions, you now understand:
+
+- ✅ Counting digits based on conditions
+- ✅ Working with number decomposition using `% 10` and `Math.floor()`
+- ✅ Armstrong number logic
+- ✅ Perfect number calculation
+- ✅ Factorials using `for` and `while`
+- ✅ Optimizing repeated calculations
+- ✅ Fibonacci sequence generation
+- ✅ Finding the Nth Fibonacci number
+
+---
+
+# ⭐ Engineering Insight
+
+Notice how many of these problems reuse the same building blocks:
+
+- Loop (`for` or `while`)
+- Condition (`if`)
+- Accumulator (`sum`, `count`, `product`)
+- Number decomposition (`% 10`, `Math.floor()`)
+
+That's the pattern experienced engineers look for. They don't memorize 500 different solutions. They recognize that "Count Even Digits," "Armstrong," "Palindrome," and "Sum of Digits" are all variations of the same algorithm with one small piece changed. Spotting those patterns is what turns interview puzzles into routine exercises instead of dramatic battles against a whiteboard.
+
+
+# 91. Count Fibonacci Numbers Below Limit
+
+## Problem
+
+Input
+
+```
+100
+```
+
+Output
+
+```
+12
+```
+
+Because the Fibonacci numbers below 100 are:
+
+```
+0
+1
+1
+2
+3
+5
+8
+13
+21
+34
+55
+89
+```
+
+Total = **12**
+
+---
+
+## Solution
+
+```javascript
+function countFibonacci(limit) {
+
+    let first = 0;
+    let second = 1;
+    let count = 0;
+
+    while (first < limit) {
+
+        count++;
+
+        let next = first + second;
+
+        first = second;
+        second = next;
+    }
+
+    return count;
+}
+
+console.log(countFibonacci(100));
+```
+
+---
+
+## Output
+
+```
+12
+```
+
+---
+
+## Time Complexity
+
+```
+O(n)
+```
+
+where `n` is the number of Fibonacci numbers generated.
+
+---
+
+# 92. Check Prime Number
+
+## Problem
+
+Create
+
+```javascript
+isPrime(number)
+```
+
+Example
+
+```
+7
+
+↓
+
+Prime
+```
+
+---
+
+## What is a Prime Number?
+
+A prime number has exactly **two factors**.
+
+```
+1
+
+and
+
+itself
+```
+
+Example
+
+```
+7
+
+↓
+
+1
+
+7
+```
+
+Prime
+
+Example
+
+```
+8
+
+↓
+
+1
+
+2
+
+4
+
+8
+```
+
+Not Prime
+
+---
+
+## Solution
+
+```javascript
+function isPrime(number) {
+
+    if (number < 2) {
+        return "Not Prime";
+    }
+
+    for (let i = 2; i < number; i++) {
+
+        if (number % i === 0) {
+            return "Not Prime";
+        }
+
+    }
+
+    return "Prime";
+}
+
+console.log(isPrime(7));
+
+console.log(isPrime(10));
+```
+
+---
+
+## Output
+
+```
+Prime
+
+Not Prime
+```
+
+---
+
+## Better Optimization
+
+Instead of checking until
+
+```
+number
+```
+
+check only until
+
+```javascript
+Math.sqrt(number)
+```
+
+This improves performance significantly.
+
+---
+
+# 93. Print Prime Numbers Between Range
+
+## Problem
+
+Input
+
+```
+1
+
+↓
+
+100
+```
+
+---
+
+## Solution
+
+```javascript
+function printPrimes(start, end) {
+
+    for (let num = start; num <= end; num++) {
+
+        let isPrime = true;
+
+        if (num < 2) {
+
+            isPrime = false;
+
+        }
+
+        for (let i = 2; i <= Math.sqrt(num); i++) {
+
+            if (num % i === 0) {
+
+                isPrime = false;
+
+                break;
+
+            }
+
+        }
+
+        if (isPrime) {
+
+            console.log(num);
+
+        }
+
+    }
+
+}
+
+printPrimes(1, 100);
+```
+
+---
+
+## Output
+
+```
+2
+3
+5
+7
+11
+13
+17
+19
+...
+97
+```
+
+---
+
+## What You Learn
+
+Nested loops
+
+Boolean flags
+
+Optimization using `Math.sqrt()`
+
+---
+
+# 94. Count Prime Numbers
+
+## Problem
+
+Input
+
+```
+1
+
+↓
+
+100
+```
+
+Output
+
+```
+25
+```
+
+---
+
+## Solution
+
+```javascript
+function countPrimes(start, end) {
+
+    let count = 0;
+
+    for (let num = start; num <= end; num++) {
+
+        let isPrime = true;
+
+        if (num < 2) {
+
+            isPrime = false;
+
+        }
+
+        for (let i = 2; i <= Math.sqrt(num); i++) {
+
+            if (num % i === 0) {
+
+                isPrime = false;
+
+                break;
+
+            }
+
+        }
+
+        if (isPrime) {
+
+            count++;
+
+        }
+
+    }
+
+    return count;
+}
+
+console.log(countPrimes(1, 100));
+```
+
+---
+
+## Output
+
+```
+25
+```
+
+---
+
+# 95. Find Next Prime Number
+
+## Problem
+
+Input
+
+```
+20
+```
+
+Output
+
+```
+23
+```
+
+---
+
+## Solution
+
+```javascript
+function nextPrime(number) {
+
+    number++;
+
+    while (true) {
+
+        let isPrime = true;
+
+        for (let i = 2; i <= Math.sqrt(number); i++) {
+
+            if (number % i === 0) {
+
+                isPrime = false;
+
+                break;
+
+            }
+
+        }
+
+        if (isPrime) {
+
+            return number;
+
+        }
+
+        number++;
+
+    }
+
+}
+
+console.log(nextPrime(20));
+```
+
+---
+
+## Output
+
+```
+23
+```
+
+---
+
+## Real World
+
+Searching until a condition becomes true is a common algorithmic pattern.
+
+---
+
+# 96. Print Star Triangle
+
+## Problem
+
+Output
+
+```
+*
+**
+***
+****
+*****
+```
+
+---
+
+## Solution
+
+```javascript
+for (let i = 1; i <= 5; i++) {
+
+    let stars = "";
+
+    for (let j = 1; j <= i; j++) {
+
+        stars += "*";
+
+    }
+
+    console.log(stars);
+
+}
+```
+
+---
+
+## Output
+
+```
+*
+**
+***
+****
+*****
+```
+
+---
+
+## Important Concept
+
+Nested loops.
+
+Outer loop = rows.
+
+Inner loop = columns.
+
+---
+
+# 97. Reverse Star Triangle
+
+## Problem
+
+```
+*****
+****
+***
+**
+*
+```
+
+---
+
+## Solution
+
+```javascript
+for (let i = 5; i >= 1; i--) {
+
+    let stars = "";
+
+    for (let j = 1; j <= i; j++) {
+
+        stars += "*";
+
+    }
+
+    console.log(stars);
+
+}
+```
+
+---
+
+## Output
+
+```
+*****
+****
+***
+**
+*
+```
+
+---
+
+# 98. Square Pattern
+
+## Problem
+
+```
+*****
+*****
+*****
+*****
+*****
+```
+
+---
+
+## Solution
+
+```javascript
+for (let i = 1; i <= 5; i++) {
+
+    let stars = "";
+
+    for (let j = 1; j <= 5; j++) {
+
+        stars += "*";
+
+    }
+
+    console.log(stars);
+
+}
+```
+
+---
+
+## Output
+
+```
+*****
+*****
+*****
+*****
+*****
+```
+
+---
+
+# 99. Number Triangle
+
+## Problem
+
+Output
+
+```
+1
+12
+123
+1234
+12345
+```
+
+---
+
+## Solution
+
+```javascript
+for (let i = 1; i <= 5; i++) {
+
+    let numbers = "";
+
+    for (let j = 1; j <= i; j++) {
+
+        numbers += j;
+
+    }
+
+    console.log(numbers);
+
+}
+```
+
+---
+
+## Output
+
+```
+1
+12
+123
+1234
+12345
+```
+
+---
+
+# 100. Reverse Number Triangle
+
+## Problem
+
+Output
+
+```
+12345
+1234
+123
+12
+1
+```
+
+---
+
+## Solution
+
+```javascript
+for (let i = 5; i >= 1; i--) {
+
+    let numbers = "";
+
+    for (let j = 1; j <= i; j++) {
+
+        numbers += j;
+
+    }
+
+    console.log(numbers);
+
+}
+```
+
+---
+
+## Output
+
+```
+12345
+1234
+123
+12
+1
+```
+
+---
+
+# ⭐ Pattern Logic (Questions 96–100)
+
+Every pattern problem follows the same structure:
+
+```javascript
+for (rows) {
+
+    let output = "";
+
+    for (columns) {
+
+        output += something;
+
+    }
+
+    console.log(output);
+
+}
+```
+
+The **outer loop** controls **how many rows** are printed.
+
+The **inner loop** controls **what appears on each row**.
+
+Once you understand this pattern, you can solve hundreds of star, number, alphabet, pyramid, diamond, and Pascal's triangle questions by changing only the inner loop logic.
+
+---
+
+# 🎯 Concepts Practiced (91–100)
+
+After completing the first 100 JavaScript coding questions, you've covered:
+
+- ✅ Fibonacci sequences and counting
+- ✅ Prime number algorithms
+- ✅ Range-based searching
+- ✅ Nested loops
+- ✅ Mathematical optimization with `Math.sqrt()`
+- ✅ Infinite loops with controlled exits (`while (true)` + `return`)
+- ✅ Star and number pattern printing
+- ✅ Building strings inside loops
+- ✅ Thinking in rows and columns
+
+---
+
+# 🏆 Milestone Reached
+
+You've now completed **100 foundational JavaScript coding problems** covering:
+
+- Variables & Data Types
+- Objects & Arrays
+- Functions
+- Operators & Conditions
+- Debugging Basics
+- Loops (`for` and `while`)
+- Number Logic
+- Factorials
+- Fibonacci
+- Prime Numbers
+- Pattern Problems
+
+This is a strong foundation. The next major modules should move beyond syntax into the kinds of problems real frontend and full-stack engineers solve every day:
+
+1. Strings (50+ problems)
+2. Arrays (100+ problems)
+3. Objects (50+ problems)
+4. Functions & Higher-Order Functions
+5. ES6+ Features
+6. DOM Manipulation
+7. Asynchronous JavaScript (`Promise`, `async/await`, Fetch API)
+8. Error Handling
+9. Closures & Scope
+10. Advanced JavaScript Interview Problems
+11. Debugging Real Code
+12. Mini JavaScript Projects
+
+Those topics are where interview difficulty starts increasing. The first 100 questions teach you to write code. The next phases teach you to reason about code, debug it, and design it, which is much closer to what roles like Alignerr and strong software engineering interviews actually demand.
