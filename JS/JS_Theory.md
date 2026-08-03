@@ -139,27 +139,6 @@ name = "John";
 
 Everywhere updates automatically.
 
----
-
-## Real Life Analogy
-
-Imagine a kitchen.
-
-Instead of saying
-
-> "Take the red container on the second shelf."
-
-you simply say
-
-> "Take the Sugar container."
-
-The container is the variable.
-
-The sugar inside is the value.
-
-Tomorrow you may refill it with more sugar.
-
-The container name stays the same.
 
 ---
 
@@ -4960,3 +4939,4407 @@ Understanding this helps you debug:
 - Production JavaScript errors
 
 These concepts look simple, but many real-world bugs come from exactly these areas.
+
+
+# 51. What is Type Conversion?
+
+## 📖 Definition
+
+**Type Conversion** is the process of changing a value from one data type to another **intentionally**.
+
+It is also called **Explicit Type Conversion** because the programmer explicitly writes code to convert the type.
+
+---
+
+## 🧠 Why Do We Need It?
+
+Imagine a user enters their age in an input field.
+
+```text
+25
+```
+
+Although it looks like a number, JavaScript receives it as a **string**.
+
+If you want to perform mathematical operations, you must convert it into a number.
+
+---
+
+## ✅ Example
+
+```javascript
+const age = "25";
+
+const convertedAge = Number(age);
+
+console.log(convertedAge);
+console.log(typeof convertedAge);
+```
+
+### Output
+
+```
+25
+number
+```
+
+---
+
+## More Examples
+
+### String → Number
+
+```javascript
+Number("100");
+```
+
+Output
+
+```
+100
+```
+
+---
+
+### Number → String
+
+```javascript
+String(100);
+```
+
+Output
+
+```
+"100"
+```
+
+---
+
+### Number → Boolean
+
+```javascript
+Boolean(1);
+```
+
+Output
+
+```
+true
+```
+
+---
+
+## 💼 Real World Example
+
+Suppose a shopping website asks the user for quantity.
+
+```javascript
+const quantity = prompt("Enter quantity");
+```
+
+User enters
+
+```
+5
+```
+
+JavaScript stores
+
+```javascript
+"5"
+```
+
+Before calculating total price:
+
+```javascript
+const total = Number(quantity) * 500;
+```
+
+---
+
+## ⭐ Interview Tip
+
+Remember:
+
+> Type Conversion is **intentional**.
+
+You decide when and how to convert.
+
+---
+
+# 52. What is Type Coercion?
+
+## 📖 Definition
+
+**Type Coercion** is the automatic conversion of one data type into another by JavaScript.
+
+The programmer does **not** write conversion code.
+
+JavaScript performs the conversion automatically.
+
+---
+
+## Example
+
+```javascript
+console.log("5" * 2);
+```
+
+Output
+
+```
+10
+```
+
+Why?
+
+JavaScript automatically converts
+
+```
+"5"
+
+↓
+
+5
+```
+
+---
+
+Another example
+
+```javascript
+console.log("5" + 2);
+```
+
+Output
+
+```
+52
+```
+
+Why?
+
+The `+` operator prefers string concatenation.
+
+So JavaScript converts
+
+```
+2
+
+↓
+
+"2"
+```
+
+Result
+
+```
+"52"
+```
+
+---
+
+## More Examples
+
+```javascript
+true + 1
+```
+
+Output
+
+```
+2
+```
+
+Because
+
+```
+true
+
+↓
+
+1
+```
+
+---
+
+```javascript
+false + 5
+```
+
+Output
+
+```
+5
+```
+
+Because
+
+```
+false
+
+↓
+
+0
+```
+
+---
+
+## ⭐ Interview Tip
+
+Type coercion is powerful but can produce unexpected bugs.
+
+Avoid depending on it.
+
+---
+
+# 53. What is the Difference Between Implicit and Explicit Type Conversion?
+
+| Explicit Conversion | Implicit Conversion |
+|--------------------|--------------------|
+| Done by programmer | Done automatically by JavaScript |
+| More readable | Can be confusing |
+| Recommended | Avoid relying on it |
+
+---
+
+## Explicit Example
+
+```javascript
+const age = "25";
+
+Number(age);
+```
+
+You wrote the conversion.
+
+---
+
+## Implicit Example
+
+```javascript
+"25" * 2
+```
+
+JavaScript converts automatically.
+
+---
+
+## Best Practice
+
+Prefer
+
+```javascript
+Number(value)
+```
+
+instead of relying on JavaScript.
+
+---
+
+# 54. How Do You Convert a String to a Number?
+
+There are three common ways.
+
+---
+
+## Method 1 — Number()
+
+```javascript
+const age = "25";
+
+const result = Number(age);
+
+console.log(result);
+```
+
+Output
+
+```
+25
+```
+
+---
+
+## Method 2 — parseInt()
+
+```javascript
+const age = "25";
+
+console.log(parseInt(age));
+```
+
+Output
+
+```
+25
+```
+
+---
+
+## Method 3 — parseFloat()
+
+```javascript
+const price = "99.95";
+
+console.log(parseFloat(price));
+```
+
+Output
+
+```
+99.95
+```
+
+---
+
+## Invalid Conversion
+
+```javascript
+Number("Hello");
+```
+
+Output
+
+```
+NaN
+```
+
+Meaning
+
+```
+Not a Number
+```
+
+---
+
+## ⭐ Interview Tip
+
+Use
+
+```javascript
+Number()
+```
+
+unless you specifically need integer or decimal parsing.
+
+---
+
+# 55. What is the Difference Between Number(), parseInt(), and parseFloat()?
+
+## Number()
+
+Converts the **entire value**.
+
+```javascript
+Number("100");
+```
+
+Output
+
+```
+100
+```
+
+---
+
+```javascript
+Number("100abc");
+```
+
+Output
+
+```
+NaN
+```
+
+---
+
+## parseInt()
+
+Reads until a non-number appears.
+
+```javascript
+parseInt("100abc");
+```
+
+Output
+
+```
+100
+```
+
+---
+
+## parseFloat()
+
+Reads decimal numbers.
+
+```javascript
+parseFloat("99.95kg");
+```
+
+Output
+
+```
+99.95
+```
+
+---
+
+## Comparison Table
+
+| Function | Accepts Decimal | Stops at Characters |
+|-----------|-----------------|---------------------|
+| Number() | ✅ | ❌ |
+| parseInt() | ❌ | ✅ |
+| parseFloat() | ✅ | ✅ |
+
+---
+
+# 56. When Should You Use parseInt()?
+
+Use `parseInt()` when you only need the **integer part**.
+
+---
+
+## Example
+
+```javascript
+const age = "25 years";
+
+console.log(parseInt(age));
+```
+
+Output
+
+```
+25
+```
+
+---
+
+Another example
+
+```javascript
+parseInt("18.9");
+```
+
+Output
+
+```
+18
+```
+
+---
+
+## Real World Example
+
+Reading age from user input.
+
+```
+25 years
+
+↓
+
+25
+```
+
+---
+
+# 57. When Should You Use parseFloat()?
+
+Use `parseFloat()` when decimal values are allowed.
+
+---
+
+## Example
+
+```javascript
+const weight = "72.5kg";
+
+console.log(parseFloat(weight));
+```
+
+Output
+
+```
+72.5
+```
+
+---
+
+Another example
+
+```javascript
+parseFloat("15.99 USD");
+```
+
+Output
+
+```
+15.99
+```
+
+---
+
+## Real World Example
+
+Shopping websites.
+
+```
+₹999.95
+
+↓
+
+999.95
+```
+
+---
+
+# 58. How Do You Convert a Number to a String?
+
+There are multiple methods.
+
+---
+
+## Method 1
+
+```javascript
+String(100);
+```
+
+Output
+
+```
+"100"
+```
+
+---
+
+## Method 2
+
+```javascript
+(100).toString();
+```
+
+Output
+
+```
+"100"
+```
+
+---
+
+## Method 3
+
+```javascript
+100 + "";
+```
+
+Output
+
+```
+"100"
+```
+
+Not recommended because it relies on implicit conversion.
+
+---
+
+## Best Practice
+
+```javascript
+String(value);
+```
+
+is the clearest and most readable.
+
+---
+
+# 59. How Do You Convert a Value to a Boolean?
+
+Use
+
+```javascript
+Boolean()
+```
+
+---
+
+## Examples
+
+```javascript
+Boolean(1);
+```
+
+Output
+
+```
+true
+```
+
+---
+
+```javascript
+Boolean(0);
+```
+
+Output
+
+```
+false
+```
+
+---
+
+```javascript
+Boolean("Hello");
+```
+
+Output
+
+```
+true
+```
+
+---
+
+```javascript
+Boolean("");
+```
+
+Output
+
+```
+false
+```
+
+---
+
+## Real World Example
+
+Login validation.
+
+```javascript
+if (Boolean(username)) {
+    console.log("Username exists");
+}
+```
+
+---
+
+# 60. What Values Are Considered Falsy in JavaScript?
+
+## 📖 Definition
+
+Falsy values are values that become
+
+```javascript
+false
+```
+
+when converted to Boolean.
+
+---
+
+## There are only **8 falsy values** in JavaScript.
+
+```javascript
+false
+```
+
+```javascript
+0
+```
+
+```javascript
+-0
+```
+
+```javascript
+0n
+```
+
+(BigInt zero)
+
+```javascript
+""
+```
+
+(Empty string)
+
+```javascript
+null
+```
+
+```javascript
+undefined
+```
+
+```javascript
+NaN
+```
+
+---
+
+## Everything Else Is Truthy
+
+Examples
+
+```javascript
+[]
+```
+
+Empty array
+
+↓
+
+Truthy
+
+---
+
+```javascript
+{}
+```
+
+Empty object
+
+↓
+
+Truthy
+
+---
+
+```javascript
+"0"
+```
+
+↓
+
+Truthy
+
+---
+
+```javascript
+"false"
+```
+
+↓
+
+Truthy
+
+---
+
+```javascript
+100
+```
+
+↓
+
+Truthy
+
+---
+
+## Common Interview Question
+
+Predict the output.
+
+```javascript
+if ([]) {
+    console.log("Hello");
+}
+```
+
+Output
+
+```
+Hello
+```
+
+Because an empty array is **truthy**.
+
+---
+
+## 🎯 Module Summary
+
+After completing Questions **51–60**, you should understand:
+
+- ✅ Type Conversion
+- ✅ Type Coercion
+- ✅ Explicit vs Implicit Conversion
+- ✅ `Number()`
+- ✅ `parseInt()`
+- ✅ `parseFloat()`
+- ✅ `String()`
+- ✅ `Boolean()`
+- ✅ Truthy Values
+- ✅ Falsy Values
+
+These concepts are fundamental for handling user input, API data, form validation, calculations, and debugging. They are also among the most frequently asked JavaScript interview topics because they reveal whether you truly understand how JavaScript behaves under the hood.
+
+
+# Module 2: Type Conversion & Type Coercion
+# Questions 61–70
+
+---
+
+# 61. What Values Are Considered Truthy?
+
+## 📖 Definition
+
+A **truthy value** is any value that becomes **`true`** when converted to a Boolean.
+
+JavaScript automatically converts values to `true` or `false` in conditions like:
+
+```javascript
+if (value) {
+  console.log("Executed");
+}
+```
+
+If `value` is truthy, the code inside the `if` block runs.
+
+---
+
+## 🧠 Important Rule
+
+There are only **8 falsy values** in JavaScript.
+
+Everything else is **truthy**.
+
+---
+
+## Common Truthy Values
+
+```javascript
+true
+```
+
+↓
+
+Truthy
+
+---
+
+```javascript
+1
+```
+
+↓
+
+Truthy
+
+---
+
+```javascript
+-1
+```
+
+↓
+
+Truthy
+
+---
+
+```javascript
+100
+```
+
+↓
+
+Truthy
+
+---
+
+```javascript
+"Hello"
+```
+
+↓
+
+Truthy
+
+---
+
+```javascript
+"0"
+```
+
+↓
+
+Truthy
+
+Many beginners think `"0"` is false.
+
+It is **not**.
+
+It is a non-empty string.
+
+---
+
+```javascript
+[]
+```
+
+↓
+
+Truthy
+
+Even an empty array is truthy.
+
+---
+
+```javascript
+{}
+```
+
+↓
+
+Truthy
+
+Even an empty object is truthy.
+
+---
+
+```javascript
+function () {}
+```
+
+↓
+
+Truthy
+
+Functions are also truthy.
+
+---
+
+## Example
+
+```javascript
+if ([]) {
+  console.log("Array is truthy");
+}
+
+if ({}) {
+  console.log("Object is truthy");
+}
+```
+
+### Output
+
+```
+Array is truthy
+Object is truthy
+```
+
+---
+
+## ⚠️ Common Mistake
+
+Many developers assume:
+
+```javascript
+if ([])
+```
+
+means
+
+> "Array has data"
+
+Wrong.
+
+An empty array is still truthy.
+
+Correct way
+
+```javascript
+if (array.length > 0)
+```
+
+---
+
+## 💼 Real World Example
+
+Checking if a user entered a name.
+
+```javascript
+const username = "Alex";
+
+if (username) {
+  console.log("Welcome");
+}
+```
+
+---
+
+## ⭐ Interview Tip
+
+Remember:
+
+```
+Everything is truthy
+except the 8 falsy values.
+```
+
+---
+
+# 62. What Happens When You Add a Number and a String?
+
+## 📖 Explanation
+
+The `+` operator has **two jobs**:
+
+1. Addition
+2. String concatenation
+
+If one operand is a string, JavaScript converts the other operand to a string.
+
+---
+
+## Example
+
+```javascript
+console.log("5" + 2);
+```
+
+### Output
+
+```
+52
+```
+
+---
+
+## What Happened?
+
+```
+"5"
+
++
+
+2
+
+↓
+
+"5"
+
++
+
+"2"
+
+↓
+
+"52"
+```
+
+JavaScript performs **implicit type coercion**.
+
+---
+
+## More Examples
+
+```javascript
+10 + "20"
+```
+
+↓
+
+```
+"1020"
+```
+
+---
+
+```javascript
+"Hello " + "World"
+```
+
+↓
+
+```
+Hello World
+```
+
+---
+
+## ⭐ Best Practice
+
+If you want mathematical addition:
+
+```javascript
+Number("5") + 2
+```
+
+Output
+
+```
+7
+```
+
+---
+
+# 63. Why Does `"5" + 2` Produce a Different Result From `"5" - 2`?
+
+This is one of the most famous JavaScript interview questions.
+
+---
+
+## Example 1
+
+```javascript
+console.log("5" + 2);
+```
+
+Output
+
+```
+52
+```
+
+Because `+` performs string concatenation when a string is involved.
+
+---
+
+## Example 2
+
+```javascript
+console.log("5" - 2);
+```
+
+Output
+
+```
+3
+```
+
+---
+
+## Why?
+
+The `-` operator only performs mathematical subtraction.
+
+JavaScript converts:
+
+```
+"5"
+
+↓
+
+5
+```
+
+Then calculates
+
+```
+5 - 2
+```
+
+---
+
+## Comparison
+
+| Expression | Output | Reason |
+|------------|--------|--------|
+| `"5" + 2` | `"52"` | String concatenation |
+| `"5" - 2` | `3` | Numeric conversion |
+
+---
+
+## ⭐ Interview Tip
+
+Only `+` can concatenate strings.
+
+Other arithmetic operators (`-`, `*`, `/`, `%`) force numeric conversion.
+
+---
+
+# 64. What Happens When You Use the Unary `+` Operator on a String?
+
+## 📖 Definition
+
+The unary `+` operator converts a value into a number.
+
+---
+
+## Example
+
+```javascript
+const age = "25";
+
+console.log(+age);
+```
+
+Output
+
+```
+25
+```
+
+Type
+
+```javascript
+number
+```
+
+---
+
+## Another Example
+
+```javascript
+console.log(+"100");
+```
+
+Output
+
+```
+100
+```
+
+---
+
+## Invalid Example
+
+```javascript
+console.log(+"Hello");
+```
+
+Output
+
+```
+NaN
+```
+
+---
+
+## Equivalent To
+
+```javascript
+Number("25")
+```
+
+---
+
+## 💼 Real World Example
+
+```javascript
+const quantity = +"5";
+
+const total = quantity * 100;
+```
+
+---
+
+## ⭐ Best Practice
+
+Although unary `+` is concise, `Number()` is clearer.
+
+```javascript
+Number(value)
+```
+
+is generally preferred for readability.
+
+---
+
+# 65. What is NaN?
+
+## 📖 Definition
+
+`NaN` stands for
+
+```
+Not a Number
+```
+
+It represents an invalid numeric result.
+
+---
+
+## Example
+
+```javascript
+Number("Hello")
+```
+
+Output
+
+```
+NaN
+```
+
+---
+
+Another example
+
+```javascript
+0 / 0
+```
+
+↓
+
+```
+NaN
+```
+
+---
+
+## Interesting Fact
+
+```javascript
+typeof NaN
+```
+
+Output
+
+```
+number
+```
+
+Even though its name says "Not a Number", JavaScript considers it a special numeric value.
+
+---
+
+## ⭐ Interview Tip
+
+`NaN` is not equal to anything.
+
+Not even itself.
+
+```javascript
+console.log(NaN === NaN);
+```
+
+Output
+
+```
+false
+```
+
+---
+
+# 66. How Do You Check if a Value is NaN?
+
+Use
+
+```javascript
+Number.isNaN()
+```
+
+---
+
+## Example
+
+```javascript
+const result = Number("Hello");
+
+console.log(Number.isNaN(result));
+```
+
+Output
+
+```
+true
+```
+
+---
+
+## Another Example
+
+```javascript
+console.log(Number.isNaN(100));
+```
+
+Output
+
+```
+false
+```
+
+---
+
+## Why Not Use `==`?
+
+```javascript
+NaN === NaN
+```
+
+Output
+
+```
+false
+```
+
+Therefore:
+
+```javascript
+Number.isNaN()
+```
+
+is the correct solution.
+
+---
+
+# 67. What is the Difference Between `isNaN()` and `Number.isNaN()`?
+
+This is a common interview question.
+
+---
+
+## `isNaN()`
+
+Performs type coercion before checking.
+
+Example
+
+```javascript
+isNaN("Hello")
+```
+
+↓
+
+```
+true
+```
+
+Because
+
+```
+"Hello"
+
+↓
+
+NaN
+```
+
+---
+
+## `Number.isNaN()`
+
+Does **not** perform type coercion.
+
+Example
+
+```javascript
+Number.isNaN("Hello")
+```
+
+↓
+
+```
+false
+```
+
+Because `"Hello"` is a string, not the special `NaN` value.
+
+---
+
+## Comparison
+
+| Function | Converts Value First? |
+|----------|-----------------------|
+| isNaN() | ✅ Yes |
+| Number.isNaN() | ❌ No |
+
+---
+
+## ⭐ Best Practice
+
+Always prefer
+
+```javascript
+Number.isNaN()
+```
+
+It is safer and more predictable.
+
+---
+
+# 68. What Happens When You Convert `null` to a Number?
+
+Example
+
+```javascript
+Number(null)
+```
+
+Output
+
+```
+0
+```
+
+---
+
+## Why?
+
+JavaScript treats `null` as an empty numeric value.
+
+---
+
+## Example
+
+```javascript
+console.log(Number(null));
+```
+
+Output
+
+```
+0
+```
+
+---
+
+## ⭐ Interview Tip
+
+Many developers incorrectly expect:
+
+```
+NaN
+```
+
+The correct answer is:
+
+```
+0
+```
+
+---
+
+# 69. What Happens When You Convert `undefined` to a Number?
+
+Example
+
+```javascript
+Number(undefined)
+```
+
+Output
+
+```
+NaN
+```
+
+---
+
+## Why?
+
+`undefined` means:
+
+> No value has been assigned.
+
+JavaScript cannot convert "no value" into a valid number.
+
+---
+
+## Example
+
+```javascript
+console.log(Number(undefined));
+```
+
+Output
+
+```
+NaN
+```
+
+---
+
+## Comparison
+
+```javascript
+Number(null)
+```
+
+↓
+
+```
+0
+```
+
+---
+
+```javascript
+Number(undefined)
+```
+
+↓
+
+```
+NaN
+```
+
+This difference is frequently tested in interviews.
+
+---
+
+# 70. What Happens When You Convert an Empty String to a Number?
+
+Example
+
+```javascript
+Number("")
+```
+
+Output
+
+```
+0
+```
+
+---
+
+## Why?
+
+JavaScript treats an empty string as zero during explicit numeric conversion.
+
+---
+
+## Example
+
+```javascript
+console.log(Number(""));
+```
+
+Output
+
+```
+0
+```
+
+---
+
+## More Examples
+
+```javascript
+Number(" ")
+```
+
+Output
+
+```
+0
+```
+
+Whitespace is ignored.
+
+---
+
+```javascript
+Number("123")
+```
+
+Output
+
+```
+123
+```
+
+---
+
+```javascript
+Number("Hello")
+```
+
+Output
+
+```
+NaN
+```
+
+---
+
+## ⭐ Common Interview Question
+
+Predict the output:
+
+```javascript
+console.log(Number(""));
+console.log(Number(" "));
+console.log(Number(null));
+console.log(Number(undefined));
+```
+
+### Output
+
+```
+0
+0
+0
+NaN
+```
+
+---
+
+# 🎯 Module Summary
+
+After completing Questions **61–70**, you should understand:
+
+- ✅ Truthy values
+- ✅ String concatenation with `+`
+- ✅ Why `"5" + 2` and `"5" - 2` behave differently
+- ✅ Unary `+` operator
+- ✅ `NaN`
+- ✅ `Number.isNaN()`
+- ✅ Difference between `isNaN()` and `Number.isNaN()`
+- ✅ Converting `null` to a number
+- ✅ Converting `undefined` to a number
+- ✅ Converting an empty string to a number
+
+These concepts are extremely important for debugging unexpected JavaScript behavior, validating user input, and answering many of the "tricky" JavaScript interview questions that test your understanding of the language rather than your ability to memorize syntax.
+
+
+# 71. What Happens When You Convert `" "` (a Space) to a Number?
+
+## 📖 Definition
+
+When you convert a string containing **only whitespace** to a number using `Number()`, JavaScript first removes the whitespace. After trimming, the string becomes an empty string (`""`), which converts to `0`.
+
+---
+
+## Example
+
+```javascript
+console.log(Number(" "));
+```
+
+### Output
+
+```
+0
+```
+
+---
+
+## Why?
+
+JavaScript internally performs these steps:
+
+```text
+" "
+
+↓
+
+Trim whitespace
+
+↓
+
+""
+
+↓
+
+Convert empty string
+
+↓
+
+0
+```
+
+---
+
+## More Examples
+
+```javascript
+console.log(Number("     "));
+```
+
+Output
+
+```
+0
+```
+
+---
+
+```javascript
+console.log(Number("\t"));
+```
+
+Output
+
+```
+0
+```
+
+---
+
+```javascript
+console.log(Number("\n"));
+```
+
+Output
+
+```
+0
+```
+
+---
+
+## ⚠️ Common Mistake
+
+Many developers expect:
+
+```
+NaN
+```
+
+The correct output is:
+
+```
+0
+```
+
+---
+
+## ⭐ Interview Tip
+
+Remember these conversions:
+
+| Value | Output |
+|--------|--------|
+| `Number("")` | `0` |
+| `Number(" ")` | `0` |
+| `Number(null)` | `0` |
+| `Number(undefined)` | `NaN` |
+
+These are very common JavaScript interview questions.
+
+---
+
+# 72. What Happens When You Convert `"123abc"` Using `Number()`?
+
+## 📖 Explanation
+
+`Number()` tries to convert the **entire string** into a valid number.
+
+If **any character** is invalid, the conversion fails.
+
+---
+
+## Example
+
+```javascript
+console.log(Number("123abc"));
+```
+
+### Output
+
+```
+NaN
+```
+
+---
+
+## Why?
+
+JavaScript reads:
+
+```text
+123abc
+```
+
+It encounters letters (`abc`), which are not valid in a number.
+
+Therefore, the whole conversion fails.
+
+---
+
+## More Examples
+
+```javascript
+Number("100kg")
+```
+
+↓
+
+```
+NaN
+```
+
+---
+
+```javascript
+Number("50%")
+```
+
+↓
+
+```
+NaN
+```
+
+---
+
+## ⭐ Interview Tip
+
+`Number()` is **strict**.
+
+The entire string must represent a valid number.
+
+---
+
+# 73. What Happens When You Convert `"123abc"` Using `parseInt()`?
+
+## 📖 Explanation
+
+Unlike `Number()`, `parseInt()` reads the string **from left to right** and stops when it finds the first invalid character.
+
+---
+
+## Example
+
+```javascript
+console.log(parseInt("123abc"));
+```
+
+### Output
+
+```
+123
+```
+
+---
+
+## Why?
+
+JavaScript processes the string like this:
+
+```text
+1 ✓
+2 ✓
+3 ✓
+a ✗ Stop
+```
+
+Only the valid numeric portion is returned.
+
+---
+
+## More Examples
+
+```javascript
+parseInt("99px")
+```
+
+↓
+
+```
+99
+```
+
+---
+
+```javascript
+parseInt("25 years")
+```
+
+↓
+
+```
+25
+```
+
+---
+
+```javascript
+parseInt("abc123")
+```
+
+↓
+
+```
+NaN
+```
+
+Because the first character is not a number.
+
+---
+
+## ⭐ Comparison
+
+```javascript
+Number("123abc")
+```
+
+↓
+
+```
+NaN
+```
+
+---
+
+```javascript
+parseInt("123abc")
+```
+
+↓
+
+```
+123
+```
+
+---
+
+## Best Practice
+
+Use:
+
+- `Number()` when the entire value must be numeric.
+- `parseInt()` when extracting integers from strings.
+
+---
+
+# 74. Why is Automatic Type Coercion Sometimes Dangerous?
+
+## 📖 Definition
+
+Automatic type coercion occurs when JavaScript silently converts one data type into another.
+
+While convenient, it can lead to unexpected results and difficult-to-find bugs.
+
+---
+
+## Example 1
+
+```javascript
+console.log("5" + 2);
+```
+
+Output
+
+```
+52
+```
+
+Many developers expect:
+
+```
+7
+```
+
+But `+` performs string concatenation.
+
+---
+
+## Example 2
+
+```javascript
+console.log("5" - 2);
+```
+
+Output
+
+```
+3
+```
+
+Here JavaScript converts `"5"` to the number `5`.
+
+---
+
+## Example 3
+
+```javascript
+console.log(true + 1);
+```
+
+Output
+
+```
+2
+```
+
+Because:
+
+```text
+true
+
+↓
+
+1
+```
+
+---
+
+## Example 4
+
+```javascript
+console.log([] + []);
+```
+
+Output
+
+```
+""
+```
+
+This surprises many developers.
+
+---
+
+## Why is This Dangerous?
+
+Imagine a shopping cart:
+
+```javascript
+const price = "500";
+const quantity = 2;
+
+const total = price + quantity;
+```
+
+Output
+
+```
+5002
+```
+
+Instead of:
+
+```
+1000
+```
+
+---
+
+## Real-World Bug
+
+A form input always returns strings:
+
+```javascript
+const age = "18";
+
+if (age + 1 === 19) {
+  // This never runs
+}
+```
+
+Because:
+
+```javascript
+"18" + 1
+```
+
+becomes:
+
+```
+181
+```
+
+---
+
+## ⭐ Interview Tip
+
+Automatic type coercion is one of the biggest sources of JavaScript bugs.
+
+Experienced developers avoid relying on it.
+
+---
+
+# 75. How Can You Avoid Unexpected Type Coercion?
+
+## 📖 Best Practices
+
+### 1. Use Explicit Type Conversion
+
+Instead of:
+
+```javascript
+"5" + 2
+```
+
+Write:
+
+```javascript
+Number("5") + 2
+```
+
+Output
+
+```
+7
+```
+
+---
+
+### 2. Use Strict Equality (`===`)
+
+Avoid:
+
+```javascript
+5 == "5"
+```
+
+Use:
+
+```javascript
+5 === 5
+```
+
+Strict equality checks both value and type.
+
+---
+
+### 3. Validate User Input
+
+Always convert input values before calculations.
+
+```javascript
+const quantity = Number(inputValue);
+```
+
+---
+
+### 4. Avoid Implicit Conversion
+
+Instead of:
+
+```javascript
+const total = price + quantity;
+```
+
+Write:
+
+```javascript
+const total = Number(price) + Number(quantity);
+```
+
+---
+
+### 5. Know the Data Type
+
+Use:
+
+```javascript
+typeof value
+```
+
+to verify what you're working with.
+
+---
+
+## Real-World Example
+
+```javascript
+const age = Number(prompt("Enter your age"));
+
+if (age >= 18) {
+  console.log("Eligible");
+}
+```
+
+This avoids comparing strings with numbers.
+
+---
+
+## ⭐ Interview Tip
+
+Good JavaScript developers don't rely on "JavaScript magic."
+
+They make conversions explicit, which makes code easier to read, debug, and maintain.
+
+---
+
+# Module 3: Operators
+
+# 76. What is an Operator?
+
+## 📖 Definition
+
+An **operator** is a special symbol or keyword that tells JavaScript to perform an operation on one or more values (called operands).
+
+Think of operators as **verbs** in programming. They tell JavaScript what action to perform.
+
+---
+
+## Example
+
+```javascript
+let a = 10;
+let b = 5;
+
+console.log(a + b);
+```
+
+Here:
+
+- `a` and `b` are **operands**.
+- `+` is the **operator**.
+
+Output:
+
+```
+15
+```
+
+---
+
+## More Examples
+
+Addition
+
+```javascript
+10 + 5
+```
+
+Subtraction
+
+```javascript
+10 - 5
+```
+
+Comparison
+
+```javascript
+10 > 5
+```
+
+Assignment
+
+```javascript
+let age = 25;
+```
+
+Logical
+
+```javascript
+true && false
+```
+
+---
+
+## Real-World Example
+
+Shopping cart:
+
+```javascript
+const total = price * quantity;
+```
+
+The `*` operator calculates the total price.
+
+---
+
+## ⭐ Interview Tip
+
+An operator performs an operation on one or more operands.
+
+---
+
+# 77. How Many Categories of Operators Exist in JavaScript?
+
+JavaScript has several categories of operators.
+
+The most important ones are:
+
+1. Arithmetic Operators
+2. Assignment Operators
+3. Comparison Operators
+4. Logical Operators
+5. Bitwise Operators
+6. Unary Operators
+7. Ternary Operator
+8. String Operators
+9. Relational Operators
+10. Type Operators (`typeof`, `instanceof`)
+11. Optional Chaining (`?.`)
+12. Nullish Coalescing (`??`)
+
+For interviews and day-to-day development, focus first on the first seven categories. The others become more important as you work with larger applications.
+
+---
+
+# 78. What are Arithmetic Operators?
+
+Arithmetic operators perform mathematical calculations.
+
+| Operator | Meaning |
+|----------|---------|
+| `+` | Addition |
+| `-` | Subtraction |
+| `*` | Multiplication |
+| `/` | Division |
+| `%` | Modulus (Remainder) |
+| `**` | Exponentiation |
+| `++` | Increment |
+| `--` | Decrement |
+
+---
+
+## Example
+
+```javascript
+let a = 20;
+let b = 5;
+
+console.log(a + b);
+console.log(a - b);
+console.log(a * b);
+console.log(a / b);
+console.log(a % b);
+console.log(a ** b);
+```
+
+Output
+
+```
+25
+15
+100
+4
+0
+3200000
+```
+
+---
+
+## Real-World Example
+
+Calculating discounts, taxes, shopping cart totals, percentages, and averages all use arithmetic operators.
+
+---
+
+# 79. What are Assignment Operators?
+
+Assignment operators assign values to variables.
+
+The most common assignment operator is:
+
+```javascript
+=
+```
+
+Example:
+
+```javascript
+let age = 25;
+```
+
+---
+
+Other assignment operators combine assignment with another operation.
+
+| Operator | Meaning |
+|----------|---------|
+| `=` | Assign |
+| `+=` | Add and assign |
+| `-=` | Subtract and assign |
+| `*=` | Multiply and assign |
+| `/=` | Divide and assign |
+| `%=` | Modulus and assign |
+| `**=` | Exponentiate and assign |
+
+---
+
+## Example
+
+```javascript
+let score = 50;
+
+score += 10;
+
+console.log(score);
+```
+
+Output
+
+```
+60
+```
+
+---
+
+## Why Use Them?
+
+Instead of:
+
+```javascript
+score = score + 10;
+```
+
+You can write:
+
+```javascript
+score += 10;
+```
+
+This is shorter and easier to read.
+
+---
+
+# 80. What are Comparison Operators?
+
+Comparison operators compare two values and return a Boolean (`true` or `false`).
+
+| Operator | Meaning |
+|----------|---------|
+| `==` | Loose equality |
+| `===` | Strict equality |
+| `!=` | Loose inequality |
+| `!==` | Strict inequality |
+| `>` | Greater than |
+| `<` | Less than |
+| `>=` | Greater than or equal |
+| `<=` | Less than or equal |
+
+---
+
+## Example
+
+```javascript
+console.log(10 > 5);
+console.log(10 === 10);
+console.log(10 !== 5);
+```
+
+Output
+
+```
+true
+true
+true
+```
+
+---
+
+## Real-World Example
+
+Checking whether a user is eligible to vote:
+
+```javascript
+if (age >= 18) {
+  console.log("Eligible");
+}
+```
+
+Comparison operators are used in almost every conditional statement.
+
+---
+
+# 🎯 Module Progress
+
+You have now completed:
+
+- ✅ Module 1: Variables & Data Types
+- ✅ Module 2: Type Conversion & Type Coercion
+- ✅ Module 3: Questions **76–80** (Operators introduction)
+
+The next section (Questions **81–90**) will cover logical operators, bitwise operators, unary operators, ternary operators, modulus, exponentiation, and the crucial differences between `=`, `==`, and `===`, which are among the most frequently asked JavaScript interview topics.
+
+
+
+# 81. What are Logical Operators?
+
+## 📖 Definition
+
+**Logical operators** are used to combine or modify Boolean (true/false) expressions.
+
+They are mainly used in:
+
+- `if` statements
+- Loops
+- Authentication
+- Form validation
+- Permission systems
+- Filtering data
+
+Logical operators don't always return `true` or `false`. They often return one of the original values, which is an important JavaScript behavior.
+
+---
+
+## Types of Logical Operators
+
+| Operator | Name | Meaning |
+|----------|------|---------|
+| `&&` | Logical AND | Returns true if all conditions are true |
+| `\|\|` | Logical OR | Returns true if at least one condition is true |
+| `!` | Logical NOT | Reverses a Boolean value |
+
+---
+
+## Logical AND (`&&`)
+
+Returns `true` only if **both conditions** are true.
+
+```javascript
+const age = 20;
+const hasID = true;
+
+console.log(age >= 18 && hasID);
+```
+
+Output
+
+```
+true
+```
+
+---
+
+If either condition is false:
+
+```javascript
+console.log(true && false);
+```
+
+Output
+
+```
+false
+```
+
+---
+
+## Logical OR (`||`)
+
+Returns `true` if **at least one** condition is true.
+
+```javascript
+const isAdmin = false;
+const isOwner = true;
+
+console.log(isAdmin || isOwner);
+```
+
+Output
+
+```
+true
+```
+
+---
+
+If both are false:
+
+```javascript
+console.log(false || false);
+```
+
+Output
+
+```
+false
+```
+
+---
+
+## Logical NOT (`!`)
+
+Reverses the Boolean value.
+
+```javascript
+console.log(!true);
+```
+
+Output
+
+```
+false
+```
+
+---
+
+```javascript
+console.log(!false);
+```
+
+Output
+
+```
+true
+```
+
+---
+
+## Real World Example
+
+Login System
+
+```javascript
+if (isLoggedIn && isVerified) {
+    console.log("Access Granted");
+}
+```
+
+Both conditions must be true.
+
+---
+
+## Interview Tip
+
+Remember:
+
+```
+&&
+
+All must be true
+```
+
+```
+||
+
+Any one can be true
+```
+
+```
+!
+
+Reverses Boolean value
+```
+
+---
+
+# 82. What are Bitwise Operators?
+
+## 📖 Definition
+
+Bitwise operators work directly on the **binary (0 and 1)** representation of numbers.
+
+Unlike arithmetic operators, they compare each individual bit.
+
+These operators are used in:
+
+- Low-level programming
+- Graphics programming
+- Encryption
+- Compression
+- Performance optimizations
+
+In everyday frontend development, they are used much less frequently.
+
+---
+
+## Common Bitwise Operators
+
+| Operator | Meaning |
+|----------|---------|
+| `&` | AND |
+| `\|` | OR |
+| `^` | XOR |
+| `~` | NOT |
+| `<<` | Left Shift |
+| `>>` | Right Shift |
+| `>>>` | Unsigned Right Shift |
+
+---
+
+## Example
+
+```javascript
+console.log(5 & 3);
+```
+
+Binary:
+
+```
+5 = 101
+
+3 = 011
+
+Result
+
+001
+```
+
+Output
+
+```
+1
+```
+
+---
+
+## Another Example
+
+```javascript
+console.log(5 | 3);
+```
+
+Output
+
+```
+7
+```
+
+---
+
+## Interview Tip
+
+Unless you're working with systems programming, networking, or performance-critical code, you won't use bitwise operators often. However, knowing what they are and recognizing them in code is valuable.
+
+---
+
+# 83. What are Unary Operators?
+
+## 📖 Definition
+
+A **unary operator** works on **only one operand**.
+
+Unlike binary operators (which require two values), unary operators perform operations using a single value.
+
+---
+
+## Common Unary Operators
+
+| Operator | Meaning |
+|----------|---------|
+| `typeof` | Returns data type |
+| `delete` | Removes object property |
+| `!` | Logical NOT |
+| `++` | Increment |
+| `--` | Decrement |
+| `+` | Convert to number |
+| `-` | Negate number |
+
+---
+
+## Example
+
+Increment
+
+```javascript
+let count = 5;
+
+count++;
+
+console.log(count);
+```
+
+Output
+
+```
+6
+```
+
+---
+
+Unary Plus
+
+```javascript
+console.log(+"25");
+```
+
+Output
+
+```
+25
+```
+
+---
+
+`typeof`
+
+```javascript
+console.log(typeof "Alex");
+```
+
+Output
+
+```
+string
+```
+
+---
+
+## Real World Example
+
+```javascript
+const quantity = +"10";
+```
+
+Converts a string into a number.
+
+---
+
+# 84. What are Ternary Operators?
+
+## 📖 Definition
+
+The **ternary operator** is JavaScript's shorthand version of an `if...else` statement.
+
+It is the **only operator that takes three operands**, which is why it's called "ternary."
+
+---
+
+## Syntax
+
+```javascript
+condition ? valueIfTrue : valueIfFalse;
+```
+
+---
+
+## Example
+
+Using `if...else`
+
+```javascript
+let age = 20;
+
+if (age >= 18) {
+    console.log("Adult");
+} else {
+    console.log("Minor");
+}
+```
+
+---
+
+Using ternary operator
+
+```javascript
+const result = age >= 18 ? "Adult" : "Minor";
+
+console.log(result);
+```
+
+Output
+
+```
+Adult
+```
+
+---
+
+## Real World Example
+
+React JSX
+
+```jsx
+{isLoggedIn ? <Dashboard /> : <Login />}
+```
+
+This is one of the most common uses of the ternary operator in React.
+
+---
+
+## Interview Tip
+
+Use ternary operators for **simple conditions**.
+
+Avoid deeply nested ternary expressions because they reduce readability.
+
+---
+
+# 85. What is the Modulus (`%`) Operator?
+
+## 📖 Definition
+
+The modulus operator returns the **remainder** after division.
+
+It does **not** return the quotient.
+
+---
+
+## Example
+
+```javascript
+console.log(10 % 3);
+```
+
+Calculation
+
+```
+10 ÷ 3
+
+Quotient = 3
+
+Remainder = 1
+```
+
+Output
+
+```
+1
+```
+
+---
+
+## Another Example
+
+```javascript
+console.log(20 % 5);
+```
+
+Output
+
+```
+0
+```
+
+Because 20 is completely divisible by 5.
+
+---
+
+## Real World Uses
+
+### Check Even Number
+
+```javascript
+number % 2 === 0
+```
+
+---
+
+### Check Odd Number
+
+```javascript
+number % 2 !== 0
+```
+
+---
+
+### Cycle Through Values
+
+Useful in pagination, sliders, and rotating arrays.
+
+---
+
+## Interview Tip
+
+The modulus operator is one of the most frequently used operators in programming.
+
+---
+
+# 86. What is Exponentiation (`**`)?
+
+## 📖 Definition
+
+The exponentiation operator raises a number to a specified power.
+
+---
+
+## Syntax
+
+```javascript
+base ** exponent
+```
+
+---
+
+## Example
+
+```javascript
+console.log(2 ** 3);
+```
+
+Output
+
+```
+8
+```
+
+Because:
+
+```
+2 × 2 × 2 = 8
+```
+
+---
+
+Another example
+
+```javascript
+console.log(5 ** 2);
+```
+
+Output
+
+```
+25
+```
+
+---
+
+Equivalent older syntax
+
+```javascript
+Math.pow(2, 3);
+```
+
+Output
+
+```
+8
+```
+
+Modern JavaScript prefers `**` because it is shorter and easier to read.
+
+---
+
+## Real World Example
+
+Area calculations, scientific calculations, financial formulas, and algorithms often require exponentiation.
+
+---
+
+# 87. What is the Difference Between `=` and `==`?
+
+This is one of the first concepts every JavaScript developer must understand.
+
+---
+
+## Assignment Operator (`=`)
+
+Used to assign a value to a variable.
+
+Example
+
+```javascript
+let age = 25;
+```
+
+Here:
+
+```
+25
+
+↓
+
+Stored in
+
+↓
+
+age
+```
+
+No comparison happens.
+
+---
+
+## Loose Equality (`==`)
+
+Compares two values.
+
+It performs automatic type conversion if necessary.
+
+Example
+
+```javascript
+console.log(5 == "5");
+```
+
+Output
+
+```
+true
+```
+
+Because JavaScript converts:
+
+```
+"5"
+
+↓
+
+5
+```
+
+Then compares.
+
+---
+
+## Comparison Table
+
+| Operator | Purpose |
+|----------|---------|
+| `=` | Assign value |
+| `==` | Compare values |
+
+---
+
+## Common Bug
+
+```javascript
+if (age = 18)
+```
+
+This assigns 18 to `age` instead of comparing it.
+
+Correct
+
+```javascript
+if (age === 18)
+```
+
+---
+
+# 88. What is the Difference Between `==` and `===`?
+
+Both compare values, but they behave differently.
+
+---
+
+## Loose Equality (`==`)
+
+Performs type coercion.
+
+```javascript
+console.log(5 == "5");
+```
+
+Output
+
+```
+true
+```
+
+---
+
+## Strict Equality (`===`)
+
+Checks both value and type.
+
+```javascript
+console.log(5 === "5");
+```
+
+Output
+
+```
+false
+```
+
+---
+
+## Comparison Table
+
+| Operator | Checks Value | Checks Type | Type Conversion |
+|----------|--------------|-------------|-----------------|
+| `==` | ✅ | ❌ | ✅ |
+| `===` | ✅ | ✅ | ❌ |
+
+---
+
+## Interview Tip
+
+Most companies expect developers to use `===` unless there's a specific reason to use `==`.
+
+---
+
+# 89. Why is `===` Generally Recommended?
+
+## 📖 Explanation
+
+`===` avoids unexpected bugs caused by automatic type coercion.
+
+It makes your code:
+
+- More predictable
+- Easier to debug
+- Easier to understand
+- Safer
+
+---
+
+## Example
+
+Using `==`
+
+```javascript
+console.log(false == 0);
+```
+
+Output
+
+```
+true
+```
+
+This surprises many developers.
+
+---
+
+Using `===`
+
+```javascript
+console.log(false === 0);
+```
+
+Output
+
+```
+false
+```
+
+This is much clearer.
+
+---
+
+## Real World Example
+
+Authentication
+
+```javascript
+if (enteredOTP === storedOTP) {
+    console.log("Verified");
+}
+```
+
+No hidden type conversion occurs.
+
+---
+
+## Interview Tip
+
+Modern JavaScript style guides (including Airbnb's JavaScript Style Guide) recommend using `===` almost all the time.
+
+---
+
+# 90. What is Loose Equality?
+
+## 📖 Definition
+
+Loose equality (`==`) compares two values **after attempting to convert them to the same type**.
+
+This automatic conversion is called **type coercion**.
+
+---
+
+## Example
+
+```javascript
+console.log(10 == "10");
+```
+
+Output
+
+```
+true
+```
+
+Because JavaScript converts:
+
+```
+"10"
+
+↓
+
+10
+```
+
+---
+
+## More Examples
+
+```javascript
+console.log(true == 1);
+```
+
+Output
+
+```
+true
+```
+
+---
+
+```javascript
+console.log(false == 0);
+```
+
+Output
+
+```
+true
+```
+
+---
+
+```javascript
+console.log(null == undefined);
+```
+
+Output
+
+```
+true
+```
+
+---
+
+## Why Can It Be Dangerous?
+
+It can produce results that are technically correct according to JavaScript's rules but unexpected for developers.
+
+For example:
+
+```javascript
+console.log("" == 0);
+```
+
+Output
+
+```
+true
+```
+
+Many developers do not expect an empty string to be equal to zero.
+
+---
+
+## Best Practice
+
+Use:
+
+```javascript
+===
+```
+
+for almost all comparisons.
+
+Only use `==` if you fully understand JavaScript's coercion rules and intentionally want that behavior.
+
+---
+
+# 🎯 Module Summary
+
+After completing Questions **81–90**, you should understand:
+
+- ✅ Logical operators (`&&`, `||`, `!`)
+- ✅ Bitwise operators
+- ✅ Unary operators
+- ✅ Ternary operator
+- ✅ Modulus (`%`)
+- ✅ Exponentiation (`**`)
+- ✅ Assignment operator (`=`)
+- ✅ Loose equality (`==`)
+- ✅ Strict equality (`===`)
+- ✅ Why modern JavaScript recommends `===`
+
+These operators are used throughout JavaScript, React, Node.js, and modern web development. A strong understanding of them will help you write cleaner code, avoid subtle bugs, and perform well in technical interviews.
+
+
+# 91. What is Strict Equality?
+
+## 📖 Definition
+
+**Strict equality (`===`)** compares **both the value and the data type**.
+
+Two values are considered equal **only if**:
+
+- Their values are the same.
+- Their data types are the same.
+
+Unlike loose equality (`==`), **strict equality does not perform type coercion**.
+
+---
+
+## Syntax
+
+```javascript
+value1 === value2
+```
+
+---
+
+## Examples
+
+### Example 1
+
+```javascript
+console.log(5 === 5);
+```
+
+Output
+
+```
+true
+```
+
+Same value and same type.
+
+---
+
+### Example 2
+
+```javascript
+console.log(5 === "5");
+```
+
+Output
+
+```
+false
+```
+
+Why?
+
+```
+5
+
+↓
+
+Number
+
+≠
+
+"5"
+
+↓
+
+String
+```
+
+Different data types.
+
+---
+
+### Example 3
+
+```javascript
+console.log(true === 1);
+```
+
+Output
+
+```
+false
+```
+
+Different types.
+
+---
+
+### Example 4
+
+```javascript
+console.log(null === undefined);
+```
+
+Output
+
+```
+false
+```
+
+Although both represent "absence of value", they are different types.
+
+---
+
+## Real World Example
+
+Login System
+
+```javascript
+const enteredOTP = Number(inputOTP);
+
+if (enteredOTP === storedOTP) {
+    console.log("Verified");
+}
+```
+
+Strict equality ensures no unexpected type conversion occurs.
+
+---
+
+## ⭐ Interview Tip
+
+Always prefer:
+
+```javascript
+===
+```
+
+over
+
+```javascript
+==
+```
+
+unless you have a very specific reason to allow type coercion.
+
+---
+
+# 92. What is the Difference Between `!=` and `!==`?
+
+Both operators check if two values are **not equal**, but they behave differently.
+
+---
+
+## `!=` (Loose Inequality)
+
+Performs type coercion before comparison.
+
+### Example
+
+```javascript
+console.log(5 != "5");
+```
+
+Output
+
+```
+false
+```
+
+Why?
+
+JavaScript converts:
+
+```
+"5"
+
+↓
+
+5
+```
+
+Then compares:
+
+```
+5 != 5
+```
+
+↓
+
+```
+false
+```
+
+---
+
+## `!==` (Strict Inequality)
+
+Checks both value and type.
+
+No type conversion.
+
+### Example
+
+```javascript
+console.log(5 !== "5");
+```
+
+Output
+
+```
+true
+```
+
+Because:
+
+```
+Number
+
+≠
+
+String
+```
+
+---
+
+## Comparison Table
+
+| Operator | Checks Type? | Type Conversion? |
+|-----------|--------------|------------------|
+| `!=` | ❌ No | ✅ Yes |
+| `!==` | ✅ Yes | ❌ No |
+
+---
+
+## Best Practice
+
+Prefer
+
+```javascript
+!==
+```
+
+because it is predictable and prevents hidden bugs.
+
+---
+
+# 93. What is Operator Precedence?
+
+## 📖 Definition
+
+**Operator precedence** determines **which operation JavaScript performs first** when an expression contains multiple operators.
+
+Think of it as JavaScript's version of the mathematical order of operations (BODMAS/PEMDAS).
+
+---
+
+## Example
+
+```javascript
+console.log(10 + 5 * 2);
+```
+
+Output
+
+```
+20
+```
+
+---
+
+## Why?
+
+JavaScript performs multiplication before addition.
+
+```
+5 × 2 = 10
+
+↓
+
+10 + 10
+
+↓
+
+20
+```
+
+---
+
+## Another Example
+
+```javascript
+console.log((10 + 5) * 2);
+```
+
+Output
+
+```
+30
+```
+
+Parentheses have the highest precedence.
+
+---
+
+## Common Precedence Order
+
+1. Parentheses `()`
+2. Unary operators (`!`, `typeof`, `++`, `--`)
+3. Exponentiation `**`
+4. Multiplication, Division, Modulus (`*`, `/`, `%`)
+5. Addition, Subtraction (`+`, `-`)
+6. Comparison operators
+7. Logical AND (`&&`)
+8. Logical OR (`||`)
+9. Nullish Coalescing (`??`)
+10. Assignment (`=`)
+
+---
+
+## Interview Tip
+
+If an expression looks confusing, use parentheses.
+
+Readable code is always better.
+
+---
+
+# 94. What is Operator Associativity?
+
+## 📖 Definition
+
+When **two operators have the same precedence**, JavaScript uses **associativity** to decide which one to evaluate first.
+
+Associativity can be:
+
+- Left to Right
+- Right to Left
+
+---
+
+## Left-to-Right Example
+
+```javascript
+console.log(20 - 10 - 5);
+```
+
+Output
+
+```
+5
+```
+
+Evaluation:
+
+```
+20 - 10 = 10
+
+↓
+
+10 - 5 = 5
+```
+
+---
+
+## Right-to-Left Example
+
+Assignment operator:
+
+```javascript
+let a, b;
+
+a = b = 10;
+```
+
+Evaluation:
+
+```
+b = 10
+
+↓
+
+a = 10
+```
+
+---
+
+## Interview Tip
+
+Most arithmetic operators are **left-to-right**.
+
+Assignment operators are **right-to-left**.
+
+---
+
+# 95. What Does the Logical AND (`&&`) Operator Return?
+
+## 📖 Definition
+
+The `&&` operator returns:
+
+- The **first falsy value**, or
+- The **last truthy value** if all operands are truthy.
+
+---
+
+## Boolean Example
+
+```javascript
+console.log(true && true);
+```
+
+Output
+
+```
+true
+```
+
+---
+
+```javascript
+console.log(true && false);
+```
+
+Output
+
+```
+false
+```
+
+---
+
+## Value Example
+
+```javascript
+console.log("Alex" && 100);
+```
+
+Output
+
+```
+100
+```
+
+Both values are truthy, so the last value is returned.
+
+---
+
+```javascript
+console.log("" && 100);
+```
+
+Output
+
+```
+""
+```
+
+The empty string is falsy, so it is returned immediately.
+
+---
+
+## Real World Example
+
+```javascript
+isLoggedIn && showDashboard();
+```
+
+If `isLoggedIn` is false, `showDashboard()` is never called.
+
+---
+
+## Short-Circuit Evaluation
+
+The `&&` operator stops as soon as it finds a falsy value.
+
+This improves performance.
+
+---
+
+# 96. What Does the Logical OR (`||`) Operator Return?
+
+## 📖 Definition
+
+The `||` operator returns:
+
+- The **first truthy value**, or
+- The **last value** if all values are falsy.
+
+---
+
+## Example
+
+```javascript
+console.log(false || "Alex");
+```
+
+Output
+
+```
+Alex
+```
+
+---
+
+```javascript
+console.log("" || "Guest");
+```
+
+Output
+
+```
+Guest
+```
+
+---
+
+## Real World Example
+
+Default values:
+
+```javascript
+const username = input || "Guest";
+```
+
+If `input` is empty, `"Guest"` is used.
+
+---
+
+## Interview Tip
+
+Remember:
+
+```
+&&
+
+↓
+
+First falsy
+
+OR
+
+Last truthy
+```
+
+```
+||
+
+↓
+
+First truthy
+
+OR
+
+Last falsy
+```
+
+---
+
+# 97. What Does the Nullish Coalescing Operator (`??`) Do?
+
+## 📖 Definition
+
+The `??` operator returns the right-hand value **only if** the left-hand value is:
+
+- `null`
+- `undefined`
+
+It does **not** treat `0`, `false`, or `""` as missing values.
+
+---
+
+## Example
+
+```javascript
+const username = null;
+
+console.log(username ?? "Guest");
+```
+
+Output
+
+```
+Guest
+```
+
+---
+
+## Another Example
+
+```javascript
+console.log(0 ?? 100);
+```
+
+Output
+
+```
+0
+```
+
+Because `0` is **not** null or undefined.
+
+---
+
+## Compare with `||`
+
+```javascript
+console.log(0 || 100);
+```
+
+Output
+
+```
+100
+```
+
+`||` treats `0` as falsy.
+
+---
+
+```javascript
+console.log(0 ?? 100);
+```
+
+Output
+
+```
+0
+```
+
+`??` only checks for `null` or `undefined`.
+
+---
+
+## Best Use Case
+
+Default values where `0` or `false` are valid.
+
+---
+
+# 98. What is the Optional Chaining Operator (`?.`)?
+
+## 📖 Definition
+
+Optional chaining safely accesses nested object properties.
+
+Instead of throwing an error when a property is missing, it returns:
+
+```javascript
+undefined
+```
+
+---
+
+## Without Optional Chaining
+
+```javascript
+console.log(user.address.city);
+```
+
+If `address` doesn't exist:
+
+```
+TypeError
+```
+
+---
+
+## With Optional Chaining
+
+```javascript
+console.log(user.address?.city);
+```
+
+Output
+
+```
+undefined
+```
+
+No error.
+
+---
+
+## Example
+
+```javascript
+const user = {
+  name: "Alex"
+};
+
+console.log(user.address?.city);
+```
+
+Output
+
+```
+undefined
+```
+
+---
+
+## Real World Example
+
+API responses often contain optional fields.
+
+Optional chaining prevents crashes when some data is missing.
+
+---
+
+# 99. What is the `typeof` Operator?
+
+## 📖 Definition
+
+`typeof` returns the data type of a value.
+
+---
+
+## Examples
+
+```javascript
+typeof "Alex"
+```
+
+Output
+
+```
+string
+```
+
+---
+
+```javascript
+typeof 100
+```
+
+↓
+
+```
+number
+```
+
+---
+
+```javascript
+typeof true
+```
+
+↓
+
+```
+boolean
+```
+
+---
+
+```javascript
+typeof undefined
+```
+
+↓
+
+```
+undefined
+```
+
+---
+
+```javascript
+typeof {}
+```
+
+↓
+
+```
+object
+```
+
+---
+
+```javascript
+typeof []
+```
+
+↓
+
+```
+object
+```
+
+Arrays are technically objects.
+
+---
+
+```javascript
+typeof function () {}
+```
+
+↓
+
+```
+function
+```
+
+Functions have their own special return value.
+
+---
+
+## Famous JavaScript Quirk
+
+```javascript
+typeof null
+```
+
+Output
+
+```
+object
+```
+
+This is a long-standing JavaScript bug kept for backward compatibility.
+
+---
+
+## Real World Example
+
+```javascript
+if (typeof age === "number") {
+    console.log("Valid age");
+}
+```
+
+---
+
+# 100. What is the `delete` Operator?
+
+## 📖 Definition
+
+The `delete` operator removes a property from an object.
+
+It does **not** delete variables declared with `let`, `const`, or `var`.
+
+---
+
+## Example
+
+```javascript
+const user = {
+  name: "Alex",
+  age: 25
+};
+
+delete user.age;
+
+console.log(user);
+```
+
+Output
+
+```javascript
+{
+  name: "Alex"
+}
+```
+
+The `age` property has been removed.
+
+---
+
+## Arrays
+
+```javascript
+const numbers = [10, 20, 30];
+
+delete numbers[1];
+
+console.log(numbers);
+```
+
+Output
+
+```javascript
+[10, empty, 30]
+```
+
+The array length does **not** change.
+
+Because of this, `delete` is generally **not recommended for arrays**.
+
+Instead, use:
+
+```javascript
+splice()
+```
+
+---
+
+## Variables
+
+```javascript
+let age = 25;
+
+delete age;
+```
+
+This does **not** work.
+
+`delete` only removes object properties.
+
+---
+
+## Real World Example
+
+```javascript
+delete user.password;
+```
+
+Useful when sending user data to the frontend without exposing sensitive information.
+
+---
+
+# 🎯 Module Summary
+
+After completing Questions **91–100**, you should understand:
+
+- ✅ Strict equality (`===`)
+- ✅ Strict inequality (`!==`)
+- ✅ Operator precedence
+- ✅ Operator associativity
+- ✅ Logical AND (`&&`)
+- ✅ Logical OR (`||`)
+- ✅ Nullish coalescing (`??`)
+- ✅ Optional chaining (`?.`)
+- ✅ `typeof` operator
+- ✅ `delete` operator
+
+These concepts appear constantly in React, Node.js, backend APIs, and production JavaScript code. Mastering them will also make debugging much easier because many subtle bugs come from misunderstanding operator behavior, equality, and JavaScript's evaluation rules.
