@@ -5013,3 +5013,4417 @@ As long as most work is I/O-bound and the Event Loop is not blocked.
 - Thread Pool handles supported background tasks
 - Worker Threads provide parallel JavaScript
 - Child Processes provide complete process isolation
+
+
+# 31. What is the Event Loop?
+
+## Interview Answer
+
+> The Event Loop is the heart of Node.js. It continuously checks whether any asynchronous tasks have completed and, if they have, executes their callbacks. This allows Node.js to handle many operations without blocking the main thread.
+
+---
+
+# Simple Definition
+
+The Event Loop is like a **manager**.
+
+Its job is very simple:
+
+- Check if any async task is finished.
+- If yes, execute its callback.
+- Repeat forever.
+
+It keeps doing this until the application stops.
+
+---
+
+# Why is it Called a "Loop"?
+
+Because it keeps running continuously.
+
+Think of a security guard.
+
+```
+Check Door
+
+↓
+
+Anyone Arrived?
+
+↓
+
+No
+
+↓
+
+Check Again
+
+↓
+
+Anyone Arrived?
+
+↓
+
+Yes
+
+↓
+
+Open Door
+
+↓
+
+Check Again...
+```
+
+The guard never stops checking.
+
+The Event Loop behaves the same way.
+
+---
+
+# Real-Life Example
+
+Imagine you are a teacher.
+
+Students submit assignments.
+
+```
+Student A → Not Finished
+
+Student B → Finished
+
+Student C → Not Finished
+```
+
+The teacher checks every student.
+
+Whoever finishes first gets checked first.
+
+The teacher doesn't sit beside one student waiting.
+
+The Event Loop also doesn't wait.
+
+---
+
+# Example
+
+```js
+console.log("Start");
+
+setTimeout(() => {
+    console.log("Timer Finished");
+}, 2000);
+
+console.log("End");
+```
+
+Output
+
+```
+Start
+
+End
+
+Timer Finished
+```
+
+Why?
+
+Because the Event Loop waits until the timer finishes.
+
+Only then does it execute the callback.
+
+---
+
+# Event Loop Flow
+
+```text
+Program Starts
+
+        │
+
+        ▼
+
+Execute JavaScript
+
+        │
+
+        ▼
+
+Async Task Started
+
+        │
+
+        ▼
+
+Continue Executing Code
+
+        │
+
+        ▼
+
+Async Task Finished
+
+        │
+
+        ▼
+
+Callback Queue
+
+        │
+
+        ▼
+
+Event Loop
+
+        │
+
+        ▼
+
+Execute Callback
+```
+
+---
+
+# Important Point
+
+The Event Loop **does not perform** the asynchronous work.
+
+It only checks:
+
+```
+Is the work finished?
+
+↓
+
+Yes
+
+↓
+
+Run Callback
+```
+
+The actual work is done by:
+
+- Operating System
+- libuv
+- Thread Pool
+
+---
+
+# Common Interview Questions
+
+### Is the Event Loop a thread?
+
+No.
+
+It is a mechanism that coordinates asynchronous callback execution.
+
+---
+
+### Does the Event Loop execute synchronous code?
+
+No.
+
+Synchronous code runs directly on the Call Stack.
+
+The Event Loop becomes important for asynchronous callbacks.
+
+---
+
+# Key Points
+
+- Heart of Node.js
+- Runs continuously
+- Executes completed async callbacks
+- Works with libuv
+- Makes Node.js non-blocking
+
+---
+
+# 32. Why Does Node.js Need an Event Loop?
+
+## Interview Answer
+
+> Node.js needs the Event Loop because JavaScript executes on a single main thread. Without the Event Loop, Node.js would have to wait for every asynchronous operation to finish before continuing.
+
+---
+
+# Imagine There Was No Event Loop
+
+Suppose we have this code.
+
+```js
+fs.readFile("file.txt");
+
+console.log("Hello");
+```
+
+Without an Event Loop,
+
+Node.js would do this.
+
+```
+Read File
+
+↓
+
+Wait...
+
+↓
+
+Wait...
+
+↓
+
+Wait...
+
+↓
+
+File Finished
+
+↓
+
+Print Hello
+```
+
+Everything stops.
+
+Very slow.
+
+---
+
+# With Event Loop
+
+```
+Read File
+
+↓
+
+Continue Program
+
+↓
+
+Print Hello
+
+↓
+
+File Finished
+
+↓
+
+Execute Callback
+```
+
+Now the application remains fast.
+
+---
+
+# Real-Life Example
+
+Imagine a receptionist.
+
+Customer says:
+
+```
+Please print this document.
+```
+
+The receptionist doesn't stand beside the printer.
+
+Instead,
+
+she serves other customers.
+
+When printing finishes,
+
+she hands over the document.
+
+That's exactly how the Event Loop works.
+
+---
+
+# Why Can't JavaScript Do This Alone?
+
+JavaScript executes one statement at a time.
+
+```
+Task 1
+
+↓
+
+Task 2
+
+↓
+
+Task 3
+```
+
+It cannot magically check thousands of completed operations.
+
+The Event Loop manages that responsibility.
+
+---
+
+# Benefits
+
+- Doesn't waste CPU time
+- Handles many users
+- Supports asynchronous programming
+- Keeps the application responsive
+
+---
+
+# Without Event Loop
+
+```
+User 1
+
+↓
+
+Wait
+
+↓
+
+User 2
+
+↓
+
+Wait
+
+↓
+
+User 3
+```
+
+---
+
+# With Event Loop
+
+```
+User 1
+
+↓
+
+Background Work
+
+↓
+
+Serve User 2
+
+↓
+
+Serve User 3
+
+↓
+
+Return Results
+```
+
+---
+
+# Common Interview Questions
+
+### Why can't Node.js work without the Event Loop?
+
+Because asynchronous callbacks would never be scheduled for execution.
+
+---
+
+### Does the Event Loop make Node.js faster?
+
+Yes.
+
+It prevents unnecessary waiting during I/O operations.
+
+---
+
+# Key Points
+
+- Needed because JavaScript is single-threaded
+- Prevents waiting
+- Enables concurrency
+- Core part of Node.js
+
+---
+
+# 33. Event Loop Phases
+
+## Interview Answer
+
+> The Node.js Event Loop is divided into multiple phases. Each phase is responsible for executing a specific type of callback in a fixed order.
+
+---
+
+# What is a Phase?
+
+A phase is simply a **step**.
+
+Think of washing clothes.
+
+```
+Wash
+
+↓
+
+Dry
+
+↓
+
+Iron
+
+↓
+
+Fold
+```
+
+Each step happens in order.
+
+The Event Loop also follows a fixed order.
+
+---
+
+# Event Loop Phases
+
+```
+             Event Loop
+
+                  │
+
+                  ▼
+
+      1. Timers
+
+                  ▼
+
+      2. Pending Callbacks
+
+                  ▼
+
+      3. Idle / Prepare
+
+                  ▼
+
+      4. Poll
+
+                  ▼
+
+      5. Check
+
+                  ▼
+
+      6. Close Callbacks
+
+                  ▲
+
+                  │
+
+            Repeat Again
+```
+
+---
+
+# What Happens in Each Phase?
+
+## 1. Timers
+
+Runs callbacks for:
+
+```js
+setTimeout()
+
+setInterval()
+```
+
+---
+
+## 2. Pending Callbacks
+
+Executes certain system-level callbacks that were deferred to the next loop iteration.
+
+---
+
+## 3. Idle / Prepare
+
+Used internally by Node.js.
+
+Developers rarely interact with this phase directly.
+
+---
+
+## 4. Poll
+
+The most important phase.
+
+It:
+
+- Receives new I/O events
+- Executes many I/O callbacks
+- Waits for new work when appropriate
+
+---
+
+## 5. Check
+
+Runs:
+
+```js
+setImmediate()
+```
+
+callbacks.
+
+---
+
+## 6. Close Callbacks
+
+Runs callbacks for closed resources.
+
+Example:
+
+```js
+socket.on("close");
+```
+
+---
+
+# Why Multiple Phases?
+
+Imagine putting everything into one big queue.
+
+```
+Timers
+
+Database
+
+Files
+
+Sockets
+
+Everything Mixed
+```
+
+Very confusing.
+
+Instead,
+
+Node.js groups similar tasks.
+
+This makes execution predictable.
+
+---
+
+# Common Interview Questions
+
+### Which is the most important phase?
+
+The Poll Phase, because it handles many I/O operations.
+
+---
+
+### Do phases always execute in the same order?
+
+Yes.
+
+The Event Loop follows a defined sequence.
+
+---
+
+# Key Points
+
+- Event Loop has multiple phases
+- Every phase has a specific responsibility
+- Phases execute in order
+- Poll phase is central to I/O processing
+
+---
+
+# 34. Timers Phase
+
+## Interview Answer
+
+> The Timers Phase is the first phase of the Event Loop. It executes callbacks scheduled by `setTimeout()` and `setInterval()` once their delay has expired.
+
+---
+
+# Important Misconception
+
+Many beginners think:
+
+```js
+setTimeout(fn, 1000);
+```
+
+means
+
+```
+Exactly after 1000 ms
+```
+
+❌ Wrong.
+
+It actually means:
+
+```
+Run this callback
+
+AFTER AT LEAST
+
+1000 ms
+
+when the Event Loop gets a chance.
+```
+
+---
+
+# Example
+
+```js
+console.log("Start");
+
+setTimeout(() => {
+    console.log("Timer");
+}, 1000);
+
+console.log("End");
+```
+
+Output
+
+```
+Start
+
+End
+
+Timer
+```
+
+---
+
+# What Happens Internally?
+
+```
+setTimeout()
+
+↓
+
+Timer Starts
+
+↓
+
+1 Second Passed
+
+↓
+
+Callback Ready
+
+↓
+
+Timers Phase
+
+↓
+
+Execute Callback
+```
+
+---
+
+# Why Doesn't It Run Exactly on Time?
+
+Suppose this code is running.
+
+```js
+while(true){}
+```
+
+The Event Loop is blocked.
+
+Even if one second has passed,
+
+the callback cannot execute.
+
+The Event Loop must be free first.
+
+---
+
+# setInterval()
+
+Runs repeatedly.
+
+```js
+setInterval(() => {
+    console.log("Hello");
+}, 1000);
+```
+
+Output
+
+```
+Hello
+
+Hello
+
+Hello
+```
+
+Every second (subject to Event Loop availability).
+
+---
+
+# Common Interview Questions
+
+### Does `setTimeout(0)` run immediately?
+
+No.
+
+It runs after the current synchronous code finishes and when the Event Loop reaches the Timers phase.
+
+---
+
+### Does `setTimeout()` guarantee exact timing?
+
+No.
+
+It guarantees a **minimum delay**, not an exact execution time.
+
+---
+
+# Key Points
+
+- First Event Loop phase
+- Executes `setTimeout()` callbacks
+- Executes `setInterval()` callbacks
+- Delay is minimum, not exact
+
+---
+
+# 35. Pending Callbacks Phase
+
+## Interview Answer
+
+> The Pending Callbacks Phase executes certain system-level callbacks that were postponed to the next Event Loop iteration. These are generally related to lower-level operations rather than typical application code.
+
+---
+
+# Simple Definition
+
+Most developers rarely work directly with this phase.
+
+Node.js uses it internally.
+
+It processes callbacks that couldn't be executed earlier and are scheduled for the next loop iteration.
+
+---
+
+# Think of It Like This
+
+Imagine a teacher checking homework.
+
+```
+Homework 1 ✅
+
+Homework 2 ❌
+
+Homework 3 ✅
+```
+
+Homework 2 has an issue.
+
+Teacher says:
+
+```
+I'll check this
+
+in the next round.
+```
+
+That's similar to the Pending Callbacks phase.
+
+---
+
+# What Kind of Callbacks?
+
+Some examples include certain callbacks related to:
+
+- Network operations
+- TCP errors
+- Some system-level events
+
+These are typically managed by Node.js itself.
+
+---
+
+# Simplified Flow
+
+```text
+System Operation
+
+        │
+
+        ▼
+
+Needs Another Loop
+
+        │
+
+        ▼
+
+Pending Callbacks Phase
+
+        │
+
+        ▼
+
+Execute Callback
+```
+
+---
+
+# Do We Use It Directly?
+
+Usually,
+
+No.
+
+Most developers spend their time using:
+
+- `setTimeout()`
+- `setImmediate()`
+- Promises
+- `async/await`
+- File System APIs
+- HTTP APIs
+
+The Pending Callbacks phase works behind the scenes.
+
+---
+
+# Why Should You Learn It?
+
+Interviewers may ask:
+
+> "Can you name the phases of the Event Loop?"
+
+You should know the purpose of each phase, even if you don't interact with all of them directly.
+
+---
+
+# Common Interview Questions
+
+### Which callbacks run in the Pending Callbacks phase?
+
+Certain deferred system-level callbacks, such as some networking-related operations.
+
+---
+
+### Do developers commonly schedule callbacks directly for this phase?
+
+No.
+
+It is mainly used internally by Node.js.
+
+---
+
+# Key Points
+
+- Second Event Loop phase
+- Handles certain deferred system callbacks
+- Mostly internal to Node.js
+- Important for understanding the complete Event Loop lifecycle
+
+
+# 36. Idle & Prepare Phase
+
+## Interview Answer
+
+> The Idle & Prepare Phase is an internal phase of the Node.js Event Loop. It is used by Node.js and libuv to prepare for the next phase of execution. Developers do not directly interact with this phase.
+
+---
+
+# Beginner-Friendly Explanation
+
+Imagine you're watching a cricket match.
+
+Before the next ball is bowled:
+
+- The umpire checks the field.
+- The bowler goes back to the run-up.
+- The batsman gets ready.
+
+Nothing exciting happens.
+
+Everyone is simply preparing.
+
+The Idle & Prepare Phase is exactly like that.
+
+Node.js prepares itself before moving to the Poll Phase.
+
+---
+
+# Where is it Located?
+
+```text
+Timers
+
+↓
+
+Pending Callbacks
+
+↓
+
+Idle & Prepare
+
+↓
+
+Poll
+
+↓
+
+Check
+
+↓
+
+Close Callbacks
+```
+
+---
+
+# What Happens Here?
+
+This phase is mainly used internally by **libuv**.
+
+Some internal tasks include:
+
+- Preparing the Event Loop
+- Managing internal resources
+- Setting up for the Poll Phase
+
+As a Node.js developer,
+
+you normally don't write code for this phase.
+
+---
+
+# Example
+
+There is **no JavaScript API** like:
+
+```js
+idlePrepare(() => {});
+```
+
+Such an API does **not** exist.
+
+This phase is completely managed by Node.js.
+
+---
+
+# Restaurant Analogy
+
+Imagine a waiter.
+
+```
+Customer Finished Eating
+
+↓
+
+Waiter Cleans Table
+
+↓
+
+Places New Plate
+
+↓
+
+Calls Next Customer
+```
+
+Cleaning the table is preparation work.
+
+Customers don't notice it,
+
+but it is necessary.
+
+---
+
+# Why Should You Learn It?
+
+Although you won't use it directly,
+
+interviewers may ask:
+
+> "Can you explain all Event Loop phases?"
+
+Knowing its purpose shows a complete understanding of the Event Loop.
+
+---
+
+# Common Interview Questions
+
+### Can developers execute code in the Idle & Prepare Phase?
+
+No.
+
+It is an internal phase used by Node.js and libuv.
+
+---
+
+### Is this phase important for application development?
+
+Not directly,
+
+but it is part of the Event Loop lifecycle.
+
+---
+
+# Key Points
+
+- Internal phase
+- Managed by libuv
+- No JavaScript API
+- Prepares for the Poll Phase
+
+---
+
+# 37. Poll Phase
+
+## Interview Answer
+
+> The Poll Phase is the most important phase of the Node.js Event Loop. It processes completed I/O operations, executes their callbacks, and waits for new events when appropriate.
+
+---
+
+# Why is Poll Phase So Important?
+
+Most asynchronous operations end up here.
+
+Examples:
+
+- File Reading
+- Database Queries
+- API Calls
+- Network Requests
+- Socket Communication
+
+If you understand the Poll Phase,
+
+you understand a large part of the Event Loop.
+
+---
+
+# Example
+
+```js
+const fs = require("fs");
+
+fs.readFile("data.txt", () => {
+    console.log("File Read");
+});
+```
+
+When the file finishes reading,
+
+its callback is generally processed during the Poll Phase.
+
+---
+
+# Simple Flow
+
+```text
+Read File
+
+↓
+
+Operating System Reads File
+
+↓
+
+Task Completed
+
+↓
+
+Poll Phase
+
+↓
+
+Execute Callback
+```
+
+---
+
+# What Does Poll Phase Do?
+
+It has three main responsibilities.
+
+## 1. Execute Completed I/O Callbacks
+
+Example
+
+```
+Database Query Finished
+
+↓
+
+Poll Phase
+
+↓
+
+Callback Runs
+```
+
+---
+
+## 2. Wait for New Events
+
+Suppose nothing is happening.
+
+Node.js doesn't waste CPU.
+
+Instead,
+
+it waits.
+
+```
+Nothing To Do
+
+↓
+
+Wait Efficiently
+
+↓
+
+New Event Arrives
+
+↓
+
+Continue
+```
+
+---
+
+## 3. Decide the Next Phase
+
+After finishing work,
+
+Node.js decides whether to:
+
+- Continue polling
+- Move to Check Phase
+- Start another Event Loop iteration
+
+---
+
+# Real-Life Example
+
+Imagine a receptionist.
+
+Customers submit forms.
+
+```
+Customer A
+
+↓
+
+Form Processing
+
+↓
+
+Receptionist Waits
+
+↓
+
+Form Returns
+
+↓
+
+Give Result
+```
+
+The receptionist spends most of the day doing this.
+
+Similarly,
+
+Node.js spends much of its time in the Poll Phase.
+
+---
+
+# Poll Phase Diagram
+
+```text
+I/O Operation
+
+       │
+
+       ▼
+
+Operating System
+
+       │
+
+       ▼
+
+Completed
+
+       │
+
+       ▼
+
+Poll Phase
+
+       │
+
+       ▼
+
+Execute Callback
+```
+
+---
+
+# Common Interview Questions
+
+### Which Event Loop phase handles most I/O callbacks?
+
+The Poll Phase.
+
+---
+
+### Is Poll Phase the busiest Event Loop phase?
+
+Usually, yes.
+
+Many asynchronous operations are handled here.
+
+---
+
+# Key Points
+
+- Most important Event Loop phase
+- Executes completed I/O callbacks
+- Waits efficiently for new events
+- Bridges async work with JavaScript execution
+
+---
+
+# 38. Check Phase
+
+## Interview Answer
+
+> The Check Phase executes callbacks scheduled using `setImmediate()`. It runs after the Poll Phase in the Event Loop.
+
+---
+
+# What is setImmediate()?
+
+Node.js provides:
+
+```js
+setImmediate(() => {
+    console.log("Hello");
+});
+```
+
+The callback waits until the Event Loop reaches the Check Phase.
+
+---
+
+# Event Loop Order
+
+```text
+Poll Phase
+
+↓
+
+Check Phase
+
+↓
+
+Close Callbacks
+```
+
+---
+
+# Example
+
+```js
+setImmediate(() => {
+    console.log("Immediate");
+});
+
+console.log("End");
+```
+
+Output
+
+```
+End
+
+Immediate
+```
+
+---
+
+# Internal Flow
+
+```text
+setImmediate()
+
+↓
+
+Check Queue
+
+↓
+
+Check Phase
+
+↓
+
+Execute Callback
+```
+
+---
+
+# Why Does Check Phase Exist?
+
+Imagine finishing office work.
+
+Before going home,
+
+you quickly complete any remaining small tasks.
+
+The Check Phase works similarly.
+
+It executes callbacks that were specifically scheduled with `setImmediate()`.
+
+---
+
+# setImmediate() vs setTimeout()
+
+Many beginners think:
+
+```
+setImmediate()
+
+=
+
+setTimeout(fn, 0)
+```
+
+❌ Incorrect.
+
+They are scheduled differently inside the Event Loop.
+
+We'll compare them in detail later.
+
+---
+
+# Common Interview Questions
+
+### Which phase executes `setImmediate()`?
+
+The Check Phase.
+
+---
+
+### Can `setImmediate()` execute before `setTimeout(0)`?
+
+Yes.
+
+Depending on where they are scheduled, either can run first.
+
+The exact order depends on the Event Loop state.
+
+---
+
+# Key Points
+
+- Executes `setImmediate()`
+- Runs after the Poll Phase
+- Separate from Timers Phase
+
+---
+
+# 39. Close Callback Phase
+
+## Interview Answer
+
+> The Close Callbacks Phase executes callbacks associated with closing resources such as sockets, streams, or servers.
+
+---
+
+# What Does "Close" Mean?
+
+Closing means a resource is no longer needed.
+
+Examples:
+
+- Closing a File
+- Closing a Socket
+- Closing a Server
+- Closing a Stream
+
+---
+
+# Example
+
+```js
+socket.on("close", () => {
+    console.log("Connection Closed");
+});
+```
+
+When the socket closes,
+
+Node.js eventually executes this callback during the Close Callbacks Phase.
+
+---
+
+# Flow
+
+```text
+Socket Closed
+
+↓
+
+Close Callback Queue
+
+↓
+
+Close Callback Phase
+
+↓
+
+Execute Callback
+```
+
+---
+
+# Real-Life Example
+
+Imagine a shop.
+
+```
+Customers Leave
+
+↓
+
+Lights Off
+
+↓
+
+Lock Door
+
+↓
+
+Go Home
+```
+
+Closing the shop happens at the end.
+
+Similarly,
+
+the Close Callback Phase handles cleanup work.
+
+---
+
+# Why Is It Needed?
+
+Resources consume memory.
+
+Closing them properly helps:
+
+- Free Memory
+- Release System Resources
+- Prevent Resource Leaks
+
+---
+
+# Common Examples
+
+- TCP Socket
+- HTTP Connection
+- File Stream
+- Network Stream
+
+---
+
+# Common Interview Questions
+
+### Which phase executes socket close callbacks?
+
+The Close Callbacks Phase.
+
+---
+
+### Is this phase used frequently in application code?
+
+Usually not directly,
+
+but it is important for proper resource cleanup.
+
+---
+
+# Key Points
+
+- Last Event Loop phase
+- Handles resource cleanup callbacks
+- Executes socket and stream close callbacks
+
+---
+
+# 40. What is the Call Stack?
+
+## Interview Answer
+
+> The Call Stack is a data structure used by the JavaScript Engine to keep track of function execution. It follows the **LIFO (Last In, First Out)** principle, meaning the last function added is the first one removed.
+
+---
+
+# What is a Stack?
+
+Imagine a stack of plates.
+
+```
+Plate 3
+
+Plate 2
+
+Plate 1
+```
+
+You remove the top plate first.
+
+You cannot remove the bottom plate first.
+
+This is called:
+
+```
+LIFO
+
+Last In
+
+First Out
+```
+
+The Call Stack works exactly like this.
+
+---
+
+# Why Do We Need the Call Stack?
+
+The JavaScript Engine needs to know:
+
+- Which function is running?
+- Which function called another function?
+- Which function should return next?
+
+The Call Stack keeps this information.
+
+---
+
+# Example
+
+```js
+function one() {
+    two();
+}
+
+function two() {
+    three();
+}
+
+function three() {
+    console.log("Hello");
+}
+
+one();
+```
+
+---
+
+# Step-by-Step Execution
+
+Initially
+
+```text
+Empty Stack
+```
+
+---
+
+`one()` is called.
+
+```text
+one()
+```
+
+---
+
+`one()` calls `two()`.
+
+```text
+two()
+
+one()
+```
+
+---
+
+`two()` calls `three()`.
+
+```text
+three()
+
+two()
+
+one()
+```
+
+---
+
+`three()` finishes.
+
+```text
+two()
+
+one()
+```
+
+---
+
+`two()` finishes.
+
+```text
+one()
+```
+
+---
+
+`one()` finishes.
+
+```text
+Empty Stack
+```
+
+---
+
+# Visual Flow
+
+```text
+Push one()
+
+↓
+
+Push two()
+
+↓
+
+Push three()
+
+↓
+
+Execute
+
+↓
+
+Pop three()
+
+↓
+
+Pop two()
+
+↓
+
+Pop one()
+```
+
+---
+
+# What Happens During Async Code?
+
+Example
+
+```js
+setTimeout(() => {
+    console.log("Done");
+}, 1000);
+
+console.log("End");
+```
+
+Execution
+
+```text
+Call Stack
+
+↓
+
+console.log("End")
+
+↓
+
+Stack Empty
+
+↓
+
+Timer Completes
+
+↓
+
+Callback Added
+
+↓
+
+Callback Enters Stack
+
+↓
+
+console.log("Done")
+```
+
+The callback **does not stay** in the Call Stack while waiting.
+
+It enters only when the Event Loop schedules it.
+
+---
+
+# Stack Overflow
+
+If functions keep calling each other forever:
+
+```js
+function test() {
+    test();
+}
+
+test();
+```
+
+Eventually,
+
+the Call Stack becomes full.
+
+Error
+
+```text
+RangeError:
+
+Maximum call stack size exceeded
+```
+
+---
+
+# Common Interview Questions
+
+### Does JavaScript have multiple Call Stacks?
+
+No.
+
+Each JavaScript thread has one Call Stack.
+
+The main Node.js thread has one main Call Stack.
+
+---
+
+### Who manages the Call Stack?
+
+The JavaScript Engine (V8 in Node.js).
+
+---
+
+# Key Points
+
+- Managed by V8
+- Stores function execution
+- Uses LIFO
+- Push when function starts
+- Pop when function ends
+- Recursive mistakes can cause Stack Overflow
+
+# 41. What is the Callback Queue?
+
+## Interview Answer
+
+> The Callback Queue (also called the Task Queue) is a queue where completed asynchronous callbacks wait until the Call Stack becomes empty. The Event Loop then moves these callbacks to the Call Stack for execution.
+
+---
+
+# Beginner-Friendly Explanation
+
+Imagine you are the only cashier in a shop.
+
+Customers arrive while you're already helping someone.
+
+They cannot interrupt you.
+
+Instead, they stand in a queue.
+
+Once you're free,
+
+you call the next customer.
+
+The Callback Queue works exactly like that.
+
+---
+
+# Why Do We Need It?
+
+Suppose this code runs.
+
+```js
+setTimeout(() => {
+    console.log("Timer");
+}, 1000);
+
+console.log("Hello");
+```
+
+When the timer finishes,
+
+JavaScript might still be busy.
+
+The callback cannot interrupt the running code.
+
+So Node.js puts it inside the Callback Queue.
+
+---
+
+# Execution Flow
+
+```text
+Call Stack
+
+↓
+
+Running JavaScript
+
+↓
+
+Timer Finished
+
+↓
+
+Callback Queue
+
+↓
+
+Wait...
+
+↓
+
+Call Stack Empty
+
+↓
+
+Event Loop Moves Callback
+
+↓
+
+Execute Callback
+```
+
+---
+
+# Example
+
+```js
+console.log("Start");
+
+setTimeout(() => {
+    console.log("Timer");
+}, 0);
+
+console.log("End");
+```
+
+Output
+
+```
+Start
+
+End
+
+Timer
+```
+
+---
+
+# Why Doesn't "Timer" Print First?
+
+Because synchronous code always finishes first.
+
+Only after the Call Stack becomes empty
+
+does the Event Loop move callbacks from the Callback Queue.
+
+---
+
+# Queue Structure
+
+Queues follow
+
+```
+FIFO
+
+First In
+
+First Out
+```
+
+Example
+
+```text
+Callback A
+
+↓
+
+Callback B
+
+↓
+
+Callback C
+```
+
+Execution
+
+```text
+A
+
+↓
+
+B
+
+↓
+
+C
+```
+
+---
+
+# Common Interview Questions
+
+### Can a callback enter the Call Stack directly?
+
+No.
+
+It first waits in the Callback Queue.
+
+---
+
+### Who moves callbacks to the Call Stack?
+
+The Event Loop.
+
+---
+
+# Key Points
+
+- Stores completed async callbacks
+- Uses FIFO order
+- Waits until Call Stack is empty
+- Event Loop transfers callbacks to the Call Stack
+
+---
+
+# 42. What is the Microtask Queue?
+
+## Interview Answer
+
+> The Microtask Queue is a high-priority queue that stores Promise callbacks, `queueMicrotask()` callbacks, and certain other microtasks. It is processed immediately after the current synchronous code finishes and before the Event Loop continues to the next phase.
+
+---
+
+# Beginner-Friendly Explanation
+
+Imagine two queues at a bank.
+
+```
+VIP Queue
+
+↓
+
+Normal Queue
+```
+
+Whenever a VIP customer arrives,
+
+they are served before normal customers.
+
+The Microtask Queue is the VIP queue.
+
+---
+
+# What Goes Into the Microtask Queue?
+
+- Promise `.then()`
+- Promise `.catch()`
+- Promise `.finally()`
+- `queueMicrotask()`
+
+> **Note:** In Node.js, `process.nextTick()` has even higher priority than the Microtask Queue. We'll cover that shortly.
+
+---
+
+# Example
+
+```js
+console.log("Start");
+
+Promise.resolve().then(() => {
+    console.log("Promise");
+});
+
+console.log("End");
+```
+
+Output
+
+```
+Start
+
+End
+
+Promise
+```
+
+---
+
+# Execution
+
+```text
+Call Stack
+
+↓
+
+Promise Completed
+
+↓
+
+Microtask Queue
+
+↓
+
+Call Stack Empty
+
+↓
+
+Execute Promise Callback
+```
+
+---
+
+# Why Is It Faster?
+
+Node.js always checks the Microtask Queue before moving to the next Event Loop phase.
+
+This makes Promise callbacks execute very quickly after synchronous code.
+
+---
+
+# Common Interview Questions
+
+### Do Promises go to the Callback Queue?
+
+No.
+
+They go to the Microtask Queue.
+
+---
+
+### Which has higher priority?
+
+Microtask Queue.
+
+---
+
+# Key Points
+
+- High-priority queue
+- Stores Promise callbacks
+- Executed before normal callbacks
+- Runs after synchronous code
+
+---
+
+# 43. What is the Macrotask Queue?
+
+## Interview Answer
+
+> The Macrotask Queue (also called the Task Queue) stores callbacks from APIs such as `setTimeout()`, `setInterval()`, and many I/O operations. These callbacks are executed during the appropriate Event Loop phases after higher-priority tasks have been completed.
+
+---
+
+# Beginner-Friendly Explanation
+
+Think of a hospital.
+
+```
+Emergency Patients
+
+↓
+
+Regular Patients
+```
+
+Emergency patients are treated first.
+
+Regular patients wait.
+
+The Macrotask Queue is like the regular queue.
+
+---
+
+# What Goes Into the Macrotask Queue?
+
+Examples include:
+
+- `setTimeout()`
+- `setInterval()`
+- Some I/O callbacks
+- `setImmediate()` (handled in the Check Phase after being scheduled)
+
+---
+
+# Example
+
+```js
+console.log("Start");
+
+setTimeout(() => {
+    console.log("Timer");
+}, 0);
+
+console.log("End");
+```
+
+Output
+
+```
+Start
+
+End
+
+Timer
+```
+
+---
+
+# Execution
+
+```text
+Timer Finished
+
+↓
+
+Macrotask Queue
+
+↓
+
+Event Loop
+
+↓
+
+Call Stack
+
+↓
+
+Execute Callback
+```
+
+---
+
+# Difference from Microtask Queue
+
+Microtasks
+
+```
+High Priority
+```
+
+Macrotasks
+
+```
+Normal Priority
+```
+
+Node.js always empties the Microtask Queue before executing the next macrotask.
+
+---
+
+# Common Interview Questions
+
+### Does `setTimeout()` use the Microtask Queue?
+
+No.
+
+It is treated as a macrotask.
+
+---
+
+### Which queue executes first?
+
+The Microtask Queue.
+
+---
+
+# Key Points
+
+- Stores timer and many async callbacks
+- Lower priority than microtasks
+- Processed through the Event Loop phases
+
+---
+
+# 44. What is the Promise Queue?
+
+## Interview Answer
+
+> The Promise Queue is another name developers commonly use for the Microtask Queue because Promise callbacks (`then`, `catch`, and `finally`) are stored there before execution.
+
+---
+
+# Is Promise Queue a Separate Queue?
+
+This confuses many beginners.
+
+The answer is:
+
+**No.**
+
+There is **not** a separate physical queue just for Promises.
+
+When people say:
+
+```
+Promise Queue
+```
+
+they are usually referring to the **Microtask Queue**.
+
+---
+
+# Example
+
+```js
+Promise.resolve()
+.then(() => {
+    console.log("One");
+})
+.then(() => {
+    console.log("Two");
+});
+```
+
+Output
+
+```
+One
+
+Two
+```
+
+Both callbacks are placed in the Microtask Queue.
+
+---
+
+# Execution
+
+```text
+Promise Resolved
+
+↓
+
+Microtask Queue
+(also called Promise Queue)
+
+↓
+
+Call Stack
+
+↓
+
+Execute Callback
+```
+
+---
+
+# Why Is It Important?
+
+Because Promise callbacks always run before timer callbacks.
+
+Example
+
+```js
+setTimeout(() => {
+    console.log("Timer");
+}, 0);
+
+Promise.resolve().then(() => {
+    console.log("Promise");
+});
+```
+
+Output
+
+```
+Promise
+
+Timer
+```
+
+Even though the timer delay is `0`.
+
+---
+
+# Common Interview Questions
+
+### Is the Promise Queue different from the Microtask Queue?
+
+No.
+
+The Promise Queue is simply a common name for the Microtask Queue when discussing Promise callbacks.
+
+---
+
+### Which methods are placed there?
+
+- `.then()`
+- `.catch()`
+- `.finally()`
+
+---
+
+# Key Points
+
+- Promise Queue = Microtask Queue
+- Stores Promise callbacks
+- Higher priority than timer callbacks
+
+---
+
+# 45. What is process.nextTick()?
+
+## Interview Answer
+
+> `process.nextTick()` is a Node.js API that schedules a callback to run immediately after the current operation completes, before the Event Loop continues and before normal microtasks and macrotasks are processed.
+
+---
+
+# Beginner-Friendly Explanation
+
+Imagine your teacher says:
+
+> "I'll check your notebook **before** checking anyone else's."
+
+That's what `process.nextTick()` does.
+
+It gets **special priority**.
+
+---
+
+# Example
+
+```js
+console.log("Start");
+
+process.nextTick(() => {
+    console.log("nextTick");
+});
+
+console.log("End");
+```
+
+Output
+
+```
+Start
+
+End
+
+nextTick
+```
+
+---
+
+# Compare with Promise
+
+```js
+Promise.resolve().then(() => {
+    console.log("Promise");
+});
+
+process.nextTick(() => {
+    console.log("nextTick");
+});
+```
+
+Output
+
+```
+nextTick
+
+Promise
+```
+
+Why?
+
+Because `process.nextTick()` has **higher priority** in Node.js.
+
+---
+
+# Compare with setTimeout()
+
+```js
+setTimeout(() => {
+    console.log("Timer");
+}, 0);
+
+process.nextTick(() => {
+    console.log("nextTick");
+});
+```
+
+Output
+
+```
+nextTick
+
+Timer
+```
+
+Again,
+
+`process.nextTick()` runs first.
+
+---
+
+# Execution Priority
+
+```text
+Current JavaScript
+
+↓
+
+process.nextTick()
+
+↓
+
+Promise Microtasks
+
+↓
+
+Event Loop
+
+↓
+
+Macrotasks
+```
+
+---
+
+# When Should You Use It?
+
+Good uses:
+
+- Small cleanup work
+- Fixing execution order
+- Deferring a callback until after the current operation
+
+Avoid using it repeatedly in a loop because it can delay the Event Loop and starve I/O processing.
+
+---
+
+# Complete Priority Order (Node.js)
+
+```text
+1. Synchronous Code
+
+↓
+
+2. process.nextTick()
+
+↓
+
+3. Promise / Microtask Queue
+
+↓
+
+4. Macrotasks
+   (setTimeout, setInterval, I/O, setImmediate, etc.)
+```
+
+> Note: Macrotasks are executed according to Event Loop phases. For example, `setTimeout()` runs in the **Timers** phase, while `setImmediate()` runs in the **Check** phase.
+
+---
+
+# Common Interview Questions
+
+### Which executes first?
+
+```js
+process.nextTick()
+
+or
+
+Promise.then()
+```
+
+Answer
+
+```
+process.nextTick()
+```
+
+---
+
+### Can excessive use of `process.nextTick()` be harmful?
+
+Yes.
+
+If you keep scheduling `process.nextTick()` callbacks continuously, the Event Loop may spend so much time processing them that I/O callbacks are delayed.
+
+---
+
+# Key Points
+
+- Node.js-specific API
+- Higher priority than Promise callbacks
+- Executes before the next Event Loop phase
+- Use carefully to avoid starving the Event Loop
+
+
+# 46. What is setImmediate()?
+
+## Interview Answer
+
+> `setImmediate()` is a Node.js API that schedules a callback to execute during the **Check Phase** of the Event Loop, after the Poll Phase completes.
+
+---
+
+# Beginner-Friendly Explanation
+
+Imagine your teacher says:
+
+> "After today's class ends, remind me about your homework."
+
+You don't interrupt the class.
+
+You wait until the class finishes.
+
+That's exactly how `setImmediate()` works.
+
+It waits until the Event Loop reaches the **Check Phase**.
+
+---
+
+# Syntax
+
+```js
+setImmediate(() => {
+    console.log("Hello");
+});
+```
+
+---
+
+# Example
+
+```js
+console.log("Start");
+
+setImmediate(() => {
+    console.log("Immediate");
+});
+
+console.log("End");
+```
+
+Output
+
+```
+Start
+
+End
+
+Immediate
+```
+
+---
+
+# Internal Flow
+
+```text
+JavaScript Starts
+
+↓
+
+setImmediate Registered
+
+↓
+
+Continue Executing Code
+
+↓
+
+Poll Phase
+
+↓
+
+Check Phase
+
+↓
+
+Execute Callback
+```
+
+---
+
+# Why Do We Need setImmediate()?
+
+Sometimes we want:
+
+- Finish current execution
+- Complete I/O callbacks
+- Execute something immediately after Poll Phase
+
+Instead of waiting for another timer.
+
+---
+
+# Real-Life Example
+
+Imagine you're cleaning your room.
+
+```
+Finish Cleaning
+
+↓
+
+Immediately Arrange Books
+
+↓
+
+Done
+```
+
+The arranging happens immediately after cleaning,
+
+not while cleaning.
+
+---
+
+# Common Use Cases
+
+- Execute code after I/O
+- Break long synchronous work into smaller pieces
+- Delay execution without using timers
+
+---
+
+# Common Interview Questions
+
+### Is `setImmediate()` available in browsers?
+
+No.
+
+It is a Node.js-specific API.
+
+---
+
+### Which Event Loop phase executes `setImmediate()`?
+
+The **Check Phase**.
+
+---
+
+# Key Points
+
+- Node.js API
+- Executes in Check Phase
+- Runs after Poll Phase
+- Not available in browsers
+
+---
+
+# 47. What is setTimeout()?
+
+## Interview Answer
+
+> `setTimeout()` schedules a callback to execute **after at least** the specified delay. The callback is executed during the **Timers Phase** when the Event Loop gets a chance.
+
+---
+
+# Beginner-Friendly Explanation
+
+Imagine you set an alarm.
+
+```
+Alarm
+
+↓
+
+5 Minutes Later
+
+↓
+
+Ring
+```
+
+But if you're busy,
+
+you may hear it slightly later.
+
+The same happens with `setTimeout()`.
+
+---
+
+# Syntax
+
+```js
+setTimeout(callback, delay);
+```
+
+---
+
+# Example
+
+```js
+console.log("Start");
+
+setTimeout(() => {
+    console.log("Timer");
+}, 2000);
+
+console.log("End");
+```
+
+Output
+
+```
+Start
+
+End
+
+Timer
+```
+
+---
+
+# Important Point
+
+Many beginners think
+
+```js
+setTimeout(fn, 1000)
+```
+
+means
+
+```
+Exactly after 1000 ms
+```
+
+❌ Wrong
+
+It means
+
+```
+After AT LEAST
+
+1000 ms
+```
+
+If the Event Loop is busy,
+
+execution will be delayed.
+
+---
+
+# Internal Flow
+
+```text
+Register Timer
+
+↓
+
+Wait 1000 ms
+
+↓
+
+Timer Finished
+
+↓
+
+Timers Queue
+
+↓
+
+Timers Phase
+
+↓
+
+Execute Callback
+```
+
+---
+
+# Example of Delay
+
+```js
+setTimeout(() => {
+    console.log("Timer");
+}, 1000);
+
+while (true) {}
+```
+
+The timer never executes,
+
+because the Event Loop is blocked forever.
+
+---
+
+# Common Use Cases
+
+- Delay execution
+- Retry operations
+- Timeouts
+- Scheduled work
+
+---
+
+# Common Interview Questions
+
+### Does `setTimeout()` guarantee exact timing?
+
+No.
+
+Only the minimum delay is guaranteed.
+
+---
+
+### Which phase executes `setTimeout()`?
+
+The **Timers Phase**.
+
+---
+
+# Key Points
+
+- Executes after minimum delay
+- Runs in Timers Phase
+- Can be delayed if Event Loop is busy
+
+---
+
+# 48. Execution Order
+
+## Interview Answer
+
+> Execution order in Node.js is determined by the Call Stack, `process.nextTick()`, the Microtask Queue (Promises), and the Event Loop phases such as Timers, Poll, and Check.
+
+---
+
+# Beginner-Friendly Explanation
+
+Node.js follows strict rules.
+
+It does **not** execute code randomly.
+
+Think of a school assembly.
+
+```
+Principal Speaks
+
+↓
+
+Teachers Speak
+
+↓
+
+Students Speak
+```
+
+There is an order.
+
+Node.js also follows an order.
+
+---
+
+# Basic Rule
+
+```
+1. Synchronous Code
+
+↓
+
+2. process.nextTick()
+
+↓
+
+3. Promise Microtasks
+
+↓
+
+4. Event Loop
+
+↓
+
+5. Timers
+
+↓
+
+6. Poll
+
+↓
+
+7. Check
+
+↓
+
+8. Close Callbacks
+```
+
+---
+
+# Example 1
+
+```js
+console.log("A");
+
+setTimeout(() => {
+    console.log("B");
+}, 0);
+
+Promise.resolve().then(() => {
+    console.log("C");
+});
+
+console.log("D");
+```
+
+Output
+
+```
+A
+
+D
+
+C
+
+B
+```
+
+---
+
+# Why?
+
+### Step 1
+
+```js
+console.log("A");
+```
+
+Output
+
+```
+A
+```
+
+---
+
+### Step 2
+
+Register timer.
+
+No output.
+
+---
+
+### Step 3
+
+Promise goes to Microtask Queue.
+
+No output.
+
+---
+
+### Step 4
+
+```js
+console.log("D");
+```
+
+Output
+
+```
+A
+
+D
+```
+
+---
+
+### Step 5
+
+Call Stack becomes empty.
+
+Node.js executes Microtasks.
+
+Output
+
+```
+A
+
+D
+
+C
+```
+
+---
+
+### Step 6
+
+Timer executes.
+
+Final Output
+
+```
+A
+
+D
+
+C
+
+B
+```
+
+---
+
+# Visual Flow
+
+```text
+Call Stack
+
+↓
+
+Promise Queue
+
+↓
+
+Timer Queue
+
+↓
+
+Output
+```
+
+---
+
+# Common Interview Questions
+
+### Why does Promise execute before Timer?
+
+Because the Microtask Queue has higher priority.
+
+---
+
+# Key Points
+
+- Synchronous first
+- `process.nextTick()` next
+- Promise callbacks after that
+- Timers later
+
+---
+
+# 49. Event Loop Interview Examples
+
+These are among the **most commonly asked** Node.js interview questions.
+
+---
+
+# Example 1
+
+```js
+console.log("Start");
+
+setTimeout(() => {
+    console.log("Timer");
+}, 0);
+
+console.log("End");
+```
+
+Output
+
+```
+Start
+
+End
+
+Timer
+```
+
+Explanation
+
+Synchronous code always finishes before timer callbacks.
+
+---
+
+# Example 2
+
+```js
+console.log("A");
+
+Promise.resolve().then(() => {
+    console.log("B");
+});
+
+console.log("C");
+```
+
+Output
+
+```
+A
+
+C
+
+B
+```
+
+Promise callbacks are microtasks.
+
+---
+
+# Example 3
+
+```js
+console.log("1");
+
+process.nextTick(() => {
+    console.log("2");
+});
+
+Promise.resolve().then(() => {
+    console.log("3");
+});
+
+console.log("4");
+```
+
+Output
+
+```
+1
+
+4
+
+2
+
+3
+```
+
+Explanation
+
+`process.nextTick()` has higher priority than Promise callbacks.
+
+---
+
+# Example 4
+
+```js
+console.log("Start");
+
+setImmediate(() => {
+    console.log("Immediate");
+});
+
+setTimeout(() => {
+    console.log("Timer");
+}, 0);
+
+console.log("End");
+```
+
+Possible Output
+
+```
+Start
+
+End
+
+Timer
+
+Immediate
+```
+
+or
+
+```
+Start
+
+End
+
+Immediate
+
+Timer
+```
+
+Why?
+
+The exact order between `setTimeout(0)` and `setImmediate()` depends on **where they are scheduled** and the current state of the Event Loop.
+
+---
+
+# Example 5
+
+```js
+console.log("Hello");
+
+setTimeout(() => {
+    console.log("Timer");
+}, 0);
+
+Promise.resolve().then(() => {
+    console.log("Promise");
+});
+
+process.nextTick(() => {
+    console.log("nextTick");
+});
+```
+
+Output
+
+```
+Hello
+
+nextTick
+
+Promise
+
+Timer
+```
+
+---
+
+# Easy Memory Trick
+
+```
+Synchronous
+
+↓
+
+nextTick
+
+↓
+
+Promise
+
+↓
+
+Timer
+
+↓
+
+Immediate
+```
+
+> Keep in mind that `setImmediate()` and `setTimeout(0)` do **not** always have a fixed order.
+
+---
+
+# Common Interview Questions
+
+### Which executes first?
+
+```js
+process.nextTick()
+```
+
+---
+
+### Second?
+
+```
+Promise
+```
+
+---
+
+### Third?
+
+```
+Timer / Immediate
+```
+
+(depending on the Event Loop state)
+
+---
+
+# Key Points
+
+- Practice code execution
+- Understand queue priorities
+- Don't memorize blindly—understand the flow
+
+---
+
+# 50. Starvation in Event Loop
+
+## Interview Answer
+
+> Event Loop Starvation happens when high-priority tasks keep executing continuously, preventing lower-priority tasks from getting a chance to run.
+
+---
+
+# Beginner-Friendly Explanation
+
+Imagine a teacher.
+
+VIP students keep coming.
+
+```
+VIP
+
+↓
+
+VIP
+
+↓
+
+VIP
+
+↓
+
+VIP
+```
+
+Regular students never get their turn.
+
+This is called **starvation**.
+
+The same thing can happen in Node.js.
+
+---
+
+# Example
+
+```js
+function repeat() {
+    process.nextTick(repeat);
+}
+
+repeat();
+
+setTimeout(() => {
+    console.log("Timer");
+}, 0);
+```
+
+Output
+
+```
+Nothing
+
+Timer Never Executes
+```
+
+Why?
+
+Every `process.nextTick()` schedules another `process.nextTick()`.
+
+Node.js keeps processing them.
+
+The Event Loop never reaches the Timers Phase.
+
+---
+
+# Visual Flow
+
+```text
+nextTick()
+
+↓
+
+nextTick()
+
+↓
+
+nextTick()
+
+↓
+
+nextTick()
+
+↓
+
+Event Loop Never Continues
+```
+
+---
+
+# Another Example
+
+```js
+function repeat() {
+    Promise.resolve().then(repeat);
+}
+
+repeat();
+```
+
+The Microtask Queue keeps filling itself.
+
+Other tasks are delayed indefinitely.
+
+---
+
+# Why Is This Dangerous?
+
+Your application may appear frozen.
+
+- Timers don't execute
+- I/O callbacks are delayed
+- Requests take much longer to finish
+
+---
+
+# How to Avoid Starvation
+
+✅ Don't create infinite `process.nextTick()` chains.
+
+✅ Don't create endless Promise recursion.
+
+✅ Break large tasks into smaller chunks.
+
+✅ Use `setImmediate()` or Worker Threads for heavy or repetitive work when appropriate.
+
+---
+
+# Real-Life Example
+
+Imagine one cashier.
+
+VIP customers never stop arriving.
+
+```
+VIP
+
+↓
+
+VIP
+
+↓
+
+VIP
+
+↓
+
+VIP
+
+↓
+
+Normal Customers Wait Forever
+```
+
+Exactly the same problem occurs in the Event Loop.
+
+---
+
+# Common Interview Questions
+
+### Which API most commonly causes Event Loop starvation?
+
+`process.nextTick()` if it is used recursively without stopping.
+
+---
+
+### Can Promises also contribute to starvation?
+
+Yes.
+
+An endless chain of microtasks can delay lower-priority tasks.
+
+---
+
+# Summary
+
+| Queue | Priority |
+|--------|----------|
+| Synchronous Code | Highest |
+| `process.nextTick()` | Very High |
+| Promise / Microtask Queue | High |
+| Timers (`setTimeout`) | Normal |
+| Poll Phase | Normal |
+| Check Phase (`setImmediate`) | Normal |
+| Close Callbacks | Last |
+
+---
+
+# Key Points
+
+- Starvation means lower-priority tasks never get CPU time
+- Recursive `process.nextTick()` is a common cause
+- Infinite microtask chains can also cause starvation
+- Use async APIs thoughtfully to keep the Event Loop healthy
+
+
+
+# 51. Event Loop Blocking
+
+## Interview Answer
+
+> Event Loop Blocking happens when the main JavaScript thread is busy executing a long-running task. During this time, the Event Loop cannot process other callbacks, making the entire Node.js application slow or unresponsive.
+
+---
+
+# Beginner-Friendly Explanation
+
+Imagine a restaurant with **one waiter**.
+
+```
+Customer 1
+
+↓
+
+Waiter Busy For 20 Minutes
+
+↓
+
+Customer 2 Waiting
+
+↓
+
+Customer 3 Waiting
+
+↓
+
+Customer 4 Waiting
+```
+
+The waiter is busy.
+
+Nobody else gets served.
+
+This is exactly what Event Loop Blocking is.
+
+---
+
+# Example
+
+```js
+console.log("Start");
+
+for (let i = 0; i < 10000000000; i++) {}
+
+console.log("End");
+```
+
+Output
+
+```
+Start
+
+(wait several seconds)
+
+End
+```
+
+During those seconds,
+
+Node.js cannot:
+
+- Handle HTTP requests
+- Read files
+- Execute timers
+- Run Promise callbacks
+
+Everything waits.
+
+---
+
+# Another Example
+
+```js
+setTimeout(() => {
+    console.log("Timer");
+}, 1000);
+
+while (true) {}
+```
+
+Output
+
+```
+Nothing
+```
+
+Why?
+
+The Event Loop never gets control.
+
+---
+
+# Internal Flow
+
+```text
+JavaScript Starts
+
+↓
+
+Heavy Calculation
+
+↓
+
+Call Stack Busy
+
+↓
+
+Event Loop Waiting
+
+↓
+
+No Timers
+
+No Promises
+
+No API Responses
+
+↓
+
+Calculation Ends
+
+↓
+
+Event Loop Continues
+```
+
+---
+
+# Common Causes
+
+- Huge loops
+- Image processing
+- Video encoding
+- Large JSON parsing
+- Complex calculations
+- Infinite loops
+- Synchronous APIs
+
+---
+
+# How to Prevent It
+
+✅ Use asynchronous APIs
+
+✅ Use Worker Threads for CPU-heavy work
+
+✅ Break big tasks into smaller pieces
+
+✅ Avoid synchronous file operations in servers
+
+---
+
+# Common Interview Questions
+
+### What blocks the Event Loop?
+
+Anything that keeps the JavaScript thread busy for a long time.
+
+---
+
+### Does async code block the Event Loop?
+
+Usually no.
+
+CPU-heavy synchronous JavaScript does.
+
+---
+
+# Key Points
+
+- Blocks entire application
+- Caused by long-running JavaScript
+- Delays timers, I/O and requests
+- Worker Threads help solve CPU-heavy problems
+
+---
+
+# 52. Infinite Loop Effects
+
+## Interview Answer
+
+> An infinite loop keeps executing forever and never exits. Because JavaScript runs on a single main thread, an infinite loop blocks the Event Loop completely, causing the application to freeze.
+
+---
+
+# Beginner-Friendly Explanation
+
+Imagine a traffic signal.
+
+Instead of changing,
+
+it stays green forever.
+
+```
+Green
+
+↓
+
+Green
+
+↓
+
+Green
+
+↓
+
+Green
+```
+
+Traffic from other directions never moves.
+
+Node.js behaves similarly.
+
+---
+
+# Example
+
+```js
+while (true) {
+    console.log("Running...");
+}
+```
+
+The loop never ends.
+
+Everything else stops.
+
+---
+
+# Another Example
+
+```js
+function test() {
+    while (true) {}
+}
+
+test();
+
+console.log("Hello");
+```
+
+Output
+
+```
+Nothing after entering the loop.
+```
+
+`console.log("Hello")` never runs.
+
+---
+
+# Effect on Server
+
+Imagine an Express server.
+
+```js
+app.get("/", (req, res) => {
+    while (true) {}
+});
+```
+
+Now,
+
+```
+User 1
+
+↓
+
+Infinite Loop
+
+↓
+
+User 2 Waits
+
+↓
+
+User 3 Waits
+
+↓
+
+User 4 Waits
+```
+
+The server appears hung.
+
+---
+
+# Internal Flow
+
+```text
+Infinite Loop
+
+↓
+
+Call Stack Never Empty
+
+↓
+
+Event Loop Cannot Run
+
+↓
+
+No Requests
+
+↓
+
+No Timers
+
+↓
+
+No Promises
+```
+
+---
+
+# Why Is It Dangerous?
+
+- CPU becomes busy
+- Requests stop responding
+- Timers never execute
+- Application freezes
+
+---
+
+# How to Avoid It
+
+Always ensure loops have a valid exit condition.
+
+Good Example
+
+```js
+let i = 0;
+
+while (i < 10) {
+    i++;
+}
+```
+
+---
+
+# Common Interview Questions
+
+### Why is an infinite loop dangerous in Node.js?
+
+Because it blocks the Event Loop and prevents the server from handling other work.
+
+---
+
+# Key Points
+
+- Never-ending execution
+- Blocks Event Loop completely
+- Makes server unresponsive
+
+---
+
+# 53. Event Loop Visualization
+
+## Interview Answer
+
+> The Event Loop continuously checks different queues and phases, moving callbacks to the Call Stack whenever it becomes empty.
+
+---
+
+# Complete Visualization
+
+```text
+                JavaScript Code
+                      │
+                      ▼
+                Call Stack
+                      │
+        ┌─────────────┴─────────────┐
+        │                           │
+        ▼                           ▼
+process.nextTick()           Promise Queue
+        │                           │
+        └─────────────┬─────────────┘
+                      ▼
+                 Event Loop
+                      │
+      ┌───────────────┼────────────────┐
+      ▼               ▼                ▼
+   Timers           Poll            Check
+(setTimeout)       (I/O)      (setImmediate)
+                      │
+                      ▼
+              Close Callbacks
+```
+
+---
+
+# Step-by-Step Example
+
+```js
+console.log("A");
+
+process.nextTick(() => console.log("B"));
+
+Promise.resolve().then(() => console.log("C"));
+
+setTimeout(() => console.log("D"), 0);
+
+console.log("E");
+```
+
+---
+
+# Execution
+
+### Step 1
+
+```
+A
+```
+
+---
+
+### Step 2
+
+Register
+
+- nextTick
+- Promise
+- Timer
+
+---
+
+### Step 3
+
+```
+E
+```
+
+---
+
+### Step 4
+
+Run nextTick
+
+```
+B
+```
+
+---
+
+### Step 5
+
+Run Promise
+
+```
+C
+```
+
+---
+
+### Step 6
+
+Run Timer
+
+```
+D
+```
+
+---
+
+# Final Output
+
+```
+A
+
+E
+
+B
+
+C
+
+D
+```
+
+---
+
+# Easy Memory Rule
+
+```text
+Synchronous
+
+↓
+
+nextTick
+
+↓
+
+Promise
+
+↓
+
+Timers
+
+↓
+
+Poll
+
+↓
+
+Immediate
+
+↓
+
+Close
+```
+
+---
+
+# Common Interview Questions
+
+### What executes first after synchronous code?
+
+`process.nextTick()`
+
+---
+
+### Which executes before Timers?
+
+Microtasks (`process.nextTick()` and Promise callbacks).
+
+---
+
+# Key Points
+
+- Understand the complete execution flow
+- Visualize queues before memorizing
+- The Event Loop coordinates callback execution
+
+---
+
+# 54. Event Loop Debugging
+
+## Interview Answer
+
+> Event Loop Debugging is the process of identifying why asynchronous callbacks are delayed, why the Event Loop is blocked, or why an application becomes slow or unresponsive.
+
+---
+
+# Beginner-Friendly Explanation
+
+Suppose your website becomes slow.
+
+You ask:
+
+```
+Why?
+
+Where is it stuck?
+
+Which code is blocking?
+```
+
+Finding these answers is Event Loop Debugging.
+
+---
+
+# Common Symptoms
+
+- Slow API responses
+- Timers executing late
+- High CPU usage
+- Application freezing
+- Requests timing out
+
+---
+
+# Example Problem
+
+```js
+app.get("/", (req, res) => {
+
+    let sum = 0;
+
+    for (let i = 0; i < 10000000000; i++) {
+        sum += i;
+    }
+
+    res.send("Done");
+});
+```
+
+Every request waits for the huge loop.
+
+---
+
+# How to Debug
+
+## 1. Check CPU Usage
+
+High CPU often means heavy synchronous JavaScript.
+
+---
+
+## 2. Check Long Loops
+
+```js
+for(...)
+while(...)
+```
+
+Large loops can block the Event Loop.
+
+---
+
+## 3. Avoid Sync APIs
+
+Bad
+
+```js
+fs.readFileSync();
+```
+
+Better
+
+```js
+fs.readFile();
+```
+
+---
+
+## 4. Use Profiling Tools
+
+Examples:
+
+- Chrome DevTools
+- Node Inspector
+- Performance Profilers
+
+These tools help identify slow functions.
+
+---
+
+# Debugging Flow
+
+```text
+Slow Application
+
+↓
+
+Find Blocking Function
+
+↓
+
+Optimize Code
+
+↓
+
+Retest
+```
+
+---
+
+# Common Interview Questions
+
+### What usually blocks the Event Loop?
+
+Long synchronous JavaScript execution.
+
+---
+
+### How do you reduce Event Loop blocking?
+
+Use asynchronous APIs, Worker Threads, and optimize algorithms.
+
+---
+
+# Key Points
+
+- Find blocking code
+- Reduce synchronous work
+- Profile performance
+- Prefer async operations
+
+---
+
+# 55. Common Interview Traps
+
+These are questions that interviewers ask to test whether you **understand** the Event Loop instead of simply memorizing definitions.
+
+---
+
+# Trap 1
+
+### Does `setTimeout(fn, 0)` execute immediately?
+
+❌ Wrong
+
+```
+Yes
+```
+
+✅ Correct
+
+No.
+
+It executes **after at least 0 ms**, when the Event Loop reaches the Timers Phase and the Call Stack is empty.
+
+---
+
+# Trap 2
+
+### Which executes first?
+
+```js
+Promise.then()
+
+or
+
+setTimeout()
+```
+
+✅ Correct
+
+```
+Promise.then()
+```
+
+Because Promise callbacks are microtasks.
+
+---
+
+# Trap 3
+
+### Which executes first?
+
+```js
+process.nextTick()
+
+or
+
+Promise.then()
+```
+
+✅ Correct
+
+```
+process.nextTick()
+```
+
+---
+
+# Trap 4
+
+### Is Node.js truly single-threaded?
+
+❌ Wrong
+
+```
+Yes
+```
+
+✅ Correct
+
+JavaScript execution is single-threaded,
+
+but Node.js also uses:
+
+- libuv
+- Thread Pool
+- Worker Threads
+- Operating System threads
+
+---
+
+# Trap 5
+
+### Is `setImmediate()` always faster than `setTimeout(0)`?
+
+❌ Wrong
+
+```
+Always
+```
+
+✅ Correct
+
+No.
+
+Their order depends on the Event Loop state and where they are scheduled.
+
+---
+
+# Trap 6
+
+### Does the Event Loop perform file reading?
+
+❌ Wrong
+
+```
+Yes
+```
+
+✅ Correct
+
+No.
+
+The Event Loop only schedules callback execution.
+
+The actual I/O work is handled by the operating system and/or libuv.
+
+---
+
+# Trap 7
+
+### Can Promises block the Event Loop?
+
+✅ Correct
+
+Normally no.
+
+However, creating an endless chain of Promise microtasks can delay other work.
+
+---
+
+# Top Interview Questions
+
+1. Why is Node.js good for APIs but not ideal for CPU-heavy work?
+
+2. Why does Promise execute before `setTimeout()`?
+
+3. Why does `process.nextTick()` execute before Promises?
+
+4. Why doesn't `setTimeout(0)` run immediately?
+
+5. What blocks the Event Loop?
+
+6. How do Worker Threads differ from the Thread Pool?
+
+7. Explain the complete Event Loop with an example.
+
+---
+
+# 1 Cr Interview Tip
+
+Don't memorize only the definitions.
+
+For every Event Loop question, be able to explain:
+
+- **What it is**
+- **Why it exists**
+- **How it works internally**
+- **When it runs**
+- **A real-world analogy**
+- **A code example**
+- **Common interview mistakes**
+
+If you can confidently explain those six points, you'll handle the vast majority of Node.js Event Loop interview questions.

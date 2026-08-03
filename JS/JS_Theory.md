@@ -80,167 +80,3935 @@ It does not define browser features like:
 - Why was ECMAScript created?
 Different browsers implemented JavaScript differently. ECMAScript standardized the language so all JavaScript engines behave consistently.
 
-# 4. What are Variables?
-A variable is a named container that stores data in memory so it can be accessed and modified during program execution.
 
-Why Do We Need Variables?
+# Module 1: Variables
+# Questions 1-10
 
-Without variables:
+---
+
+# 1. What is a Variable?
+
+## Definition
+
+A **variable** is a named container used to store data in memory so that it can be used, updated, and reused throughout a program.
+
+Think of a variable as a **label attached to a box**. The label is the variable name, and the box holds the value.
+
 ```javascript
-console.log("John");
-console.log("John");
-console.log("John");
+let name = "Utpanna";
 ```
-With variables:
-```js
-let name = "John";
+
+Here:
+
+- Variable name → `name`
+- Stored value → `"Utpanna"`
+
+---
+
+## Why Do We Need Variables?
+
+Imagine writing this:
+
+```javascript
+console.log("Utpanna");
+console.log("Utpanna");
+console.log("Utpanna");
+console.log("Utpanna");
+```
+
+Now suppose your name changes.
+
+You must replace it everywhere.
+
+Instead:
+
+```javascript
+let name = "Utpanna";
 
 console.log(name);
 console.log(name);
 console.log(name);
-```
-If the value changes, you only update it once.
-- Declaration
-  Creating the variable.
-```js
-    let age;
-```
-- Initiallizing the variable
- ```js
- let age=25;
- ```
-
- - Assignment 
- changing the value of the variable
-  ```js
-  age = 28;
-  ```
-  - variables store different types of data
-  ```js
-  let age=20;
-  let name="Jina";
-  let isStudent =true;
-  let arr=[1,2,3,4];
-  let user={
-    id:1,
-    name:"Jina"
-
-  }
+console.log(name);
 ```
 
-- variables can change it's data type.
-```js
-let x=10;
-x="Jina"
-x=true;
+Change only one place.
+
+```javascript
+name = "John";
 ```
 
-# Difference Between var, let, and const
-comparison Table
-                |     var  |        let      |   const  |
-                | -------- |      --------   | -------- |
-Scope           | Function |        Block    | Block    |
-Redeclaration   |    Yes   |         No      |   No     |
-Reassignment    |    Yes   |         Yes     |   No     |
-Hoisted         |    Yes   |        Yes      |    Yes   |
-Initialized     | undefined|         No      |   No     |
-(during hoisting)
-modern usage    |    Avoid  |when value change| Default  |
- 
+Everywhere updates automatically.
 
-- var
-```js
-var age=28;
-var age=30;
-age=33
-//everything is allowed
-```
- 
-problem with var 
-```js
-if(true){
-    var x=10;
-}
-console.log(x)
-```
-// output=10
-as var is function scopped not block scopped
+---
 
-- let
-```js
-let age=20;
-age=20
-```
-//allowed reassignment
+## Real Life Analogy
 
-```js
-let age=20;
-let age=30;
-//error as redeclaration is not allowed
-```
-```js
-if (true) {
-    let x = 10;
-}
+Imagine a kitchen.
 
-console.log(x);
-//reference Effor as let is blocked scope
+Instead of saying
+
+> "Take the red container on the second shelf."
+
+you simply say
+
+> "Take the Sugar container."
+
+The container is the variable.
+
+The sugar inside is the value.
+
+Tomorrow you may refill it with more sugar.
+
+The container name stays the same.
+
+---
+
+## Syntax
+
+```javascript
+let age = 25;
 ```
 
-- const 
-```js
+```
+let     -> keyword
+age     -> variable name
+=       -> assignment operator
+25      -> value
+```
+
+---
+
+## Memory Representation
+
+```
+Memory
+
+age
+ ┌──────┐
+ │ 25   │
+ └──────┘
+```
+
+---
+
+## Best Practices
+
+✔ Give meaningful names
+
+```javascript
+let firstName;
+```
+
+Instead of
+
+```javascript
+let x;
+```
+
+---
+
+## Common Mistakes
+
+Bad
+
+```javascript
+let a;
+let b;
+let c;
+```
+
+Good
+
+```javascript
+let firstName;
+let totalPrice;
+let employeeAge;
+```
+
+---
+
+## Interview Tip
+
+A variable is **not the value itself**.
+
+It is only a reference (name) used to access that value.
+
+---
+
+## Summary
+
+- Stores data
+- Has a name
+- Can be reused
+- Makes programs maintainable
+
+---
+
+# 2. Why Do We Use Variables?
+
+## Imagine Writing a Calculator
+
+Without variables
+
+```javascript
+console.log(50 + 20);
+console.log(50 * 20);
+console.log(50 - 20);
+```
+
+Now numbers change.
+
+Everything must be edited.
+
+Instead
+
+```javascript
+let a = 50;
+let b = 20;
+
+console.log(a + b);
+console.log(a * b);
+console.log(a - b);
+```
+
+Only change
+
+```javascript
+a = 100;
+```
+
+Entire program updates.
+
+---
+
+## Reasons
+
+Variables help us
+
+- Store data
+- Update data
+- Reuse data
+- Make code readable
+- Avoid repetition
+- Perform calculations
+- Build dynamic applications
+
+---
+
+## Real World Example
+
+Instagram stores
+
+- username
+- followers
+- likes
+- comments
+
+All are variables.
+
+Without variables Instagram couldn't remember anything.
+
+---
+
+## Best Practice
+
+Store values that may change.
+
+Avoid hardcoding.
+
+Instead of
+
+```javascript
+console.log("Welcome Utpanna");
+```
+
+Write
+
+```javascript
+let username = "Utpanna";
+
+console.log("Welcome " + username);
+```
+
+---
+
+## Summary
+
+Variables make programs flexible, reusable, and easier to maintain.
+
+---
+
+# 3. How Do You Declare a Variable in JavaScript?
+
+A variable is declared using
+
+```javascript
+var
+let
+const
+```
+
+Examples
+
+```javascript
+var city = "Delhi";
+
+let age = 25;
+
+const country = "India";
+```
+
+---
+
+## General Syntax
+
+```javascript
+keyword variableName = value;
+```
+
+Example
+
+```javascript
+let salary = 50000;
+```
+
+---
+
+## Naming Rules
+
+Valid
+
+```javascript
+let firstName;
+
+let age2;
+
+let _price;
+
+let $salary;
+```
+
+Invalid
+
+```javascript
+let 2age;
+
+let first-name;
+
+let let;
+```
+
+---
+
+## Naming Conventions
+
+Use camelCase
+
+```javascript
+firstName
+
+lastName
+
+totalPrice
+
+employeeSalary
+```
+
+Avoid
+
+```javascript
+firstname
+
+FIRSTNAME
+
+First_Name
+```
+
+---
+
+## Best Practice
+
+Prefer
+
+```javascript
+const
+```
+
+If value changes
+
+Use
+
+```javascript
+let
+```
+
+Avoid
+
+```javascript
+var
+```
+
+in modern JavaScript.
+
+---
+
+# 4. What is the Difference Between Declaration and Initialization?
+
+Many beginners think these are the same.
+
+They are not.
+
+---
+
+## Declaration
+
+Creating the variable.
+
+```javascript
+let age;
+```
+
+Memory is reserved.
+
+No value yet.
+
+---
+
+## Initialization
+
+Giving a value.
+
+```javascript
+age = 25;
+```
+
+---
+
+## Both Together
+
+```javascript
+let age = 25;
+```
+
+This is both declaration and initialization.
+
+---
+
+## Analogy
+
+Declaration
+
+Buying an empty notebook.
+
+Initialization
+
+Writing inside the notebook.
+
+---
+
+## Interview Question
+
+Which happens first?
+
+Declaration.
+
+Initialization happens later.
+
+---
+
+# 5. What Happens if a Variable is Declared but Not Initialized?
+
+Example
+
+```javascript
+let city;
+
+console.log(city);
+```
+
+Output
+
+```javascript
+undefined
+```
+
+JavaScript automatically assigns
+
+```javascript
+undefined
+```
+
+until another value is assigned.
+
+---
+
+## Why?
+
+Because memory exists.
+
+But no useful value has been stored.
+
+---
+
+## Example
+
+```javascript
+let marks;
+
+marks = 90;
+```
+
+Initially
+
+```
+undefined
+```
+
+Later
+
+```
+90
+```
+
+---
+
+## Summary
+
+Declared
+
+✅ Memory reserved
+
+Initialized
+
+❌ Not yet
+
+Value
+
+```
+undefined
+```
+
+---
+
+# 6. What Value Does an Uninitialized Variable Have?
+
+Answer
+
+```javascript
+undefined
+```
+
+Example
+
+```javascript
+let student;
+
+console.log(student);
+```
+
+Output
+
+```javascript
+undefined
+```
+
+---
+
+## Important
+
+This is different from
+
+```javascript
+null
+```
+
+undefined
+
+↓
+
+JavaScript assigned it.
+
+null
+
+↓
+
+Developer intentionally assigned it.
+
+Example
+
+```javascript
+let user = null;
+```
+
+Means
+
+"I intentionally have no value."
+
+---
+
+## Memory
+
+```
+student
+
+↓
+
+undefined
+```
+
+---
+
+# 7. What are the Three Keywords Used to Declare Variables?
+
+JavaScript provides
+
+```javascript
+var
+
+let
+
+const
+```
+
+---
+
+## var
+
+Old way
+
+ES5
+
+Function scoped
+
+Can be redeclared
+
+Can be reassigned
+
+---
+
+## let
+
+Modern
+
+ES6
+
+Block scoped
+
+Cannot redeclare
+
+Can reassign
+
+---
+
+## const
+
+Modern
+
+ES6
+
+Block scoped
+
+Cannot redeclare
+
+Cannot reassign
+
+---
+
+## Quick Table
+
+| Keyword | Redeclare | Reassign | Scope |
+|----------|-----------|----------|-------|
+| var | ✅ | ✅ | Function |
+| let | ❌ | ✅ | Block |
+| const | ❌ | ❌ | Block |
+
+---
+
+## Modern Rule
+
+Use
+
+```
+const
+```
+
+first.
+
+Use
+
+```
+let
+```
+
+only when value changes.
+
+Avoid
+
+```
+var
+```
+
+---
+
+# 8. What is the Difference Between var, let, and const?
+
+This is one of the most common interview questions.
+
+---
+
+## var
+
+```javascript
+var age = 20;
+
+var age = 30;
+```
+
+Allowed.
+
+---
+
+## let
+
+```javascript
+let age = 20;
+
+let age = 30;
+```
+
+Error.
+
+Cannot redeclare.
+
+---
+
+## let reassignment
+
+```javascript
+let age = 20;
+
+age = 30;
+```
+
+Allowed.
+
+---
+
+## const
+
+```javascript
 const PI = 3.14;
-PI = 5;
-//TypeError
+
+PI = 3;
 ```
+
+Error.
+
 Cannot reassign.
-- we can modify a const object
-```js
+
+---
+
+## Scope
+
+```javascript
+{
+    var a = 10;
+    let b = 20;
+    const c = 30;
+}
+
+console.log(a);
+```
+
+Works.
+
+```javascript
+console.log(b);
+```
+
+Error.
+
+```javascript
+console.log(c);
+```
+
+Error.
+
+---
+
+## Best Practice
+
+Default
+
+```
+const
+```
+
+Need updates
+
+```
+let
+```
+
+Almost never
+
+```
+var
+```
+
+---
+
+# 9. Why was let Introduced in ES6?
+
+Before ES6
+
+Only
+
+```javascript
+var
+```
+
+was available.
+
+It caused many bugs.
+
+---
+
+## Problems with var
+
+- Function scope only
+- Hoisting confusion
+- Redeclaration allowed
+- Variables leaking outside blocks
+
+Example
+
+```javascript
+if (true) {
+    var age = 20;
+}
+
+console.log(age);
+```
+
+Output
+
+```javascript
+20
+```
+
+Many developers expected an error.
+
+---
+
+## Solution
+
+ES6 introduced
+
+```javascript
+let
+```
+
+Now
+
+```javascript
+if (true) {
+    let age = 20;
+}
+
+console.log(age);
+```
+
+Output
+
+```text
+ReferenceError
+```
+
+Much safer.
+
+---
+
+## Benefits of let
+
+- Block scope
+- No accidental redeclaration
+- Fewer bugs
+- Cleaner code
+- Easier debugging
+- Better maintainability
+
+---
+
+# 10. Why was const Introduced?
+
+`const` was introduced in ES6 to allow developers to declare variables whose **binding should never change** after initialization.
+
+This makes code safer, more predictable, and easier to understand.
+
+---
+
+## Why Not Just Use `let`?
+
+Suppose you have:
+
+```javascript
+let API_URL = "https://api.example.com";
+```
+
+Later, somewhere else in a large codebase:
+
+```javascript
+API_URL = "https://malicious-site.com";
+```
+
+Your application now talks to the wrong server. Finding that bug in thousands of lines of code is about as enjoyable as debugging a production issue five minutes before a release.
+
+With `const`:
+
+```javascript
+const API_URL = "https://api.example.com";
+
+API_URL = "https://malicious-site.com";
+```
+
+Output:
+
+```text
+TypeError: Assignment to constant variable.
+```
+
+The mistake is caught immediately.
+
+---
+
+## Important Clarification
+
+`const` does **not** make objects or arrays immutable.
+
+```javascript
 const user = {
-    name: "John"
+  name: "Utpanna"
 };
 
-user.name = "Peter";
-
-console.log(user);
-//{ name: "Peter"}
-//Because const protects the reference, not the object's contents.
-```
-- Modern best practice:
-
-Use const by default.
-Use let only when the value needs to change.
-Avoid var in new code.
-
-# What are Data Types?
-- A data type defines the kind of value a variable can store and determines what operations can be performed on it.
-- Two types-
-
-├── Primitive
-
-└── Non-Primitive (Reference)
-
-Primitive Data Types
--There are 7 primitive data types
-```js
-let age = 20; //Number
-let name = "John"; //String
-let isLoggedIn = true; //Boolean
-let x;  //Undefined
-let user = null; //Null
-let id = Symbol("id"); //Symbol -Used for creating unique identifiers.
-let num = 12345678901234567890n; //BigInt
+user.name = "Alex";   // ✅ Allowed
 ```
 
-# Primitive vs Non-Primitive Data Types
-Primitive Types
-- Immutable (the value itself cannot be changed).call. by value
-- Stored by value.
-- Compared by value.
-- Types
-Number , String , Boolean , Null , Undefined , Symbol , BigInt
-- 
-```js
+But:
+
+```javascript
+user = {};   // ❌ Error
+```
+
+The **reference** cannot change, even though the object's contents can.
+
+---
+
+## Best Practice
+
+- Use `const` by default.
+- Use `let` only when the value needs to change.
+- Avoid `var` in modern JavaScript.
+
+---
+
+## Quick Revision
+
+- **Variable:** A named container for data.
+- **Declaration:** Creating a variable.
+- **Initialization:** Assigning its first value.
+- **Uninitialized value:** `undefined`.
+- **Keywords:** `var`, `let`, `const`.
+- **Modern choice:** Prefer `const`, then `let`, avoid `var`.
+- **`let`:** Introduced to fix problems with `var`.
+- **`const`:** Prevents accidental reassignment and improves code safety.
+
+
+
+# 11. What is Variable Reassignment?
+
+## Definition
+
+**Variable reassignment** means **changing the value stored in an already declared variable**.
+
+In simple words:
+
+- Variable already exists ✅
+- You are changing its value ✅
+- You are **NOT** creating a new variable ❌
+
+---
+
+## Syntax
+
+```javascript
+let age = 25;
+
+age = 30;
+```
+
+Here,
+
+```javascript
+age = 30;
+```
+
+is called **reassignment**.
+
+---
+
+## Step-by-Step
+
+Initially
+
+```javascript
+let age = 25;
+```
+
+Memory
+
+```
+age
+ ↓
+25
+```
+
+After
+
+```javascript
+age = 30;
+```
+
+Memory
+
+```
+age
+ ↓
+30
+```
+
+Notice that the variable name **didn't change**.
+
+Only the value changed.
+
+---
+
+## Real-Life Analogy
+
+Imagine a whiteboard.
+
+Initially
+
+```
+Age = 25
+```
+
+Later
+
+Erase it and write
+
+```
+Age = 30
+```
+
+The whiteboard is still the same.
+
+Only the writing changes.
+
+That is reassignment.
+
+---
+
+## Example 1
+
+```javascript
+let city = "Delhi";
+
+city = "Mumbai";
+
+console.log(city);
+```
+
+Output
+
+```javascript
+Mumbai
+```
+
+---
+
+## Example 2
+
+```javascript
+let score = 50;
+
+score = score + 10;
+
+console.log(score);
+```
+
+Output
+
+```javascript
+60
+```
+
+---
+
+## Example 3
+
+```javascript
+let isLoggedIn = false;
+
+isLoggedIn = true;
+```
+
+Very common in real applications.
+
+---
+
+## Where Reassignment is Used
+
+Updating
+
+- User profile
+- Shopping cart
+- Game score
+- Login status
+- Temperature
+- Counter
+- Bank balance
+
+---
+
+## Common Mistake
+
+Thinking this creates a new variable
+
+```javascript
+let age = 20;
+
+age = 30;
+```
+
+No.
+
+The same variable now stores a different value.
+
+---
+
+## Interview Question
+
+**Does reassignment create a new variable?**
+
+Answer:
+
+No.
+
+It only changes the existing value.
+
+---
+
+## Summary
+
+- Variable already exists.
+- Only its value changes.
+- Memory location may stay the same (implementation-dependent), but logically it is the same variable.
+- Allowed with `var` and `let`.
+- Not allowed with `const`.
+
+---
+
+# 12. What is Variable Redeclaration?
+
+## Definition
+
+**Redeclaration** means **declaring the same variable again in the same scope**.
+
+Example
+
+```javascript
+var age = 20;
+
+var age = 30;
+```
+
+Here,
+
+```javascript
+var age
+```
+
+is declared twice.
+
+That is redeclaration.
+
+---
+
+## Difference Between Redeclaration and Reassignment
+
+### Redeclaration
+
+Creates another declaration.
+
+```javascript
+var age = 20;
+
+var age = 30;
+```
+
+---
+
+### Reassignment
+
+Only changes value.
+
+```javascript
+let age = 20;
+
+age = 30;
+```
+
+---
+
+## Analogy
+
+Imagine a classroom.
+
+Student Roll No. 1
+
+Already exists.
+
+Redeclaration means
+
+Creating another Roll No. 1.
+
+That creates confusion.
+
+Reassignment means
+
+The same student changes address.
+
+No confusion.
+
+---
+
+## Why Redeclaration is Dangerous
+
+Imagine
+
+```javascript
+var username = "Admin";
+```
+
+500 lines later
+
+```javascript
+var username = "Guest";
+```
+
+Now debugging becomes difficult because the value changed through another declaration.
+
+---
+
+## Best Practice
+
+Avoid redeclaration.
+
+Modern JavaScript prevents it using
+
+```javascript
+let
+
+const
+```
+
+---
+
+## Summary
+
+Redeclaration
+
+↓
+
+Declaring again.
+
+Reassignment
+
+↓
+
+Changing value.
+
+---
+
+# 13. Can `var` Be Redeclared?
+
+## Answer
+
+✅ Yes.
+
+---
+
+## Example
+
+```javascript
+var age = 20;
+
+var age = 25;
+
+console.log(age);
+```
+
+Output
+
+```javascript
+25
+```
+
+JavaScript allows this.
+
+---
+
+## Why?
+
+When JavaScript was created (1995),
+
+developers wanted flexibility.
+
+Later,
+
+people realized this creates bugs.
+
+---
+
+## Example Bug
+
+```javascript
+var price = 100;
+
+// Hundreds of lines later
+
+var price = 50;
+```
+
+Which value is correct?
+
+Hard to debug.
+
+---
+
+## Interview Tip
+
+`var`
+
+✔ Redeclare
+
+✔ Reassign
+
+---
+
+## Summary
+
+Allowed
+
+```javascript
+var x = 1;
+
+var x = 2;
+```
+
+---
+
+# 14. Can `let` Be Redeclared?
+
+## Answer
+
+❌ No.
+
+---
+
+## Example
+
+```javascript
+let age = 20;
+
+let age = 30;
+```
+
+Output
+
+```text
+SyntaxError
+```
+
+---
+
+## Why?
+
+JavaScript prevents accidental mistakes.
+
+---
+
+## Example
+
+```javascript
+let username = "Admin";
+
+// Later
+
+let username = "Guest";
+```
+
+This immediately throws an error.
+
+Much easier to debug.
+
+---
+
+## Same Variable
+
+Not allowed
+
+```javascript
+let marks = 90;
+
+let marks = 95;
+```
+
+---
+
+## Different Block
+
+Allowed
+
+```javascript
+let age = 20;
+
+{
+    let age = 30;
+}
+```
+
+Different scope.
+
+Different variable.
+
+---
+
+## Summary
+
+Same scope
+
+❌ Error
+
+Different block
+
+✅ Allowed
+
+---
+
+# 15. Can `const` Be Redeclared?
+
+## Answer
+
+❌ No.
+
+---
+
+## Example
+
+```javascript
+const PI = 3.14;
+
+const PI = 22 / 7;
+```
+
+Output
+
+```text
+SyntaxError
+```
+
+---
+
+## Why?
+
+A constant should have only one declaration.
+
+---
+
+## Different Scope
+
+Allowed
+
+```javascript
+const country = "India";
+
+{
+    const country = "USA";
+}
+```
+
+These are different variables because they belong to different blocks.
+
+---
+
+## Summary
+
+Same scope
+
+❌ Not allowed
+
+Different scope
+
+✅ Allowed
+
+---
+
+# 16. Can `var` Be Reassigned?
+
+## Answer
+
+✅ Yes.
+
+---
+
+## Example
+
+```javascript
+var score = 50;
+
+score = 100;
+```
+
+Output
+
+```javascript
+100
+```
+
+---
+
+## Real Example
+
+```javascript
+var balance = 5000;
+
+balance = balance + 1000;
+```
+
+Balance changes.
+
+Perfectly valid.
+
+---
+
+## Summary
+
+`var`
+
+✔ Reassign
+
+✔ Redeclare
+
+---
+
+# 17. Can `let` Be Reassigned?
+
+## Answer
+
+✅ Yes.
+
+---
+
+## Example
+
+```javascript
+let score = 50;
+
+score = 80;
+```
+
+Output
+
+```javascript
+80
+```
+
+---
+
+## Why is This Useful?
+
+Many values naturally change:
+
+- Counter
+- Temperature
+- Shopping cart total
+- User status
+- Timer
+- Game score
+
+Example
+
+```javascript
+let counter = 0;
+
+counter++;
+
+counter++;
+
+counter++;
+```
+
+Final value
+
+```
+3
+```
+
+---
+
+## Summary
+
+`let`
+
+✔ Reassign
+
+❌ Redeclare
+
+---
+
+# 18. Can `const` Be Reassigned?
+
+## Answer
+
+❌ No.
+
+---
+
+## Example
+
+```javascript
+const PI = 3.14;
+
+PI = 3;
+```
+
+Output
+
+```text
+TypeError: Assignment to constant variable.
+```
+
+---
+
+## Why?
+
+Because the variable reference should never change.
+
+---
+
+## Important Interview Question
+
+Can a `const` object change?
+
+Yes.
+
+```javascript
+const user = {
+    name: "Utpanna"
+};
+
+user.name = "Alex";
+```
+
+Works.
+
+But
+
+```javascript
+user = {};
+```
+
+Throws an error.
+
+---
+
+## Memory Illustration
+
+```
+user
+  │
+  ▼
+{name: "Utpanna"}
+```
+
+You can modify the object the variable points to, but you cannot make `user` point to a different object.
+
+---
+
+## Summary
+
+Primitive reassignment
+
+❌
+
+Object property modification
+
+✅
+
+Reference change
+
+❌
+
+---
+
+# 19. What is Block Scope?
+
+## Definition
+
+A **block** is any code enclosed within curly braces `{}`.
+
+A variable declared with `let` or `const` inside a block is **only accessible inside that block**.
+
+---
+
+## Example
+
+```javascript
+{
+    let age = 25;
+}
+
+console.log(age);
+```
+
+Output
+
+```text
+ReferenceError
+```
+
+Why?
+
+Because `age` exists only inside the block.
+
+---
+
+## Another Example
+
+```javascript
+if (true) {
+    const message = "Hello";
+}
+
+console.log(message);
+```
+
+Again,
+
+```text
+ReferenceError
+```
+
+---
+
+## Blocks Include
+
+```javascript
+if {}
+
+for {}
+
+while {}
+
+switch {}
+
+{
+}
+```
+
+---
+
+## Why is Block Scope Important?
+
+It prevents variables from accidentally affecting other parts of your program.
+
+This makes code:
+
+- Safer
+- Easier to debug
+- Easier to maintain
+
+---
+
+## Real-Life Analogy
+
+Think of a classroom.
+
+Only students inside that classroom can use its whiteboard.
+
+People outside cannot.
+
+The classroom is the block.
+
+The whiteboard is the variable.
+
+---
+
+## Summary
+
+- Created by `{}`.
+- `let` and `const` are block-scoped.
+- Variables cannot be accessed outside their block.
+
+---
+
+# 20. What is Function Scope?
+
+## Definition
+
+A variable declared with `var` inside a function is available **everywhere within that function**, but **not outside the function**.
+
+---
+
+## Example
+
+```javascript
+function greet() {
+    var message = "Hello";
+
+    console.log(message);
+}
+
+greet();
+
+console.log(message);
+```
+
+Output
+
+```text
+Hello
+
+ReferenceError
+```
+
+---
+
+## Why?
+
+`message` belongs to the function.
+
+Once the function finishes, that variable is no longer accessible from outside.
+
+---
+
+## Function Scope vs Block Scope
+
+```javascript
+function demo() {
+
+    if (true) {
+
+        var a = 10;
+
+        let b = 20;
+    }
+
+    console.log(a); // ✅
+
+    console.log(b); // ❌
+}
+```
+
+`var` ignores the `if` block and belongs to the entire function.
+
+`let` belongs only to the `if` block.
+
+---
+
+## Real-Life Analogy
+
+Imagine a company.
+
+A function is one department.
+
+Employees (`var` variables) can move anywhere inside that department.
+
+But they cannot leave the department.
+
+A block (`let`/`const`) is like a meeting room inside the department.
+
+Only people inside that meeting room can access what's discussed there.
+
+---
+
+# Quick Revision
+
+| Keyword | Redeclare | Reassign | Scope |
+|---------|-----------|----------|--------|
+| `var` | ✅ | ✅ | Function |
+| `let` | ❌ | ✅ | Block |
+| `const` | ❌ | ❌ | Block |
+
+## Key Takeaways
+
+- **Reassignment** changes a variable's value.
+- **Redeclaration** declares the same variable again.
+- `var` allows both redeclaration and reassignment.
+- `let` allows reassignment but not redeclaration in the same scope.
+- `const` allows neither reassignment nor redeclaration.
+- **Block scope** limits variables to `{}`.
+- **Function scope** limits `var` variables to the function they are declared in.
+
+
+# 21. Which Scope Does `var` Use?
+
+## Short Answer
+
+`var` uses **Function Scope**.
+
+A variable declared using `var` is accessible anywhere inside the function where it is created.
+
+---
+
+## Example
+
+```javascript
+function userDetails() {
+
+    var username = "Utpanna";
+
+    console.log(username);
+
+}
+
+userDetails();
+```
+
+Output:
+
+```
+Utpanna
+```
+
+The variable exists inside the function.
+
+---
+
+## Outside Function Access
+
+```javascript
+function userDetails() {
+
+    var username = "Utpanna";
+
+}
+
+console.log(username);
+```
+
+Output:
+
+```
+ReferenceError: username is not defined
+```
+
+Because `username` belongs only to the function.
+
+---
+
+# Important Concept
+
+`var` does NOT have block scope.
+
+Example:
+
+```javascript
+if (true) {
+
+    var age = 25;
+
+}
+
+console.log(age);
+```
+
+Output:
+
+```
+25
+```
+
+The `if` block does not restrict the variable.
+
+---
+
+## Why Is This a Problem?
+
+Consider:
+
+```javascript
+function processUser(){
+
+    if(true){
+
+        var token = "abc123";
+
+    }
+
+    console.log(token);
+
+}
+```
+
+The variable leaks outside the `if` block.
+
+In large applications, these small leaks create difficult bugs.
+
+---
+
+## Interview Answer
+
+**Q: What scope does var use?**
+
+Answer:
+
+`var` is function-scoped, meaning it is available throughout the function where it is declared.
+
+---
+
+# 22. Which Scope Does `let` Use?
+
+## Short Answer
+
+`let` uses **Block Scope**.
+
+A block is code inside curly braces:
+
+```javascript
+{
+}
+```
+
+---
+
+## Example
+
+```javascript
+{
+
+    let message = "Hello";
+
+    console.log(message);
+
+}
+```
+
+Output:
+
+```
+Hello
+```
+
+---
+
+Outside the block:
+
+```javascript
+{
+
+    let message = "Hello";
+
+}
+
+console.log(message);
+```
+
+Output:
+
+```
+ReferenceError
+```
+
+---
+
+## Blocks Include:
+
+```javascript
+if {}
+
+for {}
+
+while {}
+
+switch {}
+
+{
+}
+```
+
+---
+
+## Why Was Block Scope Introduced?
+
+Before ES6, JavaScript mainly used:
+
+```javascript
+var
+```
+
+which caused accidental variable leaks.
+
+ES6 introduced:
+
+```javascript
+let
+const
+```
+
+to make code safer.
+
+---
+
+# 23. Which Scope Does `const` Use?
+
+## Short Answer
+
+`const` also uses **Block Scope**.
+
+---
+
+## Example
+
+```javascript
+{
+
+    const country = "India";
+
+    console.log(country);
+
+}
+```
+
+Works correctly.
+
+---
+
+Outside:
+
+```javascript
+console.log(country);
+```
+
+Error:
+
+```
+ReferenceError
+```
+
+---
+
+## Real Example
+
+React components commonly use:
+
+```javascript
+function App(){
+
+    const title = "Dashboard";
+
+}
+```
+
+The variable belongs only to that component function.
+
+---
+
+# 24. Why Is `let` Generally Preferred Over `var`?
+
+`let` was introduced because `var` created many bugs.
+
+---
+
+# Problems With `var`
+
+## 1. Function Scope Problems
+
+Example:
+
+```javascript
+if(true){
+
+    var price = 100;
+
+}
+
+console.log(price);
+```
+
+Output:
+
+```
+100
+```
+
+Many developers expect the variable to disappear outside the block.
+
+---
+
+## 2. Redeclaration Allowed
+
+Example:
+
+```javascript
+var user = "Admin";
+
+var user = "Guest";
+```
+
+No error.
+
+The previous value is replaced.
+
+---
+
+## 3. Hoisting Confusion
+
+Example:
+
+```javascript
+console.log(age);
+
+var age = 25;
+```
+
+Output:
+
+```
+undefined
+```
+
+JavaScript moves the declaration internally.
+
+---
+
+# How `let` Improves This
+
+## Block Scope
+
+```javascript
+if(true){
+
+    let price = 100;
+
+}
+
+console.log(price);
+```
+
+Error.
+
+Safer behavior.
+
+---
+
+## No Redeclaration
+
+```javascript
+let username = "Admin";
+
+let username = "Guest";
+```
+
+Error.
+
+---
+
+## Modern Rule
+
+Use:
+
+```javascript
+const
+```
+
+by default.
+
+Use:
+
+```javascript
+let
+```
+
+when values change.
+
+Avoid:
+
+```javascript
+var
+```
+
+in modern applications.
+
+---
+
+# 25. When Should You Use `const`?
+
+## Short Answer
+
+Use `const` when a variable should not be reassigned.
+
+---
+
+## Example
+
+```javascript
+const company = "Google";
+```
+
+The value should remain unchanged.
+
+---
+
+## Common Uses
+
+### API URL
+
+```javascript
+const API_URL = "https://api.example.com";
+```
+
+---
+
+### Configuration Values
+
+```javascript
+const MAX_USERS = 100;
+```
+
+---
+
+### Functions
+
+```javascript
+const calculateTotal = () => {
+
+};
+```
+
+---
+
+## Important Interview Concept
+
+`const` does not make objects immutable.
+
+Example:
+
+```javascript
+const user = {
+
+    name:"Alex"
+
+};
+
+user.name = "John";
+```
+
+Allowed.
+
+But:
+
+```javascript
+user = {};
+```
+
+Not allowed.
+
+---
+
+# Data Types
+
+---
+
+# 26. What Is a Data Type?
+
+## Definition
+
+A data type tells JavaScript what kind of value a variable contains.
+
+---
+
+## Example
+
+Number:
+
+```javascript
+let age = 25;
+```
+
+String:
+
+```javascript
+let name = "Alex";
+```
+
+Boolean:
+
+```javascript
+let isActive = true;
+```
+
+---
+
+# Why Are Data Types Important?
+
+Because JavaScript behaves differently depending on the type.
+
+Example:
+
+Numbers:
+
+```javascript
+10 + 20
+```
+
+Result:
+
+```
+30
+```
+
+Strings:
+
+```javascript
+"10" + "20"
+```
+
+Result:
+
+```
+1020
+```
+
+---
+
+# 27. How Many Primitive Data Types Does JavaScript Have?
+
+JavaScript has:
+
+```
+7 Primitive Data Types
+```
+
+---
+
+# 28. Name All Primitive Data Types
+
+The 7 primitive types are:
+
+## 1. String
+
+Text values.
+
+```javascript
+"Hello"
+```
+
+---
+
+## 2. Number
+
+Numeric values.
+
+```javascript
+100
+```
+
+---
+
+## 3. BigInt
+
+Very large numbers.
+
+```javascript
+12345678901234567890n
+```
+
+---
+
+## 4. Boolean
+
+True or false.
+
+```javascript
+true
+false
+```
+
+---
+
+## 5. Undefined
+
+A variable without a value.
+
+```javascript
+let age;
+
+console.log(age);
+```
+
+Output:
+
+```
+undefined
+```
+
+---
+
+## 6. Null
+
+Intentional empty value.
+
+```javascript
+let user = null;
+```
+
+---
+
+## 7. Symbol
+
+Creates unique identifiers.
+
+```javascript
+Symbol("id")
+```
+
+---
+
+# 29. What Is the Number Data Type?
+
+## Definition
+
+The Number type represents numeric values.
+
+JavaScript has only one number type.
+
+It handles:
+
+- Integers
+- Decimals
+- Negative numbers
+
+---
+
+## Examples
+
+```javascript
+let age = 28;
+
+let price = 99.99;
+
+let temperature = -5;
+```
+
+---
+
+## Special Number Values
+
+### Infinity
+
+```javascript
+1 / 0
+```
+
+Result:
+
+```
+Infinity
+```
+
+---
+
+### NaN
+
+Means:
+
+```
+Not a Number
+```
+
+Example:
+
+```javascript
+"hello" * 5
+```
+
+Result:
+
+```
+NaN
+```
+
+---
+
+## Important Debugging Concept
+
+Floating point issue:
+
+```javascript
+0.1 + 0.2
+```
+
+Result:
+
+```
+0.30000000000000004
+```
+
+Because computers store decimals in binary format.
+
+---
+
+# 30. What Is the String Data Type?
+
+## Definition
+
+A String represents text.
+
+---
+
+## Creating Strings
+
+Double quotes:
+
+```javascript
+"Hello"
+```
+
+Single quotes:
+
+```javascript
+'Hello'
+```
+
+Template literals:
+
+```javascript
+`Hello`
+```
+
+---
+
+## Example
+
+```javascript
+let name = "Utpanna";
+
+console.log(name);
+```
+
+Output:
+
+```
+Utpanna
+```
+
+---
+
+# Template Literals
+
+Template literals allow dynamic values.
+
+Example:
+
+```javascript
+let username = "Alex";
+
+console.log(`Hello ${username}`);
+```
+
+Output:
+
+```
+Hello Alex
+```
+
+---
+
+# Important Concept: Strings Are Immutable
+
+Strings cannot be directly changed.
+
+Example:
+
+```javascript
+let name = "Alex";
+
+name[0] = "B";
+```
+
+This will not change the string.
+
+Instead:
+
+```javascript
+name = "Blex";
+```
+
+creates a new string.
+
+---
+
+# Interview Revision
+
+Remember:
+
+```
+var
+- Function scope
+- Redeclaration allowed
+- Reassignment allowed
+
+
+let
+- Block scope
+- Redeclaration not allowed
+- Reassignment allowed
+
+
+const
+- Block scope
+- Redeclaration not allowed
+- Reassignment not allowed
+
+
+Primitive Types:
+1. String
+2. Number
+3. BigInt
+4. Boolean
+5. Undefined
+6. Null
+7. Symbol
+```
+
+---
+
+# Engineering Perspective
+
+For real-world development:
+
+- Scope understanding helps debug unexpected values.
+- Data types help prevent logic errors.
+- Knowing `var`, `let`, and `const` helps you read old and modern codebases.
+- Understanding these basics makes advanced topics like closures, React state, Node.js debugging, and async programming much easier.
+
+
+# JavaScript Theory
+
+# Module 2: Data Types
+
+## Questions 31-40
+
+---
+
+# 31. What Is the Boolean Data Type?
+
+## Definition
+
+A **Boolean** represents a value that can have only two states:
+
+```
+true
+false
+```
+
+It is mainly used for decision-making in programs.
+
+---
+
+## Example
+
+```javascript
+let isLoggedIn = true;
+
+let isAdmin = false;
+```
+
+Here:
+
+```text
+isLoggedIn → Boolean
+isAdmin    → Boolean
+```
+
+---
+
+# Real-World Example
+
+Imagine a door lock.
+
+It can have two states:
+
+```
+Locked
+Unlocked
+```
+
+In programming:
+
+```javascript
+let doorLocked = true;
+```
+
+---
+
+# Using Boolean in Conditions
+
+```javascript
+let isUserLoggedIn = true;
+
+if(isUserLoggedIn){
+
+    console.log("Show dashboard");
+
+}
+else{
+
+    console.log("Show login page");
+
+}
+```
+
+Output:
+
+```
+Show dashboard
+```
+
+---
+
+# Boolean Values Come From Comparisons
+
+Example:
+
+```javascript
+10 > 5
+```
+
+Result:
+
+```javascript
+true
+```
+
+---
+
+Example:
+
+```javascript
+10 < 5
+```
+
+Result:
+
+```javascript
+false
+```
+
+---
+
+# Common Boolean Operators
+
+## AND (`&&`)
+
+Both conditions must be true.
+
+```javascript
+true && true
+```
+
+Result:
+
+```
+true
+```
+
+---
+
+## OR (`||`)
+
+At least one condition must be true.
+
+```javascript
+true || false
+```
+
+Result:
+
+```
+true
+```
+
+---
+
+## NOT (`!`)
+
+Reverses the value.
+
+```javascript
+!true
+```
+
+Result:
+
+```
+false
+```
+
+---
+
+# Real Application Usage
+
+Boolean values control:
+
+- Login status
+- Dark mode
+- Loading state
+- Permission access
+- Feature availability
+
+Example:
+
+```javascript
+const isLoading = true;
+```
+
+React applications use Booleans everywhere.
+
+---
+
+# Interview Answer
+
+**Boolean is a primitive data type that represents logical values: true or false.**
+
+---
+
+---
+
+# 32. What Is Undefined?
+
+## Definition
+
+`undefined` means:
+
+A variable has been declared but no value has been assigned yet.
+
+---
+
+## Example
+
+```javascript
+let username;
+
+console.log(username);
+```
+
+Output:
+
+```
+undefined
+```
+
+---
+
+# Memory Representation
+
+Before assigning:
+
+```
+username
+    |
+    ↓
+undefined
+```
+
+After assigning:
+
+```javascript
+username = "Alex";
+```
+
+Memory:
+
+```
+username
+    |
+    ↓
+"Alex"
+```
+
+---
+
+# When Does JavaScript Give Undefined?
+
+## 1. Declared Variable Without Value
+
+```javascript
+let age;
+
+console.log(age);
+```
+
+---
+
+## 2. Missing Function Return
+
+```javascript
+function greet(){
+
+}
+
+console.log(greet());
+```
+
+Output:
+
+```
+undefined
+```
+
+---
+
+## 3. Accessing Missing Object Property
+
+```javascript
+const user = {
+
+    name:"Alex"
+
+};
+
+console.log(user.age);
+```
+
+Output:
+
+```
+undefined
+```
+
+---
+
+# Undefined vs Null
+
+Important interview topic.
+
+## Undefined
+
+JavaScript automatically assigns it.
+
+```javascript
+let user;
+```
+
+---
+
+## Null
+
+Developer intentionally assigns it.
+
+```javascript
+let user = null;
+```
+
+---
+
+# Interview Answer
+
+`undefined` represents the absence of an assigned value.
+
+---
+
+---
+
+# 33. What Is Null?
+
+## Definition
+
+`null` represents an intentional empty value.
+
+It means:
+
+"I know this variable exists, but currently it has no value."
+
+---
+
+## Example
+
+```javascript
+let selectedUser = null;
+```
+
+Meaning:
+
+There is currently no selected user.
+
+---
+
+# Real Application Example
+
+Imagine an ecommerce website.
+
+Before login:
+
+```javascript
+let currentUser = null;
+```
+
+After login:
+
+```javascript
+currentUser = {
+
+    name:"Alex"
+
+};
+```
+
+---
+
+# Undefined vs Null
+
+| undefined | null |
+|---|---|
+| Automatically assigned | Manually assigned |
+| Value is missing | Intentionally empty |
+| JavaScript gives it | Developer gives it |
+
+---
+
+# Strange JavaScript Behavior
+
+```javascript
+typeof null
+```
+
+Output:
+
+```
+object
+```
+
+This is a historical JavaScript bug.
+
+It should technically return:
+
+```
+null
+```
+
+but changing it would break old websites.
+
+Yes, even programming languages carry ancient baggage. Like digital archaeology.
+
+---
+
+# Interview Answer
+
+`null` is a primitive value representing intentional absence of any object value.
+
+---
+
+---
+
+# 34. What Is the Symbol Data Type?
+
+## Definition
+
+`Symbol` is a primitive data type used to create unique identifiers.
+
+---
+
+## Creating a Symbol
+
+```javascript
+const id = Symbol("userId");
+```
+
+---
+
+Every Symbol is unique.
+
+Example:
+
+```javascript
+const a = Symbol("id");
+
+const b = Symbol("id");
+
+console.log(a === b);
+```
+
+Output:
+
+```
+false
+```
+
+---
+
+# Why Use Symbols?
+
+They prevent naming conflicts.
+
+Example:
+
+```javascript
+const userId = Symbol("id");
+
+const productId = Symbol("id");
+```
+
+Both have the same description.
+
+But they are different values.
+
+---
+
+# Real-World Usage
+
+Symbols are used internally by JavaScript for:
+
+- Object customization
+- Iterators
+- Meta programming
+
+Example:
+
+```javascript
+Symbol.iterator
+```
+
+is used for making objects iterable.
+
+---
+
+# Should Beginners Focus On Symbol?
+
+Not deeply.
+
+For frontend/backend jobs:
+
+Understand:
+
+- What it is
+- Why uniqueness matters
+
+Advanced usage comes later.
+
+---
+
+# Interview Answer
+
+Symbol is a primitive data type that creates unique values, commonly used as unique object property keys.
+
+---
+
+---
+
+# 35. What Is the BigInt Data Type?
+
+## Definition
+
+BigInt is used for numbers larger than JavaScript's safe integer limit.
+
+---
+
+# Problem With Normal Numbers
+
+JavaScript Number can safely handle:
+
+```
+9007199254740991
+```
+
+After this:
+
+precision problems occur.
+
+---
+
+# Creating BigInt
+
+Add `n` at the end:
+
+```javascript
+const bigNumber = 12345678901234567890n;
+```
+
+---
+
+# Example
+
+```javascript
+const population = 8000000000000000000n;
+
+console.log(population);
+```
+
+---
+
+# BigInt Operations
+
+Both values must be BigInt.
+
+Works:
+
+```javascript
+10n + 20n
+```
+
+Result:
+
+```
+30n
+```
+
+---
+
+Does not work:
+
+```javascript
+10n + 20
+```
+
+Error:
+
+```
+TypeError
+```
+
+---
+
+# Real Usage
+
+BigInt is useful in:
+
+- Financial systems
+- Cryptography
+- Large calculations
+- Blockchain applications
+
+---
+
+# Interview Answer
+
+BigInt represents integers larger than the safe range of JavaScript Number.
+
+---
+
+---
+
+# 36. What Are Non-Primitive (Reference) Data Types?
+
+## Definition
+
+Non-primitive data types store collections of values or complex structures.
+
+They store a **reference to memory**, not the actual value directly.
+
+---
+
+# Primitive Types
+
+Store single values:
+
+```javascript
+let age = 25;
+```
+
+---
+
+# Reference Types
+
+Store complex data:
+
+```javascript
+let user = {
+
+    name:"Alex"
+
+};
+```
+
+---
+
+# Main Reference Types
+
+JavaScript has:
+
+## Object
+
+```javascript
+{
+}
+```
+
+---
+
+## Array
+
+```javascript
+[]
+```
+
+---
+
+## Function
+
+```javascript
+function(){}
+```
+
+---
+
+# Difference
+
+Primitive:
+
+```
+variable → value
+```
+
+Reference:
+
+```
+variable → memory address → object
+```
+
+---
+
+# Example
+
+```javascript
+let user1 = {
+
+    name:"Alex"
+
+};
+
+let user2 = user1;
+
+user2.name = "John";
+
+console.log(user1.name);
+```
+
+Output:
+
+```
+John
+```
+
+Why?
+
+Both variables point to the same object.
+
+---
+
+# Interview Answer
+
+Reference types store references to memory locations and include objects, arrays, and functions.
+
+---
+
+---
+
+# 37. What Is an Object in JavaScript?
+
+## Definition
+
+An object is a collection of data stored as key-value pairs.
+
+---
+
+## Example
+
+```javascript
+const user = {
+
+    name:"Alex",
+
+    age:25,
+
+    city:"Delhi"
+
+};
+```
+
+---
+
+Structure:
+
+```
+key : value
+```
+
+Example:
+
+```
+name : Alex
+age  : 25
+```
+
+---
+
+# Accessing Properties
+
+## Dot Notation
+
+```javascript
+user.name;
+```
+
+---
+
+## Bracket Notation
+
+```javascript
+user["name"];
+```
+
+---
+
+# Why Objects Matter
+
+Almost everything in JavaScript applications is represented as objects.
+
+Examples:
+
+User:
+
+```javascript
+{
+name:"Alex",
+email:"abc@gmail.com"
+}
+```
+
+Product:
+
+```javascript
+{
+title:"Laptop",
+price:50000
+}
+```
+
+API Response:
+
+```javascript
+{
+data:[],
+status:200
+}
+```
+
+---
+
+# Interview Answer
+
+An object is a collection of related data and functionality stored as key-value pairs.
+
+---
+
+---
+
+# 38. Why Are Arrays Considered Objects?
+
+## Short Answer
+
+Because arrays inherit properties and methods from JavaScript's Object prototype.
+
+---
+
+## Example
+
+```javascript
+const numbers = [1,2,3];
+```
+
+Arrays have:
+
+```javascript
+numbers.length
+
+numbers.push()
+
+numbers.map()
+```
+
+These are object-like behaviors.
+
+---
+
+# Check Type
+
+```javascript
+typeof [];
+```
+
+Output:
+
+```
+object
+```
+
+---
+
+# Internal Structure
+
+Array:
+
+```
+Object
+
+0 → value
+1 → value
+2 → value
+length → 3
+```
+
+---
+
+# Important
+
+Arrays are specialized objects designed for storing ordered collections.
+
+---
+
+# Interview Answer
+
+Arrays are objects because they are reference types with properties and methods inherited from Object.
+
+---
+
+---
+
+# 39. What Is a Function in JavaScript?
+
+## Definition
+
+A function is a reusable block of code designed to perform a specific task.
+
+---
+
+## Example
+
+```javascript
+function greet(){
+
+    console.log("Hello");
+
+}
+
+greet();
+```
+
+Output:
+
+```
+Hello
+```
+
+---
+
+# Why Use Functions?
+
+Functions provide:
+
+- Reusability
+- Organization
+- Maintainability
+- Easier debugging
+
+---
+
+# Function With Parameters
+
+```javascript
+function add(a,b){
+
+    return a+b;
+
+}
+
+add(10,20);
+```
+
+Output:
+
+```
+30
+```
+
+---
+
+# Functions Are Also Values
+
+Example:
+
+```javascript
+const greet = function(){
+
+    console.log("Hello");
+
+};
+```
+
+The function is stored inside a variable.
+
+---
+
+# Interview Answer
+
+A function is a reusable piece of code that can accept input, perform operations, and return output.
+
+---
+
+---
+
+# 40. Why Are Functions Called First-Class Citizens?
+
+## Definition
+
+Functions are called first-class citizens because JavaScript treats functions like any other value.
+
+They can be:
+
+- Stored in variables
+- Passed as arguments
+- Returned from other functions
+
+---
+
+# 1. Store Function in Variable
+
+```javascript
+const sayHello = function(){
+
+    console.log("Hello");
+
+};
+```
+
+---
+
+# 2. Pass Function as Argument
+
+```javascript
+function execute(fn){
+
+    fn();
+
+}
+
+execute(sayHello);
+```
+
+---
+
+# 3. Return Function
+
+```javascript
+function createFunction(){
+
+    return function(){
+
+        console.log("Hello");
+
+    };
+
+}
+```
+
+---
+
+# Why Is This Important?
+
+This enables:
+
+- Callbacks
+- Promises
+- Event handling
+- Array methods
+- React patterns
+
+---
+
+# Example: Array Methods
+
+```javascript
+const numbers = [1,2,3];
+
+numbers.map(function(num){
+
+    return num * 2;
+
+});
+```
+
+The function is passed as a value.
+
+---
+
+# Interview Answer
+
+Functions are first-class citizens because they can be treated like values and passed, stored, and returned like other data.
+
+---
+
+# Revision Summary
+
+```
+Boolean
+→ true/false values
+
+
+undefined
+→ declared but no assigned value
+
+
+null
+→ intentional empty value
+
+
+Symbol
+→ unique identifiers
+
+
+BigInt
+→ very large integers
+
+
+Object
+→ key-value collections
+
+
+Array
+→ specialized object for ordered data
+
+
+Function
+→ reusable code block
+
+
+First-class functions
+→ functions behave like values
+```
+
+---
+
+# Engineering Importance
+
+These concepts are required for:
+
+- React state management
+- API handling
+- Node.js development
+- Debugging memory issues
+- Understanding closures
+- Understanding async JavaScript
+- Reading production code
+
+
+# 41. What Is the Difference Between Primitive and Reference Types?
+
+## Short Answer
+
+Primitive types store **single values directly**.
+
+Reference types store a **reference to a memory location where the data exists**.
+
+---
+
+# Primitive Types
+
+JavaScript has 7 primitive types:
+
+```text
+String
+Number
+BigInt
+Boolean
+Undefined
+Null
+Symbol
+```
+
+Example:
+
+```javascript
+let age = 25;
+```
+
+The variable directly contains the value.
+
+```
+age
+ |
+ ↓
+25
+```
+
+---
+
+# Reference Types
+
+Reference types store complex data.
+
+Examples:
+
+```text
+Object
+Array
+Function
+```
+
+Example:
+
+```javascript
+const user = {
+    name:"Alex"
+};
+```
+
+Memory:
+
+```
+user
+ |
+ ↓
+Memory Address
+ |
+ ↓
+{
+ name:"Alex"
+}
+```
+
+The variable stores a reference, not the complete object.
+
+---
+
+# Important Difference: Copying Values
+
+## Primitive Copy
+
+```javascript
 let a = 10;
 
 let b = a;
@@ -248,943 +4016,947 @@ let b = a;
 b = 20;
 
 console.log(a);
-//output-10
-//Changing b does not affect a because primitives are copied by value.
-```
-```js
-let a = 10;
-
-let b = 10;
-
-console.log(a === b);
-//true
-//Primitive values are compared directly.
 ```
 
-Non-Primitive Types
-- Mutable.
-- Stored by reference.
-- Compared by reference.
-- Types -
-Object , Array , Function , Date , Map , Set , RegExp
-- 
-```js
-let obj1 = {
-    name: "John"
+Output:
+
+```
+10
+```
+
+Why?
+
+A copy of the value was created.
+
+Memory:
+
+```
+a → 10
+
+b → 10
+```
+
+Changing `b` does not affect `a`.
+
+---
+
+# Reference Copy
+
+```javascript
+let user1 = {
+
+    name:"Alex"
+
 };
 
-let obj2 = obj1;
+let user2 = user1;
 
-obj2.name = "Peter";
+user2.name = "John";
 
-console.log(obj1.name);
-//Peter
-//Both variables point to the same object in memory.
-//user1 ──┐
-//        ├──► Object
-//user2 ──┘
-```
-```js
-let a = {
-    x: 1
-};
-
-let b = {
-    x: 1
-};
-
-console.log(a === b);
-//false
-//Different object references.
-
-```
-- Arrays are Objects.
-```js
-typeof []
-//object
-```
-- Functions are objects.
-```js
-typeof function(){}
-//"function"
-//functions are a special kind of object
+console.log(user1.name);
 ```
 
-#  What is typeof?
-- typeof is a JavaScript operator that returns a string indicating the type of a value.
-- typeof value 
-or
-typeof(value)
-```js
-typeof 100  //"number"
-typeof "Hello" //"string"
-typeof true  //"boolean"
-
-let x;
-typeof x //"undefined"
-typeof Symbol() //"symbol"
-typeof 100n  //"bigint"
-typeof {} //"object"
-typeof [] //"object"
-typeof function(){}  //"function"
-typeof null //"object"
-//This is a historical bug in JavaScript.
-// In the first implementation of JavaScript, values were represented with type tags. null was incorrectly tagged in a way that made typeof report it as an object. The mistake became part of the language, and changing it now would break existing code.
-//"typeof null returns 'object' due to a legacy bug, but null is a primitive value."
-```
-```js
-Array.isArray([])
-//true , Better Way to Detect Arrays
-value === null
-//Better Way to Detect Null
-```
-# Difference Between null and undefined
-
-- undefined means a variable has been declared but has not yet been assigned a value. null is an intentional assignment representing "no value" or "empty value."
-
-```js
-let age;
-console.log(age);
-//undefined
-//JavaScript assigns undefined automatically.
-let user = null;
-// the programmer explicitly says:
-// There is currently no value.
-```
-```js
-let x;
-
-console.log(x);
-//undefined
-let person = null;
-
-console.log(person);
-//null
-```
-
-|           Undefined     |         Null            | 
-|           --------      |        --------         |
-| Automatically assigned, | Manually assigned       |
-| Means value not assigned|Means intentionally empty|
-|   ,Type: "undefined"    |typeof returns "object"  |
-|     ,Primitive          |     Primitive           |
- 
-```js
-null == undefined
-//true
-//Because loose equality considers them equivalent.
-null === undefined
-//false
-//Because they are different types.
-```
-- When you intentionally want to indicate that a variable currently has no object or meaningful value.
-let selectedUser = null;
-
-# What is NaN?
-- NaN stands for "Not a Number." It represents the result of an invalid numeric operation. Despite its name, its type is "number".
-```js
-0 / 0
-//NaN
-Number("Hello")
-//NaN
-Math.sqrt(-1)
-//NaN
-```
-```js
-typeof NaN
-//number
-//Because NaN belongs to the Number type even though it represents an invalid numeric result.
-NaN === NaN
-//false
-//NaN is defined as being unequal to every value, including itself.
-Number.isNaN(NaN);
-//true
-isNaN("hello") // true ,Avoid relying on the global isNaN() for interview answers because it performs type coercion.
-Number.isNaN("hello") // false , Number.isNaN() is the safer, more precise choice.
-```
-
-# What is Infinity?
-- Infinity is a special numeric value in JavaScript that represents a number larger than any finite number. It belongs to the Number type.
-```js
-10 / 0
-//Infinity
--10 / 0
-//-Infinity
-Number.MAX_VALUE * 2
-//Infinity
-typeof Infinity
-//"number"
-Number.isFinite(100)
-//true
-Number.isFinite(Infinity)
-//false
-```
-- NaN
-Invalid numeric result,typeof → "number",NaN === NaN → false,Check with Number.isNaN()
-- Infinity 
-Number too large to represent finitely,typeof → "number",Infinity === Infinity → true ,Check with Number.isFinite()
-
-# What are Truthy and Falsy Values?
-
-Every value in JavaScript has an inherent Boolean representation. When a value is used in a Boolean context (such as an if statement), it is automatically converted to either true or false. Values that become true are called truthy, and values that become false are called falsy.
-
-When JavaScript evaluates conditions, it automatically converts values to true or false.
- ```js
- if ("Hello") {
-    console.log("Executed");
-}
-//Executed
-//Although "Hello" is not a Boolean, JavaScript treats it as true.
+Output:
 
 ```
-- Truthy/Falsy evaluation happens in:
-
-if()
-
-while()
-
-for()
-
-&&
-
-||
-
-!
-?:
-- Falsy Values
-
-false	
-0	
--0	
-0n	
-""	
-null	
-undefined	
-NaN	
-```js
-Boolean(false)
-Boolean(0)
-Boolean("")
-Boolean(undefined)
-Boolean(null)
-////false for all
+John
 ```
 
-- Truthy Values
-Everything that is not falsy is truthy.
-- true , 1 , -5 , 100 , "Hello" , "0" , [] , {} ,  function(){}
+Why?
 
-```js
-Boolean([])
-Boolean({})
-//true
-```
-```js
-let username = "";
+Both variables point to the same object.
 
-if(username){
-    console.log("Welcome");
-}
-else{
-    console.log("Please login");
-}
-//Please login
-```
-```js
-Boolean("0")
-//true
-Boolean("false")
-//true
-```
-
-# What is Type Coercion?
-- Type coercion is the automatic or manual conversion of one data type into another.
-- JavaScript performs type coercion because it is a dynamically typed language.
-- Sometimes operations require values of the same type.
-
-JavaScript automatically converts them.
-```js
-5 + "5"
-//"55"
-//Number becomes String.
-"5" - 2
-//3
-//String becomes Number.
-```
-Types of Type Coercion
-   1. Implicit
-   2. Explicit
-
-```js
-10 + "5"
-//"105"
-10 - "5"
-//5
-10 * "5"
-//50
-10 / "5"
-//2
-true + 1
-//2
-//true → 1
-false + 5
-//5
-null + 5
-//5
-undefined + 5
-//NaN
-```
-- Because + is used for both addition and string concatenation.
-
-When one operand is a string, + prefers concatenation.
-
-The - operator only performs numeric subtraction, so both operands are converted to numbers.
-
-
-# Implicit vs Explicit Type Conversion
-
-Implicit conversion is performed automatically by JavaScript. Explicit conversion is performed manually by the programmer.
-- Implicit
-Javascript decides . May cause bugs 
-```js
-5 + "5"
-//"55"
-true + 5
-//6
-null + 10
-//10
+Memory:
 
 ```
-- Explicit
-Programmer converts values manually.More predictable
-```js
-String(100)
-//"100"
-Number("100")
-//100
-Number("Hello")
-//NaN
-Boolean(1)
-//true
-Boolean(0)
-//false
-parseInt("100px")
-//100
-parseFloat("10.5abc")
-//10.5
-```
--Prefer explicit conversion because it makes code easier to understand and avoids unexpected behavior
-
-# Difference Between == and ===
-- == compares values after performing type coercion if needed. === compares both value and type without performing type coercion.
-
-- Double Equals (==)
-Allows type conversion , loose equality ,Compares value after conversion , Can produce unexpected results
-
-```js
-5 == "5"
-//true
-//"5"
-// ↓
-// 5
-true == 1
-//true
-false == 0
-//true
-null == undefined
-//true
+user1 ───┐
+         ↓
+      Object
+         ↑
+user2 ───┘
 ```
 
-- Triple Equals (===)
-No type conversion , Strict equality , Compares type and value ,Predictable
-```js
-5 === "5"
-//false ,Different types.
-10 === 10
-//true
-true === 1
-//false
-```
+---
 
-- Always prefer ===
+# Interview Answer
 
-```js
-[] == false
-//true ,Because JavaScript performs several implicit conversions before comparison.
-[] === false
-// false 
-"" == 0
-//true
-"" === 0
-//false
-```
+Primitive types store values directly, while reference types store references to objects stored in memory.
 
-# Object.is() vs ===
+---
 
-- Both compare values, but Object.is() handles a few special cases differently. It considers NaN equal to itself and distinguishes between +0 and -0.
+---
 
-```js
-10 === 10
-//true
-Object.is(10,10)
-//true
-```
-Difference 1 — NaN
-```js
-NaN === NaN
-//false
-Object.is(NaN,NaN)
-//true
-```
-Difference 2 — +0 and -0
-```js
-+0 === -0
-//true
-Object.is(+0,-0)
-//false
+# 42. Where Are Primitive Values Typically Stored?
 
-```
-- === follows JavaScript's strict equality rules.
+## Short Answer
 
-Object.is() uses the SameValue algorithm, which is slightly stricter for these edge cases.
-- When to Use Object.is()
-Most of the time, use: ===
-Use Object.is() only when you specifically need to distinguish +0 from -0 or treat NaN values as equal. A notable real-world example is that React uses Object.is() internally in some places (such as comparing dependency values in Hooks).
+Primitive values are typically stored in the **Stack memory**.
 
-# Dynamic Typing in JavaScript
+---
 
-JavaScript is a dynamically typed language, which means you don't have to declare the data type of a variable. The type is determined automatically at runtime, and a variable can hold values of different types during execution.
-In some languages like Java or C++, you must specify the type of a variable.
-- Type checked at runtime
-- No type declaration required
-- Variable type can change
-- JavaScript, Python, Ruby
+# Example
 
-```java
-int age = 25;
-String name = "John";
-// age can only store integers.
-// name can only store strings.
-```
-```js
-let value = 10;
-value = "Hello";
-value = true;
-value = {
-    id: 1
-};
-//All are valid.
-//Because JavaScript checks the type while the program is running (runtime).
-```
-```js
-let data = 100;
-
-console.log(typeof data);
-//number
-data = "JavaScript";
-
-console.log(typeof data);
-//string
-data = false;
-
-console.log(typeof data);
-//Boolean
-//Same variable. Different data types.
-```
-✔ Less code
-
-✔ Faster development
-
-✔ Flexible
-
-✔ Easy prototyping
-
-- disadvantages
-```js
-let total = 100;
-
-total = "Hundred";
-
-console.log(total + 50);
-//Hundred50
-//Instead of numeric addition, JavaScript performs string concatenation.
-
-// This flexibility can introduce bugs if types are not handled carefully.
-```
-- JavaScript
-    Dynamically Typed
-    Weakly Typed
-
-Weak typing means JavaScript automatically converts data types when necessary (type coercion).
-```js
-5 + "5"
-//55
-```
-
-# What are Literals?
-- A literal is a fixed value written directly in the source code. It represents data exactly as it is, without requiring computation.
-- Whenever you write an actual value in your code, that value is a literal.
-```js
+```javascript
 let age = 25;
-//25 is a Number Literal.
-let name = "John";
-//"John" is a String Literal.
+
+let name = "Alex";
 ```
-- Types of Literals
-    ```js
-    //Number Literal
-    100 
-    10.5
-    -20
 
-    //String Literal
-    "Hello"
-    'World'
-    `Template Literal`
+Memory:
 
-    //Boolean Literal
-    true
-    false
-
-    //Object Literal
-    const user = {
-    name: "John",
-    age: 25
-    };
-    
-    //Array Literal
-    const numbers = [1,2,3];
-    
-    //Function Literal (
-    const greet = function(){
-    console.log("Hello");
-    };
-
-    //Regular Expression Literal
-    const pattern = /abc/;
-
-    //Template Literal
-    let name = "John";
-
-    console.log(`Hello ${name}`); // Hello John
-
-    //Null Literal
-    null
-
-    //BigInt Literal
-    100n
-
-    ```
-- Because they are the simplest way to represent values directly in code.
--"Hello" is a String Literal
-
-
-# How is Memory Allocated for Primitives and Objects?
-Primitive values are stored directly by value. Objects are stored in heap memory, and variables hold references (addresses) to those objects.
-
-JavaScript mainly uses two memory areas.
-
-Memory
-
-├── Stack
-
-└── Heap
-
-- Primitive Memory Allocation
-```js
-let a = 10;
-//Stack a → 10
-//The value itself is stored directly.
 ```
-```js
-let a = 10;
+Stack
 
-let b = a;
+age
+ |
+25
 
-// a → 10
-// b → 10
-//Both variables have independent copies.
-//Changing one does not affect the other.
-b = 20;
-// a → 10
-// b → 20
+
+name
+ |
+"Alex"
 ```
-- Object Memory Allocation
-```js 
-let user = {
-    name: "John"
+
+---
+
+# Why Stack?
+
+Primitive values are:
+
+- Small
+- Fixed size
+- Simple to access
+
+So JavaScript can store and retrieve them quickly.
+
+---
+
+# Important Note
+
+JavaScript engines are free to optimize memory internally.
+
+The stack/heap explanation is a mental model, not a strict rule visible to developers.
+
+For interviews, this model is accepted.
+
+---
+
+# 43. Where Are Reference Values Typically Stored?
+
+## Short Answer
+
+Reference values are typically stored in the **Heap memory**.
+
+---
+
+# Example
+
+```javascript
+const user = {
+
+    name:"Alex",
+    age:25
+
 };
-user ───────► Heap Address
+```
+
+Memory:
+
+```
+Stack
+
+user
+ |
+ ↓
+Heap Address
+
 
 Heap
 
 {
-    name:"John"
+ name:"Alex",
+ age:25
 }
-//The object lives in the Heap.
-//The variable stores only the reference
-let user1 = {
-    name: "John"
-};
-
-let user2 = user1;
-// user1 ───┐
-
-//           ├────► Heap Object
-
-// user2 ───┘
-//Both variables point to the same object.
-user2.name = "Peter"; //Changing one
-user1.name //also changes
-//because both variables refer to the same object.
-
 ```
-```js
-let x = 10;
-let y = x;
-y = 20;
-console.log(x);
-//10
-let obj1 = {
-    age: 20
-};
 
-let obj2 = obj1;
+---
 
-obj2.age = 30;
-
-console.log(obj1.age);
-//30
-```
-Primitives are copied by value.
-
-Objects are copied by reference.
-
-
-# Stack vs Heap Memory
-Stack memory stores primitive values, function calls, and references to objects. Heap memory stores actual objects, arrays, and functions. Stack is faster and automatically managed, while Heap is larger and managed by JavaScript's garbage collector.
-
-Stack stores:
-
-- Primitive values
-- Function execution contexts
-- Local variables
-- References (addresses) to heap objects
-
-```js
-let age = 25;
-// in memory = age → 25
-```
-✔ Fast
-
-✔ Small
-
-✔ Automatically managed
-
-✔ LIFO (Last In, First Out)
-
-Heap stores:
-
-- Objects
-- Arrays
-- Functions
-- Maps
-- Sets
-- Dates
-
-```js
-let person = {
-    name: "John"
-};
-```
-✔ Large
-
-✔ Slower than Stack
-
-✔ Dynamic memory allocation
-
-✔ Managed by Garbage Collector
-
-- Why Are Objects Stored in Heap?
+# Why Heap?
 
 Objects can:
 
-    Grow dynamically
-    Shrink
-    Contain nested objects
-    Consume varying amounts of memory
+- Grow dynamically
+- Contain many values
+- Have unknown size
 
-The stack has limited space, so storing large, dynamic structures there would be inefficient.
+Therefore they need flexible memory.
 
-- Objects are stored in the Heap. Variables that refer to them are stored on the Stack.
-- The function object itself is stored in the Heap. When you call a function, its execution context (local variables, parameters, etc.) is created on the Stack.
-- When an object in the Heap is no longer reachable by any variable or reference, JavaScript's Garbage Collector automatically reclaims its memory - Garbage Collection
-```js
-let user = {
-  name: "John"
+---
+
+# Example
+
+Large application data:
+
+```javascript
+const product = {
+
+    id:101,
+    name:"Laptop",
+    reviews:[],
+    specifications:{}
+
 };
-
-user = null;
-//If no other references point to that object, it becomes eligible for garbage collection
 ```
 
-# What is Scope?
-- Scope is the accessibility or visibility of variables, functions, and objects in different parts of a JavaScript program. It determines where a variable can be accessed and where it cannot.
-- Imagine every variable in a program were accessible from everywhere.
-```js
-let username = "John";
+This is stored as an object in memory.
 
-function login() {
-    username = "Peter";
-}
-```
-Any function could accidentally modify any variable, making large applications difficult to maintain.
+---
 
-Scope prevents this by limiting where variables can be accessed.
-```js
-let age = 20;
+# Interview Answer
 
-function showAge() {
-    console.log(age);
-}
+Reference values are stored in heap memory, and variables hold references pointing to those values.
 
-showAge();
-//20
-//age is accessible because it is in the outer scope.
+---
 
-function showName() {
-    let name = "John";
-}
+---
 
-console.log(name);
-//ReferenceError: name is not defined
-//name exists only inside the function.
-```
-- Types of Scope
-├── Global Scope
+# 44. How Do You Check the Type of a Variable?
 
-├── Function Scope
+## Short Answer
 
-├── Block Scope
+Use the `typeof` operator.
 
-└── Lexical Scope
+---
 
-# Global Scope
+# Syntax
 
-- A variable declared outside all functions and blocks is in the global scope. It can be accessed from anywhere in the program.
-```js
-let country = "India";
-
-function printCountry() {
-    console.log(country);
-}
-
-console.log(country);
-
-printCountry();
-//India
-// India
-//The variable is available everywhere because it's global.
-```
-- Global Variables
-```js
-let appName = "Interview App";
-const PI = 3.14;
-var version = "1.0";
-//All are globally accessible when declared at the top level of a script.
-```
-```js
-let message = "Hello";
-
-function greet() {
-    console.log(message);
-}
-
-function welcome() {
-    console.log(message);
-}
-//Both functions can access message.
-```
-- Global Object
-```js
-console.log(window);
-//window is the global object.
-var a = 10;
-
-console.log(window.a);
-//10
-
-let b = 20;
-const c = 30;
-
-console.log(window.b);
-console.log(window.c);
-// undefined
-// undefined
-//Global var declarations become properties of window in browsers, but let and const do not.
-```
--Problems with Global Variables
-Too many globals can cause:
-
-Variable name collisions
-Difficult debugging
-Unexpected side effects
-Hard-to-maintain code
-```js
-let count = 0;
-
-function increment() {
-    count++;
-}
-
-function reset() {
-    count = 0;
-}
-//Any code can modify count.
-```
-- Keep global variables to a minimum.
-
-Prefer keeping variables inside functions or modules.
-
-# Function Scope
-# Block Scope
-- [x] Block scope.
-- [x] Lexical scope.
-- [x] Scope chain.
-- [x] Shadowing.
-- [x] Illegal shadowing.
-- [x] Variable hoisting.
-- [x] Function hoisting.
-- [x] Hoisting with var.
-- [x] Hoisting with let.
-- [x] Hoisting with const.
-- [x] Temporal Dead Zone (TDZ).
-- [x] Redeclaration.
-- [x] Reassignment.
-
-# Why avoid var?
-
-- var is generally avoided because it is function-scoped instead of block-scoped, allows redeclaration, can lead to bugs due to hoisting, and can unintentionally become a property of the global object when declared globally in browsers.
-
-- Problem1- No Block Scope
-```js
-if (true) {
-
-    var age = 20;
-
-}
-
-console.log(age);
-//20
-//The variable leaks outside the block.
-```
-- with let -
-```js
-if (true) {
-
-    let age = 20;
-
-}
-
-console.log(age);
-//ReferenceError
+```javascript
+typeof variable;
 ```
 
-- Problem 2 — Redeclaration
-```js
-var x = 10;
+---
 
-var x = 20;
+# Examples
 
-console.log(x);
-//20
-//Allowed
+## Number
+
+```javascript
+let age = 25;
+
+console.log(typeof age);
+```
+
+Output:
 
 ```
-with let
-```js
-let x = 10;
-
-let x = 20;
-//SyntaxError
+number
 ```
-- Problem 3 — Hoisting Confusion
-```js
+
+---
+
+## String
+
+```javascript
+let name = "Alex";
+
+console.log(typeof name);
+```
+
+Output:
+
+```
+string
+```
+
+---
+
+## Boolean
+
+```javascript
+let isActive = true;
+
+console.log(typeof isActive);
+```
+
+Output:
+
+```
+boolean
+```
+
+---
+
+## Object
+
+```javascript
+const user = {};
+
+console.log(typeof user);
+```
+
+Output:
+
+```
+object
+```
+
+---
+
+# Checking Without Variable
+
+You can also:
+
+```javascript
+typeof 100;
+```
+
+Output:
+
+```
+number
+```
+
+---
+
+# Why Is This Useful?
+
+During debugging:
+
+```javascript
+console.log(typeof data);
+```
+
+helps identify unexpected values from APIs or user input.
+
+---
+
+# 45. What Does the `typeof` Operator Return?
+
+## Definition
+
+`typeof` returns a string representing the type of a value.
+
+---
+
+# Examples
+
+```javascript
+typeof "Hello"
+```
+
+Returns:
+
+```
+"string"
+```
+
+---
+
+```javascript
+typeof 100
+```
+
+Returns:
+
+```
+"number"
+```
+
+---
+
+```javascript
+typeof true
+```
+
+Returns:
+
+```
+"boolean"
+```
+
+---
+
+```javascript
+typeof undefined
+```
+
+Returns:
+
+```
+"undefined"
+```
+
+---
+
+```javascript
+typeof Symbol()
+```
+
+Returns:
+
+```
+"symbol"
+```
+
+---
+
+# Complete Table
+
+| Value | typeof result |
+|---|---|
+| `"Hello"` | string |
+| `123` | number |
+| `true` | boolean |
+| `undefined` | undefined |
+| `123n` | bigint |
+| `Symbol()` | symbol |
+| `{}` | object |
+| `[]` | object |
+| `null` | object |
+| function(){} | function |
+
+---
+
+# Important Interview Trap
+
+```javascript
+typeof [];
+```
+
+Output:
+
+```
+object
+```
+
+Arrays are objects internally.
+
+---
+
+# 46. Why Does `typeof null` Return `"object"`?
+
+## Short Answer
+
+It is a historical bug in JavaScript.
+
+---
+
+# Example
+
+```javascript
+let value = null;
+
+console.log(typeof value);
+```
+
+Output:
+
+```
+object
+```
+
+---
+
+# Why?
+
+In the original JavaScript implementation, values were represented using type tags.
+
+The internal representation of `null` was incorrectly identified as an object.
+
+---
+
+# Should It Be Changed?
+
+Technically yes.
+
+But:
+
+Millions of websites depend on this behavior.
+
+Changing it would break old code.
+
+So JavaScript keeps this strange behavior for compatibility.
+
+---
+
+# Correct Way To Check Null
+
+Do not use:
+
+```javascript
+typeof value === "null"
+```
+
+It does not work.
+
+Use:
+
+```javascript
+value === null
+```
+
+---
+
+# Interview Answer
+
+`typeof null` returns object because of an old JavaScript bug maintained for backward compatibility.
+
+---
+
+---
+
+# 47. What Is the Difference Between Null and Undefined?
+
+## Short Answer
+
+Both represent absence of value, but the meaning is different.
+
+---
+
+# Undefined
+
+Means:
+
+"A value has not been assigned."
+
+Example:
+
+```javascript
+let username;
+
+console.log(username);
+```
+
+Output:
+
+```
+undefined
+```
+
+JavaScript assigned it automatically.
+
+---
+
+# Null
+
+Means:
+
+"I intentionally set this value as empty."
+
+Example:
+
+```javascript
+let selectedUser = null;
+```
+
+Developer intentionally assigned it.
+
+---
+
+# Comparison
+
+| undefined | null |
+|---|---|
+| Automatically assigned | Manually assigned |
+| Missing value | Empty value |
+| Default state | Intentional state |
+
+---
+
+# Real Application Example
+
+Before login:
+
+```javascript
+let currentUser = null;
+```
+
+After login:
+
+```javascript
+currentUser = {
+    name:"Alex"
+};
+```
+
+---
+
+# Interview Answer
+
+Undefined means a value has not been assigned, while null represents intentional absence of value.
+
+---
+
+---
+
+# 48. Can the Type of a Variable Change in JavaScript?
+
+## Answer
+
+Yes.
+
+JavaScript is dynamically typed.
+
+---
+
+# Example
+
+```javascript
+let value = 100;
+
+console.log(typeof value);
+```
+
+Output:
+
+```
+number
+```
+
+---
+
+Later:
+
+```javascript
+value = "Hello";
+
+console.log(typeof value);
+```
+
+Output:
+
+```
+string
+```
+
+---
+
+The same variable changed type.
+
+---
+
+# Example
+
+```javascript
+let data = true;
+
+data = {
+    name:"Alex"
+};
+```
+
+Allowed.
+
+---
+
+# Is This Good Practice?
+
+Usually no.
+
+Avoid changing variable types unnecessarily.
+
+Bad:
+
+```javascript
+let user = "Alex";
+
+user = 25;
+
+user = false;
+```
+
+Hard to understand.
+
+---
+
+Better:
+
+```javascript
+let username = "Alex";
+
+let age = 25;
+
+let isActive = true;
+```
+
+---
+
+# 49. What Is Dynamic Typing?
+
+## Definition
+
+Dynamic typing means variable types are determined at runtime instead of being declared explicitly.
+
+---
+
+# Example
+
+JavaScript:
+
+```javascript
+let age = 25;
+```
+
+JavaScript automatically understands:
+
+```
+age is Number
+```
+
+---
+
+Later:
+
+```javascript
+age = "Twenty Five";
+```
+
+Now:
+
+```
+age is String
+```
+
+---
+
+# Compare With Java
+
+Java requires:
+
+```java
+int age = 25;
+```
+
+The type is fixed.
+
+---
+
+JavaScript:
+
+```javascript
+let age = 25;
+```
+
+Type can change.
+
+---
+
+# Advantages
+
+- Faster development
+- Less code
+- Flexible
+
+---
+
+# Disadvantages
+
+- Runtime errors
+- Unexpected behavior
+- Harder debugging
+
+---
+
+# TypeScript Solution
+
+TypeScript adds static typing:
+
+```typescript
+let age:number = 25;
+```
+
+Now:
+
+```typescript
+age = "hello";
+```
+
+Error.
+
+---
+
+# 50. What Is Weak Typing in JavaScript?
+
+## Definition
+
+Weak typing means JavaScript automatically converts values between different types when needed.
+
+This is called:
+
+```
+Type Coercion
+```
+
+---
+
+# Example
+
+```javascript
+console.log("5" + 10);
+```
+
+Output:
+
+```
+510
+```
+
+Why?
+
+JavaScript converts:
+
+```
+10 → "10"
+```
+
+Then combines strings.
+
+---
+
+# Another Example
+
+```javascript
+console.log("5" - 2);
+```
+
+Output:
+
+```
+3
+```
+
+Why?
+
+JavaScript converts:
+
+```
+"5" → 5
+```
+
+Then subtracts.
+
+---
+
+# Why Is This Dangerous?
+
+Example:
+
+```javascript
+let total = "100";
+
+total = total + 50;
+
 console.log(total);
-
-var total = 100;
-//undefined
 ```
 
-With let
-```js
-console.log(total);
+Output:
 
-let total = 100;
+```
+10050
 ```
 
-- [x] Variable lookup.
+Developer expected:
 
-# Strict mode.
-
-- Strict mode is a feature that enables a stricter set of rules in JavaScript. It helps detect common coding mistakes, prevents unsafe actions, and makes code more secure and easier to optimize.
-
-# "use strict".
-
-- "use strict" is a directive that enables strict mode for a script or a function. It must appear at the beginning of the script or function body.
-- Must Be First
-- It enforces stricter parsing and error handling rules, helping catch common mistakes.
-- It can help JavaScript engines optimize code better, but the main purpose is correctness and safety.
-
-``` js
-"use strict";
-
-let age = 20; 
 ```
-- The entire file runs in strict mode.
-- Function-Level Strict Mode
-```js
-function demo(){
-
-    "use strict";
-
-    let age = 20;
-
-}
-//Only this function uses strict mode.
-```
-- Common Errors Prevented
-1. Accidental Globals
-```js
-"use strict";
-
-x = 10;
-//ReferenceError
+150
 ```
 
-2. Deleting Variables
-```js
-"use strict";
+---
 
-let x = 10;
+# Best Practice
 
-delete x;
-//SyntaxError
+Use strict equality:
+
+Avoid:
+
+```javascript
+==
 ```
 
-3. Duplicate Parameters
-```js
-"use strict";
+Prefer:
 
-function test(a, a){}
-//SyntaxError
+```javascript
+===
 ```
-- If you're using ES Modules (import/export) or JavaScript classes, strict mode is enabled automatically.
 
-```js
-// math.js
-export function add(a, b) {
-    return a + b;
-}
-//No need to write "use strict" manually.
+---
+
+Example:
+
+Loose equality:
+
+```javascript
+5 == "5"
 ```
+
+Output:
+
+```
+true
+```
+
+---
+
+Strict equality:
+
+```javascript
+5 === "5"
+```
+
+Output:
+
+```
+false
+```
+
+---
+
+# Interview Answer
+
+JavaScript is weakly typed because it automatically converts values between different data types during operations.
+
+---
+
+# Final Revision
+
+```
+Primitive Types:
+- Stored as values
+- Usually stack memory
+- Copied by value
+
+
+Reference Types:
+- Objects, arrays, functions
+- Usually heap memory
+- Copied by reference
+
+
+typeof:
+- Checks data type
+- typeof null is a historical bug
+
+
+Dynamic Typing:
+- Variable types can change
+
+
+Weak Typing:
+- JavaScript automatically converts types
+- Use === to avoid unexpected behavior
+```
+
+---
+
+# Engineering Importance
+
+Understanding this helps you debug:
+
+- API response bugs
+- React state issues
+- Form input problems
+- Unexpected calculations
+- Authentication bugs
+- Production JavaScript errors
+
+These concepts look simple, but many real-world bugs come from exactly these areas.
