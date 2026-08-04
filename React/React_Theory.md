@@ -1,4 +1,4 @@
-# Module 1: React Fundamentals (1–10)
+# Module 1: React Fundamentals 
 
 ---
 
@@ -402,8 +402,6 @@ Answer:
 
 ---
 
-
-# Module 1: React Fundamentals (11–20)
 
 ## JSX
 
@@ -1945,3 +1943,1076 @@ For most React interviews, remember these key points:
 - Fiber enables scheduling and prioritization.
 - Fiber makes Concurrent Rendering possible.
 - Fiber improves responsiveness and performance.
+
+
+
+# Module 2: Components & Props (Questions 61–70)
+
+# Functional Components
+
+---
+
+## 61. What is a functional component?
+
+### Answer
+
+A **functional component** is a JavaScript function that accepts **props** as input and returns **JSX** describing what should be displayed on the screen.
+
+### Example
+
+```jsx
+function Welcome() {
+  return <h1>Hello World</h1>;
+}
+```
+
+or
+
+```jsx
+const Welcome = () => {
+  return <h1>Hello World</h1>;
+};
+```
+
+Functional components are the standard way to build React applications today.
+
+---
+
+## 62. Why are functional components preferred over class components?
+
+### Answer
+
+Since React Hooks were introduced in React 16.8, functional components can do everything class components can, with simpler syntax.
+
+### Advantages
+
+- Less code
+- Easier to read
+- Easier to test
+- Easier to reuse logic with Hooks
+- Better TypeScript support
+- Preferred by the React team
+- Better suited for modern React features
+
+### Interview Tip
+
+Today, almost all new React applications use functional components.
+
+---
+
+## 63. How do you create a functional component in React?
+
+### Answer
+
+A functional component is simply a JavaScript function that returns JSX.
+
+### Function Declaration
+
+```jsx
+function Greeting() {
+  return <h1>Hello</h1>;
+}
+```
+
+### Arrow Function
+
+```jsx
+const Greeting = () => {
+  return <h1>Hello</h1>;
+};
+```
+
+### Implicit Return
+
+```jsx
+const Greeting = () => <h1>Hello</h1>;
+```
+
+### Naming Rule
+
+Component names must start with a **capital letter**.
+
+✅ Correct
+
+```jsx
+function UserCard() {}
+```
+
+❌ Incorrect
+
+```jsx
+function userCard() {}
+```
+
+---
+
+## 64. What must a functional component return?
+
+### Answer
+
+A functional component must return one of the following:
+
+- JSX
+- A React element
+- `null`
+- A React Fragment
+- An array of React elements
+
+### Valid Example
+
+```jsx
+function App() {
+  return <h1>Hello</h1>;
+}
+```
+
+### Returning a Fragment
+
+```jsx
+function App() {
+  return (
+    <>
+      <h1>Hello</h1>
+      <p>Welcome</p>
+    </>
+  );
+}
+```
+
+### Returning null
+
+```jsx
+function App() {
+  return null;
+}
+```
+
+Returning `undefined` is **not allowed** and causes an error.
+
+---
+
+## 65. Can a functional component return multiple elements? How?
+
+### Answer
+
+Yes.
+
+However, JSX must have **one parent element**.
+
+You can achieve this using:
+
+### 1. A Wrapper Element
+
+```jsx
+return (
+  <div>
+    <h1>Hello</h1>
+    <p>Welcome</p>
+  </div>
+);
+```
+
+### 2. React Fragment
+
+```jsx
+return (
+  <>
+    <h1>Hello</h1>
+    <p>Welcome</p>
+  </>
+);
+```
+
+Fragments are preferred when you don't need an extra DOM element.
+
+---
+
+## 66. What happens if a component returns `null`?
+
+### Answer
+
+If a component returns `null`, React renders **nothing**.
+
+The component still:
+
+- Executes its code
+- Runs Hooks
+- Receives props
+- Participates in the component tree
+
+Only the UI is hidden.
+
+### Example
+
+```jsx
+function User({ isLoggedIn }) {
+  if (!isLoggedIn) {
+    return null;
+  }
+
+  return <h1>Welcome</h1>;
+}
+```
+
+This is commonly used for conditional rendering.
+
+---
+
+## 67. Can one functional component call another functional component?
+
+### Answer
+
+Yes.
+
+React applications are built by composing small components together.
+
+### Example
+
+```jsx
+function Header() {
+  return <h1>My Website</h1>;
+}
+
+function App() {
+  return (
+    <div>
+      <Header />
+    </div>
+  );
+}
+```
+
+This is called **Component Composition** and is one of React's core principles.
+
+---
+
+## 68. What are the advantages of functional components?
+
+### Answer
+
+Functional components provide several benefits:
+
+- Less boilerplate code
+- Easier to understand
+- Easier to maintain
+- Reusable logic with Hooks
+- Better performance in many cases
+- Easier testing
+- Better TypeScript compatibility
+- Recommended by the React team
+- Work seamlessly with Concurrent Rendering
+
+### Interview Tip
+
+If starting a new React project today, use functional components unless you have a specific reason not to.
+
+---
+
+## 69. What are the limitations of functional components?
+
+### Answer
+
+Modern functional components have very few limitations.
+
+Earlier (before Hooks), they could not manage state or lifecycle methods.
+
+Today, Hooks solve those problems.
+
+Possible challenges include:
+
+- Hook rules must be followed.
+- Overusing Hooks can make components harder to read.
+- Too many state variables may reduce maintainability.
+- Large components become difficult to manage.
+
+These are generally design issues rather than limitations of functional components themselves.
+
+---
+
+## 70. What are the best practices for writing functional components?
+
+### Answer
+
+Follow these best practices:
+
+- Keep components small and focused.
+- Use descriptive component names.
+- Start component names with a capital letter.
+- Keep business logic separate from UI when possible.
+- Use Hooks correctly.
+- Avoid unnecessary state.
+- Reuse components instead of duplicating code.
+- Pass data through props.
+- Avoid deeply nested JSX.
+- Split large components into smaller reusable ones.
+- Use meaningful file names.
+- Keep components easy to test.
+- Avoid side effects directly inside the render function.
+
+### Example Structure
+
+```jsx
+function UserCard({ user }) {
+  return (
+    <div className="card">
+      <h2>{user.name}</h2>
+      <p>{user.email}</p>
+    </div>
+  );
+}
+```
+
+This component is:
+
+- Reusable
+- Readable
+- Easy to test
+- Easy to maintain
+- Follows React best practices
+
+# Module 2: Components & Props (Questions 71–80)
+
+# Props
+
+---
+
+## 71. What are props in React?
+
+### Answer
+
+**Props** (short for **properties**) are read-only values passed from a **parent component** to a **child component**. They allow components to receive data and make components reusable.
+
+### Example
+
+```jsx
+function Greeting(props) {
+  return <h1>Hello, {props.name}</h1>;
+}
+
+function App() {
+  return <Greeting name="Alex" />;
+}
+```
+
+**Output**
+
+```
+Hello, Alex
+```
+
+### Key Points
+
+- Props are passed from parent to child.
+- Props make components reusable.
+- Props are read-only.
+- Props can contain any JavaScript value.
+
+---
+
+## 72. Why do we use props?
+
+### Answer
+
+Props are used to pass data and behavior between components.
+
+Without props, every component would display the same hardcoded content.
+
+### Example Without Props
+
+```jsx
+function UserCard() {
+  return <h2>Alex</h2>;
+}
+```
+
+Only displays **Alex**.
+
+### Example With Props
+
+```jsx
+function UserCard({ name }) {
+  return <h2>{name}</h2>;
+}
+
+function App() {
+  return (
+    <>
+      <UserCard name="Alex" />
+      <UserCard name="John" />
+      <UserCard name="Sarah" />
+    </>
+  );
+}
+```
+
+**Output**
+
+```
+Alex
+John
+Sarah
+```
+
+### Benefits
+
+- Reusability
+- Dynamic UI
+- Better code organization
+- Easier maintenance
+
+---
+
+## 73. Are props mutable or immutable? Why?
+
+### Answer
+
+Props are **immutable (read-only)**.
+
+A child component should **never modify** the props it receives.
+
+### Incorrect
+
+```jsx
+function User(props) {
+  props.name = "John"; // ❌ Never do this
+}
+```
+
+### Correct
+
+```jsx
+function User({ name }) {
+  return <h2>{name}</h2>;
+}
+```
+
+### Why?
+
+React follows **one-way data flow**.
+
+```
+Parent
+   ↓
+ Props
+   ↓
+Child
+```
+
+The parent owns the data.
+
+If a child needs to change the data, it should notify the parent using a callback function.
+
+---
+
+## 74. How do you pass props from a parent component to a child component?
+
+### Answer
+
+Props are passed as **attributes** on a component, similar to HTML attributes.
+
+### Parent Component
+
+```jsx
+function App() {
+  return <User name="Alex" age={25} />;
+}
+```
+
+### Child Component
+
+```jsx
+function User(props) {
+  return (
+    <>
+      <h2>{props.name}</h2>
+      <p>{props.age}</p>
+    </>
+  );
+}
+```
+
+### Output
+
+```
+Alex
+25
+```
+
+---
+
+## 75. How do you access props inside a functional component?
+
+### Answer
+
+There are two common ways.
+
+### Method 1: Using `props`
+
+```jsx
+function User(props) {
+  return <h2>{props.name}</h2>;
+}
+```
+
+---
+
+### Method 2: Using Destructuring (Recommended)
+
+```jsx
+function User({ name }) {
+  return <h2>{name}</h2>;
+}
+```
+
+Destructuring makes the code cleaner and easier to read.
+
+---
+
+## 76. What is props destructuring, and why is it useful?
+
+### Answer
+
+**Props destructuring** extracts values directly from the `props` object.
+
+### Without Destructuring
+
+```jsx
+function User(props) {
+  return (
+    <>
+      <h2>{props.name}</h2>
+      <p>{props.age}</p>
+    </>
+  );
+}
+```
+
+---
+
+### With Destructuring
+
+```jsx
+function User({ name, age }) {
+  return (
+    <>
+      <h2>{name}</h2>
+      <p>{age}</p>
+    </>
+  );
+}
+```
+
+### Benefits
+
+- Cleaner code
+- Less repetition
+- Easier to read
+- Easier to maintain
+
+This is the preferred approach in modern React.
+
+---
+
+## 77. How do you pass multiple props to a component?
+
+### Answer
+
+Pass multiple props as separate attributes.
+
+### Parent
+
+```jsx
+<User
+  name="Alex"
+  age={25}
+  city="London"
+  isAdmin={true}
+/>
+```
+
+### Child
+
+```jsx
+function User({ name, age, city, isAdmin }) {
+  return (
+    <>
+      <h2>{name}</h2>
+      <p>{age}</p>
+      <p>{city}</p>
+      <p>{isAdmin ? "Admin" : "User"}</p>
+    </>
+  );
+}
+```
+
+Props can be of different data types.
+
+---
+
+## 78. Can you pass objects and arrays as props?
+
+### Answer
+
+Yes.
+
+Props can contain **any valid JavaScript value**, including:
+
+- Objects
+- Arrays
+- Numbers
+- Strings
+- Booleans
+- Functions
+- JSX
+- Components
+
+### Passing an Object
+
+```jsx
+const user = {
+  name: "Alex",
+  age: 25
+};
+
+<User user={user} />
+```
+
+Child
+
+```jsx
+function User({ user }) {
+  return <h2>{user.name}</h2>;
+}
+```
+
+---
+
+### Passing an Array
+
+```jsx
+const skills = ["React", "Node", "TypeScript"];
+
+<User skills={skills} />
+```
+
+Child
+
+```jsx
+function User({ skills }) {
+  return (
+    <ul>
+      {skills.map(skill => (
+        <li key={skill}>{skill}</li>
+      ))}
+    </ul>
+  );
+}
+```
+
+---
+
+## 79. Can you pass functions as props? Why would you do that?
+
+### Answer
+
+Yes.
+
+Passing functions as props allows a child component to communicate with its parent.
+
+This is the primary way React handles **child-to-parent communication**.
+
+### Parent
+
+```jsx
+function App() {
+  function handleClick() {
+    alert("Button clicked");
+  }
+
+  return <Button onClick={handleClick} />;
+}
+```
+
+### Child
+
+```jsx
+function Button({ onClick }) {
+  return (
+    <button onClick={onClick}>
+      Click Me
+    </button>
+  );
+}
+```
+
+### Why pass functions as props?
+
+- Handle button clicks
+- Update parent state
+- Submit forms
+- Delete items
+- Edit data
+- Trigger API calls
+- Notify parent components of events
+
+---
+
+## 80. What is the difference between props and state?
+
+### Answer
+
+| Props | State |
+|--------|-------|
+| Passed from parent | Managed inside the component |
+| Read-only (immutable) | Mutable using state setters |
+| Used for communication | Used for local component data |
+| Controlled by the parent | Controlled by the component itself |
+| Cannot be modified directly | Updated using `setState` or Hook setters |
+| Makes components reusable | Makes components interactive |
+
+### Example
+
+```jsx
+function Counter({ title }) {
+  const [count, setCount] = useState(0);
+
+  return (
+    <>
+      <h2>{title}</h2>
+
+      <p>{count}</p>
+
+      <button onClick={() => setCount(count + 1)}>
+        Increment
+      </button>
+    </>
+  );
+}
+```
+
+Here:
+
+- `title` is a **prop** because it comes from the parent.
+- `count` is **state** because it belongs to the component and changes over time.
+
+### Interview Tip
+
+A simple way to remember the difference:
+
+- **Props = Data passed into a component.**
+- **State = Data owned and managed by the component.**
+
+
+# Module 2: Components & Props (81–90)
+
+## Component Composition
+
+### 81. What is component composition?
+
+**Answer:**
+
+Component composition is the practice of building complex UIs by combining smaller, reusable components instead of creating one large component.
+
+**Example:**
+
+```jsx
+function Header() {
+  return <header>Header</header>;
+}
+
+function Sidebar() {
+  return <aside>Sidebar</aside>;
+}
+
+function Dashboard() {
+  return (
+    <>
+      <Header />
+      <Sidebar />
+    </>
+  );
+}
+```
+
+**Why it matters**
+
+- Encourages code reuse
+- Keeps components small
+- Easier to maintain and test
+
+
+---
+
+### 82. Why is composition preferred over inheritance in React?
+
+**Answer:**
+
+React recommends composition because it provides greater flexibility and avoids the complexity of inheritance.
+
+Instead of extending components, React combines them together.
+
+**Composition**
+
+```jsx
+<Card>
+  <Profile />
+</Card>
+```
+
+**Inheritance (Not Recommended)**
+
+```jsx
+class ProfileCard extends Card {}
+```
+
+**Advantages**
+
+- More reusable
+- Less tightly coupled
+- Easier to understand
+- Easier to maintain
+
+
+---
+
+### 83. How can one component be composed of multiple child components?
+
+**Answer:**
+
+A parent component can render multiple child components together.
+
+**Example**
+
+```jsx
+function Navbar() {
+  return <nav>Navbar</nav>;
+}
+
+function Hero() {
+  return <section>Hero</section>;
+}
+
+function Footer() {
+  return <footer>Footer</footer>;
+}
+
+function Home() {
+  return (
+    <>
+      <Navbar />
+      <Hero />
+      <Footer />
+    </>
+  );
+}
+```
+
+The `Home` component is composed of three reusable components.
+
+
+---
+
+### 84. What are the advantages of component composition?
+
+**Answer:**
+
+Component composition provides several benefits:
+
+- Reusability
+- Cleaner code
+- Easier testing
+- Better scalability
+- Separation of concerns
+- Easier maintenance
+- Improved readability
+
+Large applications become easier to manage because each component has a single responsibility.
+
+
+---
+
+### 85. What is the difference between composition and code duplication?
+
+**Answer:**
+
+**Composition**
+
+Reuse existing components.
+
+```jsx
+<Card>
+  <User />
+</Card>
+```
+
+**Code Duplication**
+
+Copy the same JSX multiple times.
+
+```jsx
+<div className="card">User 1</div>
+
+<div className="card">User 2</div>
+
+<div className="card">User 3</div>
+```
+
+**Composition is better because**
+
+- One source of truth
+- Easier updates
+- Less repetitive code
+- Fewer bugs
+
+
+---
+
+### 86. How do reusable components improve maintainability?
+
+**Answer:**
+
+Reusable components centralize UI logic.
+
+If a button design changes, you update only the `Button` component instead of every page.
+
+Instead of:
+
+```jsx
+<button>Save</button>
+<button>Delete</button>
+<button>Edit</button>
+```
+
+Use:
+
+```jsx
+<Button text="Save" />
+<Button text="Delete" />
+<Button text="Edit" />
+```
+
+Benefits:
+
+- Easier maintenance
+- Consistent UI
+- Faster development
+- Fewer bugs
+
+
+---
+
+### 87. What is a layout component?
+
+**Answer:**
+
+A layout component controls the structure of a page without containing business logic.
+
+Example:
+
+```jsx
+function Layout({ children }) {
+  return (
+    <>
+      <Navbar />
+      <main>{children}</main>
+      <Footer />
+    </>
+  );
+}
+```
+
+Usage:
+
+```jsx
+<Layout>
+  <HomePage />
+</Layout>
+```
+
+Layout components are commonly used for headers, footers, sidebars, and page wrappers.
+
+
+---
+
+### 88. What is a wrapper component?
+
+**Answer:**
+
+A wrapper component wraps other components to provide shared functionality or styling.
+
+Example:
+
+```jsx
+function Card({ children }) {
+  return <div className="card">{children}</div>;
+}
+```
+
+Usage:
+
+```jsx
+<Card>
+  <Profile />
+</Card>
+```
+
+Wrapper components reduce duplication and keep layouts consistent.
+
+
+---
+
+### 89. What are presentational and container components?
+
+**Answer:**
+
+### Presentational Components
+
+Responsible only for displaying UI.
+
+```jsx
+function UserCard({ name }) {
+  return <h2>{name}</h2>;
+}
+```
+
+### Container Components
+
+Responsible for fetching data and managing logic.
+
+```jsx
+function UserContainer() {
+  const user = { name: "Alex" };
+
+  return <UserCard name={user.name} />;
+}
+```
+
+Modern React often replaces container components with custom hooks, but the concept is still useful.
+
+
+---
+
+### 90. What are common mistakes developers make when composing components?
+
+**Answer:**
+
+Common mistakes include:
+
+- Creating very large components
+- Deep component nesting
+- Duplicating UI instead of reusing components
+- Passing too many props (prop drilling)
+- Mixing business logic with UI
+- Making components responsible for multiple tasks
+- Ignoring the `children` prop when appropriate
+- Not extracting reusable components
+- Overengineering small components
+- Poor component naming
+
+**Best Practices**
+
+- Keep components small.
+- Give each component a single responsibility.
+- Prefer composition over duplication.
+- Use `children` for flexible layouts.
+- Extract repeated UI into reusable components.
