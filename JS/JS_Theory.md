@@ -274,20 +274,6 @@ Variables help us
 
 ---
 
-## Real World Example
-
-Instagram stores
-
-- username
-- followers
-- likes
-- comments
-
-All are variables.
-
-Without variables Instagram couldn't remember anything.
-
----
 
 ## Best Practice
 
@@ -473,17 +459,6 @@ This is both declaration and initialization.
 
 ---
 
-## Analogy
-
-Declaration
-
-Buying an empty notebook.
-
-Initialization
-
-Writing inside the notebook.
-
----
 
 ## Interview Question
 
@@ -991,18 +966,6 @@ The **reference** cannot change, even though the object's contents can.
 
 ---
 
-## Quick Revision
-
-- **Variable:** A named container for data.
-- **Declaration:** Creating a variable.
-- **Initialization:** Assigning its first value.
-- **Uninitialized value:** `undefined`.
-- **Keywords:** `var`, `let`, `const`.
-- **Modern choice:** Prefer `const`, then `let`, avoid `var`.
-- **`let`:** Introduced to fix problems with `var`.
-- **`const`:** Prevents accidental reassignment and improves code safety.
-
-
 
 # 11. What is Variable Reassignment?
 
@@ -1188,15 +1151,6 @@ It only changes the existing value.
 
 ---
 
-## Summary
-
-- Variable already exists.
-- Only its value changes.
-- Memory location may stay the same (implementation-dependent), but logically it is the same variable.
-- Allowed with `var` and `let`.
-- Not allowed with `const`.
-
----
 
 # 12. What is Variable Redeclaration?
 
@@ -1250,27 +1204,7 @@ age = 30;
 
 ---
 
-## Analogy
 
-Imagine a classroom.
-
-Student Roll No. 1
-
-Already exists.
-
-Redeclaration means
-
-Creating another Roll No. 1.
-
-That creates confusion.
-
-Reassignment means
-
-The same student changes address.
-
-No confusion.
-
----
 
 ## Why Redeclaration is Dangerous
 
@@ -1383,18 +1317,6 @@ Hard to debug.
 ✔ Redeclare
 
 ✔ Reassign
-
----
-
-## Summary
-
-Allowed
-
-```javascript
-var x = 1;
-
-var x = 2;
-```
 
 ---
 
@@ -9343,3 +9265,5549 @@ After completing Questions **91–100**, you should understand:
 - ✅ `delete` operator
 
 These concepts appear constantly in React, Node.js, backend APIs, and production JavaScript code. Mastering them will also make debugging much easier because many subtle bugs come from misunderstanding operator behavior, equality, and JavaScript's evaluation rules.
+
+
+# 101. What is a conditional statement?
+
+A **conditional statement** is a programming structure that allows your program to **make decisions** based on whether a condition is `true` or `false`.
+
+Instead of executing every line of code, JavaScript checks a condition and decides **which block of code should run**.
+
+Think of it like making decisions in real life.
+
+### Real-Life Example
+
+```
+If it is raining
+    Take an umbrella
+Otherwise
+    Wear sunglasses
+```
+
+The action depends on the condition.
+
+Programming works exactly the same way.
+
+---
+
+## Example
+
+```javascript
+let age = 20;
+
+if (age >= 18) {
+    console.log("You can vote.");
+}
+```
+
+### Output
+
+```
+You can vote.
+```
+
+---
+
+## Flow
+
+```
+Condition
+
+↓
+
+True?
+
+↓
+
+Yes
+↓
+
+Run Code
+
+↓
+
+No
+
+↓
+
+Skip Code
+```
+
+---
+
+## Where are conditional statements used?
+
+Almost every application uses them.
+
+Examples
+
+- Login systems
+- Payment processing
+- User authentication
+- Shopping carts
+- Weather apps
+- Online exams
+- ATM software
+- Games
+- Form validation
+
+Without conditional statements, software cannot make decisions.
+
+---
+
+# 102. Why do we use conditional statements?
+
+Imagine every program executed every line regardless of the situation.
+
+A banking app would allow everyone to withdraw money.
+
+A login page would log everyone in.
+
+An e-commerce site would always apply discounts.
+
+That would be complete chaos.
+
+Conditional statements prevent this.
+
+---
+
+## They help programs
+
+- Make decisions
+- Validate user input
+- Execute different logic
+- Handle errors
+- Protect data
+- Improve performance
+- Build business rules
+
+---
+
+## Example
+
+```javascript
+let password = "12345";
+
+if (password === "12345") {
+    console.log("Login Successful");
+}
+```
+
+Output
+
+```
+Login Successful
+```
+
+---
+
+Without the condition,
+
+everyone would log in.
+
+---
+
+# 103. What is the syntax of an if statement?
+
+The basic syntax is
+
+```javascript
+if (condition) {
+
+    // Code to execute
+
+}
+```
+
+---
+
+### Example
+
+```javascript
+let marks = 90;
+
+if (marks >= 35) {
+    console.log("Pass");
+}
+```
+
+Output
+
+```
+Pass
+```
+
+---
+
+### Parts of an if statement
+
+```javascript
+if (marks >= 35) {
+
+    console.log("Pass");
+
+}
+```
+
+```
+if
+```
+
+Keyword
+
+```
+(marks >= 35)
+```
+
+Condition
+
+```
+{
+}
+```
+
+Block of code
+
+---
+
+# 104. How does an if statement work?
+
+JavaScript evaluates the condition.
+
+If it becomes
+
+```
+true
+```
+
+the block executes.
+
+If it becomes
+
+```
+false
+```
+
+the block is skipped.
+
+---
+
+Example 1
+
+```javascript
+let age = 20;
+
+if (age >= 18) {
+    console.log("Adult");
+}
+```
+
+Condition
+
+```
+20 >= 18
+
+↓
+
+true
+```
+
+Output
+
+```
+Adult
+```
+
+---
+
+Example 2
+
+```javascript
+let age = 15;
+
+if (age >= 18) {
+    console.log("Adult");
+}
+```
+
+Condition
+
+```
+15 >= 18
+
+↓
+
+false
+```
+
+Output
+
+```
+Nothing
+```
+
+The code inside the block never executes.
+
+---
+
+# 105. When should you use an if statement?
+
+Use an `if` statement when you want to execute code **only if a condition is true**.
+
+---
+
+Examples
+
+✅ Check login
+
+```javascript
+if (isLoggedIn) {
+
+}
+```
+
+---
+
+✅ Check age
+
+```javascript
+if (age >= 18) {
+
+}
+```
+
+---
+
+✅ Check stock
+
+```javascript
+if (stock > 0) {
+
+}
+```
+
+---
+
+✅ Check balance
+
+```javascript
+if (balance >= amount) {
+
+}
+```
+
+---
+
+## Rule
+
+One condition.
+
+One possible action.
+
+---
+
+# 106. What is an else statement?
+
+The `else` block executes when the `if` condition is false.
+
+Think of it as
+
+```
+Otherwise...
+```
+
+---
+
+Syntax
+
+```javascript
+if (condition) {
+
+}
+
+else {
+
+}
+```
+
+---
+
+Example
+
+```javascript
+let age = 15;
+
+if (age >= 18) {
+
+    console.log("Adult");
+
+} else {
+
+    console.log("Minor");
+
+}
+```
+
+Output
+
+```
+Minor
+```
+
+---
+
+Flow
+
+```
+Condition
+
+↓
+
+True?
+
+↓
+
+Yes
+
+↓
+
+if block
+
+↓
+
+No
+
+↓
+
+else block
+```
+
+---
+
+# 107. When is an else block executed?
+
+The `else` block executes **only when every previous condition is false**.
+
+---
+
+Example
+
+```javascript
+let marks = 20;
+
+if (marks >= 35) {
+
+    console.log("Pass");
+
+} else {
+
+    console.log("Fail");
+
+}
+```
+
+Condition
+
+```
+20 >= 35
+
+↓
+
+false
+```
+
+Output
+
+```
+Fail
+```
+
+---
+
+Important
+
+Only **one** block executes.
+
+Never both.
+
+---
+
+# 108. What is an else if statement?
+
+An `else if` allows JavaScript to check another condition when the previous one is false.
+
+It lets you make multiple decisions.
+
+---
+
+Syntax
+
+```javascript
+if (condition1) {
+
+}
+
+else if (condition2) {
+
+}
+
+else {
+
+}
+```
+
+---
+
+Example
+
+```javascript
+let marks = 82;
+
+if (marks >= 90) {
+
+    console.log("Grade A");
+
+} else if (marks >= 80) {
+
+    console.log("Grade B");
+
+} else {
+
+    console.log("Grade C");
+
+}
+```
+
+Output
+
+```
+Grade B
+```
+
+---
+
+Real-Life Example
+
+Movie Ticket
+
+```
+Age < 5
+
+↓
+
+Free
+
+Age < 18
+
+↓
+
+₹100
+
+Adult
+
+↓
+
+₹200
+```
+
+---
+
+# 109. How are multiple else if conditions evaluated?
+
+JavaScript checks conditions **from top to bottom**.
+
+The **first true condition wins**.
+
+After finding a true condition, JavaScript ignores the remaining conditions.
+
+---
+
+Example
+
+```javascript
+let number = 20;
+
+if (number > 5) {
+
+    console.log("Greater than 5");
+
+} else if (number > 10) {
+
+    console.log("Greater than 10");
+
+}
+```
+
+Output
+
+```
+Greater than 5
+```
+
+Why?
+
+```
+20 > 5
+
+↓
+
+true
+```
+
+JavaScript stops immediately.
+
+It never checks
+
+```
+20 > 10
+```
+
+---
+
+Correct order
+
+```javascript
+if (number > 10)
+
+else if (number > 5)
+```
+
+Always write **more specific conditions first**.
+
+---
+
+# 110. What happens if none of the conditions are true?
+
+If every `if` and `else if` condition is false, JavaScript executes the `else` block.
+
+---
+
+Example
+
+```javascript
+let marks = 25;
+
+if (marks >= 90) {
+
+    console.log("A");
+
+} else if (marks >= 80) {
+
+    console.log("B");
+
+} else if (marks >= 70) {
+
+    console.log("C");
+
+} else {
+
+    console.log("Fail");
+
+}
+```
+
+Output
+
+```
+Fail
+```
+
+---
+
+If there is **no `else` block**, then nothing happens.
+
+Example
+
+```javascript
+let age = 15;
+
+if (age >= 18) {
+
+    console.log("Adult");
+
+}
+```
+
+Output
+
+```
+No Output
+```
+
+This is perfectly valid.
+
+---
+
+# 111. Can an `if` statement exist without an `else`?
+
+**Yes.**
+
+An `if` statement does **not** require an `else`.
+
+If the condition is true, the code runs.
+
+If the condition is false, JavaScript simply skips the block and continues executing the rest of the program.
+
+---
+
+Example
+
+```javascript
+let isLoggedIn = true;
+
+if (isLoggedIn) {
+    console.log("Welcome!");
+}
+
+console.log("Home Page");
+```
+
+Output
+
+```
+Welcome!
+Home Page
+```
+
+---
+
+Now change the value:
+
+```javascript
+let isLoggedIn = false;
+
+if (isLoggedIn) {
+    console.log("Welcome!");
+}
+
+console.log("Home Page");
+```
+
+Output
+
+```
+Home Page
+```
+
+The `if` block is skipped, but the rest of the program continues normally.
+
+---
+
+# Interview Tips
+
+✅ Use `if` when you have a single condition.
+
+✅ Use `if...else` when there are two possible outcomes.
+
+✅ Use `if...else if...else` for multiple conditions.
+
+✅ Arrange conditions from **most specific** to **least specific**.
+
+✅ Remember that JavaScript stops checking once it finds the **first true condition**.
+
+---
+
+# Key Takeaways
+
+- A conditional statement lets programs make decisions.
+- `if` executes code only when its condition is `true`.
+- `else` runs when the `if` condition is `false`.
+- `else if` allows checking multiple conditions.
+- Conditions are evaluated from top to bottom.
+- Only one matching branch executes in an `if...else if...else` chain.
+- `if` can be used without `else` when no alternative action is needed.
+
+
+# 112. Can an `else` exist without an `if`?
+
+**No.**
+
+An `else` block **must always belong to an `if` statement**.
+
+Writing an `else` by itself causes a syntax error because JavaScript doesn't know which condition it belongs to.
+
+---
+
+## ❌ Incorrect
+
+```javascript
+else {
+    console.log("Hello");
+}
+```
+
+Output
+
+```
+SyntaxError
+```
+
+---
+
+## ✅ Correct
+
+```javascript
+let age = 20;
+
+if (age >= 18) {
+    console.log("Adult");
+} else {
+    console.log("Minor");
+}
+```
+
+Output
+
+```
+Adult
+```
+
+---
+
+## Rule
+
+```
+if
+
+↓
+
+optional else if
+
+↓
+
+optional else
+```
+
+An `else` can **never start a decision**.
+
+---
+
+# 113. What is a nested `if` statement?
+
+A **nested `if`** means writing an `if` statement **inside another `if` statement**.
+
+The inner `if` is checked **only if the outer `if` is true**.
+
+---
+
+## Syntax
+
+```javascript
+if (condition1) {
+
+    if (condition2) {
+
+    }
+
+}
+```
+
+---
+
+## Example
+
+```javascript
+let isLoggedIn = true;
+let isAdmin = true;
+
+if (isLoggedIn) {
+
+    if (isAdmin) {
+        console.log("Admin Dashboard");
+    }
+
+}
+```
+
+Output
+
+```
+Admin Dashboard
+```
+
+---
+
+### Flow
+
+```
+Logged In?
+
+↓
+
+Yes
+
+↓
+
+Admin?
+
+↓
+
+Yes
+
+↓
+
+Dashboard
+```
+
+---
+
+## Real-world Example
+
+Online Banking
+
+```
+Logged In?
+
+↓
+
+Yes
+
+↓
+
+Balance > Amount?
+
+↓
+
+Yes
+
+↓
+
+Withdraw Money
+```
+
+Multiple conditions depend on each other.
+
+---
+
+# 114. When should nested `if` statements be avoided?
+
+Nested `if` statements are useful, but **too many levels make code difficult to read and maintain**.
+
+---
+
+## ❌ Bad Example
+
+```javascript
+if (user) {
+
+    if (user.isLoggedIn) {
+
+        if (user.isVerified) {
+
+            if (user.isAdmin) {
+
+                console.log("Welcome");
+
+            }
+
+        }
+
+    }
+
+}
+```
+
+This is difficult to follow.
+
+---
+
+## ✅ Better
+
+```javascript
+if (
+    user &&
+    user.isLoggedIn &&
+    user.isVerified &&
+    user.isAdmin
+) {
+    console.log("Welcome");
+}
+```
+
+Much cleaner.
+
+---
+
+## Use nested `if` only when
+
+- Conditions truly depend on previous conditions
+- It improves readability
+- There are only one or two levels
+
+---
+
+## Avoid when
+
+- Nesting becomes very deep
+- A logical operator (`&&`, `||`) makes the code simpler
+- Guard clauses or early returns are clearer
+
+---
+
+# 115. What are common mistakes when writing conditional statements?
+
+These mistakes appear frequently in interviews and production code.
+
+---
+
+## Mistake 1
+
+Using `=` instead of `==` or `===`
+
+❌
+
+```javascript
+if (age = 18)
+```
+
+This assigns 18 to `age`.
+
+---
+
+✅
+
+```javascript
+if (age === 18)
+```
+
+---
+
+## Mistake 2
+
+Using `==` unnecessarily
+
+Prefer
+
+```javascript
+===
+```
+
+---
+
+## Mistake 3
+
+Wrong condition order
+
+❌
+
+```javascript
+if (marks >= 50)
+
+else if (marks >= 90)
+```
+
+The second condition is never reached.
+
+---
+
+Correct
+
+```javascript
+if (marks >= 90)
+
+else if (marks >= 50)
+```
+
+---
+
+## Mistake 4
+
+Too many nested `if`s
+
+Produces unreadable code.
+
+---
+
+## Mistake 5
+
+Forgetting `break` inside `switch`
+
+Leads to fall-through.
+
+---
+
+## Mistake 6
+
+Comparing floating-point numbers directly
+
+```javascript
+0.1 + 0.2 === 0.3
+```
+
+Returns
+
+```
+false
+```
+
+---
+
+# 116. What is the ternary (`?:`) operator?
+
+The ternary operator is a **shorter way to write a simple `if...else`**.
+
+It has three parts:
+
+```javascript
+condition ? valueIfTrue : valueIfFalse;
+```
+
+---
+
+## Example
+
+```javascript
+let age = 20;
+
+let result = age >= 18 ? "Adult" : "Minor";
+
+console.log(result);
+```
+
+Output
+
+```
+Adult
+```
+
+---
+
+Equivalent
+
+```javascript
+let result;
+
+if (age >= 18) {
+
+    result = "Adult";
+
+} else {
+
+    result = "Minor";
+
+}
+```
+
+---
+
+# 117. When should you use the ternary operator instead of `if...else`?
+
+Use it for **simple decisions that return one value**.
+
+---
+
+Good Examples
+
+```javascript
+const status = age >= 18 ? "Adult" : "Minor";
+```
+
+---
+
+```javascript
+const color = darkMode ? "black" : "white";
+```
+
+---
+
+```javascript
+const message = loggedIn ? "Welcome" : "Login";
+```
+
+---
+
+Avoid it when multiple statements must execute.
+
+---
+
+# 118. When should you avoid using nested ternary operators?
+
+Nested ternaries become confusing quickly.
+
+---
+
+❌ Bad
+
+```javascript
+let result =
+age >= 18
+? marks >= 40
+? "Pass"
+: "Fail"
+: "Minor";
+```
+
+Most developers need to stop and mentally untangle it.
+
+---
+
+✅ Better
+
+```javascript
+if (age >= 18) {
+
+    if (marks >= 40) {
+
+        result = "Pass";
+
+    } else {
+
+        result = "Fail";
+
+    }
+
+} else {
+
+    result = "Minor";
+
+}
+```
+
+---
+
+Rule
+
+If readability suffers, use `if...else`.
+
+---
+
+# 119. Can a ternary operator return a value?
+
+**Yes.**
+
+Unlike an `if` statement, a ternary is an **expression**, meaning it evaluates to a value.
+
+---
+
+Example
+
+```javascript
+const age = 25;
+
+const type = age >= 18 ? "Adult" : "Minor";
+
+console.log(type);
+```
+
+Output
+
+```
+Adult
+```
+
+---
+
+You can also return values directly.
+
+```javascript
+function canVote(age) {
+
+    return age >= 18
+        ? true
+        : false;
+
+}
+```
+
+---
+
+# 120. What is the difference between an `if...else` statement and a ternary operator?
+
+| if...else | Ternary |
+|------------|----------|
+| Statement | Expression |
+| Can execute multiple statements | Returns one value |
+| Easier for complex logic | Best for simple logic |
+| More readable for large conditions | More concise |
+| Can contain many blocks | Usually one expression |
+
+---
+
+Example
+
+### if...else
+
+```javascript
+if (age >= 18) {
+
+    console.log("Adult");
+
+} else {
+
+    console.log("Minor");
+
+}
+```
+
+---
+
+### Ternary
+
+```javascript
+console.log(
+    age >= 18
+        ? "Adult"
+        : "Minor"
+);
+```
+
+---
+
+# 121. What is a `switch` statement?
+
+A `switch` statement is another decision-making structure.
+
+Instead of checking many `else if` conditions, it compares **one value against multiple possible cases**.
+
+---
+
+Example
+
+```javascript
+let day = 2;
+
+switch (day) {
+
+    case 1:
+        console.log("Monday");
+        break;
+
+    case 2:
+        console.log("Tuesday");
+        break;
+
+    default:
+        console.log("Invalid");
+
+}
+```
+
+Output
+
+```
+Tuesday
+```
+
+---
+
+# 122. When should you use a `switch` statement?
+
+Use `switch` when **one variable can have many fixed values**.
+
+---
+
+Good Examples
+
+- Days of week
+- Months
+- Menu options
+- Keyboard shortcuts
+- User roles
+- Calculator operators
+
+---
+
+Instead of
+
+```javascript
+if(day===1)
+
+else if(day===2)
+
+else if(day===3)
+```
+
+Write
+
+```javascript
+switch(day)
+```
+
+Much cleaner.
+
+---
+
+# 123. How does a `switch` statement compare values?
+
+A `switch` compares using **strict equality (`===`)**.
+
+No type conversion occurs.
+
+---
+
+Example
+
+```javascript
+let value = "5";
+
+switch (value) {
+
+    case 5:
+        console.log("Number");
+        break;
+
+    case "5":
+        console.log("String");
+        break;
+
+}
+```
+
+Output
+
+```
+String
+```
+
+Because
+
+```
+"5" !== 5
+```
+
+---
+
+# 124. What is a `case` in a `switch` statement?
+
+A `case` represents **one possible value** that the `switch` expression can match.
+
+---
+
+Example
+
+```javascript
+let role = "admin";
+
+switch (role) {
+
+    case "admin":
+        console.log("Full Access");
+        break;
+
+    case "user":
+        console.log("Limited Access");
+        break;
+
+}
+```
+
+Each `case` is like asking:
+
+```
+Is the value equal to this?
+```
+
+---
+
+# 125. What is the purpose of the `break` statement in a `switch`?
+
+`break` tells JavaScript to **stop executing the switch** after a matching case.
+
+Without it, execution continues into the following cases. This is called **fall-through**.
+
+---
+
+## ❌ Without `break`
+
+```javascript
+let day = 1;
+
+switch (day) {
+
+    case 1:
+        console.log("Monday");
+
+    case 2:
+        console.log("Tuesday");
+
+    case 3:
+        console.log("Wednesday");
+
+}
+```
+
+Output
+
+```
+Monday
+Tuesday
+Wednesday
+```
+
+---
+
+## ✅ With `break`
+
+```javascript
+let day = 1;
+
+switch (day) {
+
+    case 1:
+        console.log("Monday");
+        break;
+
+    case 2:
+        console.log("Tuesday");
+        break;
+
+    case 3:
+        console.log("Wednesday");
+        break;
+
+}
+```
+
+Output
+
+```
+Monday
+```
+
+---
+
+# Interview Tips
+
+- Use `if...else` for conditions involving ranges or complex logic.
+- Use the ternary operator only for short, readable expressions.
+- Avoid deeply nested ternary operators.
+- Use `switch` when comparing one value against many fixed options.
+- Remember that `switch` uses **strict equality (`===`)**.
+- Don't forget `break`, unless you intentionally want fall-through behavior.
+
+```
+
+
+# 126. What happens if you omit `break`?
+
+If you **omit the `break` statement**, JavaScript **does not stop** after executing the matched `case`.
+
+Instead, it continues executing the next cases until it finds a `break` or reaches the end of the `switch`.
+
+This behavior is called **fall-through**.
+
+---
+
+## Example
+
+```javascript
+let day = 2;
+
+switch (day) {
+    case 1:
+        console.log("Monday");
+
+    case 2:
+        console.log("Tuesday");
+
+    case 3:
+        console.log("Wednesday");
+
+    default:
+        console.log("Invalid Day");
+}
+```
+
+### Output
+
+```
+Tuesday
+Wednesday
+Invalid Day
+```
+
+Why?
+
+- `day` matches `case 2`.
+- There is **no `break`**.
+- JavaScript continues executing every case below it.
+
+---
+
+## Correct Version
+
+```javascript
+switch (day) {
+    case 1:
+        console.log("Monday");
+        break;
+
+    case 2:
+        console.log("Tuesday");
+        break;
+
+    case 3:
+        console.log("Wednesday");
+        break;
+
+    default:
+        console.log("Invalid Day");
+}
+```
+
+Output
+
+```
+Tuesday
+```
+
+---
+
+## Interview Tip
+
+One of the most common JavaScript interview mistakes is forgetting `break`.
+
+---
+
+# 127. What is fall-through in a switch statement?
+
+**Fall-through** is the behavior where JavaScript continues executing the next `case` statements after finding a match because no `break` was encountered.
+
+---
+
+Example
+
+```javascript
+let role = "admin";
+
+switch (role) {
+
+    case "admin":
+        console.log("Admin");
+
+    case "user":
+        console.log("User");
+
+    case "guest":
+        console.log("Guest");
+}
+```
+
+Output
+
+```
+Admin
+User
+Guest
+```
+
+---
+
+### Why?
+
+```
+Admin matched
+
+↓
+
+No break
+
+↓
+
+Execute User
+
+↓
+
+No break
+
+↓
+
+Execute Guest
+```
+
+---
+
+### Can fall-through be useful?
+
+Yes.
+
+Sometimes multiple cases should perform the same action.
+
+Example
+
+```javascript
+let grade = "A";
+
+switch (grade) {
+
+    case "A":
+    case "B":
+        console.log("Excellent");
+        break;
+
+    case "C":
+        console.log("Good");
+        break;
+
+    default:
+        console.log("Needs Improvement");
+}
+```
+
+Output
+
+```
+Excellent
+```
+
+Both `"A"` and `"B"` share the same code.
+
+This is a valid and common use of fall-through.
+
+---
+
+# 128. What is the `default` case?
+
+The `default` case is executed **when none of the cases match**.
+
+Think of it as the `else` block of a `switch` statement.
+
+---
+
+Example
+
+```javascript
+let day = 9;
+
+switch(day){
+
+    case 1:
+        console.log("Monday");
+        break;
+
+    case 2:
+        console.log("Tuesday");
+        break;
+
+    default:
+        console.log("Invalid Day");
+
+}
+```
+
+Output
+
+```
+Invalid Day
+```
+
+---
+
+Flow
+
+```
+Check Case 1
+
+↓
+
+No
+
+↓
+
+Check Case 2
+
+↓
+
+No
+
+↓
+
+Run Default
+```
+
+---
+
+# 129. Is the `default` case mandatory?
+
+**No.**
+
+A `switch` statement works perfectly without a `default` case.
+
+---
+
+Example
+
+```javascript
+let color = "Blue";
+
+switch(color){
+
+    case "Red":
+        console.log("Stop");
+        break;
+
+    case "Green":
+        console.log("Go");
+        break;
+
+}
+```
+
+Output
+
+```
+No Output
+```
+
+Nothing happens because no case matches.
+
+---
+
+### Best Practice
+
+Although optional, **always include a `default` case** unless you have a good reason not to.
+
+It helps:
+
+- Handle unexpected values
+- Prevent silent bugs
+- Make debugging easier
+
+Example
+
+```javascript
+default:
+    console.log("Unknown value");
+```
+
+---
+
+# 130. When is `switch` preferred over multiple `if...else if` statements?
+
+Use `switch` when comparing **one variable** against many fixed values.
+
+---
+
+Good Examples
+
+- Days of the week
+- Months
+- User roles
+- Calculator operators
+- Menu choices
+- Keyboard shortcuts
+
+---
+
+Instead of
+
+```javascript
+if(day===1){
+
+}
+else if(day===2){
+
+}
+else if(day===3){
+
+}
+```
+
+Use
+
+```javascript
+switch(day){
+
+}
+```
+
+Much cleaner.
+
+---
+
+Don't use `switch` for
+
+```javascript
+marks > 90
+
+age >=18
+
+salary >50000
+```
+
+Because `switch` compares values using `===`.
+
+Ranges should use `if...else`.
+
+---
+
+## Interview Rule
+
+Use
+
+- `switch` → fixed values
+- `if...else` → conditions and ranges
+
+---
+
+# Module 5: Loops
+# Questions 131–140
+
+---
+
+# 131. What is a loop?
+
+A **loop** is a programming structure that repeats a block of code **multiple times** until a condition becomes false.
+
+Without loops, you would have to write the same code repeatedly.
+
+---
+
+Example without loop
+
+```javascript
+console.log(1);
+console.log(2);
+console.log(3);
+console.log(4);
+console.log(5);
+```
+
+With a loop
+
+```javascript
+for(let i = 1; i <= 5; i++){
+
+    console.log(i);
+
+}
+```
+
+Output
+
+```
+1
+2
+3
+4
+5
+```
+
+---
+
+Real-world examples
+
+- Printing a list of users
+- Reading files
+- Processing API data
+- Rendering products
+- Sending emails
+- Looping through arrays
+
+---
+
+# 132. Why do we use loops?
+
+Loops help us:
+
+- Avoid repetitive code
+- Process collections of data
+- Save time
+- Improve readability
+- Automate repetitive tasks
+
+---
+
+Imagine printing numbers from 1 to 100.
+
+Without a loop:
+
+```javascript
+console.log(1);
+console.log(2);
+...
+console.log(100);
+```
+
+With a loop:
+
+```javascript
+for(let i = 1; i <= 100; i++){
+
+    console.log(i);
+
+}
+```
+
+One loop replaces 100 lines.
+
+---
+
+# 133. What are the different types of loops in JavaScript?
+
+JavaScript provides several looping constructs.
+
+### 1. `for`
+
+Best when you know how many times to loop.
+
+```javascript
+for(let i = 0; i < 5; i++){
+
+}
+```
+
+---
+
+### 2. `while`
+
+Runs as long as the condition is true.
+
+```javascript
+while(condition){
+
+}
+```
+
+---
+
+### 3. `do...while`
+
+Runs at least once before checking the condition.
+
+```javascript
+do{
+
+}while(condition);
+```
+
+---
+
+### 4. `for...of`
+
+Used to iterate over iterable values like arrays and strings.
+
+```javascript
+for(const value of array){
+
+}
+```
+
+---
+
+### 5. `for...in`
+
+Used to iterate over object keys.
+
+```javascript
+for(const key in object){
+
+}
+```
+
+---
+
+# 134. What is the syntax of a `for` loop?
+
+```javascript
+for(initialization; condition; update){
+
+    // code
+
+}
+```
+
+---
+
+Example
+
+```javascript
+for(let i = 1; i <= 5; i++){
+
+    console.log(i);
+
+}
+```
+
+Output
+
+```
+1
+2
+3
+4
+5
+```
+
+---
+
+Three Parts
+
+```javascript
+for(let i=1; i<=5; i++)
+```
+
+Initialization
+
+```
+let i = 1
+```
+
+Condition
+
+```
+i <= 5
+```
+
+Update
+
+```
+i++
+```
+
+---
+
+Flow
+
+```
+Initialize
+
+↓
+
+Check Condition
+
+↓
+
+Run Code
+
+↓
+
+Update
+
+↓
+
+Repeat
+```
+
+---
+
+# 135. When should you use a `for` loop?
+
+Use a `for` loop when **you know the number of iterations**.
+
+Examples
+
+- Print 1–100
+- Loop through an array
+- Generate multiplication tables
+- Pattern printing
+- Counting
+
+---
+
+Example
+
+```javascript
+const fruits = ["Apple", "Banana", "Mango"];
+
+for(let i = 0; i < fruits.length; i++){
+
+    console.log(fruits[i]);
+
+}
+```
+
+---
+
+# 136. What is a `while` loop?
+
+A `while` loop executes **as long as the condition is true**.
+
+The condition is checked **before** each iteration.
+
+---
+
+Syntax
+
+```javascript
+while(condition){
+
+    // code
+
+}
+```
+
+---
+
+Example
+
+```javascript
+let i = 1;
+
+while(i <= 5){
+
+    console.log(i);
+
+    i++;
+
+}
+```
+
+Output
+
+```
+1
+2
+3
+4
+5
+```
+
+---
+
+# 137. When should you use a `while` loop?
+
+Use a `while` loop when **you don't know in advance how many times the loop should execute**.
+
+Examples
+
+- Reading user input until valid
+- Waiting for a network response
+- Game loops
+- Reading files
+- Retry mechanisms
+
+---
+
+Example
+
+```javascript
+let passwordCorrect = false;
+
+while(!passwordCorrect){
+
+    // Ask user again
+
+}
+```
+
+The loop continues until the password becomes correct.
+
+---
+
+# 138. What is a `do...while` loop?
+
+A `do...while` loop executes the code block **first**, then checks the condition.
+
+This means it always runs **at least one time**.
+
+---
+
+Syntax
+
+```javascript
+do{
+
+    // code
+
+}while(condition);
+```
+
+---
+
+Example
+
+```javascript
+let i = 1;
+
+do{
+
+    console.log(i);
+
+    i++;
+
+}while(i <= 5);
+```
+
+Output
+
+```
+1
+2
+3
+4
+5
+```
+
+---
+
+# 139. What is the difference between `while` and `do...while`?
+
+| while | do...while |
+|--------|------------|
+| Checks condition first | Executes first, checks later |
+| May execute zero times | Executes at least once |
+| More commonly used | Less common |
+
+---
+
+Example
+
+```javascript
+let i = 10;
+
+while(i < 5){
+
+    console.log(i);
+
+}
+```
+
+Output
+
+```
+No Output
+```
+
+---
+
+Now
+
+```javascript
+let i = 10;
+
+do{
+
+    console.log(i);
+
+}while(i < 5);
+```
+
+Output
+
+```
+10
+```
+
+Even though the condition is false, the loop runs once.
+
+---
+
+# 140. What is an infinite loop?
+
+An **infinite loop** is a loop that never ends because its condition never becomes false.
+
+---
+
+Example
+
+```javascript
+while(true){
+
+    console.log("Hello");
+
+}
+```
+
+This runs forever.
+
+---
+
+Another common mistake
+
+```javascript
+let i = 1;
+
+while(i <= 5){
+
+    console.log(i);
+
+}
+```
+
+Output
+
+```
+1
+1
+1
+1
+1
+...
+```
+
+The variable `i` is never updated, so the condition is always true.
+
+---
+
+Correct
+
+```javascript
+let i = 1;
+
+while(i <= 5){
+
+    console.log(i);
+
+    i++;
+
+}
+```
+
+Output
+
+```
+1
+2
+3
+4
+5
+```
+
+---
+
+# Interview Tips
+
+- Use `switch` for fixed values and `if...else` for ranges.
+- Always use `break` unless you intentionally want fall-through.
+- Choose `for` when the number of iterations is known.
+- Choose `while` when the stopping condition depends on runtime.
+- Use `do...while` only when the code must execute at least once.
+- Always ensure loop variables are updated to avoid infinite loops.
+- Infinite loops are a common source of bugs, especially in servers and background processes.
+
+
+# 141. How can you accidentally create an infinite loop?
+
+An **infinite loop** happens when the loop's condition **never becomes false**.
+
+The program keeps running forever (or until you stop it), often causing the browser to freeze or the CPU to spike. Computers are wonderfully obedient. If you accidentally tell them "never stop," they will happily comply.
+
+---
+
+## Common Mistake 1: Forgetting to Update the Loop Variable
+
+❌ Incorrect
+
+```javascript
+let i = 1;
+
+while (i <= 5) {
+    console.log(i);
+}
+```
+
+Output
+
+```
+1
+1
+1
+1
+...
+```
+
+The value of `i` never changes.
+
+---
+
+✅ Correct
+
+```javascript
+let i = 1;
+
+while (i <= 5) {
+    console.log(i);
+    i++;
+}
+```
+
+---
+
+## Common Mistake 2: Wrong Condition
+
+❌
+
+```javascript
+let i = 1;
+
+while (i >= 1) {
+    i++;
+}
+```
+
+The condition is always true.
+
+---
+
+## Common Mistake 3: Resetting the Variable
+
+```javascript
+let i = 1;
+
+while (i <= 5) {
+    i = 1;
+}
+```
+
+The value never reaches 6.
+
+---
+
+## Common Mistake 4: `for` Loop Error
+
+```javascript
+for (let i = 1; i <= 10; ) {
+    console.log(i);
+}
+```
+
+Forgot `i++`.
+
+---
+
+## Interview Tip
+
+Whenever writing a loop, ask yourself:
+
+1. Where does it start?
+2. When does it stop?
+3. What changes every iteration?
+
+---
+
+# 142. What is the purpose of the `break` statement in loops?
+
+`break` immediately stops the loop.
+
+JavaScript exits the loop and continues with the next statement after it.
+
+---
+
+Example
+
+```javascript
+for (let i = 1; i <= 10; i++) {
+
+    if (i === 5) {
+        break;
+    }
+
+    console.log(i);
+}
+```
+
+Output
+
+```
+1
+2
+3
+4
+```
+
+The loop ends as soon as `i` becomes 5.
+
+---
+
+## Real-world Uses
+
+- Stop searching after finding an item.
+- Exit when an error occurs.
+- End processing early.
+- Stop reading a file when the required data is found.
+
+---
+
+# 143. What is the purpose of the `continue` statement?
+
+`continue` skips the **current iteration** and moves directly to the next one.
+
+The loop itself continues running.
+
+---
+
+Example
+
+```javascript
+for (let i = 1; i <= 5; i++) {
+
+    if (i === 3) {
+        continue;
+    }
+
+    console.log(i);
+}
+```
+
+Output
+
+```
+1
+2
+4
+5
+```
+
+The number `3` is skipped.
+
+---
+
+## Common Uses
+
+- Skip invalid data.
+- Ignore empty values.
+- Skip banned users.
+- Skip negative numbers.
+
+---
+
+# 144. What is the difference between `break` and `continue`?
+
+| break | continue |
+|--------|----------|
+| Stops the entire loop | Skips only the current iteration |
+| Loop ends immediately | Loop continues |
+| Used to exit early | Used to ignore one iteration |
+
+---
+
+### `break`
+
+```javascript
+for (let i = 1; i <= 5; i++) {
+
+    if (i === 3) {
+        break;
+    }
+
+    console.log(i);
+}
+```
+
+Output
+
+```
+1
+2
+```
+
+---
+
+### `continue`
+
+```javascript
+for (let i = 1; i <= 5; i++) {
+
+    if (i === 3) {
+        continue;
+    }
+
+    console.log(i);
+}
+```
+
+Output
+
+```
+1
+2
+4
+5
+```
+
+---
+
+## Interview Rule
+
+- `break` → Stop looping.
+- `continue` → Skip one iteration.
+
+---
+
+# 145. What is a nested loop?
+
+A **nested loop** is a loop inside another loop.
+
+The inner loop runs completely for every iteration of the outer loop.
+
+---
+
+Example
+
+```javascript
+for (let i = 1; i <= 3; i++) {
+
+    for (let j = 1; j <= 2; j++) {
+
+        console.log(i, j);
+
+    }
+
+}
+```
+
+Output
+
+```
+1 1
+1 2
+2 1
+2 2
+3 1
+3 2
+```
+
+---
+
+Flow
+
+```
+Outer Loop
+
+↓
+
+Inner Loop
+
+↓
+
+Inner finishes
+
+↓
+
+Outer continues
+```
+
+---
+
+# 146. When are nested loops useful?
+
+Nested loops are useful whenever you're working with **data inside data**.
+
+Examples:
+
+- Matrices (2D arrays)
+- Chess boards
+- Sudoku
+- Pattern printing
+- Tables
+- Comparing every item with every other item
+- Processing rows and columns
+
+---
+
+Example
+
+```javascript
+const matrix = [
+    [1, 2],
+    [3, 4]
+];
+
+for (let row of matrix) {
+
+    for (let value of row) {
+
+        console.log(value);
+
+    }
+
+}
+```
+
+Output
+
+```
+1
+2
+3
+4
+```
+
+---
+
+# 147. What is the `for...of` loop?
+
+`for...of` is used to iterate over **iterable values**.
+
+Examples:
+
+- Arrays
+- Strings
+- Maps
+- Sets
+
+It gives you the **value**, not the index.
+
+---
+
+Example
+
+```javascript
+const fruits = ["Apple", "Banana", "Mango"];
+
+for (const fruit of fruits) {
+    console.log(fruit);
+}
+```
+
+Output
+
+```
+Apple
+Banana
+Mango
+```
+
+---
+
+Another example
+
+```javascript
+const word = "Hello";
+
+for (const letter of word) {
+    console.log(letter);
+}
+```
+
+Output
+
+```
+H
+e
+l
+l
+o
+```
+
+---
+
+# 148. What is the `for...in` loop?
+
+`for...in` is used to iterate over the **keys (property names)** of an object.
+
+---
+
+Example
+
+```javascript
+const user = {
+    name: "Alex",
+    age: 25,
+    city: "Delhi"
+};
+
+for (const key in user) {
+
+    console.log(key);
+
+}
+```
+
+Output
+
+```
+name
+age
+city
+```
+
+---
+
+To access values
+
+```javascript
+for (const key in user) {
+
+    console.log(key, user[key]);
+
+}
+```
+
+Output
+
+```
+name Alex
+age 25
+city Delhi
+```
+
+---
+
+# 149. What is the difference between `for...of` and `for...in`?
+
+| for...of | for...in |
+|----------|----------|
+| Iterates over values | Iterates over keys |
+| Best for arrays | Best for objects |
+| Cannot directly iterate plain objects | Designed for object properties |
+| Returns actual values | Returns property names |
+
+---
+
+### `for...of`
+
+```javascript
+const numbers = [10, 20, 30];
+
+for (const value of numbers) {
+    console.log(value);
+}
+```
+
+Output
+
+```
+10
+20
+30
+```
+
+---
+
+### `for...in`
+
+```javascript
+const user = {
+    name: "Alex",
+    age: 25
+};
+
+for (const key in user) {
+    console.log(key);
+}
+```
+
+Output
+
+```
+name
+age
+```
+
+---
+
+## Interview Rule
+
+- Arrays → `for...of`
+- Objects → `for...in`
+
+---
+
+# 150. When should you avoid using `for...in`?
+
+Avoid `for...in` for arrays.
+
+---
+
+Why?
+
+It iterates over property names (indexes as strings) and can also include inherited enumerable properties.
+
+---
+
+Instead of
+
+```javascript
+const numbers = [10, 20, 30];
+
+for (const index in numbers) {
+    console.log(index);
+}
+```
+
+Output
+
+```
+0
+1
+2
+```
+
+---
+
+Use
+
+```javascript
+for (const value of numbers) {
+    console.log(value);
+}
+```
+
+Output
+
+```
+10
+20
+30
+```
+
+---
+
+## Best Practice
+
+| Data Structure | Loop |
+|---------------|------|
+| Array | `for...of` |
+| Object | `for...in` |
+| Array with index | `for` or `entries()` |
+| String | `for...of` |
+
+---
+
+# Module 6: Functions
+# Questions 151–160
+
+---
+
+# 151. What is a function?
+
+A **function** is a reusable block of code that performs a specific task.
+
+Instead of writing the same code multiple times, you write it once and call it whenever needed.
+
+---
+
+Example
+
+```javascript
+function greet() {
+    console.log("Hello");
+}
+
+greet();
+```
+
+Output
+
+```
+Hello
+```
+
+---
+
+Real-world examples
+
+- Login
+- Payment
+- Sending emails
+- Validating forms
+- Calculating totals
+- Formatting dates
+
+Almost every feature in an application is built using functions.
+
+---
+
+# 152. Why do we use functions?
+
+Functions help us:
+
+- Reuse code
+- Reduce duplication
+- Improve readability
+- Make testing easier
+- Organize programs
+- Simplify maintenance
+
+---
+
+Without a function
+
+```javascript
+console.log("Welcome");
+console.log("Welcome");
+console.log("Welcome");
+```
+
+With a function
+
+```javascript
+function welcome() {
+    console.log("Welcome");
+}
+
+welcome();
+welcome();
+welcome();
+```
+
+---
+
+# 153. What are the advantages of using functions?
+
+Functions make code:
+
+- Reusable
+- Cleaner
+- Easier to debug
+- Easier to test
+- Easier to maintain
+- Modular
+- Scalable
+
+---
+
+Example
+
+```javascript
+function calculateTax(price) {
+    return price * 0.18;
+}
+```
+
+Now every part of your application can reuse this function instead of rewriting the calculation.
+
+---
+
+# 154. What is the syntax of a function declaration?
+
+```javascript
+function functionName(parameters) {
+
+    // code
+
+    return value;
+
+}
+```
+
+---
+
+Example
+
+```javascript
+function greet(name) {
+    console.log("Hello", name);
+}
+
+greet("Alex");
+```
+
+Output
+
+```
+Hello Alex
+```
+
+---
+
+# 155. What is a function definition?
+
+A **function definition** is the code that describes what the function does.
+
+Defining a function does **not** execute it.
+
+---
+
+Example
+
+```javascript
+function add(a, b) {
+    return a + b;
+}
+```
+
+This function now exists in memory, but nothing happens until it is called.
+
+---
+
+# 156. What is a function call (invocation)?
+
+Calling a function means telling JavaScript to execute it.
+
+---
+
+Example
+
+```javascript
+function greet() {
+    console.log("Hello");
+}
+
+greet();
+```
+
+Here, `greet()` is the function call.
+
+Output
+
+```
+Hello
+```
+
+---
+
+# 157. What happens when a function is called?
+
+When a function is called:
+
+1. JavaScript creates a new execution context.
+2. Parameters receive argument values.
+3. The function body executes.
+4. A value is returned (if `return` is used).
+5. Control returns to the caller.
+
+---
+
+Example
+
+```javascript
+function square(number) {
+    return number * number;
+}
+
+const result = square(5);
+
+console.log(result);
+```
+
+Output
+
+```
+25
+```
+
+---
+
+# 158. What is the difference between defining and calling a function?
+
+| Defining | Calling |
+|----------|----------|
+| Creates the function | Executes the function |
+| Runs once during program setup | Can run many times |
+| Doesn't execute the code | Executes the code inside |
+
+---
+
+Example
+
+Definition
+
+```javascript
+function greet() {
+    console.log("Hello");
+}
+```
+
+Call
+
+```javascript
+greet();
+```
+
+---
+
+# 159. Can a function exist without being called?
+
+**Yes.**
+
+A function can be defined and never executed.
+
+---
+
+Example
+
+```javascript
+function test() {
+    console.log("Hello");
+}
+```
+
+Output
+
+```
+No Output
+```
+
+Because nobody called the function.
+
+---
+
+# 160. Can a function return nothing?
+
+Yes.
+
+If a function does not use `return`, JavaScript automatically returns `undefined`.
+
+---
+
+Example
+
+```javascript
+function greet() {
+    console.log("Hello");
+}
+
+const result = greet();
+
+console.log(result);
+```
+
+Output
+
+```
+Hello
+undefined
+```
+
+---
+
+## Interview Tips
+
+- A function is reusable code that performs one task.
+- Defining a function is different from calling it.
+- Every function call creates a new execution context.
+- If no value is returned explicitly, JavaScript returns `undefined`.
+- Keep functions small and focused on a single responsibility. Large "do everything" functions become nightmares to debug, and software engineering already provides enough nightmares without volunteering for extras.
+
+
+# 161. What is a function declaration?
+
+A **function declaration** is the standard way to define a function using the `function` keyword followed by a function name.
+
+---
+
+## Syntax
+
+```javascript
+function functionName(parameters) {
+    // code
+}
+```
+
+---
+
+## Example
+
+```javascript
+function greet(name) {
+    return `Hello ${name}`;
+}
+
+console.log(greet("Alex"));
+```
+
+Output
+
+```
+Hello Alex
+```
+
+---
+
+## Characteristics
+
+- Has a name.
+- Can be called before it appears in the code (because it is hoisted).
+- Best for reusable functions.
+
+---
+
+## Interview Tip
+
+Most utility functions in projects are written as function declarations.
+
+---
+
+# 162. What is a function expression?
+
+A **function expression** is a function assigned to a variable.
+
+The function becomes the value of that variable.
+
+---
+
+## Syntax
+
+```javascript
+const greet = function () {
+    console.log("Hello");
+};
+```
+
+---
+
+## Example
+
+```javascript
+const add = function (a, b) {
+    return a + b;
+};
+
+console.log(add(10, 20));
+```
+
+Output
+
+```
+30
+```
+
+---
+
+## Characteristics
+
+- Stored in a variable.
+- Can be anonymous or named.
+- Not fully hoisted like function declarations.
+
+---
+
+# 163. What is the difference between a function declaration and a function expression?
+
+| Function Declaration | Function Expression |
+|----------------------|---------------------|
+| Defined with `function name()` | Assigned to a variable |
+| Fully hoisted | Variable is hoisted, function is not |
+| Can be called before declaration | Must be defined before calling |
+| Better for reusable functions | Better when passing functions around |
+
+---
+
+### Function Declaration
+
+```javascript
+sayHello();
+
+function sayHello() {
+    console.log("Hello");
+}
+```
+
+Works because of hoisting.
+
+---
+
+### Function Expression
+
+```javascript
+sayHello();
+
+const sayHello = function () {
+    console.log("Hello");
+};
+```
+
+Output
+
+```
+ReferenceError
+```
+
+---
+
+# 164. Which one is hoisted?
+
+### Function Declaration
+
+✅ Completely hoisted.
+
+```javascript
+greet();
+
+function greet() {
+    console.log("Hello");
+}
+```
+
+Works.
+
+---
+
+### Function Expression
+
+```javascript
+greet();
+
+const greet = function () {};
+```
+
+Does not work.
+
+The variable exists but cannot be used before initialization.
+
+---
+
+## Interview Rule
+
+- Function declaration → Hoisted.
+- Function expression → Not callable before initialization.
+
+---
+
+# 165. When should you use a function expression?
+
+Use function expressions when:
+
+- Passing functions as arguments.
+- Assigning functions to variables.
+- Creating callbacks.
+- Working with closures.
+- Using higher-order functions.
+
+---
+
+Example
+
+```javascript
+const numbers = [1, 2, 3];
+
+numbers.forEach(function (num) {
+    console.log(num);
+});
+```
+
+---
+
+## Best Practice
+
+Use function expressions when the function is closely tied to a specific variable or operation.
+
+---
+
+# Anonymous Functions
+
+---
+
+# 166. What is an anonymous function?
+
+An **anonymous function** is a function **without a name**.
+
+---
+
+Example
+
+```javascript
+const greet = function () {
+    console.log("Hello");
+};
+```
+
+The function itself has no name.
+
+---
+
+Anonymous functions are often used only once.
+
+---
+
+# 167. Where are anonymous functions commonly used?
+
+Anonymous functions are commonly used in:
+
+- Callbacks
+- Event listeners
+- Array methods
+- Promises
+- Timers
+
+---
+
+Example
+
+```javascript
+setTimeout(function () {
+    console.log("Done");
+}, 1000);
+```
+
+---
+
+Another example
+
+```javascript
+numbers.map(function (num) {
+    return num * 2;
+});
+```
+
+---
+
+# 168. Can anonymous functions be assigned to variables?
+
+Yes.
+
+This is one of their most common uses.
+
+---
+
+Example
+
+```javascript
+const multiply = function (a, b) {
+    return a * b;
+};
+
+console.log(multiply(4, 5));
+```
+
+Output
+
+```
+20
+```
+
+---
+
+# 169. What are the advantages of anonymous functions?
+
+Advantages:
+
+- Short and concise.
+- Perfect for callbacks.
+- Avoid unnecessary global names.
+- Easy to pass as arguments.
+- Great for one-time operations.
+
+---
+
+Example
+
+```javascript
+button.addEventListener("click", function () {
+    console.log("Clicked");
+});
+```
+
+---
+
+# 170. What are the disadvantages of anonymous functions?
+
+Disadvantages:
+
+- Harder to debug.
+- Stack traces are less descriptive.
+- Cannot call themselves unless assigned.
+- Difficult to reuse.
+
+---
+
+Named function
+
+```javascript
+function calculateTotal() {}
+```
+
+Error logs clearly show:
+
+```
+calculateTotal()
+```
+
+Anonymous function errors often provide less helpful stack traces.
+
+---
+
+# Arrow Functions
+
+---
+
+# 171. What is an arrow function?
+
+An arrow function is a shorter syntax for writing functions.
+
+Introduced in ES6.
+
+---
+
+Syntax
+
+```javascript
+const greet = () => {
+    console.log("Hello");
+};
+```
+
+---
+
+Example
+
+```javascript
+const square = (n) => n * n;
+
+console.log(square(5));
+```
+
+Output
+
+```
+25
+```
+
+---
+
+# 172. Why were arrow functions introduced?
+
+Arrow functions were introduced to:
+
+- Reduce boilerplate.
+- Make callbacks cleaner.
+- Provide lexical `this`.
+- Improve readability.
+
+---
+
+Instead of
+
+```javascript
+function (x) {
+    return x * 2;
+}
+```
+
+Use
+
+```javascript
+x => x * 2
+```
+
+Much shorter.
+
+---
+
+# 173. What is the syntax of an arrow function?
+
+No parameters
+
+```javascript
+const hello = () => {
+    console.log("Hello");
+};
+```
+
+---
+
+One parameter
+
+```javascript
+const square = number => number * number;
+```
+
+---
+
+Multiple parameters
+
+```javascript
+const add = (a, b) => a + b;
+```
+
+---
+
+Multiple statements
+
+```javascript
+const divide = (a, b) => {
+    const result = a / b;
+    return result;
+};
+```
+
+---
+
+# 174. How is an arrow function different from a normal function?
+
+| Normal Function | Arrow Function |
+|-----------------|----------------|
+| Has its own `this` | Uses lexical `this` |
+| Has `arguments` | No `arguments` object |
+| Can be constructors | Cannot be constructors |
+| More verbose | Shorter syntax |
+
+---
+
+Example
+
+```javascript
+const add = (a, b) => a + b;
+```
+
+Cleaner than
+
+```javascript
+function add(a, b) {
+    return a + b;
+}
+```
+
+---
+
+# 175. Do arrow functions have their own `this`?
+
+No.
+
+Arrow functions inherit `this` from the surrounding scope.
+
+This is called **lexical `this`**.
+
+---
+
+Example
+
+```javascript
+const user = {
+
+    name: "Alex",
+
+    show() {
+
+        setTimeout(() => {
+
+            console.log(this.name);
+
+        }, 1000);
+
+    }
+
+};
+
+user.show();
+```
+
+Output
+
+```
+Alex
+```
+
+The arrow function uses the `this` value from `show()`.
+
+---
+
+## Interview Tip
+
+Lexical `this` is one of the biggest reasons arrow functions exist.
+
+---
+
+# 176. Can arrow functions be used as constructors?
+
+No.
+
+Arrow functions cannot be called with `new`.
+
+---
+
+Example
+
+```javascript
+const Person = () => {};
+
+const user = new Person();
+```
+
+Output
+
+```
+TypeError
+```
+
+---
+
+Use a normal function or a class instead.
+
+---
+
+# 177. Can arrow functions use the `arguments` object?
+
+No.
+
+Arrow functions do not have their own `arguments` object.
+
+---
+
+Example
+
+```javascript
+const test = () => {
+
+    console.log(arguments);
+
+};
+```
+
+Output
+
+```
+ReferenceError
+```
+
+---
+
+Instead, use **rest parameters**.
+
+```javascript
+const test = (...args) => {
+
+    console.log(args);
+
+};
+
+test(1, 2, 3);
+```
+
+Output
+
+```
+[1, 2, 3]
+```
+
+---
+
+# 178. When should you use arrow functions?
+
+Use arrow functions for:
+
+- Callbacks
+- Array methods
+- Promise chains
+- Small helper functions
+- Event handlers that need lexical `this`
+- Functional programming
+
+---
+
+Example
+
+```javascript
+const doubled = numbers.map(num => num * 2);
+```
+
+---
+
+# 179. When should you avoid arrow functions?
+
+Avoid arrow functions when you need:
+
+- Your own `this`
+- A constructor
+- The `arguments` object
+- Object methods that rely on dynamic `this`
+
+---
+
+Avoid
+
+```javascript
+const user = {
+
+    name: "Alex",
+
+    show: () => {
+
+        console.log(this.name);
+
+    }
+
+};
+```
+
+Output
+
+```
+undefined
+```
+
+Because `this` does not refer to `user`.
+
+---
+
+Correct
+
+```javascript
+const user = {
+
+    name: "Alex",
+
+    show() {
+
+        console.log(this.name);
+
+    }
+
+};
+```
+
+---
+
+# 180. What are the advantages of arrow functions?
+
+Arrow functions provide:
+
+- Shorter syntax.
+- Cleaner callback code.
+- Lexical `this`.
+- Better readability for small functions.
+- Excellent support for functional programming.
+
+---
+
+Example
+
+Without arrow function
+
+```javascript
+const numbers = [1, 2, 3];
+
+const doubled = numbers.map(function (num) {
+    return num * 2;
+});
+```
+
+With arrow function
+
+```javascript
+const numbers = [1, 2, 3];
+
+const doubled = numbers.map(num => num * 2);
+```
+
+Both produce
+
+```
+[2, 4, 6]
+```
+
+The arrow version is shorter and easier to scan.
+
+---
+
+# Interview Summary
+
+### Function Declaration
+- Fully hoisted.
+- Best for reusable functions.
+
+### Function Expression
+- Assigned to variables.
+- Useful for callbacks and closures.
+- Not callable before initialization.
+
+### Anonymous Function
+- No name.
+- Common in callbacks and event handlers.
+- Great for one-time use.
+
+### Arrow Function
+- Short syntax.
+- Lexical `this`.
+- No `arguments`.
+- Cannot be constructors.
+- Ideal for callbacks, array methods, and functional-style code.
+- Avoid for object methods or constructors that rely on their own `this`.
+
+For roles like Alignerr or senior JavaScript interviews, interviewers often care less about whether you *know* arrow functions exist and more about whether you can explain **why `this` behaves differently** and choose the right function type for the situation. That's where many candidates discover JavaScript has a long memory for tiny mistakes.
+
+
+
+# Parameters & Arguments (Questions 181–190)
+
+---
+
+# 181. What is a parameter?
+
+A **parameter** is a variable declared in a function definition that receives data when the function is called.
+
+Think of a parameter as an **empty placeholder** waiting for a value.
+
+---
+
+## Syntax
+
+```javascript
+function greet(name) {
+
+    console.log(name);
+
+}
+```
+
+Here,
+
+```javascript
+name
+```
+
+is the **parameter**.
+
+---
+
+## Example
+
+```javascript
+function greet(name) {
+
+    console.log(`Hello ${name}`);
+
+}
+
+greet("Alex");
+```
+
+Output
+
+```
+Hello Alex
+```
+
+Here:
+
+```
+name
+```
+
+is the parameter.
+
+---
+
+## Real-world Example
+
+```javascript
+function calculateTax(price) {
+
+    return price * 0.18;
+
+}
+```
+
+`price` is a parameter.
+
+The function can now calculate tax for **any** price.
+
+---
+
+## Interview Tip
+
+Parameters are declared when writing the function.
+
+---
+
+# 182. What is an argument?
+
+An **argument** is the actual value passed to a function when calling it.
+
+---
+
+Example
+
+```javascript
+function greet(name){
+
+    console.log(name);
+
+}
+
+greet("Alex");
+```
+
+```
+Parameter → name
+
+Argument → "Alex"
+```
+
+---
+
+Another Example
+
+```javascript
+function add(a, b){
+
+    return a + b;
+
+}
+
+add(10, 20);
+```
+
+```
+Parameters
+
+a
+b
+
+Arguments
+
+10
+20
+```
+
+---
+
+## Interview Tip
+
+Arguments are supplied when the function is called.
+
+---
+
+# 183. What is the difference between parameters and arguments?
+
+| Parameter | Argument |
+|------------|----------|
+| Declared in the function definition | Passed during the function call |
+| Placeholder | Actual value |
+| Exists inside the function | Exists at the call site |
+
+---
+
+Example
+
+```javascript
+function multiply(x, y){
+
+    return x * y;
+
+}
+
+multiply(5, 6);
+```
+
+```
+Parameters
+
+x
+y
+
+Arguments
+
+5
+6
+```
+
+---
+
+Easy way to remember
+
+```
+Parameter = Placeholder
+
+Argument = Real Value
+```
+
+---
+
+# 184. What happens if fewer arguments are passed than parameters?
+
+Missing arguments automatically become **`undefined`**.
+
+---
+
+Example
+
+```javascript
+function greet(name, city){
+
+    console.log(name);
+
+    console.log(city);
+
+}
+
+greet("Alex");
+```
+
+Output
+
+```
+Alex
+
+undefined
+```
+
+---
+
+Another Example
+
+```javascript
+function add(a, b){
+
+    console.log(a + b);
+
+}
+
+add(5);
+```
+
+Output
+
+```
+NaN
+```
+
+Because
+
+```
+5 + undefined
+
+↓
+
+NaN
+```
+
+---
+
+## Best Practice
+
+Use default parameters whenever appropriate.
+
+---
+
+# 185. What happens if more arguments are passed than parameters?
+
+JavaScript ignores extra arguments unless you explicitly access them.
+
+---
+
+Example
+
+```javascript
+function greet(name){
+
+    console.log(name);
+
+}
+
+greet("Alex", 25, "Delhi");
+```
+
+Output
+
+```
+Alex
+```
+
+The extra values are ignored.
+
+---
+
+If you want all arguments, use **rest parameters**.
+
+```javascript
+function show(...values){
+
+    console.log(values);
+
+}
+
+show(1,2,3,4,5);
+```
+
+Output
+
+```
+[1,2,3,4,5]
+```
+
+---
+
+## Interview Tip
+
+JavaScript does **not** throw an error for extra arguments.
+
+---
+
+# 186. What are default parameters?
+
+Default parameters provide a value when an argument is not supplied.
+
+---
+
+Syntax
+
+```javascript
+function greet(name = "Guest"){
+
+}
+```
+
+---
+
+Example
+
+```javascript
+function greet(name = "Guest"){
+
+    console.log(`Hello ${name}`);
+
+}
+
+greet();
+
+greet("Alex");
+```
+
+Output
+
+```
+Hello Guest
+
+Hello Alex
+```
+
+---
+
+Without default parameters
+
+```javascript
+function greet(name){
+
+    console.log(name);
+
+}
+
+greet();
+```
+
+Output
+
+```
+undefined
+```
+
+---
+
+# 187. Why are default parameters useful?
+
+They make functions safer and easier to use.
+
+Benefits:
+
+- Prevent `undefined`.
+- Reduce extra `if` statements.
+- Make APIs easier to use.
+- Provide sensible fallback values.
+
+---
+
+Instead of
+
+```javascript
+function greet(name){
+
+    if(name===undefined){
+
+        name="Guest";
+
+    }
+
+}
+```
+
+Use
+
+```javascript
+function greet(name="Guest"){
+
+}
+```
+
+Cleaner and easier to read.
+
+---
+
+Real-world Example
+
+```javascript
+function createUser(role="User"){
+
+    console.log(role);
+
+}
+```
+
+Output
+
+```
+User
+```
+
+if no role is provided.
+
+---
+
+# 188. What are rest parameters?
+
+Rest parameters collect **multiple arguments into a single array**.
+
+They are written using `...`.
+
+---
+
+Syntax
+
+```javascript
+function test(...values){
+
+}
+```
+
+---
+
+Example
+
+```javascript
+function total(...numbers){
+
+    let sum = 0;
+
+    for(const number of numbers){
+
+        sum += number;
+
+    }
+
+    return sum;
+
+}
+
+console.log(total(10,20,30));
+```
+
+Output
+
+```
+60
+```
+
+---
+
+Another Example
+
+```javascript
+function names(...people){
+
+    console.log(people);
+
+}
+
+names("Alex","John","Sara");
+```
+
+Output
+
+```
+["Alex","John","Sara"]
+```
+
+---
+
+## Important Rules
+
+Must be the **last parameter**.
+
+Correct
+
+```javascript
+function test(a,b,...rest){}
+```
+
+Wrong
+
+```javascript
+function test(...rest,a){}
+```
+
+---
+
+# 189. What is the difference between rest parameters and the `arguments` object?
+
+| Rest Parameters | arguments Object |
+|-----------------|------------------|
+| Real array | Array-like object |
+| Introduced in ES6 | Available in normal functions |
+| Works in arrow functions | Not available in arrow functions |
+| Supports array methods | Needs conversion for array methods |
+| Cleaner syntax | Older approach |
+
+---
+
+### Rest Parameter
+
+```javascript
+function test(...args){
+
+    console.log(args);
+
+}
+
+test(1,2,3);
+```
+
+Output
+
+```
+[1,2,3]
+```
+
+---
+
+### arguments Object
+
+```javascript
+function test(){
+
+    console.log(arguments);
+
+}
+
+test(1,2,3);
+```
+
+Output
+
+```
+Arguments(3)
+```
+
+---
+
+## Which should you use?
+
+Always prefer **rest parameters** in modern JavaScript.
+
+They are simpler, clearer, and work naturally with array methods.
+
+---
+
+# 190. What is the spread operator?
+
+The **spread operator (`...`)** expands an iterable into individual values.
+
+Although it uses the same `...` syntax as rest parameters, it serves the opposite purpose.
+
+- **Rest** → Collects multiple values into one array.
+- **Spread** → Expands one array (or iterable) into multiple values.
+
+---
+
+## Example 1: Copy an Array
+
+```javascript
+const numbers = [1, 2, 3];
+
+const copy = [...numbers];
+
+console.log(copy);
+```
+
+Output
+
+```
+[1, 2, 3]
+```
+
+---
+
+## Example 2: Merge Arrays
+
+```javascript
+const arr1 = [1, 2];
+
+const arr2 = [3, 4];
+
+const result = [...arr1, ...arr2];
+
+console.log(result);
+```
+
+Output
+
+```
+[1, 2, 3, 4]
+```
+
+---
+
+## Example 3: Pass Array Elements as Function Arguments
+
+```javascript
+const numbers = [10, 20];
+
+function add(a, b){
+
+    return a + b;
+
+}
+
+console.log(add(...numbers));
+```
+
+Output
+
+```
+30
+```
+
+Without spread, you would pass the whole array as one argument, which is not what `add` expects.
+
+---
+
+## Example 4: Copy an Object
+
+```javascript
+const user = {
+
+    name: "Alex",
+
+    age: 25
+
+};
+
+const copy = {
+
+    ...user
+
+};
+
+console.log(copy);
+```
+
+Output
+
+```
+{
+  name: "Alex",
+  age: 25
+}
+```
+
+---
+
+## Example 5: Merge Objects
+
+```javascript
+const user = {
+
+    name: "Alex"
+
+};
+
+const address = {
+
+    city: "Delhi"
+
+};
+
+const profile = {
+
+    ...user,
+
+    ...address
+
+};
+
+console.log(profile);
+```
+
+Output
+
+```javascript
+{
+    name: "Alex",
+    city: "Delhi"
+}
+```
+
+---
+
+# Rest vs Spread
+
+| Rest (`...`) | Spread (`...`) |
+|---------------|----------------|
+| Collects values | Expands values |
+| Used in function parameters | Used in function calls, arrays, and objects |
+| Produces an array | Produces individual values |
+
+---
+
+## Example
+
+```javascript
+function print(...values){
+
+    console.log(values);
+
+}
+
+const numbers = [1,2,3];
+
+print(...numbers);
+```
+
+Flow
+
+```
+Spread
+
+[1,2,3]
+
+↓
+
+1,2,3
+
+↓
+
+Rest
+
+↓
+
+[1,2,3]
+```
+
+The same `...` syntax performs two opposite jobs depending on where it is used.
+
+---
+
+# Interview Summary
+
+### Parameters
+- Variables declared in a function definition.
+
+### Arguments
+- Actual values passed during a function call.
+
+### Default Parameters
+- Provide fallback values when arguments are missing.
+
+### Rest Parameters (`...`)
+- Collect multiple arguments into an array.
+- Must be the last parameter.
+- Preferred over `arguments`.
+
+### Spread Operator (`...`)
+- Expands arrays, strings, or objects into individual values.
+- Commonly used for copying and merging arrays or objects, and for passing array elements as function arguments.
+
+### Quick Memory Trick
+
+```
+Parameter → Placeholder
+
+Argument → Actual Value
+
+Rest → Collect
+
+Spread → Expand
+```
+
+Mastering these concepts pays off well beyond interviews. Modern React, Node.js, and even many debugging tasks lean heavily on rest and spread syntax. They look deceptively simple, which is exactly how JavaScript likes to lure developers into confidence before handing them an unexpected bug at 2 a.m.
+
+
+# Return Values
+
+---
+
+# 191. What is the `return` statement?
+
+The `return` statement is used to **send a value back** from a function to the place where the function was called.
+
+Think of a function like a vending machine.
+
+```
+Input
+↓
+
+Function
+
+↓
+
+Output (return)
+```
+
+Without `return`, a function can perform work, but it cannot give the result back to the caller.
+
+---
+
+## Syntax
+
+```javascript
+function add(a, b) {
+    return a + b;
+}
+```
+
+---
+
+## Example
+
+```javascript
+function multiply(a, b) {
+    return a * b;
+}
+
+const result = multiply(5, 4);
+
+console.log(result);
+```
+
+Output
+
+```
+20
+```
+
+---
+
+## Why is `return` important?
+
+Without `return`
+
+```javascript
+function multiply(a, b) {
+    a * b;
+}
+
+const result = multiply(5, 4);
+
+console.log(result);
+```
+
+Output
+
+```
+undefined
+```
+
+Because the function calculated the value but never returned it.
+
+---
+
+## Interview Tip
+
+`console.log()` displays a value.
+
+`return` sends a value back.
+
+These are **not** the same thing.
+
+---
+
+# 192. Can a function have multiple `return` statements?
+
+Yes.
+
+A function can contain **many** `return` statements.
+
+However, **only one of them executes** during a single function call.
+
+---
+
+Example
+
+```javascript
+function checkNumber(number) {
+
+    if (number > 0) {
+        return "Positive";
+    }
+
+    if (number < 0) {
+        return "Negative";
+    }
+
+    return "Zero";
+
+}
+
+console.log(checkNumber(5));
+```
+
+Output
+
+```
+Positive
+```
+
+---
+
+Another example
+
+```javascript
+console.log(checkNumber(-2));
+```
+
+Output
+
+```
+Negative
+```
+
+---
+
+## Interview Tip
+
+Multiple `return` statements are common and often make code easier to read.
+
+---
+
+# 193. What happens after a `return` statement executes?
+
+Once JavaScript executes a `return` statement:
+
+- The function **immediately stops**.
+- Any code below `return` is **never executed**.
+- Control goes back to the caller.
+
+---
+
+Example
+
+```javascript
+function test() {
+
+    console.log("Start");
+
+    return;
+
+    console.log("End");
+
+}
+
+test();
+```
+
+Output
+
+```
+Start
+```
+
+`"End"` never prints.
+
+---
+
+Another example
+
+```javascript
+function add(a, b) {
+
+    return a + b;
+
+    console.log("Hello");
+
+}
+```
+
+The `console.log()` is unreachable.
+
+---
+
+## Best Practice
+
+Never place important code after a `return`.
+
+---
+
+# 194. What value is returned if a function has no `return` statement?
+
+JavaScript automatically returns:
+
+```javascript
+undefined
+```
+
+---
+
+Example
+
+```javascript
+function greet() {
+
+    console.log("Hello");
+
+}
+
+const result = greet();
+
+console.log(result);
+```
+
+Output
+
+```
+Hello
+
+undefined
+```
+
+---
+
+Even an empty function returns `undefined`.
+
+```javascript
+function test() {
+
+}
+
+console.log(test());
+```
+
+Output
+
+```
+undefined
+```
+
+---
+
+## Interview Tip
+
+Every JavaScript function returns **something**.
+
+If you don't return a value, JavaScript returns `undefined`.
+
+---
+
+# 195. Can a function return another function?
+
+Yes.
+
+Functions are **first-class citizens** in JavaScript.
+
+That means they can:
+
+- Be stored in variables.
+- Be passed as arguments.
+- Be returned from other functions.
+
+---
+
+Example
+
+```javascript
+function createGreeting() {
+
+    return function(name) {
+
+        return `Hello ${name}`;
+
+    };
+
+}
+
+const greet = createGreeting();
+
+console.log(greet("Alex"));
+```
+
+Output
+
+```
+Hello Alex
+```
+
+---
+
+Another example
+
+```javascript
+function createMultiplier(number) {
+
+    return function(value) {
+
+        return value * number;
+
+    };
+
+}
+
+const double = createMultiplier(2);
+
+console.log(double(5));
+```
+
+Output
+
+```
+10
+```
+
+---
+
+## Real-world Uses
+
+- Closures
+- React Hooks
+- Middleware
+- Function factories
+- Currying
+- Memoization
+
+---
+
+# Higher-Order Functions
+
+---
+
+# 196. What is a higher-order function?
+
+A **higher-order function** is a function that:
+
+- Accepts another function as an argument, **or**
+- Returns another function.
+
+Sometimes it does both.
+
+---
+
+Example
+
+```javascript
+function execute(fn) {
+
+    fn();
+
+}
+```
+
+`execute()` is a higher-order function because it receives another function.
+
+---
+
+Another example
+
+```javascript
+function createGreeting() {
+
+    return function() {
+
+        console.log("Hello");
+
+    };
+
+}
+```
+
+This is also a higher-order function because it returns a function.
+
+---
+
+## Interview Definition
+
+> A higher-order function is a function that takes another function as an argument or returns another function.
+
+---
+
+# 197. What is a callback function?
+
+A **callback function** is a function passed into another function to be executed later.
+
+---
+
+Example
+
+```javascript
+function greet(name) {
+
+    console.log(`Hello ${name}`);
+
+}
+
+function execute(callback) {
+
+    callback("Alex");
+
+}
+
+execute(greet);
+```
+
+Output
+
+```
+Hello Alex
+```
+
+---
+
+Another example
+
+```javascript
+setTimeout(function() {
+
+    console.log("Done");
+
+}, 1000);
+```
+
+The anonymous function is the callback.
+
+---
+
+## Real-world Examples
+
+- Button click events
+- API requests
+- File reading
+- Database queries
+- Timers
+
+---
+
+# 198. Why are callback functions useful?
+
+Callbacks make programs:
+
+- Flexible
+- Reusable
+- Asynchronous
+- Event-driven
+
+---
+
+Example
+
+Without callbacks
+
+```javascript
+calculateAddition();
+
+calculateSubtraction();
+
+calculateMultiplication();
+```
+
+Lots of repeated code.
+
+---
+
+With callbacks
+
+```javascript
+function calculate(a, b, operation) {
+
+    return operation(a, b);
+
+}
+```
+
+Now any operation can be passed.
+
+```javascript
+calculate(10, 20, add);
+
+calculate(10, 20, multiply);
+```
+
+Much more reusable.
+
+---
+
+## Real-world Uses
+
+- Event listeners
+- `setTimeout`
+- Promises
+- Express middleware
+- Node.js file system APIs
+
+---
+
+# 199. Give examples of built-in higher-order functions in JavaScript.
+
+Many JavaScript methods accept callback functions.
+
+---
+
+## `forEach()`
+
+```javascript
+numbers.forEach(number => {
+
+    console.log(number);
+
+});
+```
+
+---
+
+## `map()`
+
+```javascript
+const doubled = numbers.map(number => number * 2);
+```
+
+---
+
+## `filter()`
+
+```javascript
+const adults = users.filter(user => user.age >= 18);
+```
+
+---
+
+## `find()`
+
+```javascript
+const user = users.find(user => user.id === 1);
+```
+
+---
+
+## `reduce()`
+
+```javascript
+const total = numbers.reduce(
+
+    (sum, value) => sum + value,
+
+    0
+
+);
+```
+
+---
+
+## `sort()`
+
+```javascript
+numbers.sort((a, b) => a - b);
+```
+
+---
+
+## `setTimeout()`
+
+```javascript
+setTimeout(() => {
+
+    console.log("Hello");
+
+}, 1000);
+```
+
+---
+
+## `setInterval()`
+
+```javascript
+setInterval(() => {
+
+    console.log("Running");
+
+}, 1000);
+```
+
+---
+
+These are all higher-order functions because they receive another function.
+
+---
+
+# 200. Why are higher-order functions important in modern JavaScript?
+
+Higher-order functions are one of the foundations of modern JavaScript.
+
+Without them, libraries and frameworks like React, Node.js, Express, and many browser APIs would be far more verbose and repetitive.
+
+---
+
+## They help us write:
+
+### Cleaner Code
+
+```javascript
+users.map(user => user.name);
+```
+
+instead of manual loops.
+
+---
+
+### Reusable Code
+
+```javascript
+calculate(a, b, operation);
+```
+
+One function can perform many operations.
+
+---
+
+### Functional Programming
+
+Methods like:
+
+- `map()`
+- `filter()`
+- `reduce()`
+
+allow you to transform data without unnecessary loops.
+
+---
+
+### Event-Driven Programming
+
+```javascript
+button.addEventListener("click", handler);
+```
+
+The handler is a callback.
+
+---
+
+### Asynchronous Programming
+
+```javascript
+setTimeout(callback, 1000);
+```
+
+```javascript
+fetch(url)
+    .then(callback);
+```
+
+Callbacks are the foundation that later evolved into Promises and `async/await`.
+
+---
+
+### Server Development (Node.js)
+
+```javascript
+fs.readFile("file.txt", callback);
+```
+
+Express middleware also relies on higher-order functions.
+
+---
+
+## Interview Summary
+
+### `return`
+- Sends a value back from a function.
+- Stops function execution immediately.
+- If omitted, JavaScript returns `undefined`.
+
+### Functions Can Return Functions
+- Yes.
+- Commonly used with closures, factories, and currying.
+
+### Higher-Order Functions
+- Take a function as an argument or return a function.
+- Enable reusable and composable code.
+
+### Callback Functions
+- Functions passed into other functions.
+- Used heavily in events, asynchronous operations, and array methods.
+
+### Common Built-in Higher-Order Functions
+
+- `forEach()`
+- `map()`
+- `filter()`
+- `find()`
+- `reduce()`
+- `sort()`
+- `setTimeout()`
+- `setInterval()`
+
+---
+
+# Final Function Module Recap
+
+By this point, you should be comfortable with:
+
+- Function declarations and expressions
+- Anonymous functions
+- Arrow functions
+- Parameters vs arguments
+- Default parameters
+- Rest parameters
+- Spread operator
+- Return values
+- Callback functions
+- Higher-order functions
+
+These concepts are not just interview material. They appear constantly in React components, Node.js APIs, Express middleware, asynchronous JavaScript, and production codebases. If you understand **why** they work instead of memorizing definitions, you'll be in a much stronger position for engineering interviews where the discussion quickly moves from "What is a callback?" to "How would you design this feature using callbacks, promises, or higher-order functions?" Humans love turning simple ideas into architecture diagrams. JavaScript quietly supports all three.
