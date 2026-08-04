@@ -2697,24 +2697,6 @@ Primitive Types:
 
 ---
 
-# Engineering Perspective
-
-For real-world development:
-
-- Scope understanding helps debug unexpected values.
-- Data types help prevent logic errors.
-- Knowing `var`, `let`, and `const` helps you read old and modern codebases.
-- Understanding these basics makes advanced topics like closures, React state, Node.js debugging, and async programming much easier.
-
-
-# JavaScript Theory
-
-# Module 2: Data Types
-
-## Questions 31-40
-
----
-
 # 31. What Is the Boolean Data Type?
 
 ## Definition
