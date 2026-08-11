@@ -14792,4 +14792,3 @@ By this point, you should be comfortable with:
 - Callback functions
 - Higher-order functions
 
-These concepts are not just interview material. They appear constantly in React components, Node.js APIs, Express middleware, asynchronous JavaScript, and production codebases. If you understand **why** they work instead of memorizing definitions, you'll be in a much stronger position for engineering interviews where the discussion quickly moves from "What is a callback?" to "How would you design this feature using callbacks, promises, or higher-order functions?" Humans love turning simple ideas into architecture diagrams. JavaScript quietly supports all three.
