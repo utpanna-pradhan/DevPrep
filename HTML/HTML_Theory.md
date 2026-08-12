@@ -1101,40 +1101,51 @@ Content
 ```html
 <p>Hello</p>
 ```
-- <p>
-
-</p> tags
-
-- Element
-
-<p>Hello</p>
-
-- Opening Tag
-
+```html
 <p>
-- Closing Tag
 
+</p>  
+<!-- tags -->
+```
+- 
+```html
+<p>Hello</p>
+<!-- Element -->
+```
+- 
+```html
+<p>
+    <!-- Opening Tag -->
 </p>
+<!-- - Closing Tag -->
 
-- Self-closing (Void) Tag
 
+```
+- 
+```html
 <img>
+<!-- Self-closing (Void) Tag -->
+```
 
 No closing tag is needed.
 
 - Difference Between Tags and Elements
+
 ```html
 <h1>Hello</h1>
 ```
-Tags
 
+Tags
+```html
 <h1>
 
 </h1>
+```
 
 Element
-
+```html
 <h1>Hello</h1>
+```
 
 # 18.  Empty Elements
 
@@ -1166,31 +1177,39 @@ Element
 
 <wbr>
 ```
-- Line 1
+- 
+```
+Line 1
 
 <br>
 
 Line 2
+```
 - Output
-
+```
 Line 1
 
 Line 2
-- ```html
+```
+```html
 <img src="photo.jpg" alt="Photo">
 <input type="text">
 <!-- No closing tag. Because these elements don't wrap any content. -->
 ```
-- Is <img></img> valid?
+- Is 
+`
+<img></img>
+`valid?
 
 No.
 
-<img> is a void element and must not have a closing tag in HTML.
+`<img>` is a void element and must not have a closing tag in HTML.
 
 
 # 19.  Nesting Rules
 - Nesting means placing one HTML element inside another. HTML elements must be nested properly to create a valid document structure.
-- ```html
+- 
+```html
 <div>
 
 <p>Hello</p>
@@ -1207,7 +1226,8 @@ No.
 
 </p>
 ```
-- ```html
+
+```html
 <ul>
 
 <li>Apple</li>
@@ -1245,7 +1265,8 @@ Missing required attributes ,
 Deprecated elements ,
 Incorrect attribute values
 
-- ```html
+- 
+```html
 <p>
 
 <div>Hello</div>
@@ -1354,16 +1375,19 @@ Text Node
 - HTML attributes provide additional information or configuration for an HTML element. They are written inside the opening tag as name-value pairs.
 
 - <tag attribute="value">
-- ```html
+- 
+```html
 <img src="cat.jpg" alt="Cat">
 ```
+
 Attributes
 
 src="cat.jpg"
 
 alt="Cat"
 
-- ```html
+- 
+```html
 <a href="https://google.com">
 
 Google
@@ -1395,6 +1419,7 @@ width="300"
 height="200">
 ```
 - Boolean Attributes
+
 Some attributes don't require a value.
 ```html
 <input disabled>
@@ -1406,8 +1431,9 @@ Some attributes don't require a value.
 <input readonly>
 ```
 Equivalent to
-
+```html
 <input disabled="disabled">
+```
 - element have multiple attributes
 ```html
 <img
@@ -1419,9 +1445,11 @@ width="300">
 
 # 23.  Global Attributes
 - Global attributes are attributes that can be applied to almost every HTML element. They provide common functionality such as identification, styling, accessibility, language settings, editing, and metadata.
-- id
+- 
 
-class
+id 
+
+class 
 
 style
 
@@ -1445,7 +1473,8 @@ translate
 
 data-*
 
-- ```html
+- 
+```html
 <p
 id="para1"
 class="text"
@@ -1479,9 +1508,499 @@ Only works on elements like <a> and <area>.
 - Global attributes can be used on nearly every HTML element.
 
 
-# 24.  id
-# 25.  class
+## 24. What is the `id` Attribute?
 
+The `id` attribute gives an HTML element a **unique identifier**.
+
+Example:
+
+```html
+<h1 id="main-title">
+  Welcome
+</h1>
+```
+
+Here:
+
+```text
+id="main-title"
+```
+
+uniquely identifies that `<h1>` element within the document.
+
+### Why is `id` Used?
+
+The `id` attribute is commonly used for:
+
+```text
+JavaScript
+CSS
+Fragment links
+Accessibility
+```
+
+### Using `id` in CSS
+
+You can select an element by its ID using `#`.
+
+```html
+<h1 id="main-title">
+  Welcome
+</h1>
+```
+
+```css
+#main-title {
+  color: blue;
+}
+```
+
+### Using `id` in JavaScript
+
+JavaScript can find an element by its ID:
+
+```javascript
+const title = document.getElementById("main-title");
+```
+
+### Using `id` for Fragment Links
+
+You can link directly to an element using:
+
+```html
+<a href="#contact">
+  Contact Us
+</a>
+
+<section id="contact">
+  <h2>Contact</h2>
+</section>
+```
+
+Clicking the link navigates to the element with:
+
+```text
+id="contact"
+```
+
+### Important Rule
+
+An `id` should be **unique within the document**.
+
+Good:
+
+```html
+<h1 id="main-title">
+  Welcome
+</h1>
+
+<section id="contact">
+  Contact
+</section>
+```
+
+Bad:
+
+```html
+<h1 id="title">
+  Welcome
+</h1>
+
+<p id="title">
+  Hello
+</p>
+```
+
+Two elements should not have the same ID.
+
+### `id` Naming
+
+IDs should be meaningful.
+
+Good:
+
+```html
+<section id="contact">
+```
+
+Less useful:
+
+```html
+<section id="section1">
+```
+
+Also avoid spaces in IDs.
+
+Good:
+
+```html
+<div id="user-profile">
+```
+
+Bad:
+
+```html
+<div id="user profile">
+```
+
+### `id` vs `name`
+
+Do not confuse `id` with the `name` attribute.
+
+For example, form controls often use:
+
+```html
+<input
+  id="email"
+  name="email"
+  type="email">
+```
+
+They serve different purposes.
+
+```text
+id
+→ Identifies the element in the document
+
+name
+→ Identifies the form control when form data is submitted
+```
+
+### Interview Answer
+
+> The `id` attribute uniquely identifies an HTML element within a document. It can be used by CSS, JavaScript, fragment links, and accessibility features. An ID should normally be unique within the page.
+
+### Remember
+
+```text
+id
+→ One unique identity
+
+#
+→ CSS selector for id
+
+document.getElementById()
+→ JavaScript access
+
+#contact
+→ Fragment link
+```
+
+---
+
+## 25. What is the `class` Attribute?
+
+The `class` attribute assigns one or more **class names** to an HTML element.
+
+Example:
+
+```html
+<p class="text">
+  Hello
+</p>
+```
+
+CSS can select the element using:
+
+```css
+.text {
+  color: blue;
+}
+```
+
+### Why is `class` Used?
+
+Classes are commonly used for:
+
+```text
+CSS styling
+JavaScript selection
+Reusable component styles
+Grouping similar elements
+```
+
+### Multiple Elements Can Have the Same Class
+
+This is one of the biggest differences between `id` and `class`.
+
+Example:
+
+```html
+<p class="text">
+  First paragraph
+</p>
+
+<p class="text">
+  Second paragraph
+</p>
+
+<p class="text">
+  Third paragraph
+</p>
+```
+
+All three elements can use:
+
+```text
+class="text"
+```
+
+This is perfectly valid.
+
+Think:
+
+```text
+id
+→ One unique identity
+
+class
+→ Reusable group
+```
+
+### An Element Can Have Multiple Classes
+
+You can assign multiple class names by separating them with spaces.
+
+```html
+<button class="btn primary large">
+  Submit
+</button>
+```
+
+This element has three classes:
+
+```text
+btn
+primary
+large
+```
+
+CSS can define them separately:
+
+```css
+.btn {
+  padding: 10px 20px;
+}
+
+.primary {
+  background: blue;
+}
+
+.large {
+  font-size: 20px;
+}
+```
+
+The element receives all applicable styles.
+
+### Class vs ID in CSS
+
+Class:
+
+```html
+<p class="text">
+  Hello
+</p>
+```
+
+```css
+.text {
+  color: blue;
+}
+```
+
+ID:
+
+```html
+<p id="text">
+  Hello
+</p>
+```
+
+```css
+#text {
+  color: red;
+}
+```
+
+The selectors are:
+
+```text
+.class
+→ Class selector
+
+#id
+→ ID selector
+```
+
+### Class vs ID
+
+| Feature | `id` | `class` |
+|---|---|---|
+| Purpose | Unique identification | Group/reusable styling |
+| Should be unique? | Yes | No |
+| Multiple elements? | Normally no | Yes |
+| Multiple on one element? | One `id` value | Multiple classes |
+| CSS selector | `#name` | `.name` |
+| Common CSS use | Specific element | Reusable styles |
+| JavaScript | `getElementById()` | `querySelector()` / `querySelectorAll()` |
+
+### Important Interview Point
+
+An element can have:
+
+```html
+id="profile"
+class="card user-card"
+```
+
+So `id` and `class` are not mutually exclusive.
+
+Example:
+
+```html
+<div
+  id="profile"
+  class="card user-card">
+  
+  Profile
+
+</div>
+```
+
+Here:
+
+```text
+id
+→ profile
+
+classes
+→ card
+→ user-card
+```
+
+### Class Attribute Syntax
+
+Correct:
+
+```html
+<div class="card">
+  Content
+</div>
+```
+
+Multiple classes:
+
+```html
+<div class="card shadow rounded">
+  Content
+</div>
+```
+
+You separate class names with spaces.
+
+Do not use commas:
+
+```html
+<div class="card, shadow, rounded">
+```
+
+That creates one class value containing commas rather than three normal class names.
+
+### Interview Answer
+
+> The `class` attribute assigns one or more class names to an HTML element. Classes are reusable, so multiple elements can share the same class, and one element can have multiple classes. They are commonly used for CSS styling and JavaScript selection.
+
+### Remember
+
+```text
+class
+→ Reusable label/group
+
+.card
+→ CSS class selector
+
+One element
+→ Multiple classes possible
+
+Many elements
+→ Same class possible
+```
+
+# `id` vs `class` - Most Important Interview Question
+
+The simplest way to remember the difference:
+
+```text
+id
+→ "Who exactly are you?"
+
+class
+→ "What group do you belong to?"
+```
+
+Example:
+
+```html
+<div
+  id="user-profile"
+  class="card profile-card">
+  
+  Utpanna
+
+</div>
+```
+
+Think:
+
+```text
+id="user-profile"
+→ This specific element
+
+class="card"
+→ It belongs to the card group
+
+class="profile-card"
+→ It also belongs to the profile-card group
+```
+
+### CSS
+
+```css
+#user-profile {
+  margin: 20px;
+}
+
+.card {
+  padding: 20px;
+}
+
+.profile-card {
+  border-radius: 12px;
+}
+```
+
+All three rules can apply to the same element.
+
+# Master Memory Trick
+
+```text
+id
+→ UNIQUE
+
+class
+→ REUSABLE
+
+#id
+→ CSS ID selector
+
+.class
+→ CSS class selector
+```
+
+### One-Line Interview Answer
+
+> `id` is used to uniquely identify an element within a document, while `class` is used to assign reusable groups or styles to one or more elements.
 # 26. title
 - The title attribute provides additional information about an HTML element. Most browsers display this information as a tooltip when the user hovers over the element.
 - 
