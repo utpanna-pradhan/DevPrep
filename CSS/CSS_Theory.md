@@ -4044,3 +4044,2465 @@ Padding
        ↓
 Does not collapse
 ```
+
+# CSS Units and Responsive Measurements
+
+## 22. What is the difference between `px`, `%`, `em`, and `rem`?
+
+CSS units tell the browser **how much size, spacing, or distance an element should have**.
+
+The four important units here are:
+
+```text
+px
+%
+em
+rem
+```
+
+They are not interchangeable.
+
+---
+
+### 1. `px`
+
+`px` means **CSS pixel**.
+
+It is commonly used when you want a relatively fixed size.
+
+Example:
+
+```css
+.box {
+  width: 300px;
+  padding: 20px;
+  border: 1px solid black;
+}
+```
+
+Here:
+
+```text
+width  → 300px
+padding → 20px
+border → 1px
+```
+
+The value does not depend directly on the parent element's size or font size.
+
+### Example
+
+```css
+button {
+  padding: 12px 24px;
+  border-radius: 8px;
+}
+```
+
+`px` is commonly useful for:
+
+- Borders
+- Small spacing
+- Icons
+- Precise dimensions
+- UI elements where a fixed CSS size is appropriate
+
+### Remember
+
+```text
+px → relatively fixed CSS size
+```
+
+---
+
+### 2. `%`
+
+`%` is a **relative unit**.
+
+Its meaning depends on the property and its containing context.
+
+For properties such as `width`, a percentage is commonly calculated relative to the containing block.
+
+Example:
+
+```css
+.container {
+  width: 100%;
+}
+
+.child {
+  width: 50%;
+}
+```
+
+If the container is:
+
+```text
+1000px
+```
+
+then the child's width is:
+
+```text
+50% of 1000px
+= 500px
+```
+
+### Example
+
+```css
+.container {
+  width: 800px;
+}
+
+.box {
+  width: 50%;
+}
+```
+
+The box width becomes approximately:
+
+```text
+400px
+```
+
+### Important
+
+Do not memorize:
+
+> `%` always means percentage of the parent.
+
+That is too simplistic.
+
+The reference used by `%` depends on **which CSS property you are using**.
+
+For example, percentage values for width, height, padding, margin, and other properties have different rules.
+
+For basic responsive layouts, think:
+
+```text
+% → relative to a containing context
+```
+
+### Remember
+
+```text
+% → relative size
+```
+
+---
+
+### 3. `em`
+
+`em` is a relative unit based on **font size**.
+
+Its exact reference depends on where the value is used, which is why `em` can sometimes be confusing.
+
+For an element's own `font-size`, `em` is based on the inherited font size from its parent.
+
+For other properties such as `padding`, `margin`, and `width`, `em` is based on the element's computed font size.
+
+### Example
+
+```css
+.parent {
+  font-size: 20px;
+}
+
+.child {
+  font-size: 2em;
+}
+```
+
+The child gets:
+
+```text
+2 × 20px
+= 40px
+```
+
+So:
+
+```text
+child font-size = 40px
+```
+
+### `em` Can Compound
+
+This is where beginners sometimes get ambushed by CSS.
+
+```css
+.parent {
+  font-size: 20px;
+}
+
+.child {
+  font-size: 1.5em;
+}
+
+.grandchild {
+  font-size: 1.5em;
+}
+```
+
+The child:
+
+```text
+1.5 × 20px
+= 30px
+```
+
+The grandchild:
+
+```text
+1.5 × 30px
+= 45px
+```
+
+So:
+
+```text
+Parent       → 20px
+Child        → 30px
+Grandchild   → 45px
+```
+
+This happens because `em` can compound through nested elements when used for font sizes.
+
+### Remember
+
+```text
+em → relative to font size
+```
+
+---
+
+### 4. `rem`
+
+`rem` means **root em**.
+
+It is relative to the font size of the root element, usually:
+
+```html
+<html>
+```
+
+The root element is represented by:
+
+```css
+:root
+```
+
+or:
+
+```css
+html
+```
+
+### Example
+
+```css
+html {
+  font-size: 16px;
+}
+
+.box {
+  width: 20rem;
+}
+```
+
+Then:
+
+```text
+1rem = 16px
+
+20rem = 20 × 16px
+      = 320px
+```
+
+So:
+
+```text
+width = 320px
+```
+
+### Example
+
+```css
+html {
+  font-size: 16px;
+}
+
+.heading {
+  font-size: 2rem;
+}
+
+.text {
+  font-size: 1rem;
+}
+```
+
+Result:
+
+```text
+heading → 32px
+text    → 16px
+```
+
+### Why Developers Like `rem`
+
+`rem` provides a consistent reference point.
+
+Unlike nested `em` values, `rem` does not compound based on the font size of every parent.
+
+### Remember
+
+```text
+rem → relative to root font size
+```
+
+---
+
+## Quick Comparison
+
+| Unit | Relative To | Example |
+|---|---|---|
+| `px` | CSS pixel | `20px` |
+| `%` | Property-dependent containing context | `50%` |
+| `em` | Font-size context | `2em` |
+| `rem` | Root element's font size | `2rem` |
+
+### Easy Memory Trick
+
+```text
+px  → Fixed-ish
+%   → Context
+em  → Element font size
+rem → Root font size
+```
+
+---
+
+## 23. What is the difference between `em` and `rem`?
+
+Both `em` and `rem` are **relative units based on font size**, but they use different reference points.
+
+The easiest way to remember:
+
+```text
+em  → current element's font-size context
+rem → root element's font-size
+```
+
+---
+
+### `em`
+
+`em` depends on the font-size context.
+
+Example:
+
+```css
+.parent {
+  font-size: 20px;
+}
+
+.child {
+  font-size: 2em;
+}
+```
+
+The child becomes:
+
+```text
+2 × 20px
+= 40px
+```
+
+So:
+
+```text
+child = 40px
+```
+
+### `em` Can Compound
+
+```css
+.parent {
+  font-size: 20px;
+}
+
+.child {
+  font-size: 2em;
+}
+
+.grandchild {
+  font-size: 2em;
+}
+```
+
+Calculations:
+
+```text
+Parent:
+20px
+
+Child:
+2 × 20px
+= 40px
+
+Grandchild:
+2 × 40px
+= 80px
+```
+
+Result:
+
+```text
+Parent      → 20px
+Child       → 40px
+Grandchild  → 80px
+```
+
+This compounding behavior can become difficult to control in deeply nested components.
+
+---
+
+### `rem`
+
+`rem` always refers to the root element's font size.
+
+Example:
+
+```css
+html {
+  font-size: 16px;
+}
+
+.parent {
+  font-size: 20px;
+}
+
+.child {
+  font-size: 2rem;
+}
+```
+
+The child is:
+
+```text
+2 × 16px
+= 32px
+```
+
+The parent's `20px` does not change the `rem` calculation.
+
+Result:
+
+```text
+parent → 20px
+child  → 32px
+```
+
+### Comparison
+
+```text
+em
+↓
+Depends on font-size context
+↓
+Can compound
+
+rem
+↓
+Depends on root font-size
+↓
+Does not compound through nested parents
+```
+
+### Example Side by Side
+
+```css
+html {
+  font-size: 16px;
+}
+
+.parent {
+  font-size: 24px;
+}
+
+.child-em {
+  font-size: 2em;
+}
+
+.child-rem {
+  font-size: 2rem;
+}
+```
+
+Results:
+
+```text
+.child-em
+→ 2 × 24px
+→ 48px
+
+.child-rem
+→ 2 × 16px
+→ 32px
+```
+
+### When Would You Use `em`?
+
+`em` can be useful when you want a component's spacing or sizing to scale with its own typography.
+
+Example:
+
+```css
+.button {
+  font-size: 1rem;
+  padding: 0.75em 1.5em;
+}
+```
+
+If the button's font size changes, its padding scales with it.
+
+This can be useful for reusable components.
+
+### When Would You Use `rem`?
+
+`rem` is commonly used for:
+
+- Font sizes
+- Spacing systems
+- Consistent component dimensions
+- Global design systems
+
+Example:
+
+```css
+.card {
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+h1 {
+  font-size: 2rem;
+}
+```
+
+### Interview Answer
+
+> `em` is relative to the relevant font-size context and can compound when nested, while `rem` is relative to the root element's font size and provides a consistent reference throughout the document.
+
+### Remember
+
+```text
+em
+→ Element/context font size
+→ Can compound
+
+rem
+→ Root font size
+→ Consistent reference
+```
+
+### Best Memory Trick
+
+Think:
+
+```text
+em  → E = Element
+rem → R = Root
+```
+
+---
+
+## 24. What are `vw` and `vh`?
+
+`vw` and `vh` are **viewport-relative units**.
+
+The viewport is the visible area of the browser window.
+
+### `vw`
+
+`vw` means **viewport width**.
+
+```text
+1vw = 1% of the viewport width
+```
+
+Therefore:
+
+```text
+100vw = 100% of viewport width
+```
+
+### Example
+
+```css
+.box {
+  width: 50vw;
+}
+```
+
+If the viewport width is:
+
+```text
+1200px
+```
+
+then:
+
+```text
+50vw
+= 50% of 1200px
+= 600px
+```
+
+---
+
+### `vh`
+
+`vh` means **viewport height**.
+
+```text
+1vh = 1% of the viewport height
+```
+
+Therefore:
+
+```text
+100vh = 100% of viewport height
+```
+
+### Example
+
+```css
+.hero {
+  height: 100vh;
+}
+```
+
+If the viewport height is:
+
+```text
+800px
+```
+
+then:
+
+```text
+100vh = 800px
+```
+
+The element attempts to fill the viewport height.
+
+---
+
+### Common Example
+
+A full-screen hero section:
+
+```css
+.hero {
+  width: 100vw;
+  height: 100vh;
+}
+```
+
+This means:
+
+```text
+Width  → viewport width
+Height → viewport height
+```
+
+### Important Mobile Problem
+
+`100vh` historically caused problems on mobile browsers because the visible viewport can change when browser UI such as the address bar appears or disappears.
+
+For example:
+
+```text
+Browser UI visible
+       ↓
+Available viewport changes
+
+Browser UI hidden
+       ↓
+Available viewport changes again
+```
+
+This is one reason newer viewport units such as `dvh`, `svh`, and `lvh` exist.
+
+### `vw` vs `%`
+
+These are not always the same.
+
+```css
+.box {
+  width: 50%;
+}
+```
+
+Usually means 50% of the containing block.
+
+Whereas:
+
+```css
+.box {
+  width: 50vw;
+}
+```
+
+means 50% of the viewport width.
+
+### Example
+
+```text
+Parent width = 800px
+Viewport width = 1200px
+```
+
+Then:
+
+```text
+50%  → 400px
+50vw → 600px
+```
+
+### Interview Answer
+
+> `vw` and `vh` are viewport-relative units. `1vw` represents 1% of the viewport width, while `1vh` represents 1% of the viewport height.
+
+### Remember
+
+```text
+vw → Viewport Width
+
+vh → Viewport Height
+```
+
+---
+
+## 25. What are `dvh`, `svh`, and `lvh`?
+
+`dvh`, `svh`, and `lvh` are newer **viewport height units** designed to handle dynamic browser UI, especially on mobile devices.
+
+They solve problems that can occur when using `100vh` on mobile.
+
+The three units mean:
+
+```text
+svh → Small Viewport Height
+lvh → Large Viewport Height
+dvh → Dynamic Viewport Height
+```
+
+---
+
+### Why Were These Units Introduced?
+
+On mobile browsers, the visible area can change when browser UI appears or disappears.
+
+For example:
+
+```text
+Address bar visible
+        ↓
+Smaller available viewport
+
+Address bar hidden
+        ↓
+Larger available viewport
+```
+
+A single `vh` value could therefore produce undesirable layouts.
+
+The newer units give developers more control.
+
+---
+
+## `svh` — Small Viewport Height
+
+`svh` means **small viewport height**.
+
+It represents the viewport height when the browser's dynamic UI is taking up more space.
+
+Think:
+
+```text
+svh
+ ↓
+Smallest practical viewport
+```
+
+For example:
+
+```css
+.hero {
+  min-height: 100svh;
+}
+```
+
+This is useful when you want content to fit safely within the smaller viewport.
+
+### Remember
+
+```text
+svh → Small
+```
+
+---
+
+## `lvh` — Large Viewport Height
+
+`lvh` means **large viewport height**.
+
+It represents the viewport height when the browser's dynamic UI is minimized or hidden.
+
+Think:
+
+```text
+lvh
+ ↓
+Largest viewport
+```
+
+Example:
+
+```css
+.hero {
+  min-height: 100lvh;
+}
+```
+
+This can use the maximum available viewport height.
+
+### Remember
+
+```text
+lvh → Large
+```
+
+---
+
+## `dvh` — Dynamic Viewport Height
+
+`dvh` means **dynamic viewport height**.
+
+It changes as the browser UI changes.
+
+Think:
+
+```text
+dvh
+ ↓
+Dynamic
+ ↓
+Changes with the current viewport
+```
+
+Example:
+
+```css
+.hero {
+  min-height: 100dvh;
+}
+```
+
+As the mobile browser UI expands or collapses, the dynamic viewport value can change accordingly.
+
+### Remember
+
+```text
+dvh → Dynamic
+```
+
+---
+
+## Easy Comparison
+
+```text
+svh
+↓
+Small viewport height
+↓
+Stable smaller size
+
+lvh
+↓
+Large viewport height
+↓
+Stable larger size
+
+dvh
+↓
+Dynamic viewport height
+↓
+Changes with current viewport
+```
+
+### Comparison Table
+
+| Unit | Meaning | Simple Idea |
+|---|---|---|
+| `svh` | Small Viewport Height | Smaller viewport |
+| `lvh` | Large Viewport Height | Larger viewport |
+| `dvh` | Dynamic Viewport Height | Changes dynamically |
+
+### Example
+
+```css
+.hero {
+  min-height: 100dvh;
+}
+```
+
+This is often useful for mobile-friendly full-screen sections.
+
+But don't blindly replace every `100vh` with `100dvh`.
+
+The correct unit depends on the behavior you want.
+
+### Interview Answer
+
+> `svh`, `lvh`, and `dvh` are viewport height units designed to handle dynamic browser UI on mobile devices. `svh` represents the small viewport height, `lvh` represents the large viewport height, and `dvh` represents the dynamically changing viewport height.
+
+### Memory Trick
+
+```text
+S = Small
+L = Large
+D = Dynamic
+```
+
+Therefore:
+
+```text
+svh → Small
+lvh → Large
+dvh → Dynamic
+```
+
+---
+
+## 26. When would you use relative units?
+
+Relative units are useful when you want your layout or typography to **adapt to different screen sizes, parent sizes, or font sizes**.
+
+Common relative units include:
+
+```text
+%
+em
+rem
+vw
+vh
+dvh
+svh
+lvh
+```
+
+### 1. Use `%` for Relative Container Sizes
+
+Use `%` when an element should scale relative to its containing block.
+
+Example:
+
+```css
+.container {
+  width: 80%;
+}
+```
+
+This allows the container to become wider or narrower as its containing block changes.
+
+Good for:
+
+```text
+Responsive widths
+Fluid layouts
+Columns
+Containers
+```
+
+---
+
+### 2. Use `rem` for Consistent Typography and Spacing
+
+`rem` is useful when you want values based on the root font size.
+
+Example:
+
+```css
+h1 {
+  font-size: 2rem;
+}
+
+.card {
+  padding: 1.5rem;
+}
+
+.section {
+  margin-bottom: 3rem;
+}
+```
+
+This creates a consistent sizing system.
+
+Think:
+
+```text
+rem
+ ↓
+Global design scale
+```
+
+---
+
+### 3. Use `em` for Component-Relative Scaling
+
+Use `em` when you want a component's dimensions or spacing to scale with its font size.
+
+Example:
+
+```css
+.button {
+  font-size: 1rem;
+  padding: 0.75em 1.5em;
+}
+```
+
+If the button's font size changes, the padding scales with it.
+
+This can be useful for reusable components.
+
+Think:
+
+```text
+em
+ ↓
+Component typography relationship
+```
+
+---
+
+### 4. Use `vw` for Viewport-Based Width
+
+Use `vw` when something should scale based on the viewport width.
+
+Example:
+
+```css
+.hero-title {
+  font-size: 5vw;
+}
+```
+
+As the viewport gets wider, the text size grows.
+
+However, using raw `vw` for typography can make text too small or too large.
+
+A common modern solution is:
+
+```css
+.hero-title {
+  font-size: clamp(2rem, 5vw, 5rem);
+}
+```
+
+Now:
+
+```text
+Minimum → 2rem
+Preferred → 5vw
+Maximum → 5rem
+```
+
+This creates more controlled responsive typography.
+
+---
+
+### 5. Use `vh` for Viewport Height
+
+Use `vh` when an element should relate to the viewport height.
+
+Example:
+
+```css
+.hero {
+  min-height: 80vh;
+}
+```
+
+This makes the hero roughly 80% of the viewport height.
+
+---
+
+### 6. Use `dvh` for Mobile Full-Height Sections
+
+For mobile layouts where the browser UI changes dynamically:
+
+```css
+.hero {
+  min-height: 100dvh;
+}
+```
+
+This makes the section respond to the current dynamic viewport height.
+
+---
+
+### 7. Use `svh` When You Want Safer Small-Viewport Sizing
+
+Example:
+
+```css
+.hero {
+  min-height: 100svh;
+}
+```
+
+This can be useful when ensuring content fits within the smaller viewport state.
+
+---
+
+### 8. Use `lvh` When You Want the Large Viewport
+
+Example:
+
+```css
+.hero {
+  min-height: 100lvh;
+}
+```
+
+This is useful when you intentionally want to size against the large viewport.
+
+---
+
+## Real-World Example
+
+A responsive card might use several units together:
+
+```css
+.card {
+  width: 90%;
+  max-width: 400px;
+  padding: 1.5rem;
+  border-radius: 0.75rem;
+}
+
+.card-title {
+  font-size: clamp(1.5rem, 4vw, 2.5rem);
+}
+```
+
+Here:
+
+```text
+90%
+→ Responsive width
+
+400px
+→ Maximum width
+
+1.5rem
+→ Consistent spacing
+
+0.75rem
+→ Consistent radius
+
+4vw
+→ Responsive preferred font size
+
+clamp()
+→ Prevents the font from becoming too small or large
+```
+
+### Should You Always Use Relative Units?
+
+No.
+
+That would be another classic CSS superstition.
+
+Use the unit that matches the requirement.
+
+For example:
+
+```css
+border: 1px solid black;
+```
+
+Using:
+
+```text
+1px
+```
+
+is perfectly reasonable.
+
+You do not need:
+
+```css
+border: 0.0625rem solid black;
+```
+
+just because `rem` exists.
+
+### Practical Rule
+
+```text
+px
+→ Precise small/fixed values
+
+%
+→ Relative to containing context
+
+rem
+→ Global typography and spacing
+
+em
+→ Component-relative scaling
+
+vw
+→ Viewport width
+
+vh
+→ Viewport height
+
+dvh
+→ Dynamic viewport height
+
+svh
+→ Small viewport height
+
+lvh
+→ Large viewport height
+```
+
+### Interview Answer
+
+> Relative units are useful when a layout needs to adapt to its context. I would commonly use percentages for fluid widths, `rem` for consistent typography and spacing, `em` when component sizing should scale with its font size, and viewport units such as `vw`, `vh`, or the newer `dvh`, `svh`, and `lvh` for viewport-based layouts.
+
+### Final Memory Sheet
+
+```text
+px
+→ CSS pixel
+→ Precise/fixed-ish sizing
+
+%
+→ Relative to containing context
+→ Fluid layouts
+
+em
+→ Font-size based
+→ Can compound
+
+rem
+→ Root font-size based
+→ Consistent sizing
+
+vw
+→ Viewport width
+
+vh
+→ Viewport height
+
+svh
+→ Small viewport height
+
+lvh
+→ Large viewport height
+
+dvh
+→ Dynamic viewport height
+```
+
+### The Most Important Differences
+
+```text
+em vs rem
+
+em
+→ Element/context font size
+
+rem
+→ Root font size
+```
+
+```text
+% vs vw
+
+%
+→ Usually related to containing block/property rules
+
+vw
+→ Viewport width
+```
+
+```text
+vh vs dvh
+
+vh
+→ Traditional viewport-height unit
+
+dvh
+→ Dynamic viewport-height unit
+→ Better suited to changing mobile browser UI
+```
+
+### One-Line Memory Rule
+
+> **Use relative units when the size should adapt; use fixed units when you need predictable, precise dimensions.**
+# CSS Display
+
+## 27. What is the difference between `block`, `inline`, and `inline-block`?
+
+The `display` property controls **how an element participates in the layout**.
+
+The three important values are:
+
+```text
+block
+inline
+inline-block
+```
+
+---
+
+### 1. `display: block`
+
+A block element normally:
+
+- Starts on a new line
+- Takes the available width by default
+- Allows `width` and `height`
+- Allows `margin` and `padding`
+
+Example:
+
+```css
+.box {
+  display: block;
+  width: 300px;
+  height: 100px;
+}
+```
+
+HTML:
+
+```html
+<div class="box">Box 1</div>
+<div class="box">Box 2</div>
+```
+
+The boxes normally appear one below another:
+
+```text
+┌──────────────┐
+│    Box 1     │
+└──────────────┘
+
+┌──────────────┐
+│    Box 2     │
+└──────────────┘
+```
+
+Common block-level elements include:
+
+```text
+div
+p
+section
+article
+header
+footer
+h1 - h6
+```
+
+### Remember
+
+```text
+block
+↓
+New line
+↓
+Usually takes available width
+↓
+width/height work
+```
+
+---
+
+### 2. `display: inline`
+
+An inline element:
+
+- Does not normally start on a new line
+- Takes only as much horizontal space as its content needs
+- `width` and `height` generally do not apply as they do to block-level boxes
+- Horizontal margins and padding work
+- Vertical margins do not affect layout in the same way as block elements
+
+Example:
+
+```css
+span {
+  display: inline;
+}
+```
+
+HTML:
+
+```html
+<span>Hello</span>
+<span>World</span>
+```
+
+They appear on the same line when there is enough space:
+
+```text
+Hello World
+```
+
+Common inline elements include:
+
+```text
+span
+a
+strong
+em
+```
+
+### Example
+
+```css
+span {
+  display: inline;
+  width: 300px;
+  height: 100px;
+}
+```
+
+The `width` and `height` do not make the inline element behave like a 300px × 100px block.
+
+### Remember
+
+```text
+inline
+↓
+Stays in the text flow
+↓
+Does not start a new line
+↓
+width/height do not work like block elements
+```
+
+---
+
+### 3. `display: inline-block`
+
+`inline-block` combines important characteristics of both inline and block.
+
+It:
+
+- Sits inline with other elements
+- Allows `width` and `height`
+- Allows padding and margins
+- Does not automatically start a new line
+
+Example:
+
+```css
+.box {
+  display: inline-block;
+  width: 150px;
+  height: 100px;
+}
+```
+
+HTML:
+
+```html
+<div class="box">Box 1</div>
+<div class="box">Box 2</div>
+```
+
+They can appear side by side:
+
+```text
+┌──────────────┐  ┌──────────────┐
+│    Box 1     │  │    Box 2     │
+└──────────────┘  └──────────────┘
+```
+
+### Why Is `inline-block` Useful?
+
+Suppose you want two elements:
+
+```text
+Side by side
++
+Custom width
++
+Custom height
+```
+
+`inline-block` can provide that behavior.
+
+### Comparison
+
+| Property | `block` | `inline` | `inline-block` |
+|---|---|---|---|
+| Starts new line | Yes | No | No |
+| Takes available width by default | Yes | No | No |
+| Width works | Yes | Not like a block | Yes |
+| Height works | Yes | Not like a block | Yes |
+| Can sit beside other elements | No, normally | Yes | Yes |
+| Padding works | Yes | Yes | Yes |
+
+### Important Modern CSS Note
+
+Today, flexbox and grid are usually preferred for complex layouts instead of relying on `inline-block`.
+
+For example:
+
+```css
+.container {
+  display: flex;
+  gap: 20px;
+}
+```
+
+This gives much more control over alignment and spacing.
+
+### Interview Answer
+
+> A block element starts on a new line and normally takes the available width. An inline element stays within the text flow and does not behave like a block box for width and height. An inline-block element stays inline but allows width and height like a block-level box.
+
+### Remember
+
+```text
+block
+→ New line
+→ Width/height work
+
+inline
+→ Same line
+→ Width/height don't behave like block
+
+inline-block
+→ Same line
+→ Width/height work
+```
+
+---
+
+## 28. What is the difference between `display: none`, `visibility: hidden`, and `opacity: 0`?
+
+All three can make an element appear invisible, but they behave very differently.
+
+The key difference is:
+
+```text
+display: none
+→ Removed from layout
+
+visibility: hidden
+→ Keeps layout space
+
+opacity: 0
+→ Keeps layout space and becomes transparent
+```
+
+---
+
+### 1. `display: none`
+
+`display: none` removes the element from the layout.
+
+Example:
+
+```css
+.box {
+  display: none;
+}
+```
+
+The element:
+
+```text
+Does not appear
+Does not take up layout space
+```
+
+Example:
+
+```html
+<div class="box">Hello</div>
+<div>World</div>
+```
+
+If `.box` has:
+
+```css
+.box {
+  display: none;
+}
+```
+
+The result is effectively:
+
+```text
+World
+```
+
+There is no empty space where the box was.
+
+### Remember
+
+```text
+display: none
+↓
+Not rendered as a box
+↓
+No layout space
+```
+
+---
+
+### 2. `visibility: hidden`
+
+The element becomes invisible, but its layout space is preserved.
+
+Example:
+
+```css
+.box {
+  visibility: hidden;
+}
+```
+
+HTML:
+
+```html
+<div class="box">Hello</div>
+<div>World</div>
+```
+
+The browser still reserves space for the first element:
+
+```text
+[ Empty space where Hello was ]
+
+World
+```
+
+### Remember
+
+```text
+visibility: hidden
+↓
+Invisible
+↓
+Space remains
+```
+
+---
+
+### 3. `opacity: 0`
+
+`opacity: 0` makes the element completely transparent.
+
+Example:
+
+```css
+.box {
+  opacity: 0;
+}
+```
+
+The element still participates in layout.
+
+Unlike `display: none`, it still exists as a rendered element and can still affect interaction depending on the situation.
+
+For example, an element with:
+
+```css
+opacity: 0;
+```
+
+can still receive pointer events unless you disable them separately.
+
+If you want it not to receive pointer events:
+
+```css
+.box {
+  opacity: 0;
+  pointer-events: none;
+}
+```
+
+### Remember
+
+```text
+opacity: 0
+↓
+Transparent
+↓
+Layout space remains
+↓
+Can still be interactive unless interaction is disabled
+```
+
+---
+
+### Comparison
+
+| Property | Visible? | Layout Space? | Can Receive Pointer Events? |
+|---|---|---|---|
+| `display: none` | No | No | No |
+| `visibility: hidden` | No | Yes | Generally no |
+| `opacity: 0` | No visually | Yes | Yes, unless disabled |
+
+### Important Difference
+
+Think about a person hiding a chair:
+
+```text
+display: none
+→ Remove the chair completely
+
+visibility: hidden
+→ Chair is invisible but still occupies space
+
+opacity: 0
+→ Chair is transparent but still exists
+```
+
+CSS has apparently decided that invisible furniture needs three different philosophical states.
+
+### When Would You Use Each?
+
+#### Use `display: none`
+
+When the element should not participate in the layout.
+
+Example:
+
+```css
+.mobile-menu {
+  display: none;
+}
+```
+
+#### Use `visibility: hidden`
+
+When the element should remain in its layout position but not be visible.
+
+#### Use `opacity: 0`
+
+When you want transparency, especially for animations.
+
+Example:
+
+```css
+.modal {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.modal.show {
+  opacity: 1;
+}
+```
+
+### Interview Answer
+
+> `display: none` removes an element from the layout. `visibility: hidden` hides the element but preserves its layout space. `opacity: 0` makes the element transparent while keeping it in the layout, and it can still receive pointer events unless those are disabled.
+
+### Remember
+
+```text
+display: none
+→ Gone from layout
+
+visibility: hidden
+→ Invisible + space remains
+
+opacity: 0
+→ Transparent + space remains
+```
+
+---
+
+## 29. What is `display: flex`?
+
+`display: flex` turns an element into a **flex container** and its direct children become **flex items**.
+
+Flexbox is mainly designed for arranging elements in **one dimension**:
+
+```text
+Row
+or
+Column
+```
+
+Example:
+
+```css
+.container {
+  display: flex;
+}
+```
+
+HTML:
+
+```html
+<div class="container">
+  <div>One</div>
+  <div>Two</div>
+  <div>Three</div>
+</div>
+```
+
+By default, the items are arranged in a row:
+
+```text
+One   Two   Three
+```
+
+### Flex Container
+
+The parent is called the:
+
+```text
+Flex container
+```
+
+The direct children are called:
+
+```text
+Flex items
+```
+
+Example:
+
+```css
+.container {
+  display: flex;
+}
+```
+
+```text
+.container
+     ↓
+Flex Container
+     ↓
+┌───────┬───────┬───────┐
+│ One   │ Two   │ Three │
+└───────┴───────┴───────┘
+   ↑       ↑       ↑
+Flex items
+```
+
+### Main Axis
+
+Flexbox has two important axes:
+
+```text
+Main axis
+Cross axis
+```
+
+By default:
+
+```css
+flex-direction: row;
+```
+
+The main axis is horizontal:
+
+```text
+←──────── Main Axis ────────→
+```
+
+The cross axis is vertical:
+
+```text
+        ↑
+        │
+        │ Cross Axis
+        │
+        ↓
+```
+
+### `flex-direction`
+
+You can change the direction:
+
+```css
+.container {
+  display: flex;
+  flex-direction: column;
+}
+```
+
+Now:
+
+```text
+One
+Two
+Three
+```
+
+### `justify-content`
+
+Controls alignment along the **main axis**.
+
+Example:
+
+```css
+.container {
+  display: flex;
+  justify-content: center;
+}
+```
+
+Items move toward the center of the main axis.
+
+Common values:
+
+```text
+flex-start
+center
+flex-end
+space-between
+space-around
+space-evenly
+```
+
+### `align-items`
+
+Controls alignment along the **cross axis**.
+
+Example:
+
+```css
+.container {
+  display: flex;
+  align-items: center;
+}
+```
+
+### Example
+
+A common centered layout:
+
+```css
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+```
+
+This centers the flex items along both axes when the container has the relevant available space.
+
+### `gap`
+
+Flexbox supports `gap` for spacing between items.
+
+```css
+.container {
+  display: flex;
+  gap: 20px;
+}
+```
+
+This is usually cleaner than adding margins to every child.
+
+### Why Use Flexbox?
+
+Flexbox is excellent for:
+
+```text
+Navigation bars
+Buttons
+Cards in a row
+Centering elements
+Horizontal layouts
+Vertical layouts
+Small component layouts
+```
+
+### Interview Answer
+
+> `display: flex` turns an element into a flex container and its direct children into flex items. Flexbox is mainly used for one-dimensional layouts, allowing developers to control direction, alignment, spacing, and distribution of items along a main axis and cross axis.
+
+### Remember
+
+```text
+display: flex
+      ↓
+Parent = Flex container
+      ↓
+Children = Flex items
+      ↓
+One-dimensional layout
+      ↓
+Row or column
+```
+
+---
+
+## 30. What is `display: grid`?
+
+`display: grid` turns an element into a **grid container** and its direct children become **grid items**.
+
+CSS Grid is designed primarily for **two-dimensional layouts**:
+
+```text
+Rows
++
+Columns
+```
+
+Example:
+
+```css
+.container {
+  display: grid;
+}
+```
+
+HTML:
+
+```html
+<div class="container">
+  <div>One</div>
+  <div>Two</div>
+  <div>Three</div>
+  <div>Four</div>
+</div>
+```
+
+### Creating Columns
+
+```css
+.container {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+```
+
+This creates three columns:
+
+```text
+┌────────┬────────┬────────┐
+│  One   │  Two   │ Three  │
+├────────┼────────┼────────┤
+│  Four  │        │        │
+└────────┴────────┴────────┘
+```
+
+### What Is `fr`?
+
+`fr` means **fraction of the available space** in the grid container.
+
+Example:
+
+```css
+.container {
+  grid-template-columns: 1fr 1fr;
+}
+```
+
+The available space is divided into two equal fractions.
+
+```text
+1fr : 1fr
+
+50% : 50%
+```
+
+Another example:
+
+```css
+.container {
+  grid-template-columns: 1fr 2fr;
+}
+```
+
+The available space is divided:
+
+```text
+1fr : 2fr
+
+1/3 : 2/3
+```
+
+### Creating Rows
+
+```css
+.container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 100px 200px;
+}
+```
+
+You now have explicit row sizes.
+
+### `gap`
+
+Grid supports `gap`:
+
+```css
+.container {
+  display: grid;
+  gap: 20px;
+}
+```
+
+This creates spacing between grid items.
+
+### Grid Is Two-Dimensional
+
+Flexbox:
+
+```text
+One dimension
+
+──────────────→
+```
+
+Grid:
+
+```text
+Two dimensions
+
+→ columns
+↓ rows
+```
+
+### Flexbox vs Grid
+
+| Flexbox | Grid |
+|---|---|
+| One-dimensional | Two-dimensional |
+| Row OR column | Rows AND columns |
+| Excellent for components | Excellent for page layouts |
+| Content-driven layouts | Structure-driven layouts |
+| Navigation, buttons, small groups | Dashboards, galleries, page layouts |
+
+This is not an absolute rule.
+
+You can use both together.
+
+### Example
+
+A page could use Grid:
+
+```css
+.page {
+  display: grid;
+  grid-template-columns: 250px 1fr;
+}
+```
+
+Then the navigation could use Flexbox:
+
+```css
+.nav {
+  display: flex;
+  flex-direction: column;
+}
+```
+
+### Interview Answer
+
+> `display: grid` turns an element into a grid container and its direct children into grid items. CSS Grid is primarily designed for two-dimensional layouts, allowing developers to control rows and columns together.
+
+### Remember
+
+```text
+Flexbox
+→ One dimension
+→ Row or column
+
+Grid
+→ Two dimensions
+→ Rows and columns
+```
+
+---
+
+## 31. What is `display: contents`?
+
+`display: contents` makes an element's **box disappear from the layout**, while its children continue to participate in the layout as though the parent box were not there.
+
+Example:
+
+```css
+.wrapper {
+  display: contents;
+}
+```
+
+Consider:
+
+```html
+<div class="wrapper">
+  <div class="item">One</div>
+  <div class="item">Two</div>
+</div>
+```
+
+Normally:
+
+```text
+Wrapper
+   ↓
+Items
+```
+
+With:
+
+```css
+.wrapper {
+  display: contents;
+}
+```
+
+the wrapper does not generate its own box.
+
+Its children participate in the surrounding layout.
+
+### Example With Grid
+
+Suppose:
+
+```html
+<div class="grid">
+  <div class="wrapper">
+    <div class="item">One</div>
+    <div class="item">Two</div>
+  </div>
+
+  <div class="item">Three</div>
+</div>
+```
+
+CSS:
+
+```css
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.wrapper {
+  display: contents;
+}
+```
+
+The `.wrapper` itself does not become a grid item box.
+
+Its children can participate directly in the grid layout.
+
+Conceptually:
+
+```text
+Without display: contents
+
+Grid
+ ├── Wrapper
+ │    ├── One
+ │    └── Two
+ └── Three
+```
+
+With:
+
+```css
+.wrapper {
+  display: contents;
+}
+```
+
+the layout behaves more like:
+
+```text
+Grid
+ ├── One
+ ├── Two
+ └── Three
+```
+
+### Important
+
+`display: contents` does **not** mean:
+
+```text
+display: none
+```
+
+The element is not simply removed along with its children.
+
+Instead:
+
+```text
+Element's own box
+→ Does not participate
+
+Children
+→ Continue participating
+```
+
+### `display: contents` vs `display: none`
+
+```text
+display: none
+→ Element disappears
+→ Children disappear from layout too
+
+display: contents
+→ Element's own box disappears
+→ Children remain
+```
+
+### Why Use `display: contents`?
+
+One useful case is when you have a wrapper element that is needed for HTML structure but you do not want that wrapper to create an extra layout box.
+
+Example:
+
+```html
+<div class="card">
+  <div class="wrapper">
+    <h2>Title</h2>
+    <p>Description</p>
+  </div>
+</div>
+```
+
+You might use:
+
+```css
+.wrapper {
+  display: contents;
+}
+```
+
+when you specifically want the children to participate in the parent's layout.
+
+### Important Accessibility Consideration
+
+`display: contents` has had accessibility and browser-interoperability concerns historically, especially around how some browsers and assistive technologies handle the element's semantics.
+
+Modern browsers have improved significantly, but you should not use `display: contents` casually just to "remove a wrapper."
+
+Always make sure the semantic and accessibility behavior remains correct.
+
+### Interview Answer
+
+> `display: contents` removes the element's own layout box while allowing its children to participate in the surrounding layout. It is different from `display: none` because the children remain in the layout. It can be useful when a wrapper is needed structurally but should not create an additional layout box.
+
+### Remember
+
+```text
+display: contents
+        ↓
+Parent box disappears
+        ↓
+Children remain
+        ↓
+Children participate in surrounding layout
+```
+
+---
+
+# Final Memory Sheet
+
+## Block vs Inline vs Inline-block
+
+```text
+block
+→ New line
+→ Width/height work
+→ Usually full available width
+
+inline
+→ Same line
+→ Width/height do not behave like block
+→ Follows text flow
+
+inline-block
+→ Same line
+→ Width/height work
+```
+
+## Hiding Elements
+
+```text
+display: none
+→ No layout space
+
+visibility: hidden
+→ Layout space remains
+
+opacity: 0
+→ Transparent
+→ Layout space remains
+→ Can still receive pointer events
+```
+
+## Flexbox
+
+```text
+display: flex
+→ Flex container
+→ Direct children = flex items
+→ One-dimensional
+→ Row or column
+```
+
+## Grid
+
+```text
+display: grid
+→ Grid container
+→ Direct children = grid items
+→ Two-dimensional
+→ Rows + columns
+```
+
+## `display: contents`
+
+```text
+display: contents
+→ Parent's own box disappears
+→ Children remain
+→ Children participate in surrounding layout
+```
+
+## The Most Important Interview Comparison
+
+```text
+Flexbox
+→ One-dimensional
+→ Row OR column
+
+Grid
+→ Two-dimensional
+→ Rows AND columns
+```
+
+## One-Line Memory Rule
+
+> **Block controls normal block flow, inline follows text flow, flex handles one-dimensional layouts, grid handles two-dimensional layouts, and `display: contents` removes the parent's layout box while keeping its children.**
