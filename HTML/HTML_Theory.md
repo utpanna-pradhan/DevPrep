@@ -11401,45 +11401,1710 @@ SEO Link
 ```
 
 
+# Module 5 – Images & Media
+
+## 114. What is the `<img>` tag?
+
+### Code
+
+```html
+<img
+  src="profile.jpg"
+  alt="Profile photo">
+```
+
+### Explanation
+
+The `<img>` element is used to **embed an image into an HTML page**.
+
+The most important attributes are:
+
+```html
+src
+```
+
+Specifies the image URL or file path.
+
+```html
+alt
+```
+
+Provides alternative text describing the image.
+
+Example:
+
+```html
+<img
+  src="logo.png"
+  alt="Company logo">
+```
+
+`<img>` is a **void element**, which means it does not have a closing tag.
+
+Correct:
+
+```html
+<img src="image.jpg" alt="A mountain">
+```
+
+Not:
+
+```html
+<img src="image.jpg" alt="A mountain"></img>
+```
+
+### Remember
+
+```text
+<img>
+→ Displays an image
+
+src
+→ Where is the image?
+
+alt
+→ What does the image represent?
+```
+
+---
+
+## 115. What is the `alt` attribute?
+
+### Code
+
+```html
+<img
+  src="dog.jpg"
+  alt="Brown dog sitting on grass">
+```
+
+### Explanation
+
+The `alt` attribute provides **alternative text for an image**.
+
+It is important for:
+
+```text
+Accessibility
+Screen readers
+When an image fails to load
+Understanding the purpose of an image
+```
+
+For a meaningful image:
+
+```html
+<img
+  src="team.jpg"
+  alt="Our development team at the office">
+```
+
+For a decorative image, use an empty `alt`:
+
+```html
+<img
+  src="decorative-line.svg"
+  alt="">
+```
+
+An empty `alt` tells assistive technologies that the image is decorative and can be ignored.
+
+### Bad Example
+
+```html
+<img
+  src="team.jpg"
+  alt="image">
+```
+
+This doesn't provide useful information.
+
+Better:
+
+```html
+<img
+  src="team.jpg"
+  alt="Five developers standing together in an office">
+```
+
+### Important
+
+Do not stuff keywords into `alt` text for SEO.
+
+Bad:
+
+```html
+<img
+  src="laptop.jpg"
+  alt="best laptop cheap laptop laptop computer laptop">
+```
+
+Good:
+
+```html
+<img
+  src="laptop.jpg"
+  alt="Silver laptop on a wooden desk">
+```
+
+### Remember
+
+```text
+alt
+→ Describe the image's purpose/content
+
+Meaningful image
+→ Descriptive alt text
+
+Decorative image
+→ alt=""
+```
+
+---
+
+## 116. What is the `title` attribute on an image?
+
+### Code
+
+```html
+<img
+  src="product.jpg"
+  alt="Black leather backpack"
+  title="Black leather backpack">
+```
+
+### Explanation
+
+The `title` attribute can provide **additional advisory information** about an element.
+
+On many desktop browsers, it may appear as a tooltip when the user hovers over the image.
+
+However, `title` should **not** be used as a replacement for `alt`.
+
+Correct:
+
+```html
+<img
+  src="product.jpg"
+  alt="Black leather backpack"
+  title="Available in three sizes">
+```
+
+Here:
+
+```text
+alt
+→ Describes the image
+
+title
+→ Optional additional information
+```
+
+Do not do this:
+
+```html
+<img
+  src="product.jpg"
+  title="Black leather backpack">
+```
+
+The image is missing meaningful `alt` text.
+
+### Important
+
+`title` is not a reliable accessibility solution because tooltips are not consistently available to all users or input methods.
+
+### Remember
+
+```text
+alt
+→ Accessibility / alternative text
+
+title
+→ Optional additional information
+
+Never use title as a replacement for alt.
+```
+
+---
+
+## 117. What are responsive images?
+
+### Code
+
+```html
+<img
+  src="photo-800.jpg"
+  alt="Mountain landscape"
+  width="800"
+  height="600">
+```
+
+### Explanation
+
+Responsive images are images that are delivered or displayed appropriately for different screen sizes, resolutions, and device capabilities.
+
+The goal is to avoid unnecessarily downloading a huge image on a small device.
+
+For example, imagine you have:
+
+```text
+photo-400.jpg
+photo-800.jpg
+photo-1600.jpg
+```
+
+A small mobile screen might need the 400px image.
+
+A larger desktop screen might need the 1600px image.
+
+HTML provides features such as:
+
+```text
+srcset
+sizes
+<picture>
+```
+
+to help the browser choose an appropriate resource.
+
+CSS also helps the image fit its container:
+
+```css
+img {
+  max-width: 100%;
+  height: auto;
+}
+```
+
+### Important Distinction
+
+Responsive image **selection** and responsive image **layout** are related but different.
+
+```text
+srcset / sizes / picture
+→ Help choose which image resource to download
+
+CSS
+→ Controls how the selected image is displayed
+```
+
+### Remember
+
+```text
+Responsive images
+→ Right image for the right situation
+→ Better performance
+→ Better user experience
+```
+
+---
+
+## 118. What is `srcset`?
+
+### Code
+
+```html
+<img
+  src="photo-800.jpg"
+  srcset="
+    photo-400.jpg 400w,
+    photo-800.jpg 800w,
+    photo-1600.jpg 1600w
+  "
+  sizes="
+    (max-width: 600px) 400px,
+    (max-width: 1000px) 800px,
+    1600px
+  "
+  alt="Mountain landscape">
+```
+
+### Explanation
+
+`srcset` provides the browser with **multiple image resources**.
+
+The browser can choose an appropriate image based on factors such as:
+
+```text
+Viewport size
+Image display size
+Device pixel density
+Network conditions
+```
+
+In this example:
+
+```html
+photo-400.jpg 400w
+```
+
+means:
+
+```text
+This image resource is 400 CSS pixels wide.
+```
+
+Similarly:
+
+```html
+photo-800.jpg 800w
+```
+
+means:
+
+```text
+This resource is 800 CSS pixels wide.
+```
+
+### What does `sizes` do?
+
+`sizes` tells the browser **how wide the image is expected to be displayed** under different conditions.
+
+Example:
+
+```html
+sizes="
+  (max-width: 600px) 400px,
+  (max-width: 1000px) 800px,
+  1600px
+"
+```
+
+Conceptually:
+
+```text
+Viewport ≤ 600px
+→ Image displayed around 400px
+
+Viewport ≤ 1000px
+→ Image displayed around 800px
+
+Otherwise
+→ Image displayed around 1600px
+```
+
+The browser then uses this information together with `srcset` to choose a suitable resource.
+
+### `src` as a Fallback
+
+You will often see:
+
+```html
+<img
+  src="photo-800.jpg"
+  srcset="
+    photo-400.jpg 400w,
+    photo-800.jpg 800w,
+    photo-1600.jpg 1600w
+  "
+  alt="Mountain landscape">
+```
+
+The `src` provides the default/fallback source.
+
+### Remember
+
+```text
+src
+→ Default image
+
+srcset
+→ Available image choices
+
+sizes
+→ Expected display size
+
+Browser
+→ Chooses an appropriate resource
+```
+
+---
+
+## 119. What is the `<picture>` element?
+
+### Code
+
+```html
+<picture>
+
+  <source
+    media="(max-width: 600px)"
+    srcset="mobile.jpg">
+
+  <source
+    media="(min-width: 601px)"
+    srcset="desktop.jpg">
+
+  <img
+    src="desktop.jpg"
+    alt="Mountain landscape">
+
+</picture>
+```
+
+### Explanation
+
+The `<picture>` element allows you to provide **different image sources for different conditions**.
+
+It is especially useful when you want **art direction**.
+
+For example:
+
+```text
+Mobile
+→ Cropped portrait image
+
+Desktop
+→ Wide landscape image
+```
+
+The browser evaluates the `<source>` elements and chooses an appropriate source.
+
+The `<img>` element is required as the final fallback and provides the actual image element.
+
+### Another Example
+
+```html
+<picture>
+
+  <source
+    media="(max-width: 600px)"
+    srcset="portrait.jpg">
+
+  <source
+    media="(min-width: 601px)"
+    srcset="landscape.jpg">
+
+  <img
+    src="landscape.jpg"
+    alt="Person standing near the ocean">
+
+</picture>
+```
+
+### `<picture>` vs `srcset`
+
+This distinction is important in interviews.
+
+```text
+srcset
+→ Usually provides multiple resolutions/sizes
+→ Browser chooses an appropriate resource
+
+<picture>
+→ Allows different image sources based on conditions
+→ Useful for art direction
+```
+
+Example:
+
+```text
+Same image, different resolutions
+→ srcset
+
+Different crop/composition for mobile and desktop
+→ picture
+```
+
+### Remember
+
+```text
+<picture>
+→ Multiple possible image sources
+
+<source>
+→ Defines a possible source
+
+<img>
+→ Required fallback/display element
+```
+
+---
+
+## 120. What is the `<figure>` element?
+
+### Code
+
+```html
+<figure>
+
+  <img
+    src="architecture.jpg"
+    alt="Modern building with glass walls">
+
+</figure>
+```
+
+### Explanation
+
+`<figure>` represents **self-contained content that is referenced from the main content**, such as:
+
+```text
+Images
+Illustrations
+Diagrams
+Charts
+Code examples
+Photos
+```
+
+A figure can be moved or positioned separately from the surrounding content without losing its meaning.
+
+For example:
+
+```html
+<article>
+
+  <p>
+    Modern architecture often uses glass extensively.
+  </p>
+
+  <figure>
+
+    <img
+      src="building.jpg"
+      alt="Modern glass building">
+
+  </figure>
+
+  <p>
+    This example demonstrates the design approach.
+  </p>
+
+</article>
+```
+
+### Important
+
+`<figure>` is not simply a replacement for `<img>`.
+
+Think of it as a semantic container for self-contained content.
+
+```text
+<img>
+→ The image itself
+
+<figure>
+→ A self-contained piece of content containing the image
+```
+
+### Remember
+
+```text
+Figure
+→ Self-contained content
+
+Common use
+→ Image + caption
+```
+
+---
+
+## 121. What is `<figcaption>`?
+
+### Code
+
+```html
+<figure>
+
+  <img
+    src="mountain.jpg"
+    alt="Snow-covered mountain">
+
+  <figcaption>
+    Snow-covered mountain during sunrise.
+  </figcaption>
+
+</figure>
+```
+
+### Explanation
+
+`<figcaption>` provides a **caption or description for the content inside a `<figure>`**.
+
+The typical structure is:
+
+```text
+<figure>
+    ↓
+<img>
+    ↓
+<figcaption>
+```
+
+For example:
+
+```html
+<figure>
+
+  <img
+    src="chart.png"
+    alt="Bar chart showing sales increasing from January to June">
+
+  <figcaption>
+    Sales increased steadily from January to June.
+  </figcaption>
+
+</figure>
+```
+
+### Important Difference Between `alt` and `<figcaption>`
+
+This is a common interview question.
+
+```text
+alt
+→ Alternative text for the image
+→ Important for accessibility
+→ Used when the image cannot be perceived
+
+figcaption
+→ Visible caption associated with the figure
+→ Provides context or explanation
+```
+
+Example:
+
+```html
+<figure>
+
+  <img
+    src="team.jpg"
+    alt="Four developers standing in an office">
+
+  <figcaption>
+    Our development team at the 2026 company meetup.
+  </figcaption>
+
+</figure>
+```
+
+Here:
+
+```text
+alt
+→ What is visually in the image?
+
+figcaption
+→ What additional context does the figure provide?
+```
+
+### Remember
+
+```text
+<figure>
+→ Container for self-contained content
+
+<img>
+→ Image
+
+<figcaption>
+→ Visible caption for the figure
+```
+
+# Final Revision
+
+```text
+114. <img>
+     → Displays an image
+
+115. alt
+     → Alternative text
+     → Important for accessibility
+
+116. title
+     → Optional advisory information
+     → Not a replacement for alt
+
+117. Responsive images
+     → Appropriate image for different devices/sizes
+
+118. srcset
+     → Multiple image resources
+     → Browser chooses an appropriate one
+
+119. <picture>
+     → Multiple conditional sources
+     → Useful for art direction
+
+120. <figure>
+     → Self-contained content
+
+121. <figcaption>
+     → Caption associated with a figure
+```
+
+# Master Memory Trick
+
+```text
+<img>
+↓
+SHOW IMAGE
+
+alt
+↓
+DESCRIBE IMAGE
+
+title
+↓
+EXTRA INFORMATION
+
+srcset
+↓
+MULTIPLE RESOLUTIONS
+
+<picture>
+↓
+MULTIPLE SOURCES / ART DIRECTION
+
+<figure>
+↓
+SELF-CONTAINED CONTENT
+
+<figcaption>
+↓
+VISIBLE FIGURE CAPTION
+```
+
+# Most Important Interview Comparison
+
+```text
+srcset vs picture
+
+srcset
+→ Same image/content
+→ Different sizes/resolutions
+→ Browser chooses resource
+
+picture
+→ Different image sources
+→ Different conditions
+→ Useful for art direction
+```
+
+```text
+alt vs figcaption
+
+alt
+→ Alternative text
+→ Accessibility
+→ Describes image content/purpose
+
+figcaption
+→ Visible caption
+→ Adds context to the figure
+```
+
+
+# Module 5 – Images & Media
+
+## 122. What is Lazy Loading?
+
+### Code
+
+```html
+<img
+  src="large-image.jpg"
+  alt="Mountain landscape"
+  loading="lazy"
+  width="1200"
+  height="800">
+```
+
+### Explanation
+
+**Lazy loading** means delaying the loading of a resource until it is likely to be needed.
+
+For images:
+
+```html
+loading="lazy"
+```
+
+tells the browser that the image does not need to be loaded immediately.
+
+This is useful for images that are:
+
+```text
+Far below the initial viewport
+Not immediately visible
+Part of a long page
+```
+
+Example:
+
+```html
+<img
+  src="gallery-10.jpg"
+  alt="Gallery photo"
+  loading="lazy">
+```
+
+The browser can delay loading it until the user gets closer to that part of the page.
+
+### Why use Lazy Loading?
+
+It can reduce:
+
+```text
+Initial network requests
+Initial page loading work
+Bandwidth usage
+```
+
+This can improve the initial loading experience, especially on pages containing many images.
+
+### Important
+
+Do not blindly lazy-load every image.
+
+Images that are immediately visible, especially important hero/LCP images, generally should not be lazy-loaded.
+
+For an important above-the-fold image, you might use:
+
+```html
+<img
+  src="hero.jpg"
+  alt="Mountain resort"
+  width="1600"
+  height="900">
+```
+
+rather than:
+
+```html
+<img
+  src="hero.jpg"
+  alt="Mountain resort"
+  loading="lazy">
+```
+
+### Remember
+
+```text
+loading="lazy"
+→ Load later when needed
+
+Above the fold
+→ Usually don't lazy-load important images
+
+Below the fold
+→ Good candidate for lazy loading
+```
+
+---
+
+## 123. What is Image Optimization?
+
+### Code
+
+```html
+<img
+  src="product.webp"
+  srcset="
+    product-400.webp 400w,
+    product-800.webp 800w,
+    product-1200.webp 1200w
+  "
+  sizes="
+    (max-width: 600px) 400px,
+    (max-width: 1000px) 800px,
+    1200px
+  "
+  alt="Black backpack"
+  width="1200"
+  height="800"
+  loading="lazy">
+```
+
+### Explanation
+
+Image optimization means making images **as efficient as possible without unnecessary loss of visual quality**.
+
+Images can be one of the largest resources on a webpage, so optimizing them can significantly improve performance.
+
+Common techniques include:
+
+```text
+1. Resize images
+2. Compress images
+3. Use modern formats
+4. Use responsive images
+5. Lazy-load appropriate images
+6. Specify dimensions
+7. Use appropriate image quality
+```
+
+### 1. Resize Images
+
+Don't upload a 5000px-wide image if the website displays it at 800px.
+
+Bad:
+
+```text
+5000px image
+     ↓
+Displayed at 800px
+```
+
+Better:
+
+```text
+800px/appropriate-size image
+     ↓
+Displayed at 800px
+```
+
+### 2. Use Modern Formats
+
+Common formats include:
+
+```text
+JPEG
+PNG
+WebP
+AVIF
+SVG
+```
+
+WebP and AVIF can often provide smaller files than older raster formats while maintaining good visual quality.
+
+### 3. Responsive Images
+
+Use:
+
+```html
+srcset
+```
+
+and:
+
+```html
+sizes
+```
+
+when appropriate.
+
+This lets the browser choose a suitable resource.
+
+### 4. Specify Dimensions
+
+Example:
+
+```html
+<img
+  src="photo.webp"
+  alt="Mountain"
+  width="1200"
+  height="800">
+```
+
+Providing dimensions helps the browser reserve space for the image and can reduce layout shifts while the image loads.
+
+### 5. Lazy Loading
+
+For appropriate below-the-fold images:
+
+```html
+loading="lazy"
+```
+
+### Remember
+
+```text
+Image optimization
+→ Smaller files
+→ Appropriate dimensions
+→ Modern formats
+→ Responsive images
+→ Less unnecessary loading
+→ Better performance
+```
+
+### Interview Answer
+
+> Image optimization means reducing image file size and loading unnecessary image data as little as possible while maintaining acceptable visual quality. Common techniques include compression, resizing, modern formats such as WebP or AVIF, responsive images using `srcset`, and lazy loading for appropriate images.
+
+---
+
+## 124. What is SVG?
+
+### Code
+
+```html
+<svg
+  width="100"
+  height="100"
+  viewBox="0 0 100 100"
+  aria-label="Circle icon"
+  role="img">
+
+  <circle
+    cx="50"
+    cy="50"
+    r="40">
+  </circle>
+
+</svg>
+```
+
+### Explanation
+
+**SVG** stands for **Scalable Vector Graphics**.
+
+It is an XML-based format for describing vector graphics.
+
+SVG is commonly used for:
+
+```text
+Logos
+Icons
+Illustrations
+Simple diagrams
+Graphs
+UI graphics
+```
+
+Unlike raster images such as JPEG and PNG, SVG graphics are based on mathematical shapes.
+
+That means they can scale to different sizes without becoming pixelated in the same way raster images do.
+
+### Example with an SVG File
+
+```html
+<img
+  src="logo.svg"
+  alt="Company logo">
+```
+
+### Inline SVG
+
+You can also place SVG directly inside HTML:
+
+```html
+<svg
+  viewBox="0 0 100 100"
+  aria-hidden="true">
+
+  <circle
+    cx="50"
+    cy="50"
+    r="40">
+  </circle>
+
+</svg>
+```
+
+### SVG vs Raster Images
+
+```text
+SVG
+→ Vector
+→ Scales well
+→ Great for icons/logos
+
+JPEG/PNG/WebP
+→ Raster
+→ Made from pixels
+→ Better for many photographs
+```
+
+### Accessibility
+
+If an SVG is purely decorative:
+
+```html
+<svg
+  aria-hidden="true">
+</svg>
+```
+
+If it conveys meaningful information, provide an accessible name or appropriate alternative.
+
+### Remember
+
+```text
+SVG
+→ Vector graphics
+
+Great for
+→ Logos
+→ Icons
+→ Illustrations
+
+Main advantage
+→ Scales without normal raster pixelation
+```
+
+---
+
+## 125. What is Canvas?
+
+### Code
+
+```html
+<canvas
+  id="game"
+  width="800"
+  height="600">
+  Your browser does not support canvas.
+</canvas>
+```
+
+### JavaScript
+
+```js
+const canvas = document.getElementById("game");
+
+const ctx = canvas.getContext("2d");
+
+ctx.fillStyle = "blue";
+
+ctx.fillRect(
+  50,
+  50,
+  200,
+  100
+);
+```
+
+### Explanation
+
+The `<canvas>` element provides a drawing surface that JavaScript can use to render graphics.
+
+It is commonly used for:
+
+```text
+Games
+Charts
+Animations
+Image manipulation
+Drawing applications
+Data visualization
+```
+
+Canvas itself does not describe graphics as individual HTML elements.
+
+JavaScript draws onto the canvas.
+
+### Canvas 2D
+
+```js
+const ctx = canvas.getContext("2d");
+```
+
+gives access to the 2D drawing API.
+
+### WebGL
+
+Canvas can also be used with:
+
+```js
+canvas.getContext("webgl");
+```
+
+or newer graphics APIs such as WebGL/WebGL2.
+
+This allows more advanced GPU-based graphics.
+
+### SVG vs Canvas
+
+This is a very important interview comparison.
+
+```text
+SVG
+→ Vector graphics
+→ Elements remain part of a document structure
+→ Good for icons, diagrams, interactive vector graphics
+
+Canvas
+→ Drawing surface
+→ JavaScript renders pixels
+→ Good for games, simulations, large dynamic drawings
+```
+
+Example:
+
+```text
+100 circles
+
+SVG
+→ 100 circle elements
+
+Canvas
+→ Draw 100 circles onto one canvas
+```
+
+### Accessibility
+
+Canvas content itself is not automatically accessible like normal HTML content.
+
+If the information matters to users, provide an appropriate accessible alternative.
+
+### Remember
+
+```text
+Canvas
+→ Drawing surface
+
+JavaScript
+→ Draws on it
+
+Common uses
+→ Games
+→ Charts
+→ Graphics
+→ Animations
+```
+
+---
+
+## 126. How do you add audio to an HTML page?
+
+### Code
+
+```html
+<audio
+  controls
+  src="music.mp3">
+  Your browser does not support audio.
+</audio>
+```
+
+### Explanation
+
+The `<audio>` element embeds audio content into a webpage.
+
+The `controls` attribute displays browser-provided playback controls.
+
+For example:
+
+```text
+Play
+Pause
+Volume
+Progress
+```
+
+### Multiple Formats
+
+You can provide multiple sources:
+
+```html
+<audio controls>
+
+  <source
+    src="music.mp3"
+    type="audio/mpeg">
+
+  <source
+    src="music.ogg"
+    type="audio/ogg">
+
+  Your browser does not support audio.
+
+</audio>
+```
+
+The browser can choose a supported source.
+
+### Autoplay
+
+You may see:
+
+```html
+<audio
+  autoplay
+  controls>
+</audio>
+```
+
+However, browsers commonly restrict autoplay, especially when audio would play with sound without user interaction.
+
+Don't build your UX around surprising users with sudden audio. Humanity has suffered enough from websites doing that.
+
+### Loop
+
+```html
+<audio
+  controls
+  loop>
+</audio>
+```
+
+The audio repeats after finishing.
+
+### Muted
+
+```html
+<audio
+  controls
+  muted>
+</audio>
+```
+
+### Remember
+
+```text
+<audio>
+→ Embeds audio
+
+controls
+→ Browser playback controls
+
+<source>
+→ Alternative audio sources
+```
+
+---
+
+## 127. How do you add video to an HTML page?
+
+### Code
+
+```html
+<video
+  controls
+  width="800"
+  height="450"
+  poster="thumbnail.jpg">
+
+  <source
+    src="video.mp4"
+    type="video/mp4">
+
+  Your browser does not support video.
+
+</video>
+```
+
+### Explanation
+
+The `<video>` element embeds video content into a webpage.
+
+Important attributes include:
+
+```text
+controls
+→ Displays playback controls
+
+poster
+→ Image displayed before playback
+
+width
+→ Display width
+
+height
+→ Display height
+
+autoplay
+→ Attempts to start automatically
+
+muted
+→ Starts muted
+
+loop
+→ Repeats the video
+```
+
+### Multiple Sources
+
+```html
+<video controls>
+
+  <source
+    src="video.webm"
+    type="video/webm">
+
+  <source
+    src="video.mp4"
+    type="video/mp4">
+
+  Your browser does not support video.
+
+</video>
+```
+
+The browser can select a supported source.
+
+### Autoplay Example
+
+If autoplay is required, it is commonly paired with muted:
+
+```html
+<video
+  autoplay
+  muted
+  loop
+  playsinline>
+</video>
+```
+
+`playsinline` is particularly relevant for inline playback on mobile devices.
+
+### Accessibility
+
+Videos should consider accessibility requirements such as captions.
+
+HTML provides the `<track>` element for timed text:
+
+```html
+<video controls>
+
+  <source
+    src="lecture.mp4"
+    type="video/mp4">
+
+  <track
+    kind="captions"
+    src="captions.vtt"
+    srclang="en"
+    label="English">
+
+</video>
+```
+
+### Remember
+
+```text
+<video>
+→ Embeds video
+
+controls
+→ Playback controls
+
+poster
+→ Preview image
+
+<source>
+→ Alternative video formats
+
+<track>
+→ Captions/subtitles/timed text
+```
+
+---
+
+## 128. What is the `<source>` tag?
+
+### Code
+
+```html
+<picture>
+
+  <source
+    media="(max-width: 600px)"
+    srcset="mobile.jpg">
+
+  <img
+    src="desktop.jpg"
+    alt="Mountain landscape">
+
+</picture>
+```
+
+### Explanation
+
+The `<source>` element specifies a possible media resource for elements such as:
+
+```text
+<picture>
+<audio>
+<video>
+```
+
+It allows the browser to choose an appropriate source.
+
+### `<source>` with `<picture>`
+
+```html
+<picture>
+
+  <source
+    media="(max-width: 600px)"
+    srcset="mobile.jpg">
+
+  <source
+    media="(min-width: 601px)"
+    srcset="desktop.jpg">
+
+  <img
+    src="desktop.jpg"
+    alt="Mountain landscape">
+
+</picture>
+```
+
+Here:
+
+```text
+Small viewport
+→ mobile.jpg
+
+Large viewport
+→ desktop.jpg
+```
+
+### `<source>` with Audio
+
+```html
+<audio controls>
+
+  <source
+    src="song.mp3"
+    type="audio/mpeg">
+
+  <source
+    src="song.ogg"
+    type="audio/ogg">
+
+</audio>
+```
+
+### `<source>` with Video
+
+```html
+<video controls>
+
+  <source
+    src="video.webm"
+    type="video/webm">
+
+  <source
+    src="video.mp4"
+    type="video/mp4">
+
+</video>
+```
+
+### Important
+
+`<source>` does not display content by itself.
+
+It provides a possible resource to its parent media element.
+
+### Remember
+
+```text
+<source>
+→ Provides a possible media resource
+
+<picture>
+→ Image source
+
+<audio>
+→ Audio source
+
+<video>
+→ Video source
+```
+
+# Final Revision
+
+```text
+122. Lazy Loading
+     → loading="lazy"
+     → Useful for appropriate below-the-fold images
+
+123. Image Optimization
+     → Resize
+     → Compress
+     → Modern formats
+     → Responsive images
+     → Lazy loading when appropriate
+
+124. SVG
+     → Vector graphics
+     → Great for icons, logos, illustrations
+
+125. Canvas
+     → Drawing surface
+     → JavaScript renders graphics
+
+126. Audio
+     → <audio>
+     → controls
+     → <source>
+
+127. Video
+     → <video>
+     → controls
+     → poster
+     → <source>
+     → <track>
+
+128. Source
+     → Provides possible media resources
+     → Used with <picture>, <audio>, <video>
+```
+
+# Master Memory Trick
+
+```text
+Lazy loading
+→ LOAD LATER
+
+Image optimization
+→ SMALL + APPROPRIATE
+
+SVG
+→ VECTOR
+
+Canvas
+→ DRAW
+
+Audio
+→ SOUND
+
+Video
+→ VIDEO
+
+Source
+→ CHOOSE A RESOURCE
+```
+
+# Most Important Interview Comparisons
+
+```text
+SVG vs Canvas
+
+SVG
+→ Vector
+→ Elements are represented in the document
+→ Great for icons, logos, diagrams
+
+Canvas
+→ Drawing surface
+→ JavaScript renders graphics
+→ Great for games and dynamic graphics
+```
+
+```text
+<img src=""> vs <picture>
+
+<img>
+→ One image resource
+→ Can use srcset for responsive resource selection
+
+<picture>
+→ Multiple conditional sources
+→ Useful for art direction
+```
+
+```text
+srcset vs <source>
+
+srcset
+→ Provides image candidates on <img>
+
+<source>
+→ Provides possible resources inside
+   <picture>, <audio>, or <video>
+```
 
 
 
-
-
-
-
-
-
-
-
-
-
-6. Images & Media (25)
-- [ ] img Tag
-- [ ] alt Attribute
-- [ ] title Attribute
-- [ ] Responsive Images
-- [ ] srcset
-- [ ] picture Element
-- [ ] figure
-- [ ] figcaption
-- [ ] Lazy Loading
-- [ ] Image Optimization
-- [ ] SVG
-- [ ] Canvas
-- [ ] Audio
-- [ ] Video
-- [ ] Source Tag
-- [ ] Track Tag
-- [ ] Poster Image
-- [ ] Controls
-- [ ] Autoplay
-- [ ] Muted
-- [ ] Loop
-- [ ] Media Accessibility
-- [ ] Media Formats
-- [ ] Image SEO
-- [ ] Performance Best Practices
 
 7. Tables (15)
 - [ ] Table Structure
