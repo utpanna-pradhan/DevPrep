@@ -13102,63 +13102,4387 @@ srcset
 → Provides possible resources inside
    <picture>, <audio>, or <video>
 ```
+# Module 5 – Images & Media
 
+## 129. What is the `<track>` tag?
 
+### Code
 
+```html
+<video controls>
 
-7. Tables (15)
-- [ ] Table Structure
-- [ ] tr
-- [ ] td
-- [ ] th
-- [ ] caption
-- [ ] thead
-- [ ] tbody
-- [ ] tfoot
-- [ ] colspan
-- [ ] rowspan
-- [ ] scope
-- [ ] Accessibility
-- [ ] Responsive Tables
-- [ ] Nested Tables
-- [ ] Best Practices
+  <source
+    src="lecture.mp4"
+    type="video/mp4">
 
-8. Forms (35)
-- [ ] Form Element
-- [ ] Action Attribute
-- [ ] Method Attribute
-- [ ] GET vs POST
-- [ ] Input Types
-- [ ] Text Input
-- [ ] Password
-- [ ] Email
-- [ ] Number
-- [ ] Range
-- [ ] Date
-- [ ] Time
-- [ ] Color
-- [ ] File
-- [ ] Radio
-- [ ] Checkbox
-- [ ] Select
-- [ ] Option
-- [ ] Optgroup
-- [ ] Textarea
-- [ ] Button Types
-- [ ] Label
-- [ ] Fieldset
-- [ ] Legend
-- [ ] Placeholder
-- [ ] Required
-- [ ] Pattern
-- [ ] Min & Max
-- [ ] Step
-- [ ] Autocomplete
-- [ ] Autofocus
-- [ ] Disabled
-- [ ] Readonly
-- [ ] Native Validation
-- [ ] Form Accessibility
+  <track
+    kind="captions"
+    src="captions-en.vtt"
+    srclang="en"
+    label="English">
+
+</video>
+```
+
+### Explanation
+
+The `<track>` element provides **timed text** for `<video>` and `<audio>`.
+
+It is commonly used for:
+
+- Captions
+- Subtitles
+- Chapters
+- Descriptions
+- Metadata
+
+The most common use is captions.
+
+Important attributes:
+
+```text
+kind
+→ Defines the type of track
+
+src
+→ Path to the WebVTT file
+
+srclang
+→ Language of the track
+
+label
+→ Name shown to the user
+```
+
+### Common `kind` values
+
+```text
+captions
+→ Captions for accessibility
+
+subtitles
+→ Text for spoken dialogue, often translated
+
+chapters
+→ Navigation chapters
+
+descriptions
+→ Text descriptions of video content
+
+metadata
+→ Information intended for scripts
+```
+
+### Remember
+
+```text
+<track>
+→ Timed text for media
+
+Most common use
+→ Captions
+```
+
+---
+
+## 130. What is the `poster` image?
+
+### Code
+
+```html
+<video
+  controls
+  poster="video-thumbnail.jpg"
+  width="800"
+  height="450">
+
+  <source
+    src="movie.mp4"
+    type="video/mp4">
+
+</video>
+```
+
+### Explanation
+
+The `poster` attribute specifies an image displayed **before the video starts playing**.
+
+Think of it as the video's thumbnail.
+
+```text
+Before video starts
+        ↓
+Poster image
+        ↓
+User presses Play
+        ↓
+Video starts
+```
+
+The poster is not part of the video itself. It is a preview image.
+
+### Remember
+
+```text
+poster
+→ Video preview image
+→ Shown before playback
+```
+
+---
+
+## 131. What does the `controls` attribute do?
+
+### Code
+
+```html
+<video
+  controls
+  src="movie.mp4">
+</video>
+```
+
+### Explanation
+
+The `controls` attribute tells the browser to display its built-in media controls.
+
+For video, these can include:
+
+```text
+Play / Pause
+Volume
+Progress bar
+Fullscreen
+```
+
+For audio, they can include:
+
+```text
+Play / Pause
+Volume
+Progress
+```
+
+Without `controls`:
+
+```html
+<video src="movie.mp4"></video>
+```
+
+the browser does not normally display its default playback controls.
+
+With `controls`:
+
+```html
+<video
+  src="movie.mp4"
+  controls>
+</video>
+```
+
+the user gets browser-provided controls.
+
+### Remember
+
+```text
+controls
+→ Show browser's media controls
+```
+
+---
+
+## 132. What does the `autoplay` attribute do?
+
+### Code
+
+```html
+<video
+  autoplay
+  muted
+  loop
+  playsinline>
+
+  <source
+    src="background.mp4"
+    type="video/mp4">
+
+</video>
+```
+
+### Explanation
+
+`autoplay` tells the browser to **attempt to start the media automatically**.
+
+Example:
+
+```html
+<video
+  autoplay
+  src="video.mp4">
+</video>
+```
+
+However, browsers can restrict autoplay, especially when the media would automatically play with audible sound.
+
+That is why background videos are commonly written as:
+
+```html
+<video
+  autoplay
+  muted
+  loop
+  playsinline>
+</video>
+```
+
+### Important
+
+`autoplay` does not guarantee that playback will happen.
+
+It means:
+
+```text
+autoplay
+→ Attempt automatic playback
+```
+
+Browser policies and user settings can affect whether playback actually starts.
+
+### Remember
+
+```text
+autoplay
+→ Attempt to play automatically
+
+Autoplay + sound
+→ Often restricted
+
+Background video
+→ Commonly autoplay + muted
+```
+
+---
+
+## 133. What does the `muted` attribute do?
+
+### Code
+
+```html
+<video
+  autoplay
+  muted
+  loop
+  playsinline>
+
+  <source
+    src="background.mp4"
+    type="video/mp4">
+
+</video>
+```
+
+### Explanation
+
+`muted` causes the media to start with its audio muted.
+
+It is commonly used with autoplay videos.
+
+```html
+<video
+  autoplay
+  muted
+  loop>
+</video>
+```
+
+The video can play without producing sound.
+
+Common uses include:
+
+```text
+Background videos
+Hero videos
+Decorative animations
+Silent promotional videos
+```
+
+### Important
+
+`muted` affects the **audio**, not whether the video is visible.
+
+```text
+muted
+→ Sound off
+
+It does NOT mean
+→ Video hidden
+```
+
+### Remember
+
+```text
+muted
+→ No audio output
+```
+
+---
+
+## 134. What does the `loop` attribute do?
+
+### Code
+
+```html
+<video
+  controls
+  loop>
+
+  <source
+    src="animation.mp4"
+    type="video/mp4">
+
+</video>
+```
+
+### Explanation
+
+`loop` tells the browser to **restart the media automatically after it reaches the end**.
+
+Without `loop`:
+
+```text
+Video
+ ↓
+End
+ ↓
+Stops
+```
+
+With `loop`:
+
+```text
+Video
+ ↓
+End
+ ↓
+Starts again
+ ↓
+End
+ ↓
+Starts again
+```
+
+It can be used with both video and audio:
+
+```html
+<audio
+  controls
+  loop
+  src="background-music.mp3">
+</audio>
+```
+
+### Remember
+
+```text
+loop
+→ Repeat media automatically
+```
+
+---
+
+## 135. What are Media Accessibility best practices?
+
+### Code
+
+```html
+<video
+  controls
+  poster="lecture.jpg">
+
+  <source
+    src="lecture.mp4"
+    type="video/mp4">
+
+  <track
+    kind="captions"
+    src="captions-en.vtt"
+    srclang="en"
+    label="English">
+
+  Your browser does not support video.
+
+</video>
+```
+
+### Explanation
+
+Media should be usable by people with different abilities.
+
+Important practices include:
+
+```text
+1. Provide captions for video
+2. Provide transcripts when appropriate
+3. Provide controls
+4. Avoid unexpected autoplay with sound
+5. Provide meaningful alternatives
+6. Make controls keyboard accessible
+7. Ensure sufficient visual contrast
+```
+
+### Captions
+
+Captions help users who:
+
+```text
+Are deaf or hard of hearing
+Are in a noisy environment
+Cannot play audio
+Prefer reading along
+```
+
+Use:
+
+```html
+<track kind="captions">
+```
+
+### Transcripts
+
+For audio content, a text transcript can provide an alternative:
+
+```html
+<audio
+  controls
+  src="interview.mp3">
+</audio>
+
+<p>
+  Transcript: The interview discusses...
+</p>
+```
+
+### Remember
+
+```text
+Accessible media
+→ Captions
+→ Transcripts when appropriate
+→ Controls
+→ Keyboard access
+→ No surprising audio
+```
+
+---
+
+## 136. What are common media formats?
+
+### Code
+
+```html
+<video controls>
+
+  <source
+    src="video.webm"
+    type="video/webm">
+
+  <source
+    src="video.mp4"
+    type="video/mp4">
+
+</video>
+```
+
+### Explanation
+
+Different media formats provide different combinations of:
+
+```text
+Quality
+Compression
+File size
+Browser support
+Features
+```
+
+### Common Image Formats
+
+```text
+JPEG
+→ Photos and complex images
+
+PNG
+→ Transparency and lossless graphics
+
+WebP
+→ Modern raster image format
+
+AVIF
+→ Modern image format with strong compression
+
+SVG
+→ Vector graphics
+```
+
+### Common Audio Formats
+
+```text
+MP3
+→ Very widely supported
+
+AAC
+→ Common compressed audio format
+
+Ogg Vorbis
+→ Open audio format
+
+Opus
+→ Efficient modern audio codec
+```
+
+### Common Video Formats
+
+```text
+MP4
+→ Very widely supported
+
+WebM
+→ Common web video format
+
+Ogg
+→ Open multimedia container
+```
+
+### Important Interview Concept
+
+Do not confuse a **container format** with a **codec**.
+
+For example:
+
+```text
+MP4
+→ Container
+
+H.264
+→ Video codec
+
+AAC
+→ Audio codec
+```
+
+The container packages media streams and related information together.
+
+### Remember
+
+```text
+Container
+→ Packages media
+
+Codec
+→ Encodes and decodes media
+```
+
+---
+
+## 137. What is Image SEO?
+
+### Code
+
+```html
+<img
+  src="blue-running-shoes.webp"
+  alt="Blue running shoes for men"
+  width="800"
+  height="600">
+```
+
+### Explanation
+
+Image SEO means making images easier for search engines to **understand and index**, while also keeping them accessible and performant.
+
+Important practices include:
+
+```text
+1. Use descriptive filenames
+2. Write useful alt text
+3. Use appropriate image formats
+4. Compress images
+5. Use responsive images
+6. Specify image dimensions
+7. Place images near relevant content
+```
+
+### Descriptive Filename
+
+Bad:
+
+```text
+IMG_827364.jpg
+```
+
+Better:
+
+```text
+blue-running-shoes.jpg
+```
+
+### Useful Alt Text
+
+Bad:
+
+```html
+<img
+  src="shoes.jpg"
+  alt="image">
+```
+
+Better:
+
+```html
+<img
+  src="blue-running-shoes.jpg"
+  alt="Blue running shoes for men">
+```
+
+### Avoid Keyword Stuffing
+
+Bad:
+
+```html
+<img
+  src="shoes.jpg"
+  alt="best shoes cheap shoes running shoes shoes online">
+```
+
+Alt text should describe the image naturally.
+
+### Decorative Images
+
+If an image is purely decorative and provides no useful information, use an empty `alt`:
+
+```html
+<img
+  src="decoration.svg"
+  alt="">
+```
+
+This tells assistive technologies that the image can be ignored.
+
+### Remember
+
+```text
+Image SEO
+→ Descriptive filename
+→ Useful alt text
+→ Good performance
+→ Correct dimensions
+→ Relevant surrounding content
+```
+
+---
+
+## 138. What are Image and Media Performance Best Practices?
+
+### Code
+
+```html
+<img
+  src="hero-1200.webp"
+  srcset="
+    hero-600.webp 600w,
+    hero-1200.webp 1200w,
+    hero-2000.webp 2000w
+  "
+  sizes="100vw"
+  alt="Mountain landscape"
+  width="1200"
+  height="700">
+
+<img
+  src="gallery-800.webp"
+  alt="Forest landscape"
+  width="800"
+  height="600"
+  loading="lazy">
+
+<video
+  controls
+  poster="video-poster.jpg"
+  width="800"
+  height="450">
+
+  <source
+    src="video.webm"
+    type="video/webm">
+
+  <source
+    src="video.mp4"
+    type="video/mp4">
+
+</video>
+```
+
+### Explanation
+
+Images and videos can consume a large amount of bandwidth, so media performance is important.
+
+### 1. Use Appropriate Image Sizes
+
+Do not serve a huge image when a smaller image is sufficient.
+
+```text
+Bad
+5000px image
+     ↓
+Displayed at 500px
+
+Better
+Appropriate-sized image
+     ↓
+Displayed at 500px
+```
+
+### 2. Use Responsive Images
+
+Use:
+
+```html
+srcset
+```
+
+and:
+
+```html
+sizes
+```
+
+when appropriate.
+
+This allows the browser to choose a suitable image resource.
+
+### 3. Use Modern Formats
+
+Consider:
+
+```text
+WebP
+AVIF
+```
+
+when appropriate for your browser-support and quality requirements.
+
+### 4. Compress Images
+
+Reduce unnecessary file size while maintaining acceptable visual quality.
+
+### 5. Lazy-load Appropriate Images
+
+For images far below the initial viewport:
+
+```html
+<img
+  src="gallery.jpg"
+  alt="Gallery image"
+  loading="lazy">
+```
+
+Do not automatically lazy-load your critical hero/LCP image.
+
+### 6. Specify Width and Height
+
+```html
+<img
+  src="photo.webp"
+  alt="Mountain"
+  width="1200"
+  height="800">
+```
+
+Providing dimensions helps the browser reserve space and can reduce layout shifts.
+
+### 7. Optimize Video
+
+Video files can be very large.
+
+Consider:
+
+```text
+Correct resolution
+Efficient codec
+Compressed files
+Poster image
+Appropriate delivery/streaming strategy
+```
+
+Do not send a gigantic 4K video to every mobile user just because apparently bandwidth grows on trees.
+
+### 8. Avoid Unnecessary Autoplay
+
+Autoplaying large videos can consume:
+
+```text
+Bandwidth
+CPU
+Battery
+Network resources
+```
+
+Use autoplay only when there is a real design reason.
+
+### 9. Use Poster Images
+
+```html
+<video
+  poster="thumbnail.jpg"
+  controls>
+</video>
+```
+
+A suitable poster provides a useful preview before playback.
+
+### 10. Use `preload` Carefully
+
+Media loading behavior can be influenced by:
+
+```html
+<video
+  controls
+  preload="none">
+</video>
+```
+
+```html
+<video
+  controls
+  preload="metadata">
+</video>
+```
+
+```html
+<video
+  controls
+  preload="auto">
+</video>
+```
+
+`preload` is a hint to the browser, not an absolute command.
+
+### Remember
+
+```text
+Media Performance
+↓
+Use the right file size
+↓
+Use modern formats
+↓
+Use responsive images
+↓
+Lazy-load appropriate below-fold media
+↓
+Set image dimensions
+↓
+Optimize video
+↓
+Avoid unnecessary autoplay
+```
+
+# Final Revision
+
+```text
+129. <track>
+     → Captions, subtitles, chapters, descriptions, metadata
+
+130. poster
+     → Image shown before video playback
+
+131. controls
+     → Browser's media controls
+
+132. autoplay
+     → Attempts automatic playback
+
+133. muted
+     → Audio starts muted
+
+134. loop
+     → Repeats media
+
+135. Media Accessibility
+     → Captions
+     → Transcripts
+     → Controls
+     → Keyboard access
+     → Avoid surprising audio
+
+136. Media Formats
+     → JPEG, PNG, WebP, AVIF, SVG
+     → MP3, AAC, Opus
+     → MP4, WebM
+
+137. Image SEO
+     → Descriptive filenames
+     → Useful alt text
+     → Good performance
+     → Correct dimensions
+
+138. Performance Best Practices
+     → Optimize size
+     → Responsive images
+     → Modern formats
+     → Lazy loading
+     → Optimize video
+     → Avoid unnecessary autoplay
+```
+
+# Master Memory Trick
+
+```text
+track
+→ TEXT
+
+poster
+→ PREVIEW
+
+controls
+→ CONTROL
+
+autoplay
+→ START
+
+muted
+→ SILENCE
+
+loop
+→ REPEAT
+
+accessibility
+→ CAPTIONS + TRANSCRIPTS
+
+formats
+→ RIGHT FILE TYPE
+
+image SEO
+→ DESCRIBE + OPTIMIZE
+
+performance
+→ DON'T DOWNLOAD WHAT YOU DON'T NEED
+```
+
+# Important Interview Comparisons
+
+```text
+alt vs poster
+
+alt
+→ Alternative text for an image
+
+poster
+→ Preview image for a video
+```
+
+```text
+autoplay vs controls
+
+autoplay
+→ Attempts to start automatically
+
+controls
+→ Gives the user playback controls
+```
+
+```text
+muted vs volume
+
+muted
+→ Media is silenced
+
+volume
+→ Controls audio level
+```
+
+```text
+loop vs autoplay
+
+autoplay
+→ Start automatically
+
+loop
+→ Restart after reaching the end
+```
+
+```text
+srcset vs loading="lazy"
+
+srcset
+→ Helps choose an appropriate image resource
+
+loading="lazy"
+→ Delays loading until the image is likely needed
+```
+
+# Module 6 – Tables
+
+## 139. What is the basic structure of an HTML table?
+
+### Code
+
+```html
+<table>
+
+  <tr>
+    <th>Name</th>
+    <th>Age</th>
+    <th>City</th>
+  </tr>
+
+  <tr>
+    <td>Utpanna</td>
+    <td>24</td>
+    <td>Odisha</td>
+  </tr>
+
+  <tr>
+    <td>Rahul</td>
+    <td>25</td>
+    <td>Delhi</td>
+  </tr>
+
+</table>
+```
+
+### Explanation
+
+The `<table>` element is used to display **tabular data**, meaning data organized into rows and columns.
+
+Basic structure:
+
+```text
+<table>
+    ↓
+<tr> → Table Row
+    ↓
+<th> → Header Cell
+<td> → Data Cell
+```
+
+### Remember
+
+```text
+<table> → Complete table
+<tr>    → Row
+<th>    → Header cell
+<td>    → Data cell
+```
+
+---
+
+## 140. What is the `<tr>` element?
+
+### Code
+
+```html
+<table>
+
+  <tr>
+    <td>Utpanna</td>
+    <td>Frontend Developer</td>
+  </tr>
+
+  <tr>
+    <td>Rahul</td>
+    <td>Backend Developer</td>
+  </tr>
+
+</table>
+```
+
+### Explanation
+
+`<tr>` means **Table Row**.
+
+It represents one horizontal row inside a table.
+
+For example:
+
+```html
+<tr>
+  <td>Utpanna</td>
+  <td>Frontend Developer</td>
+</tr>
+```
+
+This creates one row containing two cells.
+
+### Remember
+
+```text
+<tr>
+→ Table Row
+```
+
+Easy memory:
+
+```text
+tr = table row
+```
+
+---
+
+## 141. What is the `<td>` element?
+
+### Code
+
+```html
+<table>
+
+  <tr>
+    <td>Utpanna</td>
+    <td>Frontend Developer</td>
+    <td>India</td>
+  </tr>
+
+</table>
+```
+
+### Explanation
+
+`<td>` means **Table Data**.
+
+It represents a normal data cell inside a table row.
+
+Example:
+
+```html
+<td>Utpanna</td>
+```
+
+A row can contain multiple `<td>` elements:
+
+```html
+<tr>
+  <td>Utpanna</td>
+  <td>24</td>
+  <td>Odisha</td>
+</tr>
+```
+
+### Remember
+
+```text
+<td>
+→ Table Data
+→ Normal data cell
+```
+
+---
+
+## 142. What is the `<th>` element?
+
+### Code
+
+```html
+<table>
+
+  <tr>
+    <th>Name</th>
+    <th>Role</th>
+    <th>Location</th>
+  </tr>
+
+  <tr>
+    <td>Utpanna</td>
+    <td>Frontend Developer</td>
+    <td>Odisha</td>
+  </tr>
+
+</table>
+```
+
+### Explanation
+
+`<th>` means **Table Header**.
+
+It represents a header cell that describes a row or column.
+
+For example:
+
+```html
+<th>Name</th>
+```
+
+This tells the user that the corresponding cells contain names.
+
+### Why use `<th>` instead of `<td>`?
+
+Because `<th>` has semantic meaning.
+
+Good:
+
+```html
+<th>Name</th>
+```
+
+Not ideal:
+
+```html
+<td>
+  <strong>Name</strong>
+</td>
+```
+
+The second example may look like a header, but semantically it is still a normal data cell.
+
+### `scope` Attribute
+
+You can tell the browser and assistive technologies what a header describes.
+
+For a column:
+
+```html
+<th scope="col">Name</th>
+<th scope="col">Role</th>
+<th scope="col">Location</th>
+```
+
+For a row:
+
+```html
+<th scope="row">Utpanna</th>
+```
+
+### Remember
+
+```text
+<th>
+→ Table Header
+
+<td>
+→ Table Data
+```
+
+---
+
+## 143. What is the `<caption>` element?
+
+### Code
+
+```html
+<table>
+
+  <caption>
+    Employee Information
+  </caption>
+
+  <tr>
+    <th>Name</th>
+    <th>Role</th>
+  </tr>
+
+  <tr>
+    <td>Utpanna</td>
+    <td>Frontend Developer</td>
+  </tr>
+
+</table>
+```
+
+### Explanation
+
+`<caption>` provides a **title or description for a table**.
+
+It tells the user what the table is about.
+
+Example:
+
+```html
+<caption>
+  Monthly Sales Report
+</caption>
+```
+
+The caption is associated with the table itself.
+
+### Remember
+
+```text
+<caption>
+→ Table title / description
+```
+
+Easy memory:
+
+```text
+caption = table's title
+```
+
+---
+
+## 144. What is the `<thead>` element?
+
+### Code
+
+```html
+<table>
+
+  <thead>
+
+    <tr>
+      <th scope="col">Name</th>
+      <th scope="col">Role</th>
+      <th scope="col">Experience</th>
+    </tr>
+
+  </thead>
+
+  <tbody>
+
+    <tr>
+      <td>Utpanna</td>
+      <td>Frontend Developer</td>
+      <td>2 years</td>
+    </tr>
+
+    <tr>
+      <td>Rahul</td>
+      <td>Backend Developer</td>
+      <td>3 years</td>
+    </tr>
+
+  </tbody>
+
+</table>
+```
+
+### Explanation
+
+`<thead>` represents the **header section of a table**.
+
+It usually contains the row or rows containing the table's header cells.
+
+Example:
+
+```html
+<thead>
+
+  <tr>
+    <th>Name</th>
+    <th>Role</th>
+  </tr>
+
+</thead>
+```
+
+It makes the table's structure clearer and more semantic.
+
+### Remember
+
+```text
+<thead>
+→ Table Header Section
+```
+
+---
+
+# Complete Table Example
+
+### Code
+
+```html
+<table>
+
+  <caption>
+    Employee Information
+  </caption>
+
+  <thead>
+
+    <tr>
+      <th scope="col">Name</th>
+      <th scope="col">Role</th>
+      <th scope="col">Experience</th>
+    </tr>
+
+  </thead>
+
+  <tbody>
+
+    <tr>
+      <td>Utpanna</td>
+      <td>Frontend Developer</td>
+      <td>2 years</td>
+    </tr>
+
+    <tr>
+      <td>Rahul</td>
+      <td>Backend Developer</td>
+      <td>3 years</td>
+    </tr>
+
+  </tbody>
+
+</table>
+```
+
+# Final Revision
+
+```text
+139. Table Structure
+     → <table>
+        → <tr>
+           → <th> / <td>
+
+140. <tr>
+     → Table Row
+
+141. <td>
+     → Table Data Cell
+
+142. <th>
+     → Table Header Cell
+
+143. <caption>
+     → Table title / description
+
+144. <thead>
+     → Table Header Section
+```
+
+# Master Memory Trick
+
+```text
+<table>
+   ↓
+<tr>
+   ↓
+ROW
+   ↓
+<th> / <td>
+   ↓
+CELLS
+
+<caption>
+→ TABLE TITLE
+
+<thead>
+→ TABLE HEADERS
+```
+
+# Interview Memory
+
+```text
+<tr>
+→ Row
+
+<th>
+→ Header cell
+
+<td>
+→ Data cell
+
+<caption>
+→ Table title/description
+
+<thead>
+→ Header section
+```
+
+### One-Line Interview Answer
+
+> HTML tables organize tabular data into rows and columns. `<table>` creates the table, `<tr>` creates rows, `<th>` creates header cells, `<td>` creates data cells, `<caption>` describes the table, and `<thead>` groups the header rows.
+
+## 145. What is the `<tbody>` element?
+
+### Code
+
+```html
+<table>
+
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Role</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr>
+      <td>Utpanna</td>
+      <td>Frontend Developer</td>
+    </tr>
+
+    <tr>
+      <td>Rahul</td>
+      <td>Backend Developer</td>
+    </tr>
+  </tbody>
+
+</table>
+```
+
+### Explanation
+
+`<tbody>` represents the **main body of a table**.
+
+It contains the main data rows.
+
+Think:
+
+```text
+<thead>
+→ Header rows
+
+<tbody>
+→ Main data rows
+
+<tfoot>
+→ Footer/summary rows
+```
+
+### Remember
+
+> **tbody = table's main data**
+
+---
+
+## 146. What is the `<tfoot>` element?
+
+### Code
+
+```html
+<table>
+
+  <thead>
+    <tr>
+      <th>Product</th>
+      <th>Price</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr>
+      <td>Laptop</td>
+      <td>₹50,000</td>
+    </tr>
+
+    <tr>
+      <td>Mouse</td>
+      <td>₹1,000</td>
+    </tr>
+  </tbody>
+
+  <tfoot>
+    <tr>
+      <th scope="row">Total</th>
+      <td>₹51,000</td>
+    </tr>
+  </tfoot>
+
+</table>
+```
+
+### Explanation
+
+`<tfoot>` represents the **footer section of a table**.
+
+It is commonly used for:
+
+- Totals
+- Summaries
+- Calculations
+- Final information
+
+### Remember
+
+```text
+<thead>
+→ Header
+
+<tbody>
+→ Main data
+
+<tfoot>
+→ Summary / total
+```
+
+---
+
+## 147. What is `colspan`?
+
+### Code
+
+```html
+<table border="1">
+
+  <tr>
+    <th colspan="3">Employee Information</th>
+  </tr>
+
+  <tr>
+    <th>Name</th>
+    <th>Role</th>
+    <th>City</th>
+  </tr>
+
+  <tr>
+    <td>Utpanna</td>
+    <td>Frontend Developer</td>
+    <td>Odisha</td>
+  </tr>
+
+</table>
+```
+
+### Explanation
+
+`colspan` specifies how many **columns a cell should span across**.
+
+```html
+<th colspan="3">
+  Employee Information
+</th>
+```
+
+This cell occupies **3 columns**.
+
+Think:
+
+```text
+colspan
+   ↓
+column span
+   ↓
+How many columns should this cell cover?
+```
+
+### Visual idea
+
+Without `colspan`:
+
+```text
+| Name | Role | City |
+```
+
+With `colspan="3"`:
+
+```text
+|     Employee Information     |
+| Name | Role | City |
+```
+
+### Remember
+
+> **colspan = span across columns**
+
+---
+
+## 148. What is `rowspan`?
+
+### Code
+
+```html
+<table border="1">
+
+  <tr>
+    <th>Department</th>
+    <th>Name</th>
+  </tr>
+
+  <tr>
+    <td rowspan="2">Engineering</td>
+    <td>Utpanna</td>
+  </tr>
+
+  <tr>
+    <td>Rahul</td>
+  </tr>
+
+</table>
+```
+
+### Explanation
+
+`rowspan` specifies how many **rows a cell should span across**.
+
+```html
+<td rowspan="2">
+  Engineering
+</td>
+```
+
+This cell occupies the space of **2 rows**.
+
+Think:
+
+```text
+rowspan
+   ↓
+row span
+   ↓
+How many rows should this cell cover?
+```
+
+### Remember
+
+> **rowspan = span across rows**
+
+### Easy Comparison
+
+```text
+colspan
+→ Multiple columns
+
+rowspan
+→ Multiple rows
+```
+
+---
+
+## 149. What is the `scope` attribute?
+
+### Code
+
+```html
+<table>
+
+  <thead>
+    <tr>
+      <th scope="col">Name</th>
+      <th scope="col">Role</th>
+      <th scope="col">City</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr>
+      <th scope="row">Utpanna</th>
+      <td>Frontend Developer</td>
+      <td>Odisha</td>
+    </tr>
+  </tbody>
+
+</table>
+```
+
+### Explanation
+
+The `scope` attribute tells the browser and assistive technologies **what cells a table header is associated with**.
+
+Common values include:
+
+```text
+col
+→ Header applies to a column
+
+row
+→ Header applies to a row
+
+colgroup
+→ Header applies to a group of columns
+
+rowgroup
+→ Header applies to a group of rows
+```
+
+### Column Header
+
+```html
+<th scope="col">
+  Name
+</th>
+```
+
+This means the header describes the column.
+
+### Row Header
+
+```html
+<th scope="row">
+  Utpanna
+</th>
+```
+
+This means the header describes the row.
+
+### Remember
+
+```text
+scope
+→ Defines what a table header applies to
+
+scope="col"
+→ Column
+
+scope="row"
+→ Row
+```
+
+---
+
+## 150. How do you make HTML tables accessible?
+
+### Code
+
+```html
+<table>
+
+  <caption>
+    Employee Information
+  </caption>
+
+  <thead>
+    <tr>
+      <th scope="col">Name</th>
+      <th scope="col">Role</th>
+      <th scope="col">Experience</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr>
+      <th scope="row">Utpanna</th>
+      <td>Frontend Developer</td>
+      <td>2 years</td>
+    </tr>
+
+    <tr>
+      <th scope="row">Rahul</th>
+      <td>Backend Developer</td>
+      <td>3 years</td>
+    </tr>
+  </tbody>
+
+</table>
+```
+
+### Explanation
+
+Accessible tables should make the relationship between **headers and data** clear.
+
+Important practices:
+
+```text
+1. Use <th> for headers
+2. Use <caption> when a table needs a title/description
+3. Use scope="col" for column headers
+4. Use scope="row" for row headers
+5. Keep table structure simple when possible
+6. Do not use tables for page layout
+```
+
+### Why is this important?
+
+Screen readers need to understand which header belongs to which data cell.
+
+For example:
+
+```text
+Name → Utpanna
+Role → Frontend Developer
+Experience → 2 years
+```
+
+Semantic table markup helps assistive technologies understand these relationships.
+
+### Remember
+
+> **Accessible table = meaningful headers + clear relationships**
+
+---
+
+## 151. How can you make a table responsive?
+
+### Code
+
+```html
+<div class="table-container">
+
+  <table>
+
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Role</th>
+        <th>Experience</th>
+        <th>Location</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr>
+        <td>Utpanna</td>
+        <td>Frontend Developer</td>
+        <td>2 years</td>
+        <td>Odisha</td>
+      </tr>
+    </tbody>
+
+  </table>
+
+</div>
+```
+
+```css
+.table-container {
+  overflow-x: auto;
+}
+
+table {
+  min-width: 600px;
+  border-collapse: collapse;
+}
+```
+
+### Explanation
+
+Tables can become wider than a mobile screen.
+
+One simple solution is to allow **horizontal scrolling**.
+
+```text
+Desktop
+→ Full table visible
+
+Mobile
+→ Table can scroll horizontally
+```
+
+The wrapper handles the overflow instead of forcing the entire page to become wider.
+
+### Important
+
+Do not automatically turn every table into cards.
+
+The best responsive solution depends on the type of data.
+
+Common approaches include:
+
+```text
+1. Horizontal scrolling
+2. Smaller table layout
+3. Hiding non-essential columns
+4. Converting rows into cards for specific use cases
+5. Using responsive CSS
+```
+
+### Remember
+
+```text
+Responsive table
+→ Make the data usable on small screens
+```
+
+---
+
+## 152. What are nested tables?
+
+### Code
+
+```html
+<table border="1">
+
+  <tr>
+    <th>Department</th>
+    <th>Employees</th>
+  </tr>
+
+  <tr>
+    <td>Engineering</td>
+
+    <td>
+
+      <table border="1">
+
+        <tr>
+          <th>Name</th>
+          <th>Role</th>
+        </tr>
+
+        <tr>
+          <td>Utpanna</td>
+          <td>Frontend Developer</td>
+        </tr>
+
+      </table>
+
+    </td>
+
+  </tr>
+
+</table>
+```
+
+### Explanation
+
+A nested table is a `<table>` placed inside a cell of another `<table>`.
+
+In this example:
+
+```text
+Outer Table
+    ↓
+<td>
+    ↓
+Inner Table
+```
+
+Nested tables are technically possible, but they should generally be **avoided unless the data genuinely requires a nested tabular structure**.
+
+They can make:
+
+```text
+Accessibility
+→ More complicated
+
+Responsive design
+→ More difficult
+
+Maintenance
+→ More difficult
+```
+
+### Remember
+
+> **Nested table = table inside another table cell**
+
+Use them only when the data structure actually calls for it. Humans have already invented enough ways to make HTML complicated.
+
+---
+
+## 153. What are HTML table best practices?
+
+### Code
+
+```html
+<table>
+
+  <caption>
+    Employee Information
+  </caption>
+
+  <thead>
+    <tr>
+      <th scope="col">Name</th>
+      <th scope="col">Role</th>
+      <th scope="col">Experience</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr>
+      <th scope="row">Utpanna</th>
+      <td>Frontend Developer</td>
+      <td>2 years</td>
+    </tr>
+
+    <tr>
+      <th scope="row">Rahul</th>
+      <td>Backend Developer</td>
+      <td>3 years</td>
+    </tr>
+  </tbody>
+
+  <tfoot>
+    <tr>
+      <th scope="row">Total Employees</th>
+      <td colspan="2">2</td>
+    </tr>
+  </tfoot>
+
+</table>
+```
+
+### Explanation
+
+Follow these practices when creating HTML tables:
+
+### 1. Use tables for tabular data
+
+```text
+Good
+→ Employee data
+→ Product prices
+→ Sales reports
+→ Schedules
+```
+
+Do not use tables to create webpage layouts.
+
+```text
+Page layout
+→ Flexbox / Grid
+```
+
+### 2. Use semantic elements
+
+Prefer:
+
+```html
+<table>
+<caption>
+<thead>
+<tbody>
+<tfoot>
+<tr>
+<th>
+<td>
+```
+
+when they accurately describe the data.
+
+### 3. Use `<th>` for headers
+
+```html
+<th>Name</th>
+```
+
+instead of pretending that this is a header:
+
+```html
+<td>
+  <strong>Name</strong>
+</td>
+```
+
+### 4. Use `scope` when useful
+
+```html
+<th scope="col">
+  Name
+</th>
+```
+
+This makes header relationships clearer.
+
+### 5. Keep tables simple
+
+Avoid unnecessary complicated structures.
+
+Simple tables are easier to:
+
+```text
+Read
+Maintain
+Style
+Make accessible
+Make responsive
+```
+
+### 6. Add a caption when appropriate
+
+```html
+<caption>
+  Monthly Sales Report
+</caption>
+```
+
+This immediately tells the user what the table represents.
+
+### 7. Make wide tables responsive
+
+```css
+.table-wrapper {
+  overflow-x: auto;
+}
+```
+
+### 8. Avoid unnecessary nested tables
+
+Use nested tables only when the data genuinely requires them.
+
+### 9. Do not use deprecated presentation attributes
+
+Avoid:
+
+```html
+<table border="1">
+```
+
+for modern styling.
+
+Use CSS:
+
+```css
+table {
+  border-collapse: collapse;
+}
+
+th,
+td {
+  border: 1px solid #ccc;
+}
+```
+
+### 10. Do not use tables for page layout
+
+Bad approach:
+
+```text
+<table>
+→ Header
+→ Sidebar
+→ Main content
+→ Footer
+```
+
+Modern approach:
+
+```text
+CSS Grid
+Flexbox
+→ Page layout
+```
+
+---
+
+# Final Revision
+
+```text
+145. <tbody>
+     → Main table data
+
+146. <tfoot>
+     → Footer / summary / totals
+
+147. colspan
+     → Cell spans multiple columns
+
+148. rowspan
+     → Cell spans multiple rows
+
+149. scope
+     → Defines what a header applies to
+
+150. Accessibility
+     → <th> + scope + caption + clear structure
+
+151. Responsive Tables
+     → Make tables usable on small screens
+     → Horizontal scrolling is one common solution
+
+152. Nested Tables
+     → Table inside another table cell
+     → Avoid unless genuinely needed
+
+153. Best Practices
+     → Use tables for tabular data
+     → Use semantic elements
+     → Use proper headers
+     → Use scope when appropriate
+     → Keep structure simple
+     → Make wide tables responsive
+     → Do not use tables for page layout
+```
+
+# Master Memory Trick
+
+```text
+<tbody>
+→ DATA
+
+<tfoot>
+→ TOTAL / SUMMARY
+
+colspan
+→ COLUMNS
+
+rowspan
+→ ROWS
+
+scope
+→ HEADER RELATIONSHIP
+
+accessibility
+→ CLEAR HEADERS + RELATIONSHIPS
+
+responsive
+→ WORKS ON SMALL SCREENS
+
+nested
+→ TABLE INSIDE TABLE
+
+best practice
+→ TABLES FOR DATA, NOT LAYOUT
+```
+
+# Most Important Interview Comparison
+
+```text
+colspan
+→ Horizontal
+→ Spans columns
+
+rowspan
+→ Vertical
+→ Spans rows
+```
+
+```text
+scope="col"
+→ Header describes a column
+
+scope="row"
+→ Header describes a row
+```
+
+```text
+<thead>
+→ Header rows
+
+<tbody>
+→ Main data rows
+
+<tfoot>
+→ Summary/footer rows
+```
+
+# Module 7 – Forms
+
+## 154. What is the `<form>` element?
+
+### Code
+
+```html
+<form>
+  <label for="name">Name:</label>
+
+  <input
+    type="text"
+    id="name"
+    name="name">
+
+  <button type="submit">
+    Submit
+  </button>
+</form>
+```
+
+### Explanation
+
+The `<form>` element is used to create a **form for collecting user input**.
+
+Forms are commonly used for:
+
+```text
+Login
+Registration
+Contact forms
+Search
+Checkout
+Feedback
+File uploads
+```
+
+The `<form>` element acts as a container for form controls such as:
+
+```html
+<input>
+<textarea>
+<select>
+<button>
+```
+
+### Remember
+
+```text
+<form>
+→ Container for user input
+→ Collects data
+→ Can submit data to a server
+```
+
+---
+
+## 155. What is the `action` attribute?
+
+### Code
+
+```html
+<form action="/submit-form">
+  <label for="name">Name:</label>
+
+  <input
+    type="text"
+    id="name"
+    name="name">
+
+  <button type="submit">
+    Submit
+  </button>
+</form>
+```
+
+### Explanation
+
+The `action` attribute specifies **where the form data should be sent when the form is submitted**.
+
+In this example:
+
+```html
+<form action="/submit-form">
+```
+
+the browser submits the form data to:
+
+```text
+/submit-form
+```
+
+Think:
+
+```text
+User fills form
+      ↓
+User submits
+      ↓
+Form data
+      ↓
+action URL
+      ↓
+Server
+```
+
+### Remember
+
+```text
+action
+→ Where should the form data go?
+```
+
+---
+
+## 156. What is the `method` attribute?
+
+### Code
+
+```html
+<form
+  action="/login"
+  method="post">
+
+  <label for="email">Email:</label>
+
+  <input
+    type="email"
+    id="email"
+    name="email">
+
+  <label for="password">Password:</label>
+
+  <input
+    type="password"
+    id="password"
+    name="password">
+
+  <button type="submit">
+    Login
+  </button>
+
+</form>
+```
+
+### Explanation
+
+The `method` attribute specifies **how the browser sends the form data**.
+
+The two commonly used methods are:
+
+```text
+GET
+POST
+```
+
+Example:
+
+```html
+<form method="get">
+```
+
+or:
+
+```html
+<form method="post">
+```
+
+### Remember
+
+```text
+method
+→ How should the form data be sent?
+```
+
+---
+
+## 157. What is the difference between GET and POST?
+
+### Code
+
+```html
+<form
+  action="/search"
+  method="get">
+
+  <input
+    type="search"
+    name="query">
+
+  <button type="submit">
+    Search
+  </button>
+
+</form>
+```
+
+```html
+<form
+  action="/login"
+  method="post">
+
+  <input
+    type="email"
+    name="email">
+
+  <input
+    type="password"
+    name="password">
+
+  <button type="submit">
+    Login
+  </button>
+
+</form>
+```
+
+### Explanation
+
+Both GET and POST submit form data, but they are used differently.
+
+### GET
+
+With GET, form data is generally included in the **URL query string**.
+
+Example:
+
+```text
+/search?query=javascript
+```
+
+GET is commonly used for:
+
+```text
+Search
+Filtering
+Sorting
+Reading/querying data
+```
+
+GET requests are useful when the request can be represented as a URL and safely repeated.
+
+### POST
+
+With POST, form data is sent in the **request body** rather than being appended to the URL.
+
+POST is commonly used for operations such as:
+
+```text
+Creating data
+Submitting forms
+Login requests
+Uploading data
+Changing server-side state
+```
+
+### Important Security Point
+
+Do not think:
+
+```text
+GET = insecure
+POST = secure
+```
+
+That is an oversimplification.
+
+POST does **not** automatically encrypt or secure data.
+
+For sensitive data, use:
+
+```text
+HTTPS
+→ Encrypts data in transit
+```
+
+### Comparison
+
+| GET | POST |
+|---|---|
+| Data commonly appears in URL | Data is sent in request body |
+| Good for retrieving/filtering data | Good for submitting/changing data |
+| URL can be bookmarked/shared | Request body is not normally represented in the URL |
+| Suitable for idempotent/read-oriented operations | Often used for state-changing operations |
+| Not suitable for sensitive data in URL | Better than GET for keeping data out of the URL, but still requires HTTPS |
+
+### Remember
+
+```text
+GET
+→ Ask for data
+→ Data commonly goes in URL
+
+POST
+→ Submit/change data
+→ Data goes in request body
+```
+
+---
+
+## 158. What are the different HTML input types?
+
+### Code
+
+```html
+<form>
+
+  <input type="text">
+
+  <input type="password">
+
+  <input type="email">
+
+  <input type="number">
+
+  <input type="date">
+
+  <input type="time">
+
+  <input type="checkbox">
+
+  <input type="radio">
+
+  <input type="file">
+
+  <input type="color">
+
+  <input type="range">
+
+  <input type="search">
+
+  <input type="url">
+
+  <input type="tel">
+
+  <input type="hidden">
+
+  <input type="submit">
+
+  <input type="reset">
+
+  <input type="button">
+
+</form>
+```
+
+### Explanation
+
+The `<input>` element can represent many different types of form controls.
+
+Common types include:
+
+```text
+text
+→ General text
+
+password
+→ Password input
+
+email
+→ Email address
+
+number
+→ Numeric input
+
+date
+→ Date
+
+time
+→ Time
+
+checkbox
+→ Multiple independent choices
+
+radio
+→ One choice from a group
+
+file
+→ File selection
+
+color
+→ Color selection
+
+range
+→ Slider
+
+search
+→ Search input
+
+url
+→ URL input
+
+tel
+→ Telephone number
+
+hidden
+→ Hidden form value
+
+submit
+→ Submit form
+
+reset
+→ Reset form
+
+button
+→ Generic button
+```
+
+### Why use the correct input type?
+
+The browser can provide appropriate:
+
+```text
+Validation
+Keyboard on mobile devices
+User interface
+Accessibility semantics
+Built-in behavior
+```
+
+For example:
+
+```html
+<input type="email">
+```
+
+is more meaningful than:
+
+```html
+<input type="text">
+```
+
+when the expected value is an email address.
+
+### Remember
+
+> **Choose the input type that matches the data.**
+
+---
+
+## 159. What is a text input?
+
+### Code
+
+```html
+<label for="username">
+  Username:
+</label>
+
+<input
+  type="text"
+  id="username"
+  name="username">
+```
+
+### Explanation
+
+`type="text"` creates a **single-line text input**.
+
+It is commonly used for:
+
+```text
+Name
+Username
+City
+Job title
+Short messages
+```
+
+Example:
+
+```html
+<input
+  type="text"
+  name="username"
+  placeholder="Enter your username">
+```
+
+### Important Attributes
+
+```text
+name
+→ Name used when submitting the value
+
+id
+→ Identifies the element
+
+placeholder
+→ Displays a hint
+
+value
+→ Initial/current value
+
+required
+→ Makes the field required
+
+maxlength
+→ Maximum number of characters
+```
+
+### Remember
+
+```text
+type="text"
+→ Single-line text
+```
+
+---
+
+## 160. What is a password input?
+
+### Code
+
+```html
+<label for="password">
+  Password:
+</label>
+
+<input
+  type="password"
+  id="password"
+  name="password"
+  autocomplete="current-password">
+```
+
+### Explanation
+
+`type="password"` creates an input designed for **password-like secret values**.
+
+The browser normally hides the characters visually.
+
+For example, instead of:
+
+```text
+mypassword123
+```
+
+the browser may display:
+
+```text
+•••••••••••••
+```
+
+### Important
+
+`type="password"` does **not encrypt the password**.
+
+It only controls how the value is presented in the input.
+
+Security must also involve things such as:
+
+```text
+HTTPS
+→ Protects data during transmission
+
+Server-side password hashing
+→ Protects stored passwords
+
+Proper authentication
+→ Protects user accounts
+```
+
+Never store user passwords as plain text on the server.
+
+### `autocomplete`
+
+For a login password:
+
+```html
+<input
+  type="password"
+  autocomplete="current-password">
+```
+
+For a new password during registration:
+
+```html
+<input
+  type="password"
+  autocomplete="new-password">
+```
+
+This helps password managers understand the purpose of the field.
+
+### Remember
+
+```text
+type="password"
+→ Hides password characters visually
+
+It does NOT mean
+→ Password is encrypted
+```
+
+# Final Revision
+
+```text
+154. <form>
+     → Container for user input
+
+155. action
+     → Where form data is submitted
+
+156. method
+     → How form data is submitted
+
+157. GET vs POST
+     → GET: data commonly in URL
+     → POST: data in request body
+
+158. Input Types
+     → Different controls for different kinds of data
+
+159. type="text"
+     → Single-line text
+
+160. type="password"
+     → Password-like input with hidden characters
+```
+
+# Master Memory Trick
+
+```text
+<form>
+   ↓
+Collect data
+
+action
+   ↓
+WHERE?
+
+method
+   ↓
+HOW?
+
+<input>
+   ↓
+WHAT TYPE?
+
+text
+   ↓
+Normal text
+
+password
+   ↓
+Secret-looking input
+```
+
+# Interview Trap
+
+```text
+Question:
+Does type="password" encrypt the password?
+
+Answer:
+No.
+
+type="password"
+→ Only hides the characters visually.
+
+HTTPS
+→ Protects data during transmission.
+
+Server-side hashing
+→ Protects stored passwords.
+```
+
+## 172. What is the `<optgroup>` element?
+
+### Code
+
+```html
+<label for="course">Choose a course:</label>
+
+<select id="course" name="course">
+
+  <optgroup label="Frontend">
+    <option value="html">HTML</option>
+    <option value="css">CSS</option>
+    <option value="javascript">JavaScript</option>
+  </optgroup>
+
+  <optgroup label="Backend">
+    <option value="node">Node.js</option>
+    <option value="python">Python</option>
+  </optgroup>
+
+</select>
+```
+
+### Explanation
+
+`<optgroup>` is used to **group related `<option>` elements** inside a `<select>`.
+
+It makes a long dropdown easier to understand.
+
+```text
+Frontend
+  → HTML
+  → CSS
+  → JavaScript
+
+Backend
+  → Node.js
+  → Python
+```
+
+The `label` attribute provides the name of the group.
+
+### Remember
+
+> `<optgroup>` = Group related dropdown options.
+
+---
+
+## 173. What is the `<textarea>` element?
+
+### Code
+
+```html
+<label for="message">
+  Message:
+</label>
+
+<textarea
+  id="message"
+  name="message"
+  rows="5"
+  cols="30"
+  placeholder="Enter your message">
+</textarea>
+```
+
+### Explanation
+
+`<textarea>` is used for **multi-line text input**.
+
+It is useful for:
+
+```text
+Messages
+Comments
+Feedback
+Descriptions
+Addresses
+```
+
+Unlike:
+
+```html
+<input type="text">
+```
+
+which is normally a single-line input, `<textarea>` can contain multiple lines.
+
+### Important attributes
+
+```text
+rows
+→ Approximate number of visible text rows
+
+cols
+→ Approximate number of visible character columns
+
+placeholder
+→ Hint shown before the user enters text
+
+maxlength
+→ Maximum number of characters
+
+required
+→ Makes the field required
+```
+
+### Remember
+
+```text
+<input type="text">
+→ Single line
+
+<textarea>
+→ Multiple lines
+```
+
+---
+
+## 174. What are the different button types?
+
+### Code
+
+```html
+<form>
+
+  <button type="submit">
+    Submit
+  </button>
+
+  <button type="reset">
+    Reset
+  </button>
+
+  <button type="button">
+    Click Me
+  </button>
+
+</form>
+```
+
+### Explanation
+
+The `<button>` element can have different `type` values.
+
+### `type="submit"`
+
+Submits the form.
+
+```html
+<button type="submit">
+  Submit
+</button>
+```
+
+### `type="reset"`
+
+Resets the form controls to their initial values.
+
+```html
+<button type="reset">
+  Reset
+</button>
+```
+
+### `type="button"`
+
+A normal button with no automatic form submission behavior.
+
+```html
+<button type="button">
+  Open Menu
+</button>
+```
+
+JavaScript can be used to give it custom behavior.
+
+### Important Interview Point
+
+Inside a `<form>`, a `<button>` without an explicit `type` generally behaves as a submit button.
+
+Therefore, it is good practice to explicitly specify the type when you do not want submission.
+
+### Remember
+
+```text
+submit
+→ Submit form
+
+reset
+→ Reset form
+
+button
+→ Normal button
+```
+
+---
+
+## 175. What is the `<label>` element?
+
+### Code
+
+```html
+<label for="email">
+  Email:
+</label>
+
+<input
+  type="email"
+  id="email"
+  name="email">
+```
+
+### Explanation
+
+`<label>` provides a **text label for a form control**.
+
+The `for` attribute connects the label to the input's `id`.
+
+```text
+label for="email"
+        ↓
+input id="email"
+```
+
+The values must match.
+
+### Another Method
+
+You can also place the input inside the label:
+
+```html
+<label>
+  Email:
+
+  <input
+    type="email"
+    name="email">
+</label>
+```
+
+### Why is `<label>` important?
+
+It improves:
+
+```text
+Accessibility
+Usability
+Click/tap behavior
+Screen reader understanding
+```
+
+For example, clicking the label can focus the associated input.
+
+### Remember
+
+> **label = describes a form control**
+
+---
+
+## 176. What is the `<fieldset>` element?
+
+### Code
+
+```html
+<fieldset>
+
+  <legend>Personal Information</legend>
+
+  <label for="name">
+    Name:
+  </label>
+
+  <input
+    type="text"
+    id="name"
+    name="name">
+
+  <label for="email">
+    Email:
+  </label>
+
+  <input
+    type="email"
+    id="email"
+    name="email">
+
+</fieldset>
+```
+
+### Explanation
+
+`<fieldset>` groups **related form controls** together.
+
+It is especially useful for logically related controls such as:
+
+```text
+Personal information
+Payment information
+Shipping address
+Radio button groups
+Preferences
+```
+
+### Remember
+
+> **fieldset = Group related form controls**
+
+---
+
+## 177. What is the `<legend>` element?
+
+### Code
+
+```html
+<fieldset>
+
+  <legend>Choose your preferred language</legend>
+
+  <label>
+    <input
+      type="radio"
+      name="language"
+      value="javascript">
+    JavaScript
+  </label>
+
+  <label>
+    <input
+      type="radio"
+      name="language"
+      value="python">
+    Python
+  </label>
+
+</fieldset>
+```
+
+### Explanation
+
+`<legend>` provides a **caption or title for a `<fieldset>`**.
+
+It tells the user what the group of controls represents.
+
+```text
+fieldset
+    ↓
+legend → What is this group about?
+    ↓
+form controls
+```
+
+### Remember
+
+```text
+<fieldset>
+→ Groups controls
+
+<legend>
+→ Names the group
+```
+
+---
+
+## 178. What is the `placeholder` attribute?
+
+### Code
+
+```html
+<label for="username">
+  Username:
+</label>
+
+<input
+  type="text"
+  id="username"
+  name="username"
+  placeholder="Enter your username">
+```
+
+### Explanation
+
+`placeholder` displays a **temporary hint** inside a form control before the user enters a value.
+
+Example:
+
+```text
+[ Enter your username ]
+```
+
+When the user starts typing, the placeholder disappears.
+
+### Important
+
+A placeholder is **not a replacement for a label**.
+
+Bad:
+
+```html
+<input
+  type="email"
+  placeholder="Email">
+```
+
+Better:
+
+```html
+<label for="email">
+  Email
+</label>
+
+<input
+  type="email"
+  id="email"
+  placeholder="you@example.com">
+```
+
+### Remember
+
+```text
+placeholder
+→ Hint
+
+label
+→ Actual field description
+```
+
+---
+
+## 179. What does the `required` attribute do?
+
+### Code
+
+```html
+<form>
+
+  <label for="email">
+    Email:
+  </label>
+
+  <input
+    type="email"
+    id="email"
+    name="email"
+    required>
+
+  <button type="submit">
+    Submit
+  </button>
+
+</form>
+```
+
+### Explanation
+
+`required` specifies that the user **must provide a value before the form can be submitted**.
+
+It is a Boolean attribute.
+
+You do not need:
+
+```html
+required="true"
+```
+
+Simply use:
+
+```html
+required
+```
+
+### Remember
+
+```text
+required
+→ User must provide a value
+```
+
+---
+
+## 180. What is the `pattern` attribute?
+
+### Code
+
+```html
+<label for="username">
+  Username:
+</label>
+
+<input
+  type="text"
+  id="username"
+  name="username"
+  pattern="[A-Za-z0-9]+"
+  title="Use only letters and numbers"
+  required>
+```
+
+### Explanation
+
+The `pattern` attribute specifies a **regular expression that the input value must match** for native constraint validation.
+
+In this example:
+
+```html
+pattern="[A-Za-z0-9]+"
+```
+
+the value must contain one or more letters or numbers.
+
+### Example
+
+Valid:
+
+```text
+Utpanna123
+```
+
+Invalid:
+
+```text
+Utpanna@123
+```
+
+because `@` is not included in the pattern.
+
+### Important
+
+`pattern` is mainly used with text-like input types where pattern validation is supported.
+
+### Remember
+
+```text
+pattern
+→ Value must match a specified pattern
+→ Uses a regular expression
+```
+
+---
+
+## 181. What are `min` and `max`?
+
+### Code
+
+```html
+<label for="age">
+  Age:
+</label>
+
+<input
+  type="number"
+  id="age"
+  name="age"
+  min="18"
+  max="60">
+```
+
+### Explanation
+
+`min` defines the **minimum allowed value**.
+
+`max` defines the **maximum allowed value**.
+
+In this example:
+
+```text
+Minimum → 18
+Maximum → 60
+```
+
+So the value should be between 18 and 60 for native constraint validation.
+
+They can also be used with date and time-related controls.
+
+Example:
+
+```html
+<input
+  type="date"
+  name="appointment"
+  min="2026-08-13"
+  max="2026-12-31">
+```
+
+### Remember
+
+```text
+min
+→ Minimum
+
+max
+→ Maximum
+```
+
+---
+
+## 182. What is the `step` attribute?
+
+### Code
+
+```html
+<label for="price">
+  Price:
+</label>
+
+<input
+  type="number"
+  id="price"
+  name="price"
+  min="0"
+  max="100"
+  step="10">
+```
+
+### Explanation
+
+`step` defines the **allowed increment between valid values**.
+
+Here:
+
+```text
+0
+10
+20
+30
+40
+...
+100
+```
+
+The browser uses `step` as part of constraint validation.
+
+It is also useful with controls such as:
+
+```text
+number
+range
+date
+time
+```
+
+### Example
+
+```html
+<input
+  type="number"
+  min="0"
+  max="100"
+  step="5">
+```
+
+Possible valid values include:
+
+```text
+0
+5
+10
+15
+20
+...
+```
+
+### Remember
+
+```text
+min
+→ Where can it start?
+
+max
+→ Where can it end?
+
+step
+→ How much does it move?
+```
+
+---
+
+## 183. What is the `autocomplete` attribute?
+
+### Code
+
+```html
+<label for="email">
+  Email:
+</label>
+
+<input
+  type="email"
+  id="email"
+  name="email"
+  autocomplete="email">
+```
+
+### Explanation
+
+`autocomplete` tells the browser **what kind of information the field expects**, allowing browsers and password managers to help fill forms.
+
+Common values include:
+
+```text
+name
+email
+username
+current-password
+new-password
+tel
+street-address
+postal-code
+country
+```
+
+Example:
+
+```html
+<input
+  type="text"
+  name="username"
+  autocomplete="username">
+```
+
+For a login password:
+
+```html
+<input
+  type="password"
+  name="password"
+  autocomplete="current-password">
+```
+
+For a new password:
+
+```html
+<input
+  type="password"
+  name="password"
+  autocomplete="new-password">
+```
+
+### Remember
+
+```text
+autocomplete
+→ Helps the browser fill known information
+```
+
+---
+
+## 184. What is the `autofocus` attribute?
+
+### Code
+
+```html
+<form>
+
+  <label for="search">
+    Search:
+  </label>
+
+  <input
+    type="search"
+    id="search"
+    name="search"
+    autofocus>
+
+</form>
+```
+
+### Explanation
+
+`autofocus` tells the browser to **automatically focus the control when the page loads**.
+
+The user can start typing without manually clicking the input.
+
+### Important
+
+Use `autofocus` carefully.
+
+Automatically moving the user's focus can be confusing, especially for users navigating with keyboards or assistive technologies.
+
+### Remember
+
+```text
+autofocus
+→ Automatically receives focus
+```
+
+---
+
+## 185. What does the `disabled` attribute do?
+
+### Code
+
+```html
+<label for="username">
+  Username:
+</label>
+
+<input
+  type="text"
+  id="username"
+  name="username"
+  value="Utpanna"
+  disabled>
+```
+
+### Explanation
+
+A disabled form control:
+
+```text
+Cannot normally be edited
+Cannot normally receive focus
+Is excluded from form submission
+```
+
+Example:
+
+```html
+<button type="submit" disabled>
+  Submit
+</button>
+```
+
+The button cannot currently be activated.
+
+### Important Difference
+
+A disabled input's value is **not submitted with the form**.
+
+This is an important interview point.
+
+### Remember
+
+```text
+disabled
+→ Cannot interact normally
+→ Not submitted
+```
+
+---
+
+## 186. What does the `readonly` attribute do?
+
+### Code
+
+```html
+<label for="username">
+  Username:
+</label>
+
+<input
+  type="text"
+  id="username"
+  name="username"
+  value="Utpanna"
+  readonly>
+```
+
+### Explanation
+
+`readonly` means the user **cannot edit the value**, but the control can still generally be focused and its value can be submitted.
+
+This is different from `disabled`.
+
+### Comparison
+
+```text
+readonly
+→ Cannot edit
+→ Can generally receive focus
+→ Value is submitted
+
+disabled
+→ Cannot interact normally
+→ Cannot receive normal focus
+→ Value is NOT submitted
+```
+
+### Remember
+
+> **readonly = Read but don't edit**
+
+---
+
+## 187. What is native form validation?
+
+### Code
+
+```html
+<form>
+
+  <label for="email">
+    Email:
+  </label>
+
+  <input
+    type="email"
+    id="email"
+    name="email"
+    required>
+
+  <label for="age">
+    Age:
+  </label>
+
+  <input
+    type="number"
+    id="age"
+    name="age"
+    min="18"
+    max="60">
+
+  <button type="submit">
+    Submit
+  </button>
+
+</form>
+```
+
+### Explanation
+
+Native form validation is the **built-in validation provided by the browser**.
+
+HTML provides validation features through attributes and input types such as:
+
+```text
+required
+type="email"
+type="url"
+min
+max
+minlength
+maxlength
+pattern
+step
+```
+
+For example:
+
+```html
+<input
+  type="email"
+  required>
+```
+
+The browser can check:
+
+```text
+Is a value present?
+Is it a valid email format?
+```
+
+before allowing normal form submission.
+
+### Important
+
+Native validation improves the user experience, but **server-side validation is still required**.
+
+Never trust only browser validation because users can bypass client-side checks.
+
+### Remember
+
+```text
+HTML validation
+→ Browser checks input
+
+Server validation
+→ Server checks input
+
+Use both.
+```
+
+---
+
+## 188. What are the accessibility best practices for HTML forms?
+
+### Code
+
+```html
+<form>
+
+  <fieldset>
+
+    <legend>Contact Information</legend>
+
+    <div>
+      <label for="name">
+        Name:
+      </label>
+
+      <input
+        type="text"
+        id="name"
+        name="name"
+        autocomplete="name"
+        required>
+    </div>
+
+    <div>
+      <label for="email">
+        Email:
+      </label>
+
+      <input
+        type="email"
+        id="email"
+        name="email"
+        autocomplete="email"
+        required>
+    </div>
+
+    <div>
+      <label for="message">
+        Message:
+      </label>
+
+      <textarea
+        id="message"
+        name="message"
+        rows="5"
+        required></textarea>
+    </div>
+
+    <button type="submit">
+      Send Message
+    </button>
+
+  </fieldset>
+
+</form>
+```
+
+### Explanation
+
+Accessible forms should make it easy for **all users, including users using screen readers or keyboard navigation, to understand and operate the form**.
+
+Important practices include:
+
+### 1. Use `<label>`
+
+Every form control should have a clear accessible label.
+
+```html
+<label for="email">
+  Email
+</label>
+
+<input
+  id="email"
+  name="email"
+  type="email">
+```
+
+### 2. Connect the label and input
+
+The values must match:
+
+```text
+label for="email"
+        ↓
+input id="email"
+```
+
+### 3. Group related controls
+
+Use:
+
+```html
+<fieldset>
+  <legend>...</legend>
+</fieldset>
+```
+
+for logically related controls, especially radio groups.
+
+### 4. Do not use placeholder as the only label
+
+Bad:
+
+```html
+<input
+  placeholder="Email">
+```
+
+Better:
+
+```html
+<label for="email">
+  Email
+</label>
+
+<input
+  id="email"
+  name="email"
+  type="email"
+  placeholder="you@example.com">
+```
+
+### 5. Use the correct input type
+
+Use:
+
+```html
+<input type="email">
+```
+
+for email.
+
+Use:
+
+```html
+<input type="tel">
+```
+
+for telephone numbers.
+
+Use:
+
+```html
+<input type="date">
+```
+
+for dates.
+
+Correct semantic controls give browsers and assistive technologies more information.
+
+### 6. Make required fields clear
+
+Use:
+
+```html
+<input
+  type="email"
+  name="email"
+  required>
+```
+
+Also provide a clear indication in the visible form when appropriate.
+
+### 7. Make keyboard navigation possible
+
+Users should be able to move through the form using the keyboard.
+
+Avoid unnecessarily removing focus indicators with CSS.
+
+### 8. Provide useful error messages
+
+Errors should clearly explain:
+
+```text
+What went wrong
+How to fix it
+Which field has the problem
+```
+
+### 9. Do not rely only on color
+
+Bad:
+
+```text
+Red border = error
+```
+
+Some users may not perceive the color difference.
+
+Provide text or other clear information as well.
+
+### 10. Use native HTML before ARIA
+
+Prefer semantic HTML such as:
+
+```html
+<label>
+<input>
+<select>
+<textarea>
+<button>
+<fieldset>
+<legend>
+```
+
+before adding unnecessary ARIA attributes.
+
+### Remember
+
+```text
+Accessible form
+→ Clear labels
+→ Correct controls
+→ Logical grouping
+→ Keyboard support
+→ Clear errors
+→ Useful semantics
+```
+
+# Final Revision
+
+```text
+172. <optgroup>
+     → Groups related <option> elements
+
+173. <textarea>
+     → Multi-line text input
+
+174. Button Types
+     → submit
+     → reset
+     → button
+
+175. <label>
+     → Describes a form control
+
+176. <fieldset>
+     → Groups related form controls
+
+177. <legend>
+     → Names/describes a fieldset
+
+178. placeholder
+     → Temporary hint
+     → Not a replacement for a label
+
+179. required
+     → Value is required
+
+180. pattern
+     → Value must match a specified pattern
+
+181. min / max
+     → Minimum / maximum allowed value
+
+182. step
+     → Allowed increment
+
+183. autocomplete
+     → Helps browser/password managers fill information
+
+184. autofocus
+     → Automatically focuses a control
+
+185. disabled
+     → Cannot normally interact
+     → Value is not submitted
+
+186. readonly
+     → Cannot edit
+     → Value can be submitted
+
+187. Native Validation
+     → Browser performs built-in constraint validation
+
+188. Form Accessibility
+     → Labels + semantics + keyboard support + clear errors
+```
+
+# Master Memory Trick
+
+```text
+optgroup
+→ GROUP OPTIONS
+
+textarea
+→ MULTI-LINE TEXT
+
+submit
+→ SEND
+
+reset
+→ RESET
+
+button
+→ CUSTOM ACTION
+
+label
+→ DESCRIBE
+
+fieldset
+→ GROUP FIELDS
+
+legend
+→ NAME THE GROUP
+
+placeholder
+→ HINT
+
+required
+→ MUST FILL
+
+pattern
+→ MUST MATCH
+
+min / max
+→ RANGE LIMITS
+
+step
+→ INCREMENT
+
+autocomplete
+→ BROWSER HELP
+
+autofocus
+→ FOCUS AUTOMATICALLY
+
+disabled
+→ DISABLED + NOT SUBMITTED
+
+readonly
+→ CAN'T EDIT + CAN SUBMIT
+
+native validation
+→ BROWSER CHECKS
+
+accessibility
+→ EVERYONE CAN USE THE FORM
+```
+
+# Important Interview Comparisons
+
+## `disabled` vs `readonly`
+
+```text
+disabled
+→ Cannot normally interact
+→ Cannot normally receive focus
+→ NOT submitted with form
+
+readonly
+→ Cannot edit
+→ Can generally receive focus
+→ IS submitted with form
+```
+
+## `placeholder` vs `label`
+
+```text
+label
+→ Identifies the field
+→ Important for accessibility
+
+placeholder
+→ Temporary hint/example
+→ Disappears when typing
+→ Should NOT replace the label
+```
+
+## `min` vs `max` vs `step`
+
+```text
+min
+→ Lowest allowed value
+
+max
+→ Highest allowed value
+
+step
+→ Allowed increment
+```
+
+## `fieldset` vs `legend`
+
+```text
+fieldset
+→ Groups related controls
+
+legend
+→ Describes the group
+```
+
+## Native Validation vs Server Validation
+
+```text
+Native validation
+→ Browser checks the input
+
+Server validation
+→ Server checks the input
+
+Real application
+→ Use server-side validation even when native validation exists
+```
 
 9. Metadata & SEO (20)
 - [ ] meta Tag
