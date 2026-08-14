@@ -6506,3 +6506,105 @@ Grid
 ## One-Line Memory Rule
 
 > **Block controls normal block flow, inline follows text flow, flex handles one-dimensional layouts, grid handles two-dimensional layouts, and `display: contents` removes the parent's layout box while keeping its children.**
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+7. Positioning — 7
+- [ ] Explain static, relative, absolute, fixed, and sticky.
+- [ ] Difference between relative and absolute.
+- [ ] Difference between absolute and fixed.
+- [ ] How does an absolutely positioned element determine its containing block?
+- [ ] Why is position: relative commonly used with absolute?
+- [ ] How does position: sticky work?
+- [ ] Why does position: sticky sometimes not work?
+8. Flexbox — 10
+- [ ] What is Flexbox?
+- [ ] What are the main and cross axes?
+- [ ] Difference between justify-content and align-items.
+- [ ] Difference between align-items and align-content.
+- [ ] What does flex-wrap do?
+- [ ] Explain flex-grow, flex-shrink, and flex-basis.
+- [ ] What does flex: 1 mean?
+- [ ] How do you center an element using Flexbox?
+- [ ] Why does a flex item sometimes overflow its container?
+- [ ] Why does min-width: 0 sometimes fix Flexbox problems?
+9. Grid — 7
+- [ ] What is CSS Grid?
+- [ ] Difference between Grid and Flexbox.
+- [ ] What are grid tracks, lines, cells, and areas?
+- [ ] What does fr mean?
+- [ ] What are repeat() and minmax()?
+- [ ] Difference between auto-fit and auto-fill.
+- [ ] How would you create a responsive card grid using Grid?
+10. Responsive CSS — 5
+- [ ] What is responsive web design?
+- [ ] What is mobile-first design?
+- [ ] What are media queries?
+- [ ] What are container queries?
+- [ ] Difference between media queries and container queries.
+
+Tier 2: Strong Frontend — 25 questions
+Once those 60 are solid, learn these.
+11. Typography
+- [ ] font-size, font-weight, line-height, letter-spacing
+- [ ] Why is line-height important?
+- [ ] How does text-overflow: ellipsis work?
+- [ ] Difference between overflow-wrap, word-break, and white-space.
+- [ ] How do responsive typography systems work?
+12. Backgrounds & Images
+- [ ] Difference between background-size: cover and contain.
+- [ ] Difference between <img> and background images.
+- [ ] What does object-fit do?
+- [ ] What is aspect-ratio?
+- [ ] How can CSS prevent image layout shifts?
+13. Transforms & Animations
+- [ ] What is transform?
+- [ ] Difference between transform and changing top/left.
+- [ ] What are CSS transitions?
+- [ ] Difference between transitions and animations.
+- [ ] What are @keyframes?
+14. CSS Functions & Variables
+- [ ] What is calc()?
+- [ ] What are min(), max(), and clamp()?
+- [ ] What are CSS custom properties?
+- [ ] CSS variables vs SCSS variables.
+- [ ] How would you implement dark mode using CSS variables?
+15. Modern CSS
+- [ ] What is :has()?
+- [ ] What are :is() and :where()?
+- [ ] Difference between :is() and :where().
+- [ ] What are logical properties?
+- [ ] What is subgrid?
+
+Tier 3: Senior-Level CSS — 15 questions
+These are worth knowing for your long-term target, but do not start here.
+- [ ] What is a stacking context?
+- [ ] Why can z-index: 9999 fail?
+- [ ] What creates a stacking context?
+- [ ] What are reflow and repaint?
+- [ ] What is compositing?
+- [ ] Why are transform and opacity preferred for many animations?
+- [ ] What is layout thrashing?
+- [ ] How do you optimize CSS performance?
+- [ ] What is critical CSS?
+- [ ] What is unused CSS?
+- [ ] What is content-visibility?
+- [ ] What is contain?
+- [ ] What is CSS architecture?
+- [ ] How would you structure CSS for a large application?
+- [ ] How would you design a scalable design system?
