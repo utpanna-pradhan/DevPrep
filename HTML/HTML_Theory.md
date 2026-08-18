@@ -2887,20 +2887,6 @@ data-*
 → Custom data
 ```
 
-## Super Simple Memory Trick
-
-```text
-Drag → draggable
-Spell → spellcheck
-Translate → translate
-Tab → tabindex
-Access → accesskey
-Edit → contenteditable
-Data → data-*
-```
-
-> These are mostly **HTML global attributes**. Learn what problem each one solves rather than memorizing the specification like a human printer. In an interview, understanding the behavior and knowing one practical example is far more valuable than reciting definitions.
-
 # HTML Attributes
 
 ## 38. What are Boolean Attributes?
@@ -3971,37 +3957,7 @@ Check whether HTML attributes are
 valid, correctly spelled, and correctly used.
 ```
 
-# Master Memory Trick
 
-```text
-Boolean
-→ Present or absent
-
-Custom
-→ data-*
-
-Inheritance
-→ HTML attributes generally don't copy down
-
-Required
-→ Needed
-
-Optional
-→ Extra
-
-Order
-→ Usually doesn't matter
-
-Inline
-→ CSS inside style=""
-
-Best practices
-→ Semantic + accessible + clean
-
-Validation
-→ Check the HTML
-```
-# Semantic HTML (30)
 # Semantic HTML
 
 ## 46. What is Semantic HTML?
@@ -4884,33 +4840,6 @@ ARTICLE
 FOOTER
 → "Here is information related to this page/section."
 ```
-
-## Most Important Interview Difference
-
-```text
-div
-→ Generic container
-
-section
-→ Meaningful thematic section
-
-article
-→ Self-contained/independent content
-
-main
-→ Primary page content
-```
-
-## One-Line Memory Trick
-
-```text
-HEADER  → Start / Intro
-MAIN    → Main content
-SECTION → Group
-ARTICLE → Independent content
-FOOTER  → End / Related info
-```
-# Semantic HTML
 
 ## 52. What is the `<aside>` element?
 

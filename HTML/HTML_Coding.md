@@ -6433,7 +6433,7 @@ Tree
 
 ---
 
-## 70. How do you choose between <ul>, <ol>, and <dl>?
+## 70. How do you choose between &lt;ul&gt;, &lt;ol&gt;, and &lt;dl&gt;?
 
 ### Code
 
