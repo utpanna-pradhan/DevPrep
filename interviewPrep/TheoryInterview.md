@@ -1,0 +1,6801 @@
+Pasted markdown(20260831-053504).md
+File
+ in simple easy language understandable easy to remember and in md format code must be enclose with tripple  
+
+We can finish the complete preparation in 9 sections total. That gives you coverage without creating a 400-page JavaScript bible nobody remembers under interview pressure.
+
+Complete Alignerr Frontend JavaScript Developer Preparation
+✅ Section 1: AI Code Evaluation & Code Review Mindset
+✅ Section 2: Advanced JavaScript Fundamentals
+✅ Section 3: Async JavaScript, Promises & Event Loop
+Section 4: DOM Manipulation, Events & Browser APIs
+Section 5: React + Frontend Bugs + Performance
+Section 6: AI Code Evaluation, Rubrics & Distractors
+Section 7: Real-Life Bug Scenarios & Debugging
+Section 8: Frontend System Design + Scaling
+Section 9: Full Mock Interview with Questions & Pro Answers
+
+Now let's cover Sections 4, 5, and 6.
+
+SECTION 4: DOM Manipulation, Events & Browser APIs
+1. What is the DOM?
+
+DOM means:
+
+Document Object Model
+
+The browser converts HTML into a tree-like structure that JavaScript can interact with.
+
+HTML:
+
+<button id="btn">Click Me</button>
+
+JavaScript can access it:
+
+const button = document.getElementById("btn");
+
+And change it:
+
+button.textContent = "Clicked!";
+Easy understanding
+HTML
+ ↓
+Browser creates DOM
+ ↓
+JavaScript can read/change it
+2. Selecting Elements
+getElementById
+const title = document.getElementById("title");
+
+Selects one element by ID.
+
+querySelector
+const button = document.querySelector(".button");
+
+Selects the first matching element.
+
+You can use:
+
+document.querySelector("#id");
+document.querySelector(".class");
+document.querySelector("button");
+querySelectorAll
+const buttons = document.querySelectorAll(".button");
+
+Selects all matching elements.
+
+Then:
+
+buttons.forEach(button => {
+  console.log(button);
+});
+Easy memory
+querySelector     → First match
+querySelectorAll  → All matches
+3. Changing DOM Content
+textContent
+element.textContent = "Hello";
+
+Safely inserts text.
+
+innerHTML
+element.innerHTML = "<strong>Hello</strong>";
+
+Parses HTML.
+
+Important Security Problem
+
+Never blindly do:
+
+element.innerHTML = userInput;
+
+Because malicious input could inject scripts.
+
+Potential:
+
+XSS (Cross-Site Scripting)
+
+Safer
+element.textContent = userInput;
+Interview answer
+
+"I prefer textContent for plain user-generated text. I only use innerHTML with trusted or properly sanitized content because injecting unsanitized HTML can create XSS vulnerabilities."
+
+🔥 Strong answer.
+
+4. Creating Elements
+
+Instead of writing HTML strings:
+
+container.innerHTML += `
+  <div>Hello</div>
+`;
+
+You can create elements:
+
+const div = document.createElement("div");
+
+div.textContent = "Hello";
+
+container.appendChild(div);
+Why can this be better?
+More control
+Safer
+Avoids reparsing large HTML strings
+5. Event Listeners
+button.addEventListener("click", () => {
+  console.log("Clicked");
+});
+
+Common events:
+
+click
+input
+change
+submit
+keydown
+keyup
+mouseover
+scroll
+6. Event Object
+button.addEventListener("click", event => {
+  console.log(event);
+});
+
+The event object contains information about what happened.
+
+Useful properties:
+
+event.target
+event.currentTarget
+event.preventDefault()
+event.stopPropagation()
+7. event.target vs event.currentTarget
+
+Very common interview question.
+
+HTML:
+
+<div id="parent">
+  <button id="child">Click</button>
+</div>
+
+JavaScript:
+
+parent.addEventListener("click", event => {
+  console.log(event.target);
+  console.log(event.currentTarget);
+});
+
+If user clicks button:
+
+event.target
+→ button that was clicked
+
+event.currentTarget
+→ element where listener is attached
+Easy memory
+
+target = where event started
+
+currentTarget = where listener lives
+
+8. Event Bubbling
+
+Events generally travel upward.
+
+Example:
+
+<div id="parent">
+  <button id="child">Click</button>
+</div>
+
+Click button:
+
+Button clicked
+   ↓
+Parent receives event
+   ↓
+Higher parent receives event
+
+This is called:
+
+Event Bubbling
+
+Example:
+
+child.addEventListener("click", () => {
+  console.log("Child");
+});
+
+parent.addEventListener("click", () => {
+  console.log("Parent");
+});
+
+Click child:
+
+Child
+Parent
+9. stopPropagation()
+
+Stops the event from continuing upward.
+
+child.addEventListener("click", event => {
+  event.stopPropagation();
+
+  console.log("Child");
+});
+
+Now parent listener won't run.
+
+Be careful
+
+Don't use stopPropagation() everywhere.
+
+It can make event behavior difficult to debug.
+
+Use it only when needed.
+
+10. Event Delegation
+
+This is VERY important.
+
+Imagine 1,000 buttons.
+
+Bad:
+
+buttons.forEach(button => {
+  button.addEventListener("click", handleClick);
+});
+
+Instead, attach one listener to parent.
+
+HTML:
+
+<ul id="list">
+  <li data-id="1">User 1</li>
+  <li data-id="2">User 2</li>
+  <li data-id="3">User 3</li>
+</ul>
+
+JavaScript:
+
+list.addEventListener("click", event => {
+  if (event.target.matches("li")) {
+    console.log(event.target.dataset.id);
+  }
+});
+Why?
+
+Because events bubble.
+
+Advantages
+Fewer event listeners
+Better performance
+Works with dynamically added elements
+Interview answer
+
+"Event delegation uses event bubbling by attaching a listener to a parent instead of every child. It reduces the number of listeners and also supports dynamically created elements."
+
+🔥 Memorize.
+
+11. preventDefault()
+
+Prevents default browser behavior.
+
+Example:
+
+form.addEventListener("submit", event => {
+  event.preventDefault();
+
+  console.log("Form submitted");
+});
+
+Without it, form might reload the page.
+
+Another example:
+
+<a href="/home">Home</a>
+link.addEventListener("click", event => {
+  event.preventDefault();
+
+  console.log("Custom navigation");
+});
+12. Event Listener Memory Leak
+
+Very important for frontend debugging.
+
+Bad:
+
+function initialize() {
+  button.addEventListener("click", handleClick);
+}
+
+initialize();
+initialize();
+initialize();
+
+Now clicking once could run:
+
+handleClick
+handleClick
+handleClick
+
+This happens because listeners accumulate.
+
+Fix
+
+Remove listener when appropriate.
+
+button.removeEventListener(
+  "click",
+  handleClick
+);
+
+Important:
+
+This works:
+
+function handleClick() {
+  console.log("Clicked");
+}
+
+button.addEventListener("click", handleClick);
+
+button.removeEventListener("click", handleClick);
+
+This doesn't work properly:
+
+button.addEventListener("click", () => {
+  console.log("Clicked");
+});
+
+button.removeEventListener("click", () => {
+  console.log("Clicked");
+});
+
+Why?
+
+Because these are two different function objects.
+
+13. Debouncing
+
+Imagine a search input.
+
+R
+Re
+Rea
+Reac
+React
+
+Without debouncing:
+
+API Call
+API Call
+API Call
+API Call
+API Call
+
+Terrible.
+
+Debounce
+
+Wait until the user stops typing.
+
+function debounce(callback, delay) {
+  let timer;
+
+  return function (...args) {
+    clearTimeout(timer);
+
+    timer = setTimeout(() => {
+      callback(...args);
+    }, delay);
+  };
+}
+
+Usage:
+
+const search = debounce(query => {
+  console.log("Searching:", query);
+}, 500);
+Easy memory
+
+Debounce = Wait until activity stops
+
+Examples:
+
+Search input
+Resize event
+Autosave
+14. Throttling
+
+Throttle limits how frequently something can execute.
+
+Example:
+
+Scroll
+Scroll
+Scroll
+Scroll
+Scroll
+
+Instead of running function 100 times per second:
+
+Run
+Wait
+Run
+Wait
+Run
+Simple throttle
+function throttle(callback, delay) {
+  let waiting = false;
+
+  return function (...args) {
+    if (waiting) return;
+
+    callback(...args);
+
+    waiting = true;
+
+    setTimeout(() => {
+      waiting = false;
+    }, delay);
+  };
+}
+Easy difference
+Debounce
+→ Wait until user stops
+
+Throttle
+→ Limit how often it runs
+15. localStorage vs sessionStorage
+localStorage
+
+Data stays after browser closes.
+
+localStorage.setItem("name", "John");
+
+const name = localStorage.getItem("name");
+sessionStorage
+
+Data generally exists for the browser tab session.
+
+sessionStorage.setItem("name", "John");
+Easy memory
+localStorage
+→ Stays longer
+
+sessionStorage
+→ Current browser session
+Important
+
+Don't store sensitive tokens carelessly in localStorage.
+
+Potential XSS attacks can access them.
+
+SECTION 4 INTERVIEW QUESTIONS
+Q: What is event delegation?
+
+"Event delegation means attaching one event listener to a parent element and using event bubbling to handle events from its children. It reduces unnecessary listeners and works well for dynamically added elements."
+
+Q: Difference between target and currentTarget?
+
+"event.target is the element where the event originated, while event.currentTarget is the element whose event listener is currently executing."
+
+Q: Difference between debounce and throttle?
+
+"Debounce waits until events stop before executing, while throttle limits execution to a maximum frequency."
+
+Q: Why is innerHTML dangerous?
+
+"Using unsanitized user input with innerHTML can introduce XSS vulnerabilities."
+
+SECTION 5: React + Frontend Bugs + Performance
+
+Alignerr says JavaScript frontend developer, so React knowledge can absolutely appear.
+
+The key is not just knowing React.
+
+You need to identify AI-generated React mistakes.
+
+1. State Mutation
+
+One of the most common bugs.
+
+Wrong
+const [users, setUsers] = useState([]);
+
+function addUser(user) {
+  users.push(user);
+
+  setUsers(users);
+}
+
+Problem:
+
+push() mutates the existing array.
+
+React state should be treated as immutable.
+
+Correct
+function addUser(user) {
+  setUsers(previousUsers => [
+    ...previousUsers,
+    user
+  ]);
+}
+Easy memory
+
+Don't modify state directly. Create a new value.
+
+2. Object State Mutation
+
+Wrong:
+
+user.name = "John";
+
+setUser(user);
+
+Better:
+
+setUser(previousUser => ({
+  ...previousUser,
+  name: "John"
+}));
+3. Why Functional State Updates?
+
+Bad:
+
+setCount(count + 1);
+setCount(count + 1);
+
+You might expect +2.
+
+But updates can use the same old value.
+
+Better:
+
+setCount(previousCount => previousCount + 1);
+setCount(previousCount => previousCount + 1);
+Interview answer
+
+"When the next state depends on the previous state, I prefer the functional update form because it avoids relying on a potentially stale state value."
+
+4. useEffect Dependency Mistakes
+
+Example:
+
+useEffect(() => {
+  fetchUser(userId);
+}, []);
+
+Potential problem:
+
+If userId changes, effect doesn't run again.
+
+Better:
+
+useEffect(() => {
+  fetchUser(userId);
+}, [userId]);
+5. Infinite useEffect Loop
+
+Classic AI-generated disaster.
+
+useEffect(() => {
+  setUsers(users);
+}, [users]);
+
+What happens?
+
+users changes
+↓
+useEffect runs
+↓
+setUsers
+↓
+users changes
+↓
+useEffect runs
+↓
+∞
+
+Always ask:
+
+Does this effect update something that is also causing it to run?
+
+6. Missing Cleanup
+
+Example:
+
+useEffect(() => {
+  const interval = setInterval(() => {
+    console.log("Running");
+  }, 1000);
+}, []);
+
+If component unmounts, interval may continue.
+
+Correct:
+
+useEffect(() => {
+  const interval = setInterval(() => {
+    console.log("Running");
+  }, 1000);
+
+  return () => {
+    clearInterval(interval);
+  };
+}, []);
+Cleanup is important for
+Timers
+Event listeners
+WebSocket connections
+Subscriptions
+API cancellation
+7. Race Condition in React
+useEffect(() => {
+  fetch(`/api/user/${userId}`)
+    .then(response => response.json())
+    .then(data => setUser(data));
+}, [userId]);
+
+Problem:
+
+User 1 request starts
+User changes to User 2
+User 2 request starts
+
+User 2 finishes first ✓
+User 1 finishes later ❌
+Old data overwrites new data
+
+Fix using AbortController:
+
+useEffect(() => {
+  const controller = new AbortController();
+
+  async function loadUser() {
+    try {
+      const response = await fetch(
+        `/api/user/${userId}`,
+        {
+          signal: controller.signal
+        }
+      );
+
+      const data = await response.json();
+
+      setUser(data);
+
+    } catch (error) {
+      if (error.name !== "AbortError") {
+        console.error(error);
+      }
+    }
+  }
+
+  loadUser();
+
+  return () => {
+    controller.abort();
+  };
+}, [userId]);
+8. React Keys
+
+Wrong:
+
+users.map((user, index) => (
+  <User key={index} user={user} />
+));
+
+Why potentially bad?
+
+Imagine removing or reordering items.
+
+React may associate component state with the wrong item.
+
+Better:
+
+users.map(user => (
+  <User key={user.id} user={user} />
+));
+Easy memory
+
+Keys should identify the item, not its current position.
+
+9. useMemo
+
+Used to avoid expensive recalculation.
+
+const sortedUsers = useMemo(() => {
+  return [...users].sort(
+    (a, b) => a.name.localeCompare(b.name)
+  );
+}, [users]);
+
+But don't use it everywhere.
+
+Bad thinking:
+
+"Every calculation needs useMemo."
+
+No.
+
+useMemo also adds complexity.
+
+Professional answer
+
+"I use useMemo when profiling or application behavior shows that an expensive calculation is causing unnecessary work. I don't use it automatically for simple calculations."
+
+🔥 Strong.
+
+10. useCallback
+
+Used to memoize function references.
+
+const handleClick = useCallback(() => {
+  console.log("Clicked");
+}, []);
+
+Useful when:
+
+Passing callback to memoized child
+Function is dependency of an effect
+
+But unnecessary here:
+
+const add = useCallback(
+  (a, b) => a + b,
+  []
+);
+
+Don't optimize imaginary problems.
+
+11. React.memo
+
+Prevents unnecessary component re-renders when props haven't changed.
+
+const UserCard = React.memo(function UserCard({
+  user
+}) {
+  return <div>{user.name}</div>;
+});
+
+But again:
+
+Measure first.
+
+Don't wrap every component in React.memo.
+
+12. Expensive DOM Operations
+
+Bad:
+
+for (let i = 0; i < 10000; i++) {
+  document.body.innerHTML += `<div>${i}</div>`;
+}
+
+This can repeatedly reparse and update the DOM.
+
+Better approaches:
+
+DocumentFragment
+Batch updates
+Virtualized lists
+React rendering
+
+For huge lists:
+
+Virtualization
+
+Only render items visible on screen.
+
+Instead of:
+
+10,000 DOM elements
+
+Render:
+
+20 visible elements
+
+Libraries include tools like React Window, though the underlying idea matters more than worshipping a package.
+
+13. Frontend Performance Checklist
+
+When website is slow, check:
+
+1. Large JavaScript bundle?
+2. Too many API requests?
+3. Unnecessary React renders?
+4. Large images?
+5. Too many DOM nodes?
+6. Memory leaks?
+7. Expensive calculations?
+8. Slow network?
+Professional debugging approach
+
+"I first measure before optimizing. I would use browser performance tools and React profiling to identify whether the bottleneck is rendering, network activity, JavaScript execution, or excessive DOM work."
+
+SECTION 5 INTERVIEW QUESTIONS
+Q: Why shouldn't React state be mutated?
+
+"React relies on state updates and reference changes to determine when components should update. Mutating existing state can cause unpredictable behavior and makes changes harder to track."
+
+Q: Why use functional setState?
+
+"When new state depends on previous state, functional updates avoid stale values."
+
+Q: What causes useEffect infinite loops?
+
+"A common cause is when an effect updates state and that same state change causes the effect to run again."
+
+Q: Why not use array index as key?
+
+"Indexes can cause incorrect component identity when items are inserted, removed, or reordered."
+
+Q: When do you use useMemo?
+
+"For expensive calculations where avoiding repeated work provides a measurable benefit."
+
+SECTION 6: AI CODE EVALUATION, RUBRICS & DISTRACTORS
+
+This section is especially important for Alignerr.
+
+They are not only testing:
+
+Can you code?
+
+They may test:
+
+Can you evaluate an AI agent objectively?
+
+1. How Do You Evaluate AI Code?
+
+Use this framework:
+
+C - Correctness
+
+Does it work?
+
+Ask:
+
+Does output match requirements?
+Are edge cases handled?
+Is logic correct?
+R - Reliability
+
+Does it work when things go wrong?
+
+Ask:
+
+API failure?
+Empty data?
+Network issue?
+Invalid input?
+A - Architecture
+
+Is the structure reasonable?
+
+Ask:
+
+Too much duplication?
+Unnecessary complexity?
+Clear separation?
+F - Frontend Performance
+
+Ask:
+
+Too many renders?
+Too many DOM operations?
+Memory leaks?
+Large lists?
+T - Testing
+
+Ask:
+
+How do we verify this?
+Happy path?
+Edge cases?
+Failure cases?
+Easy framework:
+
+CRAFT
+
+C → Correctness
+R → Reliability
+A → Architecture
+F → Frontend Performance
+T → Testing
+
+This is useful during the interview.
+
+2. What is a Rubric?
+
+A rubric is a clear list of criteria used to judge an answer.
+
+Bad rubric:
+
+Code should be good.
+
+Terrible.
+
+How does anyone objectively measure "good"?
+
+Better:
+
+1. Correctly identifies missing response.ok check.
+2. Explains why fetch does not reject on HTTP 500.
+3. Handles network failures.
+4. Does not introduce unnecessary retry logic.
+5. Provides a working corrected implementation.
+
+Now evaluation is measurable.
+
+3. Good Rubric Characteristics
+
+A good rubric should be:
+
+Specific
+
+Bad:
+
+Handles errors properly.
+
+Good:
+
+Checks response.ok before parsing response data.
+
+Testable
+
+Can we verify it?
+
+Example:
+
+Given API returns HTTP 500
+Expected:
+Function throws an error
+Objective
+
+Avoid:
+
+Code should be elegant.
+
+Instead:
+
+Does not mutate input data.
+
+Complete
+
+Include:
+
+Main requirement
+Edge cases
+Error handling
+Verification
+4. How to Create an AI Task
+
+Imagine you want to test an AI agent.
+
+Bad task:
+
+"Fix this JavaScript code."
+
+Too vague.
+
+Better:
+
+"A search component displays stale results when users type quickly. Identify the root cause and modify the implementation so only the latest search response can update the UI."
+
+Now the task has:
+
+Problem
+↓
+Expected behavior
+↓
+Hidden complexity
+5. What Are Distractors?
+
+A distractor is something intentionally included that looks suspicious but is NOT the real problem.
+
+This is extremely important.
+
+Imagine logs:
+
+[Warning] Deprecated API detected
+[Error] Search request failed
+[Warning] Analytics SDK outdated
+[Error] State update received stale response
+
+The actual issue:
+
+State update received stale response
+
+Distractor:
+
+Deprecated API
+Analytics warning
+
+The AI should identify the real root cause instead of fixing random warnings.
+
+6. Good Distractors vs Bad Distractors
+Bad Distractor
+ERROR: SOMETHING IS WRONG
+
+That's just confusing nonsense.
+
+Good Distractor
+
+A realistic but unrelated warning.
+
+Example:
+
+[WARN] Analytics request took 800ms
+
+The actual production issue might be:
+
+[ERROR] Cannot read properties of undefined
+
+A strong AI should not waste time optimizing analytics latency.
+
+7. Types of Distractors
+1. Noisy logs
+Warning: Deprecated package
+Warning: Slow analytics request
+Error: Actual database connection failure
+2. Misleading variable names
+const userCache = fetchUserFromAPI();
+
+Maybe it's not actually a cache.
+
+AI should follow behavior, not names.
+
+3. Similar symptoms
+
+Example:
+
+UI is slow
+
+Possible causes:
+
+Large image
+Memory leak
+Infinite render
+Slow API
+
+Only one is real.
+
+4. Unrelated code changes
+
+A Git diff might contain:
+
+Changed button color
+Changed API timeout
+Changed authentication logic
+
+The bug may only be authentication logic.
+
+8. How Would You Design a Difficult AI Task?
+
+Excellent interview question.
+
+Answer:
+
+"I would start with a real engineering failure and make sure there is one clearly verifiable root cause. Then I would add realistic complexity without making the task ambiguous. For example, I might include several warnings in logs, an unrelated recent code change, and multiple components involved in the flow. The distractors should be plausible but should not make the correct answer impossible to determine."
+
+🔥 This is exactly the mindset they want.
+
+9. Example AI Debugging Task
+
+Scenario:
+
+A React search page sometimes displays old results.
+
+Logs:
+
+10:00:01 Search: "react"
+10:00:02 Request started ID: 101
+
+10:00:03 Search: "react hooks"
+10:00:03 Request started ID: 102
+
+10:00:04 Response ID: 102 completed
+10:00:05 Response ID: 101 completed
+
+10:00:05 UI updated with response ID: 101
+
+Question:
+
+What is the problem?
+
+Answer:
+
+Race condition.
+
+The older request finished after the newer request and overwrote the latest state.
+
+Correct Fix
+
+One possible solution:
+
+let controller;
+
+async function search(query) {
+  controller?.abort();
+
+  controller = new AbortController();
+
+  const response = await fetch(
+    `/api/search?q=${query}`,
+    {
+      signal: controller.signal
+    }
+  );
+
+  if (!response.ok) {
+    throw new Error("Search failed");
+  }
+
+  return response.json();
+}
+10. How Do You Verify an AI Fix?
+
+Don't just read the code and say:
+
+"Looks fine."
+
+Test it.
+
+For the search race condition:
+
+Test 1
+
+Normal search.
+
+Input: React
+Expected: React results
+Test 2
+
+Rapid typing.
+
+React
+↓
+React Hooks
+
+Expected:
+
+Only React Hooks results appear
+Test 3
+
+Network delays.
+
+Force:
+
+Old request → Slow
+New request → Fast
+
+Expected:
+
+Old response must not overwrite latest result
+
+This is how you validate a fix.
+
+11. Difficulty Calibration
+
+Alignerr mentioned calibration.
+
+This means:
+
+Adjusting task difficulty so it's neither too easy nor impossible.
+
+You can increase difficulty by adding:
+
+Level 1
+
+One file.
+
+Clear error.
+
+Cannot read property of undefined
+
+Easy.
+
+Level 2
+
+Multiple functions.
+
+Need to trace data.
+
+Component
+↓
+API Service
+↓
+Data Transformer
+↓
+UI
+
+Medium.
+
+Level 3
+
+Multiple files + logs + distractors.
+
+Frontend
+↓
+API
+↓
+Cache
+↓
+Configuration
+↓
+Logs
+
+Hard.
+
+12. Avoiding Ambiguous Tasks
+
+Bad task:
+
+"Fix the performance issue."
+
+What performance issue?
+
+Maybe:
+
+Rendering
+Network
+Database
+Images
+Memory
+
+Impossible to objectively score.
+
+Better:
+
+"The page freezes when rendering more than 10,000 rows. Identify the bottleneck and modify rendering so only visible rows are mounted."
+
+Now success can be verified.
+
+13. What Makes a Great AI Engineering Task?
+
+Memorize this:
+
+Realistic
++
+Clear objective
++
+Real root cause
++
+Plausible distractors
++
+Multiple valid clues
++
+Verifiable solution
++
+Objective rubric
+=
+Good AI task
+SECTION 6: MOST IMPORTANT INTERVIEW ANSWERS
+Q: How would you evaluate AI-generated code?
+
+"I would first understand the intended behavior and verify correctness. Then I would test edge cases and failure scenarios, review the implementation for maintainability and performance issues, and finally verify the proposed fix with reproducible tests."
+
+Q: What is a distractor?
+
+"A distractor is realistic but unrelated information included in a task to test whether the AI can distinguish relevant evidence from noise. A good distractor should increase reasoning difficulty without making the task ambiguous."
+
+Q: How do you create a scoring rubric?
+
+"I break the expected solution into observable criteria such as correctly identifying the root cause, implementing the required fix, preserving existing behavior, handling important edge cases, and passing defined verification tests."
+
+Q: How do you calibrate task difficulty?
+
+"I adjust the amount of context, number of files, log noise, indirectness of symptoms, and number of plausible but incorrect paths while ensuring the task still has a clear, verifiable solution."
+
+🔥 Sections 4, 5, 6 Super Cheat Sheet
+SECTION 4
+
+DOM → Browser representation of HTML
+
+target → Where event started
+currentTarget → Where listener exists
+
+Event Bubbling → Event moves upward
+
+Event Delegation → One parent listener handles children
+
+preventDefault → Stops default browser behavior
+
+stopPropagation → Stops event moving upward
+
+Debounce → Wait until activity stops
+
+Throttle → Limit execution frequency
+
+textContent → Safer text insertion
+
+innerHTML → Can cause XSS with unsafe input
+SECTION 5
+
+Never mutate React state
+
+Previous state needed?
+→ Use functional update
+
+useEffect
+→ Watch dependencies
+
+Effect creates resource?
+→ Cleanup required
+
+Large lists?
+→ Virtualization
+
+useMemo
+→ Expensive calculation
+
+useCallback
+→ Stable function reference when needed
+
+React.memo
+→ Avoid unnecessary renders when beneficial
+
+Index as key?
+→ Dangerous for changing/reordered lists
+SECTION 6
+
+CRAFT Framework
+
+C → Correctness
+R → Reliability
+A → Architecture
+F → Frontend Performance
+T → Testing
+
+Good AI Task:
+
+Realistic
+Clear
+Challenging
+Not ambiguous
+Has distractors
+Verifiable
+
+Good Rubric:
+
+Specific
+Objective
+Testable
+Complete
+
+Distractor:
+Relevant-looking but unrelated information
+Remaining
+
+Section 7: Real-life bug scenarios and debugging stories. This will help enormously when they ask, "Tell me about a real bug you solved."
+
+Section 8: Scaling frontend applications, performance, architecture, and "how would you scale this?" questions.
+
+Section 9: Full 15-minute mock interview with rapid-fire questions and polished answers you can actually remember under pressure.
+
+start section 7,8,9
+SECTION 7: Real-Life Bug Scenarios & Debugging
+
+This section is critical because Alignerr may ask:
+
+“Tell me about a real bug you solved.”
+“How do you debug an issue?”
+“How would you investigate this production problem?”
+“What if logs contain multiple errors?”
+“How do you find the root cause?”
+
+They don't expect superhero stories where you saved NASA. They want a structured debugging mindset.
+
+1. My Debugging Framework
+
+Use this simple framework:
+
+R → R → T → F → V
+R → Reproduce
+R → Read evidence
+T → Trace root cause
+F → Fix
+V → Verify
+Step 1: Reproduce
+
+First, confirm the problem actually exists.
+
+Ask:
+
+When does it happen?
+Is it consistent?
+Which browser/environment?
+What input causes it?
+Is it happening for all users?
+
+Never start changing random code.
+
+That creates:
+
+Bug
+↓
+Random Fix
+↓
+Two New Bugs
+↓
+Confusion
+↓
+Developer questioning career choices
+Step 2: Read Evidence
+
+Check:
+
+Browser console
+Network tab
+Stack trace
+Logs
+Git history
+Recent changes
+
+Example:
+
+TypeError: Cannot read properties of undefined
+at UserProfile.jsx:42
+
+Immediately inspect:
+
+UserProfile.jsx
+Line 42
+Step 3: Trace Root Cause
+
+Don't fix only the symptom.
+
+Example:
+
+user.name
+
+causes error.
+
+A lazy fix might be:
+
+user?.name
+
+But ask:
+
+Why is user undefined?
+
+Maybe:
+
+API failed
+↓
+Error ignored
+↓
+State remains undefined
+↓
+Component crashes
+
+The real problem may be error handling, not optional chaining.
+
+🔥 This is a very important AI evaluation mindset.
+
+Step 4: Fix
+
+Make the smallest correct fix.
+
+Avoid:
+
+Bug in one function
+↓
+Rewrite entire application
+
+A classic human solution to a leaking tap: demolish the house.
+
+Step 5: Verify
+
+Test:
+
+Happy path
++
+Original bug
++
+Edge cases
++
+Regression
+2. Professional Answer: "How Do You Debug?"
+
+Memorize this:
+
+"My debugging process starts by reproducing the issue consistently. Then I collect evidence from logs, browser developer tools, network requests, and stack traces. I trace the data flow to identify the root cause rather than just suppressing the symptom. After implementing the smallest correct fix, I verify the original scenario, test edge cases, and check that existing functionality has not regressed."
+
+🔥 Excellent answer for Alignerr.
+
+3. Real-Life Scenario: API Data Not Displaying
+
+Imagine a React application.
+
+useEffect(() => {
+  fetch("/api/users")
+    .then(response => response.json())
+    .then(data => setUsers(data));
+}, []);
+
+Sometimes users don't appear.
+
+Debugging
+Step 1: Check Network Tab
+
+Response:
+
+500 Internal Server Error
+
+But code still does:
+
+response.json()
+
+Potentially causing another error.
+
+Root cause
+
+No HTTP error handling.
+
+Fix
+useEffect(() => {
+  async function loadUsers() {
+    try {
+      const response = await fetch("/api/users");
+
+      if (!response.ok) {
+        throw new Error(
+          `Request failed: ${response.status}`
+        );
+      }
+
+      const data = await response.json();
+
+      setUsers(data);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  loadUsers();
+}, []);
+Verification
+
+Test:
+
+✓ API 200
+✓ API 404
+✓ API 500
+✓ Network failure
+✓ Empty response
+Interview explanation
+
+"I would first check whether the issue is frontend rendering or the network request. If the request is failing, I would inspect the status and response body. One common issue is assuming fetch rejects on HTTP errors, so I explicitly check response.ok and handle failure states."
+
+4. Real-Life Scenario: Infinite React Re-render
+
+Code:
+
+useEffect(() => {
+  setCount(count + 1);
+}, [count]);
+What happens?
+count changes
+↓
+Effect runs
+↓
+setCount
+↓
+count changes
+↓
+Effect runs
+↓
+∞
+Root Cause
+
+The effect changes the dependency that triggers itself.
+
+Fix
+
+Ask:
+
+Should this effect really update count?
+
+Maybe it should only run once:
+
+useEffect(() => {
+  setCount(previous => previous + 1);
+}, []);
+
+But don't blindly use [] to silence the problem. Understand the intended behavior first.
+
+Strong answer
+
+"I would inspect whether the effect updates state that also appears in its dependency array. That pattern can create a feedback loop. I would then restructure the logic based on the intended lifecycle rather than simply removing dependencies."
+
+🔥 Very professional.
+
+5. Real-Life Scenario: Search Shows Wrong Results
+
+This is one of the BEST scenarios for Alignerr.
+
+User types:
+
+React
+
+Request starts.
+
+Immediately types:
+
+React Hooks
+
+Second request starts.
+
+Network timing:
+
+Request: React Hooks → finishes first
+Request: React → finishes later
+
+Result:
+
+Old results overwrite new results ❌
+Root Cause
+
+Race condition.
+
+Fix
+let controller;
+
+async function search(query) {
+  controller?.abort();
+
+  controller = new AbortController();
+
+  const response = await fetch(
+    `/api/search?q=${encodeURIComponent(query)}`,
+    {
+      signal: controller.signal
+    }
+  );
+
+  if (!response.ok) {
+    throw new Error("Search failed");
+  }
+
+  return response.json();
+}
+Verification
+
+Artificially slow the first request.
+
+Request A → 3 seconds
+Request B → 500ms
+
+Expected:
+
+Only latest request updates UI ✓
+Interview answer
+
+"A realistic frontend issue is stale search results caused by asynchronous race conditions. I would reproduce it using throttled network conditions, confirm request ordering in the network tab, and then prevent stale responses using AbortController or request IDs."
+
+This answer sounds much stronger than:
+
+"I checked console.log and fixed it."
+
+6. Real-Life Scenario: Button Clicks Multiple Times
+
+User says:
+
+"One click sometimes triggers three API requests."
+
+Investigation
+
+Check event listeners.
+
+Bad code:
+
+function initialize() {
+  button.addEventListener("click", submitForm);
+}
+
+If initialize() runs multiple times:
+
+Listener 1
+Listener 2
+Listener 3
+
+One click:
+
+submitForm()
+submitForm()
+submitForm()
+Root Cause
+
+Event listener not cleaned up.
+
+Fix
+button.addEventListener(
+  "click",
+  submitForm
+);
+
+return () => {
+  button.removeEventListener(
+    "click",
+    submitForm
+  );
+};
+In React
+useEffect(() => {
+  window.addEventListener(
+    "resize",
+    handleResize
+  );
+
+  return () => {
+    window.removeEventListener(
+      "resize",
+      handleResize
+    );
+  };
+}, []);
+7. Real-Life Scenario: Website Becomes Slow
+
+Imagine a dashboard with:
+
+20,000 rows
+
+The page freezes.
+
+Wrong assumption
+
+"React is slow."
+
+No.
+
+Measure first.
+
+Investigation
+
+Use:
+
+Browser Performance tab
+React Profiler
+Network tab
+Memory profiling
+
+Maybe issue:
+
+20,000 DOM nodes
+Fix
+
+Use:
+
+Virtualization
+
+Only render visible rows.
+
+Before:
+
+20,000 DOM nodes
+
+After:
+
+30 visible DOM nodes
+Interview answer
+
+"I wouldn't immediately optimize the framework. I would profile the application first. If the bottleneck is rendering a large list, virtualization would reduce the number of mounted DOM elements."
+
+8. Real-Life Scenario: Memory Leak
+
+Component:
+
+useEffect(() => {
+  const timer = setInterval(() => {
+    fetchData();
+  }, 5000);
+}, []);
+
+User navigates away.
+
+But timer continues.
+
+Then:
+
+Component A unmounts
+Timer still running ❌
+
+Component A mounts again
+New timer starts
+
+Component A unmounts
+Both timers continue ❌❌
+
+Eventually:
+
+Many timers
+Many API requests
+Poor performance
+Fix
+useEffect(() => {
+  const timer = setInterval(() => {
+    fetchData();
+  }, 5000);
+
+  return () => {
+    clearInterval(timer);
+  };
+}, []);
+9. Real-Life Scenario: Production Works Locally But Fails After Deployment
+
+This is very common.
+
+Example:
+
+fetch("http://localhost:5000/api/users");
+
+Works locally.
+
+Deploy frontend.
+
+Production:
+
+https://myapp.com
+
+Still calls:
+
+http://localhost:5000
+
+Obviously production doesn't contain your laptop. Humanity has not yet invented that feature.
+
+Fix
+
+Environment variables.
+
+const API_URL = import.meta.env.VITE_API_URL;
+fetch(`${API_URL}/api/users`);
+
+Different environment:
+
+Development
+→ http://localhost:5000
+
+Production
+→ https://api.example.com
+Interview Answer
+
+"When something works locally but fails in production, I compare environment configuration, API endpoints, CORS behavior, build configuration, and runtime logs rather than assuming the application code itself is wrong."
+
+🔥 Excellent answer.
+
+10. Real-Life Scenario: CORS Error
+
+Browser:
+
+Access to fetch at API has been blocked by CORS policy
+
+Common mistake:
+
+Trying to fix it in React.
+
+CORS is mainly controlled by server response headers.
+
+Backend example:
+
+app.use(cors({
+  origin: "https://myfrontend.com"
+}));
+Important Interview Point
+
+Don't disable security blindly.
+
+Bad:
+
+origin: "*"
+
+for everything, especially sensitive authenticated APIs.
+
+Professional answer
+
+"I would verify the browser's Origin header and server CORS configuration, including allowed origins, methods, headers, and credentials."
+
+11. Real-Life Scenario: "The UI Is Broken"
+
+Logs:
+
+[WARN] Analytics SDK outdated
+
+[WARN] Image optimization disabled
+
+[ERROR] Cannot read properties of undefined
+
+[WARN] Third-party widget slow
+
+AI agent sees:
+
+Analytics SDK outdated
+
+and starts updating packages.
+
+Wrong.
+
+Correct approach:
+
+Trace stack
+TypeError
+↓
+Component
+↓
+Props
+↓
+API response
+↓
+Root cause
+Key Alignerr statement
+
+"I would prioritize evidence based on its relationship to the reported symptom. Not every warning in logs is causal, so I would trace the failing execution path instead of assuming the most visible error is the root cause."
+
+🔥 This is exactly useful for task author/evaluator thinking.
+
+SECTION 7: REAL BUG STORY TEMPLATE
+
+If they ask:
+
+"Tell me about a bug you solved."
+
+Use this structure:
+
+S → I → A → R
+S → Situation
+I → Investigation
+A → Action
+R → Result
+Example
+
+"I encountered an issue where asynchronous data could display stale results when requests completed out of order. I reproduced the problem by simulating slow network conditions and inspected request timing in the browser network tab. I identified it as a race condition and addressed it by cancelling stale requests and ensuring only the latest response could update the UI. I then tested rapid input changes and delayed responses to verify that older responses could no longer overwrite current state."
+
+This is safe, professional, and technically solid.
+
+Important: If they ask about something you personally solved, don't claim fake production experience. You can say:
+
+"In a project I built..."
+
+and discuss an actual project scenario.
+
+SECTION 8: Scaling Frontend Applications
+
+Now the question:
+
+"How would you scale this application?"
+
+Do not immediately scream:
+
+"Microservices!"
+
+Frontend developers love recommending distributed systems for a todo app. Resist.
+
+First understand what is actually growing.
+
+1. What Does "Scale" Mean?
+
+Scaling can mean:
+
+More Users
+More Data
+More Features
+More Developers
+More Requests
+More Complexity
+
+Different problem = different solution.
+
+First interview answer
+
+"Before choosing a scaling strategy, I would clarify what is scaling: traffic, data size, rendering complexity, or team and codebase complexity. The solution depends on the bottleneck."
+
+🔥 This is a very mature answer.
+
+2. Scaling for More Users
+
+Suppose:
+
+1,000 users
+↓
+100,000 users
+
+Frontend concerns:
+
+CDN
+Caching
+Smaller bundles
+Lazy loading
+API efficiency
+CDN
+
+Static assets:
+
+JS
+CSS
+Images
+Fonts
+
+are distributed geographically.
+
+Instead of every user contacting one server:
+
+User India
+    ↓
+Server USA ❌
+
+Use CDN:
+
+User India
+    ↓
+Nearby CDN ✓
+3. Code Splitting
+
+Don't send entire application immediately.
+
+Bad:
+
+5 MB JavaScript bundle
+
+User only visits:
+
+Home Page
+
+Why download:
+
+Dashboard
+Admin Panel
+Settings
+Reports
+
+Use lazy loading.
+
+React:
+
+const Dashboard = React.lazy(() =>
+  import("./Dashboard")
+);
+
+With:
+
+<Suspense fallback={<Loading />}>
+  <Dashboard />
+</Suspense>
+Benefit
+
+Load code only when needed.
+
+4. Image Optimization
+
+Large images can destroy performance.
+
+Problems:
+
+10 MB image
+↓
+Mobile user
+↓
+Slow connection
+↓
+Sad human
+
+Solutions:
+
+WebP / AVIF
+Responsive images
+Lazy loading
+Compression
+CDN
+
+Example:
+
+<img
+  src="image.webp"
+  loading="lazy"
+  alt="Product"
+/>
+5. API Scaling
+
+Don't request unnecessary data.
+
+Bad:
+
+GET /users
+
+Returns:
+
+10,000 users
+
+When UI needs:
+
+20 users
+
+Use:
+
+Pagination
+Filtering
+Caching
+
+Example:
+
+GET /users?page=1&limit=20
+6. Frontend Caching
+
+Don't repeatedly fetch unchanged data.
+
+Options:
+
+Browser Cache
+CDN Cache
+Application Cache
+React Query / TanStack Query
+
+Example concept:
+
+First Visit
+↓
+Fetch API
+↓
+Cache Data
+
+Second Visit
+↓
+Use Cached Data
+
+But cache invalidation matters.
+
+One of the hardest problems in programming:
+
+Cache invalidation
+Naming things
+Off-by-one errors
+
+A depressing but accurate industry joke.
+
+7. Scaling Large Lists
+
+Imagine:
+
+100,000 products
+
+Don't:
+
+Render 100,000 components
+
+Use:
+
+Pagination
+Page 1 → 20 products
+Page 2 → 20 products
+Infinite Scroll
+
+Load more when needed.
+
+Virtualization
+
+Render only visible items.
+
+100,000 items in data
+
+Visible:
+
+20 items
+
+DOM:
+
+20 elements
+8. Scaling State Management
+
+Small application:
+
+useState
+Props
+
+Medium:
+
+Context
+
+Complex application:
+
+Possible:
+
+Redux
+Zustand
+React Query
+
+But don't say:
+
+"Large app = Redux."
+
+State types matter.
+
+Client State
+Modal open
+Theme
+Sidebar state
+Server State
+Users
+Products
+API data
+
+For server state:
+
+Tools such as TanStack Query can help manage caching, loading states, retries, and invalidation.
+
+Professional answer
+
+"I separate client UI state from server state. I avoid putting all application data into one global store and choose state management based on ownership, update frequency, and caching requirements."
+
+9. Scaling Codebase
+
+As projects grow:
+
+components/
+utils/
+pages/
+hooks/
+services/
+
+can become messy.
+
+Better organization often focuses on features:
+
+src/
+ ├── features/
+ │    ├── auth/
+ │    ├── dashboard/
+ │    ├── products/
+ │
+ ├── components/
+ ├── services/
+ ├── hooks/
+
+Why?
+
+Everything related to a feature stays closer together.
+
+10. Scaling Teams
+
+Imagine:
+
+2 developers
+↓
+50 developers
+
+Problems:
+
+Merge conflicts
+Different coding styles
+Breaking changes
+Unclear ownership
+
+Solutions:
+
+ESLint
+Prettier
+TypeScript
+Code Reviews
+CI/CD
+Automated Tests
+Clear Ownership
+Strong answer
+
+"As teams scale, consistency becomes as important as individual coding skill. Automated linting, testing, CI checks, code review standards, and clear ownership help prevent integration problems."
+
+11. Frontend Observability
+
+Production errors may not appear locally.
+
+Use:
+
+Error tracking
+Performance monitoring
+Browser logs
+Metrics
+
+Conceptually:
+
+User reports issue
+↓
+Error tracking
+↓
+Stack trace
+↓
+User action
+↓
+Browser information
+↓
+Investigate
+
+Possible platforms include Datadog and Grafana, though for the interview you mainly need to understand observability, not memorize every dashboard button invented by enterprise software.
+
+12. Scaling Architecture: Don't Overengineer
+
+Bad progression:
+
+Simple React App
+↓
+Add microservices
+↓
+Add Kafka
+↓
+Add Kubernetes
+↓
+Nobody knows why
+
+Better:
+
+Simple architecture
+↓
+Measure bottleneck
+↓
+Identify limitation
+↓
+Scale specific component
+Golden interview line
+
+"I prefer to scale based on measured bottlenecks rather than introducing architectural complexity prematurely."
+
+🔥 Memorize.
+
+13. How Would You Handle 1 Million Users?
+
+Potential answer:
+
+"I would first identify which part of the system is under pressure. From a frontend perspective, I would serve static assets through a CDN, optimize bundle size with code splitting, cache appropriate resources, lazy-load noncritical content, and minimize unnecessary API requests. For large datasets, I would use pagination or virtualization. I would also monitor real user performance and error rates so scaling decisions are based on actual bottlenecks."
+
+This is a very strong answer.
+
+14. Scaling an AI Task Environment
+
+This connects directly to Alignerr.
+
+Suppose they ask:
+
+"How would you scale task creation?"
+
+Answer:
+
+"I would standardize the task structure while keeping the underlying failures diverse. Each task could include a reproducible environment, clear initial state, logs or evidence, expected verification steps, and an objective rubric. I would automate environment setup where possible and maintain version-controlled fixtures so tasks remain reproducible."
+
+🔥 Very relevant to the Task Author role.
+
+SECTION 8 CHEAT SHEET
+Scaling starts with:
+
+What is growing?
+↓
+Find bottleneck
+↓
+Measure
+↓
+Optimize specific problem
+More Users
+→ CDN
+→ Caching
+→ Code splitting
+
+Large Data
+→ Pagination
+→ Infinite scroll
+→ Virtualization
+
+Large Codebase
+→ Feature-based structure
+→ TypeScript
+→ Testing
+
+Large Team
+→ CI/CD
+→ Code review
+→ Linting
+→ Ownership
+
+Large API Usage
+→ Caching
+→ Pagination
+→ Reduce requests
+Golden line
+
+"Scale based on measured bottlenecks, not assumptions."
+
+SECTION 9: FULL ALIGNERR MOCK INTERVIEW
+
+This is your final interview preparation.
+
+A 15-minute interview will likely be conversational.
+
+They won't ask 100 questions.
+
+They want to quickly determine:
+
+Can this person actually reason about code?
+Can they debug?
+Can they evaluate AI output?
+Can they communicate clearly?
+PART 1: INTRODUCTION
+Q1. Tell me about yourself.
+Answer
+
+"I'm a frontend-focused developer with hands-on experience building responsive web applications using JavaScript, React, and modern frontend tooling. A big part of my work involves turning requirements into working interfaces and debugging issues across components, APIs, and application state. I'm particularly interested in this role because it requires more than writing code. It involves analyzing AI-generated solutions, identifying subtle correctness issues, and defining clear criteria for what a good engineering solution should look like. That combination of JavaScript knowledge, debugging, and structured evaluation is what interests me about Alignerr."
+
+Remember structure
+Who you are
+↓
+What you build
+↓
+What you're good at
+↓
+Why Alignerr
+Q2. Why Alignerr?
+Answer
+
+"What interests me is the evaluation side of engineering. Writing code is one skill, but being able to determine whether code is actually correct, reliable, and robust requires deeper reasoning. I like the idea of examining AI-generated solutions, identifying subtle issues, and creating objective criteria for evaluation. I also find the task-authoring aspect interesting because it requires designing realistic problems rather than theoretical questions."
+
+PART 2: AI CODE REVIEW
+Q3. How would you evaluate AI-generated code?
+Answer
+
+"First, I would understand the expected behavior rather than judging the code by appearance. Then I would verify correctness against the requirements, test edge cases and failure scenarios, and review the implementation for maintainability, performance, and security concerns. Finally, I would verify the fix with reproducible tests. I try to distinguish between a cosmetic improvement and an actual correctness issue."
+
+🔥 Excellent.
+
+Q4. AI generated working code. Is it automatically good?
+Answer
+
+"No. Passing the happy path is not enough. I would check edge cases, error handling, asynchronous behavior, performance characteristics, security concerns, and whether the implementation remains correct under realistic conditions."
+
+Q5. What would you prioritize when reviewing code?
+Answer
+1. Correctness
+2. Reliability
+3. Security
+4. Performance
+5. Maintainability
+6. Style
+Answer
+
+"I prioritize correctness first. After that I look at reliability and important failure cases, then security and performance depending on the context. Style matters, but I wouldn't reject correct production-ready code simply because I prefer a different formatting style."
+
+Very mature answer.
+
+PART 3: BUG SCENARIO
+Q6. A user says the page is broken. What do you do?
+Answer
+
+"I would first clarify and reproduce the issue. Then I would collect evidence from browser developer tools, network requests, console errors, and stack traces. I would trace the failing data or execution path to find the root cause instead of immediately changing the visible line where the error appears. After implementing the smallest correct fix, I would verify the original scenario and test for regressions."
+
+Q7. How do you distinguish root cause from symptom?
+Answer
+
+"I trace backward from the failure. For example, if a component crashes because a value is undefined, adding optional chaining may hide the symptom, but I would investigate why the value became undefined. The root cause could be an API failure, incorrect data transformation, or missing state initialization."
+
+🔥 Very important.
+
+PART 4: DISTRACTORS
+Q8. What distractors would you add to challenge an AI?
+Answer
+
+"I would include realistic but non-causal information, such as unrelated warnings, recent changes in another module, or logs from background services. The distractors should be plausible enough to require reasoning but should not make the task ambiguous. There must still be enough evidence for a careful agent to identify the true root cause."
+
+Q9. How do you avoid making distractors unfair?
+Answer
+
+"I make sure distractors are genuinely unrelated rather than contradictory. The correct execution path should still contain sufficient evidence. The goal is to test prioritization and reasoning, not to trick the model through missing information."
+
+🔥 Excellent distinction.
+
+PART 5: RUBRICS
+Q10. How would you create a scoring rubric?
+Answer
+
+"I would break the expected outcome into observable and independently checkable criteria. For example: identifies the correct root cause, makes the required code change, preserves existing behavior, handles relevant failure cases, and passes defined verification tests. I would avoid subjective criteria like 'elegant code' unless they are converted into measurable requirements."
+
+Q11. What makes a bad rubric?
+Answer
+
+"A bad rubric is vague, subjective, or impossible to verify. For example, saying 'the solution should be clean' doesn't define correctness. A good rubric describes observable outcomes and allows different valid implementations where appropriate."
+
+PART 6: JAVASCRIPT RAPID FIRE
+Q12. Closure?
+
+"A closure allows a function to retain access to variables from its outer lexical scope even after the outer function has finished."
+
+Q13. Event loop?
+
+"JavaScript executes synchronous code first. After the stack is clear, microtasks such as Promise callbacks are processed before task callbacks such as setTimeout."
+
+Q14. Promise.all vs allSettled?
+
+"Promise.all rejects when any Promise fails, while Promise.allSettled waits for all operations and reports each result."
+
+Q15. Async forEach problem?
+
+"forEach doesn't wait for async callbacks. I would use for...of for sequential operations or Promise.all for independent parallel operations."
+
+Q16. Race condition?
+
+"A race condition occurs when asynchronous operations complete in an unpredictable order and an older result can overwrite newer application state."
+
+PART 7: REACT QUESTIONS
+Q17. Why not mutate state?
+
+"State should be treated as immutable. Creating new references makes updates predictable and helps React correctly detect changes."
+
+Q18. useEffect cleanup?
+
+"Cleanup prevents resources such as timers, event listeners, subscriptions, or requests from continuing after a component is no longer relevant."
+
+Q19. Why not index as key?
+
+"Indexes can cause incorrect component identity when items are inserted, removed, or reordered."
+
+PART 8: SCALING
+Q20. How would you scale a frontend application?
+Answer
+
+"I would first identify what is actually becoming a bottleneck. For traffic, I would consider CDN and caching. For bundle size, code splitting and lazy loading. For large datasets, pagination or virtualization. For application complexity, modular architecture and clear state ownership. I prefer measuring bottlenecks before introducing optimization."
+
+PART 9: REAL-LIFE EXPERIENCE QUESTION
+
+This one matters.
+
+Q21. Tell me about a difficult bug you solved.
+
+Don't invent a story about:
+
+"At my Fortune 500 company, I prevented a global outage."
+
+Interviewers can smell fictional engineering adventures.
+
+Use a real project.
+
+Safe structure
+
+"In one of my frontend projects, I encountered an issue where [REAL PROBLEM]. I first reproduced it and used [DevTools/logs/console/network] to narrow down whether the issue was in rendering, state, or the API layer. I traced the problem to [ROOT CAUSE]. I fixed it by [FIX], then tested the original scenario along with edge cases to ensure it didn't regress."
+
+Use a project you genuinely built.
+
+PART 10: IF YOU DON'T KNOW AN ANSWER
+
+Very important.
+
+Don't panic.
+
+Don't invent.
+
+Say:
+
+"I haven't worked directly with that specific tool, but my approach would be to first understand what information it provides and then use it to correlate the reported symptom with errors, request traces, and performance metrics. The debugging principles would remain the same: reproduce, collect evidence, isolate the failing path, and verify the fix."
+
+This is MUCH better than:
+
+"Yes, I have extensive experience with Datadog."
+
+Followed by:
+
+"Datadog is... a dog monitoring application?"
+
+PART 11: FINAL QUESTIONS THEY MAY ASK
+"How do you know your fix is correct?"
+
+"I verify it against the original failure scenario first, then test relevant edge and failure cases. I also check that the fix doesn't introduce regressions in related functionality. Where possible, I prefer automated tests or reproducible verification steps."
+
+"What makes a task difficult for AI?"
+
+"The best difficulty comes from realistic reasoning requirements rather than simply making the code longer. Multiple files, indirect symptoms, asynchronous behavior, plausible distractors, and the need to trace data flow can increase difficulty while still keeping the task objectively solvable."
+
+"What would you do if the AI finds a different valid solution?"
+
+"The rubric should evaluate outcomes and required constraints rather than requiring one exact implementation. If multiple approaches correctly solve the problem and meet the requirements, they should be accepted."
+
+🔥 This is a particularly good answer for AI evaluation work.
+
+🚨 THE 15-MINUTE INTERVIEW STRATEGY
+
+Don't give 5-minute answers.
+
+Use:
+
+Answer Structure
+Direct Answer
+↓
+Reason
+↓
+Small Example
+
+Example:
+
+Question: What is event delegation?
+
+Bad:
+
+Event delegation is a pattern that was originally developed...
+
+Nobody asked for a documentary.
+
+Better:
+
+"Event delegation means attaching a listener to a parent and handling events from its children through event bubbling. It's useful for dynamic lists because you don't need a separate listener for every item."
+
+Done.
+
+🔥 YOUR MASTER INTERVIEW CHEAT SHEET
+
+Memorize these lines:
+
+Debugging
+
+"I reproduce the issue, collect evidence, trace the root cause, make the smallest correct fix, and verify against regressions."
+
+AI Evaluation
+
+"I verify intended behavior first, then correctness, edge cases, reliability, and finally implementation quality."
+
+Root Cause
+
+"I avoid fixing only the visible symptom and trace backward to understand why the failure occurred."
+
+Distractors
+
+"Distractors should be realistic and plausible but must not make the task ambiguous."
+
+Rubrics
+
+"A rubric should contain observable, objective, and independently checkable criteria."
+
+Async
+
+"Microtasks run before task queue callbacks after synchronous execution completes."
+
+Scaling
+
+"I scale based on measured bottlenecks rather than assumptions."
+
+Performance
+
+"I measure before optimizing."
+
+AI Task
+
+"Difficulty should come from realistic reasoning complexity, not artificial ambiguity."
+
+Verification
+
+"A fix isn't complete until the original failure and relevant edge cases are verified."
+
+FINAL PRE-INTERVIEW PRIORITY
+
+For a 15-minute Alignerr interview, focus most heavily on these:
+
+★★★★★ Debugging methodology
+
+★★★★★ Real bug scenarios
+
+★★★★★ Root cause vs symptom
+
+★★★★★ AI-generated code evaluation
+
+★★★★★ Distractors
+
+★★★★★ Scoring rubrics
+
+★★★★★ Async JavaScript
+
+★★★★☆ React bugs
+
+★★★★☆ Scaling
+
+★★★☆☆ Advanced JavaScript theory
+Most important mindset
+
+They are probably not looking for someone who can recite every JavaScript API from memory.
+
+They want someone who, when presented with messy code, logs, and incomplete information, can calmly say:
+
+What is the evidence? What is the actual failure? What is the root cause? How can we verify the fix?
+
+That is the core pattern running through almost every question in this role.
+
+Pasted markdown(20260831-062525).md
+File
+covert all to .md format for github 
+
+Done. I converted the complete preparation into a GitHub-ready Markdown file containing the sections and interview material. Because apparently manually copying 70,000 characters into a README is humanity's preferred form of suffering.
+
+Download it here:
+
+Download the complete Alignerr Frontend JavaScript Interview Preparation (.md)
+
+Suggested GitHub repository structure:
+
+alignerr-interview-preparation/
+│
+├── README.md
+│
+└── alignerr-frontend-javascript-interview-preparation.md
+
+For the repository, I'd recommend naming the main file:
+
+README.md
+
+That way GitHub displays the complete preparation automatically when someone opens the repository.
+
+alignerr-frontend-javascript-interview-preparation.md
+Document
+
+Library
+/
+alignerr-frontend-javascript-interview-preparation.md
+1. Scope: var, let, and const
+
+The three types
+
+var
+
+Function-scoped.
+
+function test() {
+  if (true) {
+    var message = "Hello";
+  }
+
+  console.log(message); // Hello
+}
+let
+
+Block-scoped.
+
+function test() {
+  if (true) {
+    let message = "Hello";
+  }
+
+  console.log(message); // ReferenceError
+}
+const
+
+Also block-scoped, but cannot be reassigned.
+
+const name = "John";
+
+name = "Mike"; // Error
+
+Interview answer
+
+"let and const are block-scoped, while var is function-scoped. I generally prefer const by default and use let when reassignment is necessary. Avoiding var reduces bugs caused by function scope and hoisting behavior."
+
+AI-generated bug to catch
+
+for (var i = 0; i < 3; i++) {
+  setTimeout(() => {
+    console.log(i);
+  }, 1000);
+}
+
+Output:
+
+3
+3
+3
+Why?
+
+var creates one shared function-scoped binding.
+
+By the time callbacks execute:
+
+i === 3
+
+Fix:
+
+for (let i = 0; i < 3; i++) {
+  setTimeout(() => {
+    console.log(i);
+  }, 1000);
+}
+
+Output:
+
+0
+1
+2
+Pro explanation
+
+"The issue isn't setTimeout itself. The problem is that all callbacks close over the same var binding. Using let creates a separate binding for each loop iteration."
+
+That explanation is much stronger than simply saying "let is block scoped."
+
+2. Scope
+
+Scope means:
+
+Where can a variable be accessed?
+
+Example:
+
+function test() {
+  const message = "Hello";
+
+  console.log(message); // Works
+}
+console.log(message); // Error
+
+There are mainly:
+
+Global scope
+Function scope
+Block scope
+
+Example of block scope:
+
+if (true) {
+  let name = "John";
+}
+
+console.log(name); // Error
+
+Because name exists only inside the {} block.
+
+3. Hoisting
+
+Hoisting means JavaScript processes declarations before executing code.
+
+var
+
+console.log(x);
+
+var x = 10;
+
+Output:
+
+undefined
+
+let
+
+console.log(x);
+
+let x = 10;
+
+Output:
+
+ReferenceError
+var → accessible before declaration but gives undefined
+let / const → cannot access before initialization
+
+Technically, let and const are also hoisted.
+
+But they stay in something called:
+
+Temporal Dead Zone (TDZ)
+
+Until they are initialized.
+
+"var is hoisted and initialized with undefined. let and const are also hoisted but cannot be accessed before initialization because of the Temporal Dead Zone."
+
+4. Closures
+
+Simple definition
+
+A closure happens when a function remembers variables from its outer function.
+
+Example:
+
+function createCounter() {
+  let count = 0;
+
+  return function () {
+    count++;
+    return count;
+  };
+}
+const counter = createCounter();
+
+console.log(counter()); // 1
+console.log(counter()); // 2
+console.log(counter()); // 3
+
+Even though createCounter() has finished, the inner function still remembers:
+
+count
+
+That is a closure.
+
+Closure = Function remembers its surrounding variables.
+
+Real-life uses
+
+Event listeners ,
+Timers ,
+Debouncing ,
+Private variables ,
+Callbacks ,
+Memoization ,
+
+"A closure is when a function retains access to variables from its outer lexical scope even after the outer function has finished executing."
+
+5. Closure Bug with var
+
+Consider:
+
+for (var i = 0; i < 3; i++) {
+  setTimeout(() => {
+    console.log(i);
+  }, 1000);
+}
+
+What will print?
+
+3
+3
+3
+
+Why?
+
+Because var creates one shared variable.
+
+By the time setTimeout runs:
+
+i === 3
+
+Fix
+
+Use let.
+
+for (let i = 0; i < 3; i++) {
+  setTimeout(() => {
+    console.log(i);
+  }, 1000);
+}
+
+Output:
+
+0
+1
+2
+
+"All callbacks share the same var binding. Using let creates a separate binding for each iteration."
+
+6. this Keyword
+
+The value of this usually depends on how a function is called.
+
+Example:
+
+const user = {
+  name: "John",
+
+  greet() {
+    console.log(this.name);
+  }
+};
+
+user.greet();
+
+Output:
+
+John
+
+Here:
+
+this
+
+refers to:
+
+user
+
+7. Arrow Function and this
+
+Arrow functions do NOT have their own this.
+
+They use this from their surrounding scope.
+
+Common mistake
+
+const user = {
+  name: "John",
+
+  greet: () => {
+    console.log(this.name);
+  }
+};
+
+user.greet();
+
+This may not print "John".
+
+Better
+
+const user = {
+  name: "John",
+
+  greet() {
+    console.log(this.name);
+  }
+};
+
+Easy rule
+
+Don't use arrow functions when you need the object's own this.
+
+Interview answer
+
+"Arrow functions don't create their own this. They inherit it from the surrounding lexical scope."
+
+8. call, apply, and bind
+
+These are used to control this.
+
+call
+
+Calls immediately.
+
+function greet(city) {
+  console.log(`${this.name} from ${city}`);
+}
+
+const user = {
+  name: "John"
+};
+greet.call(user, "Delhi");
+
+apply
+
+Similar to call, but arguments are passed as an array.
+
+greet.apply(user, ["Delhi"]);
+
+bind
+
+Returns a new function.
+
+const newGreet = greet.bind(user);
+
+newGreet("Delhi");
+
+Easy memory
+call  → Call now
+apply → Call now with array
+bind  → Bind and call later
+
+9. Prototypes
+
+JavaScript uses prototypes for inheritance.
+
+Example:
+
+function Person(name) {
+  this.name = name;
+}
+
+Person.prototype.greet = function () {
+  return `Hello ${this.name}`;
+};
+
+const person = new Person("John");
+
+console.log(person.greet());
+
+The greet function is shared through the prototype.
+
+Simple meaning
+
+Prototype allows objects to share properties and methods.
+
+10. Classes
+
+Classes are a cleaner way to work with objects.
+
+class Person {
+  constructor(name) {
+    this.name = name;
+  }
+
+  greet() {
+    return `Hello ${this.name}`;
+  }
+}
+
+const person = new Person("John");
+
+console.log(person.greet());
+Important interview point
+
+JavaScript classes are built on prototypes.
+
+Interview answer
+
+"JavaScript uses prototype-based inheritance. Classes provide cleaner syntax on top of the prototype system."
+
+11. Shallow Copy vs Deep Copy
+
+Very important for React and JavaScript.
+
+Consider:
+
+const user = {
+  name: "John",
+  address: {
+    city: "Bhubaneswar"
+  }
+};
+
+const copy = { ...user };
+
+copy.address.city = "Delhi";
+
+console.log(user.address.city);
+
+Output:
+
+Delhi
+
+Why?
+
+Because:
+
+{ ...user }
+
+creates only a shallow copy.
+
+The nested object is still shared.
+
+Easy understanding
+Original Object
+      │
+      ▼
+Address Object ◄──── Copy Object
+
+Both point to the same nested object.
+
+Important line
+
+Shallow copy copies the first level, but nested objects still share references.
+
+12. Spread Operator
+const numbers = [1, 2, 3];
+
+const newNumbers = [...numbers];
+
+Objects:
+
+const user = {
+  name: "John"
+};
+
+const newUser = {
+  ...user,
+  age: 25
+};
+13. Rest Operator
+
+Collects multiple values.
+
+function sum(...numbers) {
+  return numbers.reduce(
+    (total, num) => total + num,
+    0
+  );
+}
+
+console.log(sum(1, 2, 3));
+Easy memory
+Spread → Opens values
+Rest   → Collects values
+14. || vs ??
+
+Very important.
+
+||
+
+Uses fallback for any falsy value.
+
+const value = 0;
+
+console.log(value || 10);
+
+Output:
+
+10
+
+Because 0 is falsy.
+
+??
+
+Only uses fallback when value is:
+
+null
+undefined
+const value = 0;
+
+console.log(value ?? 10);
+
+Output:
+
+0
+Easy memory
+|| → Any falsy value
+?? → Only null or undefined
+15. Optional Chaining ?.
+
+Without optional chaining:
+
+console.log(user.address.city);
+
+If address doesn't exist:
+
+💥 Error.
+
+With optional chaining:
+
+console.log(user?.address?.city);
+
+Returns:
+
+undefined
+
+Instead of crashing.
+
+Common mistake
+user?.address.city
+
+Only protects user.
+
+Correct:
+
+user?.address?.city
+16. map()
+
+Used to transform an array.
+
+const numbers = [1, 2, 3];
+
+const doubled = numbers.map(number => {
+  return number * 2;
+});
+
+console.log(doubled);
+
+Output:
+
+[2, 4, 6]
+Remember
+
+map() = Transform every item.
+
+17. forEach()
+
+Used for doing something with each item.
+
+numbers.forEach(number => {
+  console.log(number);
+});
+
+Important:
+
+const result = numbers.forEach(
+  number => number * 2
+);
+
+console.log(result);
+
+Output:
+
+undefined
+Remember
+
+forEach() does not return a new transformed array.
+
+18. filter()
+
+Returns all matching items.
+
+const users = [
+  { name: "John", age: 20 },
+  { name: "Mike", age: 15 }
+];
+
+const adults = users.filter(user => {
+  return user.age >= 18;
+});
+
+Result:
+
+[
+  { name: "John", age: 20 }
+]
+Remember
+
+filter() = Keep matching items.
+
+19. find()
+
+Returns the first matching item.
+
+const user = users.find(user => {
+  return user.name === "John";
+});
+Remember
+filter → Multiple matches
+find   → First match
+20. reduce()
+
+Used to combine values into one result.
+
+const numbers = [1, 2, 3];
+
+const total = numbers.reduce(
+  (sum, number) => {
+    return sum + number;
+  },
+  0
+);
+
+console.log(total);
+
+Output:
+
+6
+Remember
+
+reduce() = Many values → One value.
+
+
+1. Synchronous vs Asynchronous
+Synchronous
+
+Code executes one by one.
+
+console.log("First");
+console.log("Second");
+console.log("Third");
+
+Output:
+
+First
+Second
+Third
+Asynchronous
+
+Some operations take time.
+
+Examples:
+
+API calls
+Timers
+File operations
+Database requests
+console.log("First");
+
+setTimeout(() => {
+  console.log("Second");
+}, 1000);
+
+console.log("Third");
+
+Output:
+
+First
+Third
+Second
+2. Promise
+
+A Promise represents a future result.
+
+It can be:
+
+Pending
+   ↓
+Fulfilled
+or
+Rejected
+
+Example:
+
+const promise = new Promise((resolve, reject) => {
+  const success = true;
+
+  if (success) {
+    resolve("Success");
+  } else {
+    reject("Failed");
+  }
+});
+3. .then() and .catch()
+fetchData()
+  .then(data => {
+    console.log(data);
+  })
+  .catch(error => {
+    console.error(error);
+  });
+.then() → Success
+.catch() → Error
+4. async / await
+
+async/await makes Promise code easier to read.
+
+Instead of:
+
+fetchData()
+  .then(data => {
+    console.log(data);
+  })
+  .catch(error => {
+    console.error(error);
+  });
+
+Use:
+
+async function loadData() {
+  try {
+    const data = await fetchData();
+
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+Important: Async Function Always Returns Promise
+async function getNumber() {
+  return 10;
+}
+
+This actually returns:
+
+Promise.resolve(10);
+
+So:
+
+getNumber().then(value => {
+  console.log(value);
+});
+5. What does await do?
+
+Example:
+
+async function test() {
+  console.log("Start");
+
+  await fetchData();
+
+  console.log("End");
+}
+
+await pauses only this async function.
+
+It does NOT freeze the whole JavaScript application.
+
+Interview answer
+
+"await pauses the execution of the current async function until the Promise settles, but it doesn't block the entire JavaScript runtime."
+
+6. Event Loop
+
+This is an important interview topic.
+
+JavaScript has:
+
+Call Stack
+Microtask Queue
+Task Queue
+Event Loop
+
+Simplified:
+
+JavaScript Code
+       ↓
+   Call Stack
+       ↓
+Promise → Microtask Queue
+setTimeout → Task Queue
+       ↓
+   Event Loop
+
+The important rule:
+
+Microtasks run before Tasks.
+
+7. Event Loop Example
+console.log("Start");
+
+setTimeout(() => {
+  console.log("Timeout");
+}, 0);
+
+Promise.resolve().then(() => {
+  console.log("Promise");
+});
+
+console.log("End");
+
+Output:
+
+Start
+End
+Promise
+Timeout
+Why?
+Start runs immediately.
+setTimeout is scheduled.
+Promise callback is added to microtask queue.
+End runs immediately.
+Promise microtask runs.
+Timeout runs.
+Easy rule
+Synchronous Code
+      ↓
+Microtasks (Promises)
+      ↓
+Tasks (setTimeout)
+8. fetch() Important Trap
+
+Consider:
+
+async function getUsers() {
+  const response = await fetch("/api/users");
+
+  return response.json();
+}
+
+Looks correct.
+
+But what if server returns:
+
+404
+500
+401
+
+fetch() usually does NOT reject just because the HTTP status is an error.
+
+So check:
+
+response.ok
+
+Better:
+
+async function getUsers() {
+  const response = await fetch("/api/users");
+
+  if (!response.ok) {
+    throw new Error(
+      `Request failed: ${response.status}`
+    );
+  }
+
+  return response.json();
+}
+Interview line
+
+"fetch only rejects for network-level failures, so HTTP error responses should usually be checked using response.ok."
+
+Very useful line. Memorize it.
+
+9. Error Handling
+async function getUsers() {
+  try {
+    const response = await fetch("/api/users");
+
+    if (!response.ok) {
+      throw new Error("Failed to fetch users");
+    }
+
+    return await response.json();
+
+  } catch (error) {
+    console.error(error);
+
+    throw error;
+  }
+}
+
+But important:
+
+Don't add try/catch everywhere blindly.
+
+Sometimes a lower-level function should let the error propagate.
+
+Professional answer
+
+"I first decide where an error should be handled. Lower-level functions can propagate errors, while higher-level layers can convert them into user-facing error states."
+
+10. Promise.all()
+
+Use when multiple async operations are independent.
+
+Bad:
+
+const users = await getUsers();
+const posts = await getPosts();
+const comments = await getComments();
+
+This runs one after another.
+
+Better:
+
+const [users, posts, comments] = await Promise.all([
+  getUsers(),
+  getPosts(),
+  getComments()
+]);
+
+Now they run concurrently.
+
+Important
+
+Use only if operations are independent.
+
+Example where sequential is necessary:
+
+const user = await getUser();
+
+const posts = await getPosts(user.id);
+
+The second operation needs the first result.
+
+Interview answer
+
+"I use Promise.all for independent asynchronous operations. If one operation depends on another's result, sequential execution is necessary."
+
+11. Promise.all() Failure
+await Promise.all([
+  fetchUsers(),
+  fetchPosts(),
+  fetchComments()
+]);
+
+If one fails:
+
+Promise.all rejects.
+
+This is useful when all data is required.
+
+12. Promise.allSettled()
+
+Use when partial success is okay.
+
+const results = await Promise.allSettled([
+  fetchUsers(),
+  fetchPosts(),
+  fetchComments()
+]);
+
+Even if one fails, you get all results.
+
+Example:
+
+[
+  {
+    status: "fulfilled",
+    value: []
+  },
+  {
+    status: "rejected",
+    reason: Error
+  }
+]
+Easy difference
+Promise.all
+→ All must succeed
+
+Promise.allSettled
+→ Give me every result
+13. The Famous forEach(async) Bug
+
+Wrong:
+
+async function processUsers(users) {
+  users.forEach(async user => {
+    await saveUser(user);
+  });
+
+  console.log("Completed");
+}
+
+Problem:
+
+forEach()
+
+does not wait for async callbacks.
+
+So:
+
+Completed
+
+may print before users are saved.
+
+Sequential solution
+async function processUsers(users) {
+  for (const user of users) {
+    await saveUser(user);
+  }
+
+  console.log("Completed");
+}
+
+Runs one by one.
+
+Parallel solution
+async function processUsers(users) {
+  await Promise.all(
+    users.map(user => saveUser(user))
+  );
+
+  console.log("Completed");
+}
+
+Runs concurrently.
+
+Which should you use?
+
+Depends.
+
+Use sequential when:
+
+Order matters
+Requests depend on each other
+Don't want to overload server
+
+Use parallel when:
+
+Operations are independent
+Faster execution is needed
+Pro interview answer
+
+"forEach doesn't await asynchronous callbacks. I would choose either for...of for sequential processing or Promise.all for independent concurrent operations depending on the requirements."
+
+14. Race Conditions
+
+A race condition happens when multiple async operations finish in an unpredictable order.
+
+Real example: Search
+
+User searches:
+
+React
+
+Request starts.
+
+Then immediately searches:
+
+React Hooks
+
+Another request starts.
+
+Imagine:
+
+Request 2 finishes first
+↓
+Shows React Hooks results
+
+Request 1 finishes later
+↓
+Overwrites with old React results ❌
+
+This is a race condition.
+
+15. AbortController
+
+Used to cancel previous requests.
+
+let controller;
+
+async function search(query) {
+  controller?.abort();
+
+  controller = new AbortController();
+
+  const response = await fetch(
+    `/api/search?q=${query}`,
+    {
+      signal: controller.signal
+    }
+  );
+
+  return response.json();
+}
+
+Now when a new search happens, the old request can be cancelled.
+
+Interview answer
+
+"For rapidly changing requests like search input, I would prevent stale responses using AbortController, request IDs, or checking whether the response still matches the latest application state."
+
+16. Sequential vs Parallel
+Sequential
+for (const id of ids) {
+  await fetchUser(id);
+}
+
+One after another.
+
+Request 1
+   ↓
+Request 2
+   ↓
+Request 3
+Parallel
+await Promise.all(
+  ids.map(id => fetchUser(id))
+);
+
+All start together.
+
+Request 1 ──┐
+Request 2 ──┼── Running
+Request 3 ──┘
+But be careful
+
+Imagine:
+
+Promise.all(
+  100000 users.map(user => fetchUser(user.id))
+);
+
+Potentially 100,000 requests.
+
+Your backend will develop trust issues.
+
+For huge data, use:
+
+Concurrency limits
+
+Example concept:
+
+Process 5 requests
+↓
+Wait for completion
+↓
+Process next 5
+Strong interview answer
+
+"For large datasets, unrestricted Promise.all can overwhelm downstream services, so I would consider bounded concurrency."
+
+17. Unhandled Promise Rejection
+
+Bad:
+
+async function load() {
+  fetchData();
+}
+
+If fetchData() fails, the Promise might not be handled properly.
+
+Better:
+
+async function load() {
+  try {
+    await fetchData();
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+Or return it:
+
+function load() {
+  return fetchData();
+}
+Important principle
+
+Every async operation should have a clear error handling or error propagation strategy.
+
+18. Retry Logic
+
+Bad AI-generated retry logic:
+
+async function fetchData() {
+  try {
+    return await apiCall();
+  } catch {
+    return fetchData();
+  }
+}
+
+Problem:
+
+♾️ Infinite retry.
+
+This can overload your server.
+
+Better Retry
+async function fetchWithRetry(
+  request,
+  retries = 3
+) {
+  for (let attempt = 0; attempt < retries; attempt++) {
+    try {
+      return await request();
+
+    } catch (error) {
+      if (attempt === retries - 1) {
+        throw error;
+      }
+
+      await new Promise(resolve =>
+        setTimeout(
+          resolve,
+          1000 * 2 ** attempt
+        )
+      );
+    }
+  }
+}
+
+This uses:
+
+Exponential Backoff
+
+Wait time:
+
+Attempt 1 → 1 second
+Attempt 2 → 2 seconds
+Attempt 3 → 4 seconds
+Important
+
+Don't retry every error.
+
+Probably don't retry:
+
+400 Bad Request
+401 Unauthorized
+403 Forbidden
+
+Potential retry:
+
+429 Too Many Requests
+503 Service Unavailable
+Network errors
+
+Depending on the API.
+
+19. Real AI Code Review Example
+
+AI-generated code:
+
+async function loadDashboard() {
+  const user = await getUser();
+  const posts = await getPosts();
+  const notifications = await getNotifications();
+
+  return {
+    user,
+    posts,
+    notifications
+  };
+}
+How to review professionally
+
+Don't immediately say:
+
+"Use Promise.all."
+
+First ask:
+
+Are these operations independent?
+
+If yes:
+
+async function loadDashboard() {
+  const [
+    user,
+    posts,
+    notifications
+  ] = await Promise.all([
+    getUser(),
+    getPosts(),
+    getNotifications()
+  ]);
+
+  return {
+    user,
+    posts,
+    notifications
+  };
+}
+Professional explanation
+
+"I would first check whether these requests depend on one another. If they are independent, sequential execution creates unnecessary latency, so Promise.all would be more efficient. If partial failure is acceptable, I would also consider Promise.allSettled."
+
+This is how you should think in an Alignerr interview.
+
+20. Tricky Event Loop Question
+console.log("A");
+
+setTimeout(() => {
+  console.log("B");
+}, 0);
+
+Promise.resolve().then(() => {
+  console.log("C");
+});
+
+Promise.resolve().then(() => {
+  console.log("D");
+});
+
+console.log("E");
+
+Output:
+
+A
+E
+C
+D
+B
+Why?
+1. Run synchronous code
+   A
+
+2. Schedule Timeout
+
+3. Schedule Promise C
+
+4. Schedule Promise D
+
+5. Run synchronous code
+   E
+
+6. Run Microtasks
+   C
+   D
+
+7. Run Task
+   B
+Golden Rule
+
+Sync → Microtasks → Tasks
+
+SECTION 2 + 3: IMPORTANT INTERVIEW QUESTIONS
+Q1. What is a closure?
+
+"A closure is when a function retains access to variables from its outer lexical scope even after the outer function has finished."
+
+Q2. What is the difference between var, let, and const?
+
+"var is function scoped, while let and const are block scoped. I prefer const by default and use let when reassignment is necessary."
+
+Q3. What is shallow copy?
+
+"A shallow copy creates a new outer object or array, but nested objects still share the same references."
+
+Q4. What is the difference between arrow and regular functions?
+
+"A major difference is this. Regular functions have their own this depending on how they are called, while arrow functions inherit this from their surrounding scope."
+
+Q5. What is the Event Loop?
+
+"The Event Loop manages asynchronous execution in JavaScript. After synchronous code finishes, microtasks such as Promise callbacks are processed before tasks such as setTimeout callbacks."
+
+Q6. What is a race condition?
+
+"A race condition happens when multiple asynchronous operations complete in an unpredictable order and the final result depends on timing."
+
+Q7. Why is forEach(async) problematic?
+
+"forEach does not wait for Promises returned by async callbacks. For sequential execution I would use for...of, and for independent parallel execution I would use Promise.all."
+
+Q8. Difference between Promise.all and Promise.allSettled?
+
+"Promise.all rejects if any Promise fails, while Promise.allSettled waits for every Promise and returns the result of each one."
+
+Q9. Does fetch() reject on 404?
+
+"Not automatically. Fetch mainly rejects for network-level failures, so I check response.ok to handle HTTP errors."
+
+Q10. Does await block JavaScript?
+
+"await pauses the current async function, but it doesn't block the entire JavaScript runtime."
+
+FINAL SUPER-EASY CHEAT SHEET
+JavaScript
+var      → Function scope
+let      → Block scope + can change
+const    → Block scope + cannot reassign
+
+Closure  → Function remembers outer variables
+
+this     → Depends on how regular function is called
+
+Arrow    → Uses surrounding this
+
+Prototype → Objects can share methods
+
+Shallow Copy → Nested objects still share references
+
+||       → Fallback for falsy values
+
+??       → Fallback only for null/undefined
+
+map      → Transform
+filter   → Keep matching
+find     → First match
+reduce   → Many → One
+forEach  → Perform action
+Async
+Promise
+Pending → Fulfilled / Rejected
+
+async
+→ Always returns Promise
+
+await
+→ Pauses current async function
+
+Event Loop
+Sync → Microtasks → Tasks
+
+Promise
+→ Microtask
+
+setTimeout
+→ Task
+
+Promise.all
+→ All must succeed
+
+Promise.allSettled
+→ Get every result
+
+AbortController
+→ Cancel requests
+
+Race Condition
+→ Old async result overwrites new result
+🔥 Top 8 Lines to Memorize for Alignerr
+"I first verify the intended behavior before changing the implementation."
+"Passing the happy path doesn't guarantee robust code."
+"I prioritize correctness and reliability before style preferences."
+"Fetch doesn't automatically reject for HTTP error status codes."
+"forEach doesn't wait for async callbacks."
+"Microtasks run before task queue callbacks."
+"I use Promise.all only when operations are independent."
+"Every asynchronous operation should have a clear error handling or propagation strategy."
+
+
+SECTION 4: DOM Manipulation, Events & Browser APIs
+1. What is the DOM?
+
+DOM means:
+
+Document Object Model
+
+The browser converts HTML into a tree-like structure that JavaScript can interact with.
+
+HTML:
+
+<button id="btn">Click Me</button>
+
+JavaScript can access it:
+
+const button = document.getElementById("btn");
+
+And change it:
+
+button.textContent = "Clicked!";
+Easy understanding
+HTML
+ ↓
+Browser creates DOM
+ ↓
+JavaScript can read/change it
+2. Selecting Elements
+getElementById
+const title = document.getElementById("title");
+
+Selects one element by ID.
+
+querySelector
+const button = document.querySelector(".button");
+
+Selects the first matching element.
+
+You can use:
+
+document.querySelector("#id");
+document.querySelector(".class");
+document.querySelector("button");
+querySelectorAll
+const buttons = document.querySelectorAll(".button");
+
+Selects all matching elements.
+
+Then:
+
+buttons.forEach(button => {
+  console.log(button);
+});
+Easy memory
+querySelector     → First match
+querySelectorAll  → All matches
+3. Changing DOM Content
+textContent
+element.textContent = "Hello";
+
+Safely inserts text.
+
+innerHTML
+element.innerHTML = "<strong>Hello</strong>";
+
+Parses HTML.
+
+Important Security Problem
+
+Never blindly do:
+
+element.innerHTML = userInput;
+
+Because malicious input could inject scripts.
+
+Potential:
+
+XSS (Cross-Site Scripting)
+
+Safer
+element.textContent = userInput;
+Interview answer
+
+"I prefer textContent for plain user-generated text. I only use innerHTML with trusted or properly sanitized content because injecting unsanitized HTML can create XSS vulnerabilities."
+
+🔥 Strong answer.
+
+4. Creating Elements
+
+Instead of writing HTML strings:
+
+container.innerHTML += `
+  <div>Hello</div>
+`;
+
+You can create elements:
+
+const div = document.createElement("div");
+
+div.textContent = "Hello";
+
+container.appendChild(div);
+Why can this be better?
+More control
+Safer
+Avoids reparsing large HTML strings
+5. Event Listeners
+button.addEventListener("click", () => {
+  console.log("Clicked");
+});
+
+Common events:
+
+click
+input
+change
+submit
+keydown
+keyup
+mouseover
+scroll
+6. Event Object
+button.addEventListener("click", event => {
+  console.log(event);
+});
+
+The event object contains information about what happened.
+
+Useful properties:
+
+event.target
+event.currentTarget
+event.preventDefault()
+event.stopPropagation()
+7. event.target vs event.currentTarget
+
+Very common interview question.
+
+HTML:
+
+<div id="parent">
+  <button id="child">Click</button>
+</div>
+
+JavaScript:
+
+parent.addEventListener("click", event => {
+  console.log(event.target);
+  console.log(event.currentTarget);
+});
+
+If user clicks button:
+
+event.target
+→ button that was clicked
+
+event.currentTarget
+→ element where listener is attached
+Easy memory
+
+target = where event started
+
+currentTarget = where listener lives
+
+8. Event Bubbling
+
+Events generally travel upward.
+
+Example:
+
+<div id="parent">
+  <button id="child">Click</button>
+</div>
+
+Click button:
+
+Button clicked
+   ↓
+Parent receives event
+   ↓
+Higher parent receives event
+
+This is called:
+
+Event Bubbling
+
+Example:
+
+child.addEventListener("click", () => {
+  console.log("Child");
+});
+
+parent.addEventListener("click", () => {
+  console.log("Parent");
+});
+
+Click child:
+
+Child
+Parent
+9. stopPropagation()
+
+Stops the event from continuing upward.
+
+child.addEventListener("click", event => {
+  event.stopPropagation();
+
+  console.log("Child");
+});
+
+Now parent listener won't run.
+
+Be careful
+
+Don't use stopPropagation() everywhere.
+
+It can make event behavior difficult to debug.
+
+Use it only when needed.
+
+10. Event Delegation
+
+This is VERY important.
+
+Imagine 1,000 buttons.
+
+Bad:
+
+buttons.forEach(button => {
+  button.addEventListener("click", handleClick);
+});
+
+Instead, attach one listener to parent.
+
+HTML:
+
+<ul id="list">
+  <li data-id="1">User 1</li>
+  <li data-id="2">User 2</li>
+  <li data-id="3">User 3</li>
+</ul>
+
+JavaScript:
+
+list.addEventListener("click", event => {
+  if (event.target.matches("li")) {
+    console.log(event.target.dataset.id);
+  }
+});
+Why?
+
+Because events bubble.
+
+Advantages
+Fewer event listeners
+Better performance
+Works with dynamically added elements
+Interview answer
+
+"Event delegation uses event bubbling by attaching a listener to a parent instead of every child. It reduces the number of listeners and also supports dynamically created elements."
+
+🔥 Memorize.
+
+11. preventDefault()
+
+Prevents default browser behavior.
+
+Example:
+
+form.addEventListener("submit", event => {
+  event.preventDefault();
+
+  console.log("Form submitted");
+});
+
+Without it, form might reload the page.
+
+Another example:
+
+<a href="/home">Home</a>
+link.addEventListener("click", event => {
+  event.preventDefault();
+
+  console.log("Custom navigation");
+});
+12. Event Listener Memory Leak
+
+Very important for frontend debugging.
+
+Bad:
+
+function initialize() {
+  button.addEventListener("click", handleClick);
+}
+
+initialize();
+initialize();
+initialize();
+
+Now clicking once could run:
+
+handleClick
+handleClick
+handleClick
+
+This happens because listeners accumulate.
+
+Fix
+
+Remove listener when appropriate.
+
+button.removeEventListener(
+  "click",
+  handleClick
+);
+
+Important:
+
+This works:
+
+function handleClick() {
+  console.log("Clicked");
+}
+
+button.addEventListener("click", handleClick);
+
+button.removeEventListener("click", handleClick);
+
+This doesn't work properly:
+
+button.addEventListener("click", () => {
+  console.log("Clicked");
+});
+
+button.removeEventListener("click", () => {
+  console.log("Clicked");
+});
+
+Why?
+
+Because these are two different function objects.
+
+13. Debouncing
+
+Imagine a search input.
+
+R
+Re
+Rea
+Reac
+React
+
+Without debouncing:
+
+API Call
+API Call
+API Call
+API Call
+API Call
+
+Terrible.
+
+Debounce
+
+Wait until the user stops typing.
+
+function debounce(callback, delay) {
+  let timer;
+
+  return function (...args) {
+    clearTimeout(timer);
+
+    timer = setTimeout(() => {
+      callback(...args);
+    }, delay);
+  };
+}
+
+Usage:
+
+const search = debounce(query => {
+  console.log("Searching:", query);
+}, 500);
+Easy memory
+
+Debounce = Wait until activity stops
+
+Examples:
+
+Search input
+Resize event
+Autosave
+14. Throttling
+
+Throttle limits how frequently something can execute.
+
+Example:
+
+Scroll
+Scroll
+Scroll
+Scroll
+Scroll
+
+Instead of running function 100 times per second:
+
+Run
+Wait
+Run
+Wait
+Run
+Simple throttle
+function throttle(callback, delay) {
+  let waiting = false;
+
+  return function (...args) {
+    if (waiting) return;
+
+    callback(...args);
+
+    waiting = true;
+
+    setTimeout(() => {
+      waiting = false;
+    }, delay);
+  };
+}
+Easy difference
+Debounce
+→ Wait until user stops
+
+Throttle
+→ Limit how often it runs
+15. localStorage vs sessionStorage
+localStorage
+
+Data stays after browser closes.
+
+localStorage.setItem("name", "John");
+
+const name = localStorage.getItem("name");
+sessionStorage
+
+Data generally exists for the browser tab session.
+
+sessionStorage.setItem("name", "John");
+Easy memory
+localStorage
+→ Stays longer
+
+sessionStorage
+→ Current browser session
+Important
+
+Don't store sensitive tokens carelessly in localStorage.
+
+Potential XSS attacks can access them.
+
+SECTION 4 INTERVIEW QUESTIONS
+Q: What is event delegation?
+
+"Event delegation means attaching one event listener to a parent element and using event bubbling to handle events from its children. It reduces unnecessary listeners and works well for dynamically added elements."
+
+Q: Difference between target and currentTarget?
+
+"event.target is the element where the event originated, while event.currentTarget is the element whose event listener is currently executing."
+
+Q: Difference between debounce and throttle?
+
+"Debounce waits until events stop before executing, while throttle limits execution to a maximum frequency."
+
+Q: Why is innerHTML dangerous?
+
+"Using unsanitized user input with innerHTML can introduce XSS vulnerabilities."
+
+SECTION 5: React + Frontend Bugs + Performance
+
+Alignerr says JavaScript frontend developer, so React knowledge can absolutely appear.
+
+The key is not just knowing React.
+
+You need to identify AI-generated React mistakes.
+
+1. State Mutation
+
+One of the most common bugs.
+
+Wrong
+const [users, setUsers] = useState([]);
+
+function addUser(user) {
+  users.push(user);
+
+  setUsers(users);
+}
+
+Problem:
+
+push() mutates the existing array.
+
+React state should be treated as immutable.
+
+Correct
+function addUser(user) {
+  setUsers(previousUsers => [
+    ...previousUsers,
+    user
+  ]);
+}
+Easy memory
+
+Don't modify state directly. Create a new value.
+
+2. Object State Mutation
+
+Wrong:
+
+user.name = "John";
+
+setUser(user);
+
+Better:
+
+setUser(previousUser => ({
+  ...previousUser,
+  name: "John"
+}));
+3. Why Functional State Updates?
+
+Bad:
+
+setCount(count + 1);
+setCount(count + 1);
+
+You might expect +2.
+
+But updates can use the same old value.
+
+Better:
+
+setCount(previousCount => previousCount + 1);
+setCount(previousCount => previousCount + 1);
+Interview answer
+
+"When the next state depends on the previous state, I prefer the functional update form because it avoids relying on a potentially stale state value."
+
+4. useEffect Dependency Mistakes
+
+Example:
+
+useEffect(() => {
+  fetchUser(userId);
+}, []);
+
+Potential problem:
+
+If userId changes, effect doesn't run again.
+
+Better:
+
+useEffect(() => {
+  fetchUser(userId);
+}, [userId]);
+5. Infinite useEffect Loop
+
+Classic AI-generated disaster.
+
+useEffect(() => {
+  setUsers(users);
+}, [users]);
+
+What happens?
+
+users changes
+↓
+useEffect runs
+↓
+setUsers
+↓
+users changes
+↓
+useEffect runs
+↓
+∞
+
+Always ask:
+
+Does this effect update something that is also causing it to run?
+
+6. Missing Cleanup
+
+Example:
+
+useEffect(() => {
+  const interval = setInterval(() => {
+    console.log("Running");
+  }, 1000);
+}, []);
+
+If component unmounts, interval may continue.
+
+Correct:
+
+useEffect(() => {
+  const interval = setInterval(() => {
+    console.log("Running");
+  }, 1000);
+
+  return () => {
+    clearInterval(interval);
+  };
+}, []);
+Cleanup is important for
+Timers
+Event listeners
+WebSocket connections
+Subscriptions
+API cancellation
+7. Race Condition in React
+useEffect(() => {
+  fetch(`/api/user/${userId}`)
+    .then(response => response.json())
+    .then(data => setUser(data));
+}, [userId]);
+
+Problem:
+
+User 1 request starts
+User changes to User 2
+User 2 request starts
+
+User 2 finishes first ✓
+User 1 finishes later ❌
+Old data overwrites new data
+
+Fix using AbortController:
+
+useEffect(() => {
+  const controller = new AbortController();
+
+  async function loadUser() {
+    try {
+      const response = await fetch(
+        `/api/user/${userId}`,
+        {
+          signal: controller.signal
+        }
+      );
+
+      const data = await response.json();
+
+      setUser(data);
+
+    } catch (error) {
+      if (error.name !== "AbortError") {
+        console.error(error);
+      }
+    }
+  }
+
+  loadUser();
+
+  return () => {
+    controller.abort();
+  };
+}, [userId]);
+8. React Keys
+
+Wrong:
+
+users.map((user, index) => (
+  <User key={index} user={user} />
+));
+
+Why potentially bad?
+
+Imagine removing or reordering items.
+
+React may associate component state with the wrong item.
+
+Better:
+
+users.map(user => (
+  <User key={user.id} user={user} />
+));
+Easy memory
+
+Keys should identify the item, not its current position.
+
+9. useMemo
+
+Used to avoid expensive recalculation.
+
+const sortedUsers = useMemo(() => {
+  return [...users].sort(
+    (a, b) => a.name.localeCompare(b.name)
+  );
+}, [users]);
+
+But don't use it everywhere.
+
+Bad thinking:
+
+"Every calculation needs useMemo."
+
+No.
+
+useMemo also adds complexity.
+
+Professional answer
+
+"I use useMemo when profiling or application behavior shows that an expensive calculation is causing unnecessary work. I don't use it automatically for simple calculations."
+
+🔥 Strong.
+
+10. useCallback
+
+Used to memoize function references.
+
+const handleClick = useCallback(() => {
+  console.log("Clicked");
+}, []);
+
+Useful when:
+
+Passing callback to memoized child
+Function is dependency of an effect
+
+But unnecessary here:
+
+const add = useCallback(
+  (a, b) => a + b,
+  []
+);
+
+Don't optimize imaginary problems.
+
+11. React.memo
+
+Prevents unnecessary component re-renders when props haven't changed.
+
+const UserCard = React.memo(function UserCard({
+  user
+}) {
+  return <div>{user.name}</div>;
+});
+
+But again:
+
+Measure first.
+
+Don't wrap every component in React.memo.
+
+12. Expensive DOM Operations
+
+Bad:
+
+for (let i = 0; i < 10000; i++) {
+  document.body.innerHTML += `<div>${i}</div>`;
+}
+
+This can repeatedly reparse and update the DOM.
+
+Better approaches:
+
+DocumentFragment
+Batch updates
+Virtualized lists
+React rendering
+
+For huge lists:
+
+Virtualization
+
+Only render items visible on screen.
+
+Instead of:
+
+10,000 DOM elements
+
+Render:
+
+20 visible elements
+
+Libraries include tools like React Window, though the underlying idea matters more than worshipping a package.
+
+13. Frontend Performance Checklist
+
+When website is slow, check:
+
+1. Large JavaScript bundle?
+2. Too many API requests?
+3. Unnecessary React renders?
+4. Large images?
+5. Too many DOM nodes?
+6. Memory leaks?
+7. Expensive calculations?
+8. Slow network?
+Professional debugging approach
+
+"I first measure before optimizing. I would use browser performance tools and React profiling to identify whether the bottleneck is rendering, network activity, JavaScript execution, or excessive DOM work."
+
+SECTION 5 INTERVIEW QUESTIONS
+Q: Why shouldn't React state be mutated?
+
+"React relies on state updates and reference changes to determine when components should update. Mutating existing state can cause unpredictable behavior and makes changes harder to track."
+
+Q: Why use functional setState?
+
+"When new state depends on previous state, functional updates avoid stale values."
+
+Q: What causes useEffect infinite loops?
+
+"A common cause is when an effect updates state and that same state change causes the effect to run again."
+
+Q: Why not use array index as key?
+
+"Indexes can cause incorrect component identity when items are inserted, removed, or reordered."
+
+Q: When do you use useMemo?
+
+"For expensive calculations where avoiding repeated work provides a measurable benefit."
+
+SECTION 6: AI CODE EVALUATION, RUBRICS & DISTRACTORS
+
+This section is especially important for Alignerr.
+
+They are not only testing:
+
+Can you code?
+
+They may test:
+
+Can you evaluate an AI agent objectively?
+
+1. How Do You Evaluate AI Code?
+
+Use this framework:
+
+C - Correctness
+
+Does it work?
+
+Ask:
+
+Does output match requirements?
+Are edge cases handled?
+Is logic correct?
+R - Reliability
+
+Does it work when things go wrong?
+
+Ask:
+
+API failure?
+Empty data?
+Network issue?
+Invalid input?
+A - Architecture
+
+Is the structure reasonable?
+
+Ask:
+
+Too much duplication?
+Unnecessary complexity?
+Clear separation?
+F - Frontend Performance
+
+Ask:
+
+Too many renders?
+Too many DOM operations?
+Memory leaks?
+Large lists?
+T - Testing
+
+Ask:
+
+How do we verify this?
+Happy path?
+Edge cases?
+Failure cases?
+Easy framework:
+
+CRAFT
+
+C → Correctness
+R → Reliability
+A → Architecture
+F → Frontend Performance
+T → Testing
+
+This is useful during the interview.
+
+2. What is a Rubric?
+
+A rubric is a clear list of criteria used to judge an answer.
+
+Bad rubric:
+
+Code should be good.
+
+Terrible.
+
+How does anyone objectively measure "good"?
+
+Better:
+
+1. Correctly identifies missing response.ok check.
+2. Explains why fetch does not reject on HTTP 500.
+3. Handles network failures.
+4. Does not introduce unnecessary retry logic.
+5. Provides a working corrected implementation.
+
+Now evaluation is measurable.
+
+3. Good Rubric Characteristics
+
+A good rubric should be:
+
+Specific
+
+Bad:
+
+Handles errors properly.
+
+Good:
+
+Checks response.ok before parsing response data.
+
+Testable
+
+Can we verify it?
+
+Example:
+
+Given API returns HTTP 500
+Expected:
+Function throws an error
+Objective
+
+Avoid:
+
+Code should be elegant.
+
+Instead:
+
+Does not mutate input data.
+
+Complete
+
+Include:
+
+Main requirement
+Edge cases
+Error handling
+Verification
+4. How to Create an AI Task
+
+Imagine you want to test an AI agent.
+
+Bad task:
+
+"Fix this JavaScript code."
+
+Too vague.
+
+Better:
+
+"A search component displays stale results when users type quickly. Identify the root cause and modify the implementation so only the latest search response can update the UI."
+
+Now the task has:
+
+Problem
+↓
+Expected behavior
+↓
+Hidden complexity
+5. What Are Distractors?
+
+A distractor is something intentionally included that looks suspicious but is NOT the real problem.
+
+This is extremely important.
+
+Imagine logs:
+
+[Warning] Deprecated API detected
+[Error] Search request failed
+[Warning] Analytics SDK outdated
+[Error] State update received stale response
+
+The actual issue:
+
+State update received stale response
+
+Distractor:
+
+Deprecated API
+Analytics warning
+
+The AI should identify the real root cause instead of fixing random warnings.
+
+6. Good Distractors vs Bad Distractors
+Bad Distractor
+ERROR: SOMETHING IS WRONG
+
+That's just confusing nonsense.
+
+Good Distractor
+
+A realistic but unrelated warning.
+
+Example:
+
+[WARN] Analytics request took 800ms
+
+The actual production issue might be:
+
+[ERROR] Cannot read properties of undefined
+
+A strong AI should not waste time optimizing analytics latency.
+
+7. Types of Distractors
+1. Noisy logs
+Warning: Deprecated package
+Warning: Slow analytics request
+Error: Actual database connection failure
+2. Misleading variable names
+const userCache = fetchUserFromAPI();
+
+Maybe it's not actually a cache.
+
+AI should follow behavior, not names.
+
+3. Similar symptoms
+
+Example:
+
+UI is slow
+
+Possible causes:
+
+Large image
+Memory leak
+Infinite render
+Slow API
+
+Only one is real.
+
+4. Unrelated code changes
+
+A Git diff might contain:
+
+Changed button color
+Changed API timeout
+Changed authentication logic
+
+The bug may only be authentication logic.
+
+8. How Would You Design a Difficult AI Task?
+
+Excellent interview question.
+
+Answer:
+
+"I would start with a real engineering failure and make sure there is one clearly verifiable root cause. Then I would add realistic complexity without making the task ambiguous. For example, I might include several warnings in logs, an unrelated recent code change, and multiple components involved in the flow. The distractors should be plausible but should not make the correct answer impossible to determine."
+
+🔥 This is exactly the mindset they want.
+
+9. Example AI Debugging Task
+
+Scenario:
+
+A React search page sometimes displays old results.
+
+Logs:
+
+10:00:01 Search: "react"
+10:00:02 Request started ID: 101
+
+10:00:03 Search: "react hooks"
+10:00:03 Request started ID: 102
+
+10:00:04 Response ID: 102 completed
+10:00:05 Response ID: 101 completed
+
+10:00:05 UI updated with response ID: 101
+
+Question:
+
+What is the problem?
+
+Answer:
+
+Race condition.
+
+The older request finished after the newer request and overwrote the latest state.
+
+Correct Fix
+
+One possible solution:
+
+let controller;
+
+async function search(query) {
+  controller?.abort();
+
+  controller = new AbortController();
+
+  const response = await fetch(
+    `/api/search?q=${query}`,
+    {
+      signal: controller.signal
+    }
+  );
+
+  if (!response.ok) {
+    throw new Error("Search failed");
+  }
+
+  return response.json();
+}
+10. How Do You Verify an AI Fix?
+
+Don't just read the code and say:
+
+"Looks fine."
+
+Test it.
+
+For the search race condition:
+
+Test 1
+
+Normal search.
+
+Input: React
+Expected: React results
+Test 2
+
+Rapid typing.
+
+React
+↓
+React Hooks
+
+Expected:
+
+Only React Hooks results appear
+Test 3
+
+Network delays.
+
+Force:
+
+Old request → Slow
+New request → Fast
+
+Expected:
+
+Old response must not overwrite latest result
+
+This is how you validate a fix.
+
+11. Difficulty Calibration
+
+Alignerr mentioned calibration.
+
+This means:
+
+Adjusting task difficulty so it's neither too easy nor impossible.
+
+You can increase difficulty by adding:
+
+Level 1
+
+One file.
+
+Clear error.
+
+Cannot read property of undefined
+
+Easy.
+
+Level 2
+
+Multiple functions.
+
+Need to trace data.
+
+Component
+↓
+API Service
+↓
+Data Transformer
+↓
+UI
+
+Medium.
+
+Level 3
+
+Multiple files + logs + distractors.
+
+Frontend
+↓
+API
+↓
+Cache
+↓
+Configuration
+↓
+Logs
+
+Hard.
+
+12. Avoiding Ambiguous Tasks
+
+Bad task:
+
+"Fix the performance issue."
+
+What performance issue?
+
+Maybe:
+
+Rendering
+Network
+Database
+Images
+Memory
+
+Impossible to objectively score.
+
+Better:
+
+"The page freezes when rendering more than 10,000 rows. Identify the bottleneck and modify rendering so only visible rows are mounted."
+
+Now success can be verified.
+
+13. What Makes a Great AI Engineering Task?
+
+Memorize this:
+
+Realistic
++
+Clear objective
++
+Real root cause
++
+Plausible distractors
++
+Multiple valid clues
++
+Verifiable solution
++
+Objective rubric
+=
+Good AI task
+SECTION 6: MOST IMPORTANT INTERVIEW ANSWERS
+Q: How would you evaluate AI-generated code?
+
+"I would first understand the intended behavior and verify correctness. Then I would test edge cases and failure scenarios, review the implementation for maintainability and performance issues, and finally verify the proposed fix with reproducible tests."
+
+Q: What is a distractor?
+
+"A distractor is realistic but unrelated information included in a task to test whether the AI can distinguish relevant evidence from noise. A good distractor should increase reasoning difficulty without making the task ambiguous."
+
+Q: How do you create a scoring rubric?
+
+"I break the expected solution into observable criteria such as correctly identifying the root cause, implementing the required fix, preserving existing behavior, handling important edge cases, and passing defined verification tests."
+
+Q: How do you calibrate task difficulty?
+
+"I adjust the amount of context, number of files, log noise, indirectness of symptoms, and number of plausible but incorrect paths while ensuring the task still has a clear, verifiable solution."
+
+🔥 Sections 4, 5, 6 Super Cheat Sheet
+SECTION 4
+
+DOM → Browser representation of HTML
+
+target → Where event started
+currentTarget → Where listener exists
+
+Event Bubbling → Event moves upward
+
+Event Delegation → One parent listener handles children
+
+preventDefault → Stops default browser behavior
+
+stopPropagation → Stops event moving upward
+
+Debounce → Wait until activity stops
+
+Throttle → Limit execution frequency
+
+textContent → Safer text insertion
+
+innerHTML → Can cause XSS with unsafe input
+SECTION 5
+
+Never mutate React state
+
+Previous state needed?
+→ Use functional update
+
+useEffect
+→ Watch dependencies
+
+Effect creates resource?
+→ Cleanup required
+
+Large lists?
+→ Virtualization
+
+useMemo
+→ Expensive calculation
+
+useCallback
+→ Stable function reference when needed
+
+React.memo
+→ Avoid unnecessary renders when beneficial
+
+Index as key?
+→ Dangerous for changing/reordered lists
+SECTION 6
+
+CRAFT Framework
+
+C → Correctness
+R → Reliability
+A → Architecture
+F → Frontend Performance
+T → Testing
+
+Good AI Task:
+
+Realistic
+Clear
+Challenging
+Not ambiguous
+Has distractors
+Verifiable
+
+Good Rubric:
+
+Specific
+Objective
+Testable
+Complete
+
+Distractor:
+Relevant-looking but unrelated information
+
+SECTION 7: Real-Life Bug Scenarios & Debugging
+
+This section is critical because Alignerr may ask:
+
+“Tell me about a real bug you solved.”
+“How do you debug an issue?”
+“How would you investigate this production problem?”
+“What if logs contain multiple errors?”
+“How do you find the root cause?”
+
+They don't expect superhero stories where you saved NASA. They want a structured debugging mindset.
+
+1. My Debugging Framework
+
+Use this simple framework:
+
+R → R → T → F → V
+R → Reproduce
+R → Read evidence
+T → Trace root cause
+F → Fix
+V → Verify
+Step 1: Reproduce
+
+First, confirm the problem actually exists.
+
+Ask:
+
+When does it happen?
+Is it consistent?
+Which browser/environment?
+What input causes it?
+Is it happening for all users?
+
+Never start changing random code.
+
+That creates:
+
+Bug
+↓
+Random Fix
+↓
+Two New Bugs
+↓
+Confusion
+↓
+Developer questioning career choices
+Step 2: Read Evidence
+
+Check:
+
+Browser console
+Network tab
+Stack trace
+Logs
+Git history
+Recent changes
+
+Example:
+
+TypeError: Cannot read properties of undefined
+at UserProfile.jsx:42
+
+Immediately inspect:
+
+UserProfile.jsx
+Line 42
+Step 3: Trace Root Cause
+
+Don't fix only the symptom.
+
+Example:
+
+user.name
+
+causes error.
+
+A lazy fix might be:
+
+user?.name
+
+But ask:
+
+Why is user undefined?
+
+Maybe:
+
+API failed
+↓
+Error ignored
+↓
+State remains undefined
+↓
+Component crashes
+
+The real problem may be error handling, not optional chaining.
+
+🔥 This is a very important AI evaluation mindset.
+
+Step 4: Fix
+
+Make the smallest correct fix.
+
+Avoid:
+
+Bug in one function
+↓
+Rewrite entire application
+
+A classic human solution to a leaking tap: demolish the house.
+
+Step 5: Verify
+
+Test:
+
+Happy path
++
+Original bug
++
+Edge cases
++
+Regression
+2. Professional Answer: "How Do You Debug?"
+
+Memorize this:
+
+"My debugging process starts by reproducing the issue consistently. Then I collect evidence from logs, browser developer tools, network requests, and stack traces. I trace the data flow to identify the root cause rather than just suppressing the symptom. After implementing the smallest correct fix, I verify the original scenario, test edge cases, and check that existing functionality has not regressed."
+
+🔥 Excellent answer for Alignerr.
+
+3. Real-Life Scenario: API Data Not Displaying
+
+Imagine a React application.
+
+useEffect(() => {
+  fetch("/api/users")
+    .then(response => response.json())
+    .then(data => setUsers(data));
+}, []);
+
+Sometimes users don't appear.
+
+Debugging
+Step 1: Check Network Tab
+
+Response:
+
+500 Internal Server Error
+
+But code still does:
+
+response.json()
+
+Potentially causing another error.
+
+Root cause
+
+No HTTP error handling.
+
+Fix
+useEffect(() => {
+  async function loadUsers() {
+    try {
+      const response = await fetch("/api/users");
+
+      if (!response.ok) {
+        throw new Error(
+          `Request failed: ${response.status}`
+        );
+      }
+
+      const data = await response.json();
+
+      setUsers(data);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  loadUsers();
+}, []);
+Verification
+
+Test:
+
+✓ API 200
+✓ API 404
+✓ API 500
+✓ Network failure
+✓ Empty response
+Interview explanation
+
+"I would first check whether the issue is frontend rendering or the network request. If the request is failing, I would inspect the status and response body. One common issue is assuming fetch rejects on HTTP errors, so I explicitly check response.ok and handle failure states."
+
+4. Real-Life Scenario: Infinite React Re-render
+
+Code:
+
+useEffect(() => {
+  setCount(count + 1);
+}, [count]);
+What happens?
+count changes
+↓
+Effect runs
+↓
+setCount
+↓
+count changes
+↓
+Effect runs
+↓
+∞
+Root Cause
+
+The effect changes the dependency that triggers itself.
+
+Fix
+
+Ask:
+
+Should this effect really update count?
+
+Maybe it should only run once:
+
+useEffect(() => {
+  setCount(previous => previous + 1);
+}, []);
+
+But don't blindly use [] to silence the problem. Understand the intended behavior first.
+
+Strong answer
+
+"I would inspect whether the effect updates state that also appears in its dependency array. That pattern can create a feedback loop. I would then restructure the logic based on the intended lifecycle rather than simply removing dependencies."
+
+🔥 Very professional.
+
+5. Real-Life Scenario: Search Shows Wrong Results
+
+This is one of the BEST scenarios for Alignerr.
+
+User types:
+
+React
+
+Request starts.
+
+Immediately types:
+
+React Hooks
+
+Second request starts.
+
+Network timing:
+
+Request: React Hooks → finishes first
+Request: React → finishes later
+
+Result:
+
+Old results overwrite new results ❌
+Root Cause
+
+Race condition.
+
+Fix
+let controller;
+
+async function search(query) {
+  controller?.abort();
+
+  controller = new AbortController();
+
+  const response = await fetch(
+    `/api/search?q=${encodeURIComponent(query)}`,
+    {
+      signal: controller.signal
+    }
+  );
+
+  if (!response.ok) {
+    throw new Error("Search failed");
+  }
+
+  return response.json();
+}
+Verification
+
+Artificially slow the first request.
+
+Request A → 3 seconds
+Request B → 500ms
+
+Expected:
+
+Only latest request updates UI ✓
+Interview answer
+
+"A realistic frontend issue is stale search results caused by asynchronous race conditions. I would reproduce it using throttled network conditions, confirm request ordering in the network tab, and then prevent stale responses using AbortController or request IDs."
+
+This answer sounds much stronger than:
+
+"I checked console.log and fixed it."
+
+6. Real-Life Scenario: Button Clicks Multiple Times
+
+User says:
+
+"One click sometimes triggers three API requests."
+
+Investigation
+
+Check event listeners.
+
+Bad code:
+
+function initialize() {
+  button.addEventListener("click", submitForm);
+}
+
+If initialize() runs multiple times:
+
+Listener 1
+Listener 2
+Listener 3
+
+One click:
+
+submitForm()
+submitForm()
+submitForm()
+Root Cause
+
+Event listener not cleaned up.
+
+Fix
+button.addEventListener(
+  "click",
+  submitForm
+);
+
+return () => {
+  button.removeEventListener(
+    "click",
+    submitForm
+  );
+};
+In React
+useEffect(() => {
+  window.addEventListener(
+    "resize",
+    handleResize
+  );
+
+  return () => {
+    window.removeEventListener(
+      "resize",
+      handleResize
+    );
+  };
+}, []);
+7. Real-Life Scenario: Website Becomes Slow
+
+Imagine a dashboard with:
+
+20,000 rows
+
+The page freezes.
+
+Wrong assumption
+
+"React is slow."
+
+No.
+
+Measure first.
+
+Investigation
+
+Use:
+
+Browser Performance tab
+React Profiler
+Network tab
+Memory profiling
+
+Maybe issue:
+
+20,000 DOM nodes
+Fix
+
+Use:
+
+Virtualization
+
+Only render visible rows.
+
+Before:
+
+20,000 DOM nodes
+
+After:
+
+30 visible DOM nodes
+Interview answer
+
+"I wouldn't immediately optimize the framework. I would profile the application first. If the bottleneck is rendering a large list, virtualization would reduce the number of mounted DOM elements."
+
+8. Real-Life Scenario: Memory Leak
+
+Component:
+
+useEffect(() => {
+  const timer = setInterval(() => {
+    fetchData();
+  }, 5000);
+}, []);
+
+User navigates away.
+
+But timer continues.
+
+Then:
+
+Component A unmounts
+Timer still running ❌
+
+Component A mounts again
+New timer starts
+
+Component A unmounts
+Both timers continue ❌❌
+
+Eventually:
+
+Many timers
+Many API requests
+Poor performance
+Fix
+useEffect(() => {
+  const timer = setInterval(() => {
+    fetchData();
+  }, 5000);
+
+  return () => {
+    clearInterval(timer);
+  };
+}, []);
+9. Real-Life Scenario: Production Works Locally But Fails After Deployment
+
+This is very common.
+
+Example:
+
+fetch("http://localhost:5000/api/users");
+
+Works locally.
+
+Deploy frontend.
+
+Production:
+
+https://myapp.com
+
+Still calls:
+
+http://localhost:5000
+
+Obviously production doesn't contain your laptop. Humanity has not yet invented that feature.
+
+Fix
+
+Environment variables.
+
+const API_URL = import.meta.env.VITE_API_URL;
+fetch(`${API_URL}/api/users`);
+
+Different environment:
+
+Development
+→ http://localhost:5000
+
+Production
+→ https://api.example.com
+Interview Answer
+
+"When something works locally but fails in production, I compare environment configuration, API endpoints, CORS behavior, build configuration, and runtime logs rather than assuming the application code itself is wrong."
+
+🔥 Excellent answer.
+
+10. Real-Life Scenario: CORS Error
+
+Browser:
+
+Access to fetch at API has been blocked by CORS policy
+
+Common mistake:
+
+Trying to fix it in React.
+
+CORS is mainly controlled by server response headers.
+
+Backend example:
+
+app.use(cors({
+  origin: "https://myfrontend.com"
+}));
+Important Interview Point
+
+Don't disable security blindly.
+
+Bad:
+
+origin: "*"
+
+for everything, especially sensitive authenticated APIs.
+
+Professional answer
+
+"I would verify the browser's Origin header and server CORS configuration, including allowed origins, methods, headers, and credentials."
+
+11. Real-Life Scenario: "The UI Is Broken"
+
+Logs:
+
+[WARN] Analytics SDK outdated
+
+[WARN] Image optimization disabled
+
+[ERROR] Cannot read properties of undefined
+
+[WARN] Third-party widget slow
+
+AI agent sees:
+
+Analytics SDK outdated
+
+and starts updating packages.
+
+Wrong.
+
+Correct approach:
+
+Trace stack
+TypeError
+↓
+Component
+↓
+Props
+↓
+API response
+↓
+Root cause
+Key Alignerr statement
+
+"I would prioritize evidence based on its relationship to the reported symptom. Not every warning in logs is causal, so I would trace the failing execution path instead of assuming the most visible error is the root cause."
+
+🔥 This is exactly useful for task author/evaluator thinking.
+
+SECTION 7: REAL BUG STORY TEMPLATE
+
+If they ask:
+
+"Tell me about a bug you solved."
+
+Use this structure:
+
+S → I → A → R
+S → Situation
+I → Investigation
+A → Action
+R → Result
+Example
+
+"I encountered an issue where asynchronous data could display stale results when requests completed out of order. I reproduced the problem by simulating slow network conditions and inspected request timing in the browser network tab. I identified it as a race condition and addressed it by cancelling stale requests and ensuring only the latest response could update the UI. I then tested rapid input changes and delayed responses to verify that older responses could no longer overwrite current state."
+
+This is safe, professional, and technically solid.
+
+Important: If they ask about something you personally solved, don't claim fake production experience. You can say:
+
+"In a project I built..."
+
+and discuss an actual project scenario.
+
+SECTION 8: Scaling Frontend Applications
+
+Now the question:
+
+"How would you scale this application?"
+
+Do not immediately scream:
+
+"Microservices!"
+
+Frontend developers love recommending distributed systems for a todo app. Resist.
+
+First understand what is actually growing.
+
+1. What Does "Scale" Mean?
+
+Scaling can mean:
+
+More Users
+More Data
+More Features
+More Developers
+More Requests
+More Complexity
+
+Different problem = different solution.
+
+First interview answer
+
+"Before choosing a scaling strategy, I would clarify what is scaling: traffic, data size, rendering complexity, or team and codebase complexity. The solution depends on the bottleneck."
+
+🔥 This is a very mature answer.
+
+2. Scaling for More Users
+
+Suppose:
+
+1,000 users
+↓
+100,000 users
+
+Frontend concerns:
+
+CDN
+Caching
+Smaller bundles
+Lazy loading
+API efficiency
+CDN
+
+Static assets:
+
+JS
+CSS
+Images
+Fonts
+
+are distributed geographically.
+
+Instead of every user contacting one server:
+
+User India
+    ↓
+Server USA ❌
+
+Use CDN:
+
+User India
+    ↓
+Nearby CDN ✓
+3. Code Splitting
+
+Don't send entire application immediately.
+
+Bad:
+
+5 MB JavaScript bundle
+
+User only visits:
+
+Home Page
+
+Why download:
+
+Dashboard
+Admin Panel
+Settings
+Reports
+
+Use lazy loading.
+
+React:
+
+const Dashboard = React.lazy(() =>
+  import("./Dashboard")
+);
+
+With:
+
+<Suspense fallback={<Loading />}>
+  <Dashboard />
+</Suspense>
+Benefit
+
+Load code only when needed.
+
+4. Image Optimization
+
+Large images can destroy performance.
+
+Problems:
+
+10 MB image
+↓
+Mobile user
+↓
+Slow connection
+↓
+Sad human
+
+Solutions:
+
+WebP / AVIF
+Responsive images
+Lazy loading
+Compression
+CDN
+
+Example:
+
+<img
+  src="image.webp"
+  loading="lazy"
+  alt="Product"
+/>
+5. API Scaling
+
+Don't request unnecessary data.
+
+Bad:
+
+GET /users
+
+Returns:
+
+10,000 users
+
+When UI needs:
+
+20 users
+
+Use:
+
+Pagination
+Filtering
+Caching
+
+Example:
+
+GET /users?page=1&limit=20
+6. Frontend Caching
+
+Don't repeatedly fetch unchanged data.
+
+Options:
+
+Browser Cache
+CDN Cache
+Application Cache
+React Query / TanStack Query
+
+Example concept:
+
+First Visit
+↓
+Fetch API
+↓
+Cache Data
+
+Second Visit
+↓
+Use Cached Data
+
+But cache invalidation matters.
+
+One of the hardest problems in programming:
+
+Cache invalidation
+Naming things
+Off-by-one errors
+
+A depressing but accurate industry joke.
+
+7. Scaling Large Lists
+
+Imagine:
+
+100,000 products
+
+Don't:
+
+Render 100,000 components
+
+Use:
+
+Pagination
+Page 1 → 20 products
+Page 2 → 20 products
+Infinite Scroll
+
+Load more when needed.
+
+Virtualization
+
+Render only visible items.
+
+100,000 items in data
+
+Visible:
+
+20 items
+
+DOM:
+
+20 elements
+8. Scaling State Management
+
+Small application:
+
+useState
+Props
+
+Medium:
+
+Context
+
+Complex application:
+
+Possible:
+
+Redux
+Zustand
+React Query
+
+But don't say:
+
+"Large app = Redux."
+
+State types matter.
+
+Client State
+Modal open
+Theme
+Sidebar state
+Server State
+Users
+Products
+API data
+
+For server state:
+
+Tools such as TanStack Query can help manage caching, loading states, retries, and invalidation.
+
+Professional answer
+
+"I separate client UI state from server state. I avoid putting all application data into one global store and choose state management based on ownership, update frequency, and caching requirements."
+
+9. Scaling Codebase
+
+As projects grow:
+
+components/
+utils/
+pages/
+hooks/
+services/
+
+can become messy.
+
+Better organization often focuses on features:
+
+src/
+ ├── features/
+ │    ├── auth/
+ │    ├── dashboard/
+ │    ├── products/
+ │
+ ├── components/
+ ├── services/
+ ├── hooks/
+
+Why?
+
+Everything related to a feature stays closer together.
+
+10. Scaling Teams
+
+Imagine:
+
+2 developers
+↓
+50 developers
+
+Problems:
+
+Merge conflicts
+Different coding styles
+Breaking changes
+Unclear ownership
+
+Solutions:
+
+ESLint
+Prettier
+TypeScript
+Code Reviews
+CI/CD
+Automated Tests
+Clear Ownership
+Strong answer
+
+"As teams scale, consistency becomes as important as individual coding skill. Automated linting, testing, CI checks, code review standards, and clear ownership help prevent integration problems."
+
+11. Frontend Observability
+
+Production errors may not appear locally.
+
+Use:
+
+Error tracking
+Performance monitoring
+Browser logs
+Metrics
+
+Conceptually:
+
+User reports issue
+↓
+Error tracking
+↓
+Stack trace
+↓
+User action
+↓
+Browser information
+↓
+Investigate
+
+Possible platforms include Datadog and Grafana, though for the interview you mainly need to understand observability, not memorize every dashboard button invented by enterprise software.
+
+12. Scaling Architecture: Don't Overengineer
+
+Bad progression:
+
+Simple React App
+↓
+Add microservices
+↓
+Add Kafka
+↓
+Add Kubernetes
+↓
+Nobody knows why
+
+Better:
+
+Simple architecture
+↓
+Measure bottleneck
+↓
+Identify limitation
+↓
+Scale specific component
+Golden interview line
+
+"I prefer to scale based on measured bottlenecks rather than introducing architectural complexity prematurely."
+
+🔥 Memorize.
+
+13. How Would You Handle 1 Million Users?
+
+Potential answer:
+
+"I would first identify which part of the system is under pressure. From a frontend perspective, I would serve static assets through a CDN, optimize bundle size with code splitting, cache appropriate resources, lazy-load noncritical content, and minimize unnecessary API requests. For large datasets, I would use pagination or virtualization. I would also monitor real user performance and error rates so scaling decisions are based on actual bottlenecks."
+
+This is a very strong answer.
+
+14. Scaling an AI Task Environment
+
+This connects directly to Alignerr.
+
+Suppose they ask:
+
+"How would you scale task creation?"
+
+Answer:
+
+"I would standardize the task structure while keeping the underlying failures diverse. Each task could include a reproducible environment, clear initial state, logs or evidence, expected verification steps, and an objective rubric. I would automate environment setup where possible and maintain version-controlled fixtures so tasks remain reproducible."
+
+🔥 Very relevant to the Task Author role.
+
+SECTION 8 CHEAT SHEET
+Scaling starts with:
+
+What is growing?
+↓
+Find bottleneck
+↓
+Measure
+↓
+Optimize specific problem
+More Users
+→ CDN
+→ Caching
+→ Code splitting
+
+Large Data
+→ Pagination
+→ Infinite scroll
+→ Virtualization
+
+Large Codebase
+→ Feature-based structure
+→ TypeScript
+→ Testing
+
+Large Team
+→ CI/CD
+→ Code review
+→ Linting
+→ Ownership
+
+Large API Usage
+→ Caching
+→ Pagination
+→ Reduce requests
+Golden line
+
+"Scale based on measured bottlenecks, not assumptions."
+
+SECTION 9: FULL ALIGNERR MOCK INTERVIEW
+
+This is your final interview preparation.
+
+A 15-minute interview will likely be conversational.
+
+They won't ask 100 questions.
+
+They want to quickly determine:
+
+Can this person actually reason about code?
+Can they debug?
+Can they evaluate AI output?
+Can they communicate clearly?
+PART 1: INTRODUCTION
+Q1. Tell me about yourself.
+Answer
+
+"I'm a frontend-focused developer with hands-on experience building responsive web applications using JavaScript, React, and modern frontend tooling. A big part of my work involves turning requirements into working interfaces and debugging issues across components, APIs, and application state. I'm particularly interested in this role because it requires more than writing code. It involves analyzing AI-generated solutions, identifying subtle correctness issues, and defining clear criteria for what a good engineering solution should look like. That combination of JavaScript knowledge, debugging, and structured evaluation is what interests me about Alignerr."
+
+Remember structure
+Who you are
+↓
+What you build
+↓
+What you're good at
+↓
+Why Alignerr
+Q2. Why Alignerr?
+Answer
+
+"What interests me is the evaluation side of engineering. Writing code is one skill, but being able to determine whether code is actually correct, reliable, and robust requires deeper reasoning. I like the idea of examining AI-generated solutions, identifying subtle issues, and creating objective criteria for evaluation. I also find the task-authoring aspect interesting because it requires designing realistic problems rather than theoretical questions."
+
+PART 2: AI CODE REVIEW
+Q3. How would you evaluate AI-generated code?
+Answer
+
+"First, I would understand the expected behavior rather than judging the code by appearance. Then I would verify correctness against the requirements, test edge cases and failure scenarios, and review the implementation for maintainability, performance, and security concerns. Finally, I would verify the fix with reproducible tests. I try to distinguish between a cosmetic improvement and an actual correctness issue."
+
+🔥 Excellent.
+
+Q4. AI generated working code. Is it automatically good?
+Answer
+
+"No. Passing the happy path is not enough. I would check edge cases, error handling, asynchronous behavior, performance characteristics, security concerns, and whether the implementation remains correct under realistic conditions."
+
+Q5. What would you prioritize when reviewing code?
+Answer
+1. Correctness
+2. Reliability
+3. Security
+4. Performance
+5. Maintainability
+6. Style
+Answer
+
+"I prioritize correctness first. After that I look at reliability and important failure cases, then security and performance depending on the context. Style matters, but I wouldn't reject correct production-ready code simply because I prefer a different formatting style."
+
+Very mature answer.
+
+PART 3: BUG SCENARIO
+Q6. A user says the page is broken. What do you do?
+Answer
+
+"I would first clarify and reproduce the issue. Then I would collect evidence from browser developer tools, network requests, console errors, and stack traces. I would trace the failing data or execution path to find the root cause instead of immediately changing the visible line where the error appears. After implementing the smallest correct fix, I would verify the original scenario and test for regressions."
+
+Q7. How do you distinguish root cause from symptom?
+Answer
+
+"I trace backward from the failure. For example, if a component crashes because a value is undefined, adding optional chaining may hide the symptom, but I would investigate why the value became undefined. The root cause could be an API failure, incorrect data transformation, or missing state initialization."
+
+🔥 Very important.
+
+PART 4: DISTRACTORS
+Q8. What distractors would you add to challenge an AI?
+Answer
+
+"I would include realistic but non-causal information, such as unrelated warnings, recent changes in another module, or logs from background services. The distractors should be plausible enough to require reasoning but should not make the task ambiguous. There must still be enough evidence for a careful agent to identify the true root cause."
+
+Q9. How do you avoid making distractors unfair?
+Answer
+
+"I make sure distractors are genuinely unrelated rather than contradictory. The correct execution path should still contain sufficient evidence. The goal is to test prioritization and reasoning, not to trick the model through missing information."
+
+🔥 Excellent distinction.
+
+PART 5: RUBRICS
+Q10. How would you create a scoring rubric?
+Answer
+
+"I would break the expected outcome into observable and independently checkable criteria. For example: identifies the correct root cause, makes the required code change, preserves existing behavior, handles relevant failure cases, and passes defined verification tests. I would avoid subjective criteria like 'elegant code' unless they are converted into measurable requirements."
+
+Q11. What makes a bad rubric?
+Answer
+
+"A bad rubric is vague, subjective, or impossible to verify. For example, saying 'the solution should be clean' doesn't define correctness. A good rubric describes observable outcomes and allows different valid implementations where appropriate."
+
+PART 6: JAVASCRIPT RAPID FIRE
+Q12. Closure?
+
+"A closure allows a function to retain access to variables from its outer lexical scope even after the outer function has finished."
+
+Q13. Event loop?
+
+"JavaScript executes synchronous code first. After the stack is clear, microtasks such as Promise callbacks are processed before task callbacks such as setTimeout."
+
+Q14. Promise.all vs allSettled?
+
+"Promise.all rejects when any Promise fails, while Promise.allSettled waits for all operations and reports each result."
+
+Q15. Async forEach problem?
+
+"forEach doesn't wait for async callbacks. I would use for...of for sequential operations or Promise.all for independent parallel operations."
+
+Q16. Race condition?
+
+"A race condition occurs when asynchronous operations complete in an unpredictable order and an older result can overwrite newer application state."
+
+PART 7: REACT QUESTIONS
+Q17. Why not mutate state?
+
+"State should be treated as immutable. Creating new references makes updates predictable and helps React correctly detect changes."
+
+Q18. useEffect cleanup?
+
+"Cleanup prevents resources such as timers, event listeners, subscriptions, or requests from continuing after a component is no longer relevant."
+
+Q19. Why not index as key?
+
+"Indexes can cause incorrect component identity when items are inserted, removed, or reordered."
+
+PART 8: SCALING
+Q20. How would you scale a frontend application?
+Answer
+
+"I would first identify what is actually becoming a bottleneck. For traffic, I would consider CDN and caching. For bundle size, code splitting and lazy loading. For large datasets, pagination or virtualization. For application complexity, modular architecture and clear state ownership. I prefer measuring bottlenecks before introducing optimization."
+
+PART 9: REAL-LIFE EXPERIENCE QUESTION
+
+This one matters.
+
+Q21. Tell me about a difficult bug you solved.
+
+Don't invent a story about:
+
+"At my Fortune 500 company, I prevented a global outage."
+
+Interviewers can smell fictional engineering adventures.
+
+Use a real project.
+
+Safe structure
+
+"In one of my frontend projects, I encountered an issue where [REAL PROBLEM]. I first reproduced it and used [DevTools/logs/console/network] to narrow down whether the issue was in rendering, state, or the API layer. I traced the problem to [ROOT CAUSE]. I fixed it by [FIX], then tested the original scenario along with edge cases to ensure it didn't regress."
+
+Use a project you genuinely built.
+
+PART 10: IF YOU DON'T KNOW AN ANSWER
+
+Very important.
+
+Don't panic.
+
+Don't invent.
+
+Say:
+
+"I haven't worked directly with that specific tool, but my approach would be to first understand what information it provides and then use it to correlate the reported symptom with errors, request traces, and performance metrics. The debugging principles would remain the same: reproduce, collect evidence, isolate the failing path, and verify the fix."
+
+This is MUCH better than:
+
+"Yes, I have extensive experience with Datadog."
+
+Followed by:
+
+"Datadog is... a dog monitoring application?"
+
+PART 11: FINAL QUESTIONS THEY MAY ASK
+"How do you know your fix is correct?"
+
+"I verify it against the original failure scenario first, then test relevant edge and failure cases. I also check that the fix doesn't introduce regressions in related functionality. Where possible, I prefer automated tests or reproducible verification steps."
+
+"What makes a task difficult for AI?"
+
+"The best difficulty comes from realistic reasoning requirements rather than simply making the code longer. Multiple files, indirect symptoms, asynchronous behavior, plausible distractors, and the need to trace data flow can increase difficulty while still keeping the task objectively solvable."
+
+"What would you do if the AI finds a different valid solution?"
+
+"The rubric should evaluate outcomes and required constraints rather than requiring one exact implementation. If multiple approaches correctly solve the problem and meet the requirements, they should be accepted."
+
+🔥 This is a particularly good answer for AI evaluation work.
+
+🚨 THE 15-MINUTE INTERVIEW STRATEGY
+
+Don't give 5-minute answers.
+
+Use:
+
+Answer Structure
+Direct Answer
+↓
+Reason
+↓
+Small Example
+
+Example:
+
+Question: What is event delegation?
+
+Bad:
+
+Event delegation is a pattern that was originally developed...
+
+Nobody asked for a documentary.
+
+Better:
+
+"Event delegation means attaching a listener to a parent and handling events from its children through event bubbling. It's useful for dynamic lists because you don't need a separate listener for every item."
+
+Done.
+
+# Memorize these lines:
+
+Debugging
+
+"I reproduce the issue, collect evidence, trace the root cause, make the smallest correct fix, and verify against regressions."
+
+AI Evaluation
+
+"I verify intended behavior first, then correctness, edge cases, reliability, and finally implementation quality."
+
+Root Cause
+
+"I avoid fixing only the visible symptom and trace backward to understand why the failure occurred."
+
+Distractors
+
+"Distractors should be realistic and plausible but must not make the task ambiguous."
+
+Rubrics
+
+"A rubric should contain observable, objective, and independently checkable criteria."
+
+Async
+
+"Microtasks run before task queue callbacks after synchronous execution completes."
+
+Scaling
+
+"I scale based on measured bottlenecks rather than assumptions."
+
+Performance
+
+"I measure before optimizing."
+
+AI Task
+
+"Difficulty should come from realistic reasoning complexity, not artificial ambiguity."
+
+Verification
+
+"A fix isn't complete until the original failure and relevant edge cases are verified."
+
