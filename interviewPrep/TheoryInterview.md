@@ -1,10 +1,6 @@
-Section 1: Core Interview Mindset + How to Evaluate AI-Generated JavaScript Code
+# Section 1: Core Interview Mindset + How to Evaluate AI-Generated JavaScript Code
 
-This is the foundation. Before jumping into closures, promises, React traps, and event-loop nightmares, you need to understand how to think like the person Alignerr wants to hire.
-
-For this role, they are not simply asking:
-
-"Can you write JavaScript?"
+## "Can you write JavaScript?"
 
 They are asking:
 
@@ -59,6 +55,7 @@ Are there logical errors?
 Are return values correct?
 Does async behavior work correctly?
 Are there hidden assumptions?
+
 O — Optimization
 
 Ask:
@@ -69,6 +66,7 @@ Too many DOM operations?
 Repeated API calls?
 Memory issues?
 Unnecessary computation?
+
 D — Defensive Programming
 
 Ask:
@@ -78,6 +76,7 @@ What happens if API fails?
 What happens if an array is empty?
 What happens if an element doesn't exist?
 Is error handling correct?
+
 E — ES6+ Standards
 
 Ask:
@@ -89,9 +88,6 @@ Destructuring
 Spread operators
 Modern array methods
 
-But be careful.
-
-Don't criticize code merely because it doesn't use the newest syntax invented last Tuesday.
 
 Correctness matters more than syntax style.
 
@@ -104,6 +100,7 @@ Is logic unnecessarily complicated?
 Is functionality duplicated?
 Can another developer understand it?
 Does each function have one responsibility?
+
 3. The perfect answer structure
 
 Suppose the interviewer shows you code and asks:
@@ -140,14 +137,13 @@ Step 6: Mention verification
 
 "I would verify this with asynchronous tests that confirm all users are processed before the function resolves."
 
-This structure is exactly how a professional evaluator thinks.
 
 4. The difference between "works" and "good code"
 
 This is extremely important for AI evaluation.
 
 Consider:
-
+```js
 function getUser(users, id) {
   for (let i = 0; i < users.length; i++) {
     if (users[i].id == id) {
@@ -155,7 +151,7 @@ function getUser(users, id) {
     }
   }
 }
-
+```
 Does it work?
 
 Often, yes.
@@ -177,11 +173,11 @@ users[i].id === id
 Issue 2: Readability
 
 Modern JavaScript could use:
-
+```js
 function getUser(users, id) {
   return users.find(user => user.id === id);
 }
-
+```
 But here's the important nuance:
 
 Don't criticize a traditional loop simply because find() exists.
@@ -206,17 +202,18 @@ Not:
 
 Humans already have enough unreadable code pretending to be clever.
 
-5. Happy path vs real-world behavior
+# 5. Happy path vs real-world behavior
 
 AI-generated code often passes the obvious example.
 
 Example:
-
+```js
 async function getUsers() {
   const response = await fetch("/api/users");
   return response.json();
 }
 
+```
 An inexperienced reviewer might say:
 
 Looks good.
@@ -234,6 +231,7 @@ Response format changes?
 That's the difference.
 
 Improved version
+```js
 async function getUsers() {
   try {
     const response = await fetch("/api/users");
@@ -250,33 +248,29 @@ async function getUsers() {
     throw error;
   }
 }
+```
 What would you say in an interview?
 
 "The original implementation handles the happy path but doesn't explicitly handle HTTP error responses. Since fetch only rejects on network-level failures, I would check response.ok and define how errors should propagate."
 
-🔥 That's a professional answer.
 
-Notice you're not just saying:
-
-"Add try catch."
-
-You explain why.
-
-6. How to identify AI-generated code weaknesses
+# 6. How to identify AI-generated code weaknesses
 
 AI code often has recognizable failure patterns.
 
 Pattern 1: Correct-looking but incomplete
+```js
 const response = await fetch(url);
 const data = await response.json();
-
+```
 Missing:
-
+```
 response.ok
+```
 Pattern 2: Over-engineering
 
 AI might produce:
-
+```js
 class UserManagerFactory {
   constructor() {
     this.cache = new Map();
@@ -286,7 +280,7 @@ class UserManagerFactory {
     return new Proxy(/* ... */);
   }
 }
-
+```
 For a simple button click.
 
 Your review:
@@ -296,29 +290,31 @@ Your review:
 Excellent.
 
 Pattern 3: Unnecessary abstraction
+```js
 function createHandler(callback) {
   return function(event) {
     return callback(event);
   };
 }
-
+```
 Why?
 
 Could simply use:
-
+```js
 button.addEventListener("click", handleClick);
-
+```
 Ask:
 
 Does this abstraction solve an actual problem?
 
 Pattern 4: Silent failures
+```js
 try {
   await saveData();
 } catch (error) {
   return null;
 }
-
+```
 Potentially dangerous.
 
 Why?
@@ -334,28 +330,29 @@ from:
 Better to define error behavior explicitly.
 
 Pattern 5: Incorrect async assumptions
+```js
 users.forEach(async user => {
   await saveUser(user);
 });
 
 console.log("All users saved");
-
+```
 Classic bug.
 
 console.log may execute before saves complete.
 
-7. The hierarchy of issues
+# 7. The hierarchy of issues
 
 When reviewing AI-generated code, don't treat every issue equally.
 
 Suppose code contains:
-
+```js
 let x = "hello";
-
+```
 and also:
-
+```js
 user.name.toUpperCase();
-
+```
 without checking whether user exists.
 
 Which do you mention first?
@@ -363,61 +360,66 @@ Which do you mention first?
 Obviously:
 
 1. Runtime crash
+
 2. Logic bug
+
 3. Security issue
+
 4. Data corruption
+
 5. Performance
+
 6. Maintainability
+
 7. Style
 
 This is important.
 
-Professional interview answer:
-
 "I prioritize issues by impact. Functional correctness and potential runtime or security failures come before stylistic improvements."
 
-🔥 Memorize.
 
-8. How to classify bugs
+# 8. How to classify bugs
 
 When they show you code, classify the issue.
 
 Type 1: Syntax error
 
 Code cannot run.
-
+```js
 const name = ;
+```
 Type 2: Runtime error
 
 Code starts but crashes.
-
+```js
 const user = undefined;
 console.log(user.name);
+```
 Type 3: Logic error
 
 Code runs but gives wrong output.
-
+```js
 function isAdult(age) {
   return age > 18;
 }
-
+```
 Potentially excludes age 18.
 
 Type 4: Async bug
 
 Timing/order issue.
-
+```js
 async function run() {
   fetchData();
   console.log("Finished");
 }
-
+```
 Finished appears before fetch completes.
 
 Type 5: Performance bug
 
 Works but becomes slow at scale.
-
+```js
 users.forEach(user => {
   posts.forEach(post => {
     if (post.userId === user.id) {
@@ -425,37 +427,26 @@ users.forEach(user => {
     }
   });
 });
-
+```
 Potential O(n²).
 
 Type 6: Memory bug
 
 Resources aren't cleaned up.
-
+```js
 setInterval(fetchData, 1000);
-
+```
 Never cleared.
 
 Type 7: Security issue
+```js
 element.innerHTML = userInput;
-
+```
 Potential XSS.
 
-9. What does "clean code" actually mean?
-
-Interviewers may ask:
+# 9. What does "clean code" actually mean?
 
 "How do you evaluate code quality?"
-
-Don't say:
-
-"Clean code means using const and semicolons."
-
-That's style preference wearing a fake moustache and pretending to be engineering.
-
-Say:
-
-Writing
 
 For me, clean code primarily means code that is easy to understand, correct, and safe to modify.
 
@@ -465,14 +456,8 @@ However, I don't believe clean code means maximizing abstraction or making code 
 
 I prioritize correctness and clarity first, then look at maintainability and performance based on the context.
 
-This is a mature answer.
 
-10. What makes AI-generated code different from human code?
-
-Potential interview question.
-
-Strong answer:
-Writing
+# 10. What makes AI-generated code different from human code?
 
 AI-generated code can often look convincing because it follows common patterns, but that doesn't guarantee that the code is correct in the specific context.
 
@@ -482,15 +467,10 @@ AI can also over-engineer solutions, introduce unnecessary abstractions, miss ed
 
 So my evaluation would focus on validating behavior rather than trusting that familiar-looking patterns are automatically correct.
 
-Golden sentence:
-
 "Plausible-looking code is not the same as correct code."
 
-MEMORIZE THIS.
 
-11. How would you improve AI-generated code?
-
-They might show code and ask you to improve it.
+# 11. How would you improve AI-generated code?
 
 Your process:
 
@@ -510,19 +490,14 @@ Improve readability
       ↓
 Verify solution
 
-Don't jump directly into rewriting.
-
-Say:
-
 "Before changing the implementation, I would first understand the intended behavior. Otherwise, there's a risk of optimizing or refactoring code while preserving an incorrect assumption."
 
-This is a very strong engineering mindset.
 
-12. Code Review Simulation #1
+# 12. Code Review Simulation 
 
-Let's practice.
 
 AI generated:
+```js
 function calculateTotal(items) {
   let total = 0;
 
@@ -532,6 +507,7 @@ function calculateTotal(items) {
 
   return total;
 }
+```
 How would you review it?
 Step 1: Intent
 
@@ -570,10 +546,8 @@ Strong review answer:
 
 "For valid numeric input, the logic is correct and the complexity is O(n), which is appropriate. One thing I'd clarify is the input contract. If this handles monetary values, floating-point precision could become an issue, and representing currency in the smallest unit, such as cents or paise, would be safer."
 
-🔥 Excellent evaluator thinking.
-
-13. Code Review Simulation #2
-AI-generated code:
+# 13. Code Review Simulation 
+```js
 function handleClick() {
   const button = document.querySelector("#submit");
 
@@ -584,6 +558,7 @@ function handleClick() {
 
 handleClick();
 handleClick();
+```
 Review
 
 First call:
@@ -596,13 +571,11 @@ Another listener.
 
 One click now triggers twice.
 
-Strong answer:
-
 "The main issue is repeated event listener registration. If this function is called multiple times, duplicate listeners accumulate and the handler executes multiple times. Depending on the application lifecycle, I would ensure initialization happens only once or remove existing listeners during cleanup."
 
-This shows you think about lifecycle, not just syntax.
 
-14. Code Review Simulation #3
+# 14. Code Review Simulation 
+```js
 async function loadData() {
   const response = await fetch("/api/data");
 
@@ -612,7 +585,7 @@ async function loadData() {
 
   return null;
 }
-
+```
 What's wrong?
 
 Many people say:
@@ -632,7 +605,7 @@ legitimate absence
 request failure
 
 Better:
-
+```js
 async function loadData() {
   const response = await fetch("/api/data");
 
@@ -644,16 +617,16 @@ async function loadData() {
 
   return response.json();
 }
-
+```
 Potential nuance:
 
 For 204 No Content, don't call .json().
 
-Strong explanation:
 
 "I would prefer response.ok over checking specifically for status 200 unless the endpoint contract explicitly guarantees 200. I'd also avoid returning null for every failure because it hides useful failure information."
 
-15. Code Review Simulation #4: The subtle one
+# 15. Code Review Simulation 
+```js
 const users = [
   { id: 1, name: "A" },
   { id: 2, name: "B" }
@@ -667,7 +640,7 @@ activeUsers.push({
 });
 
 console.log(users.length);
-
+```
 Output?
 
 3
@@ -681,73 +654,49 @@ const activeUsers = users;
 copies the reference, not the array.
 
 Better:
+```
 const activeUsers = [...users];
-
+```
 But remember shallow copy.
 
-Interview explanation:
 
 "The issue is reference sharing. activeUsers and users point to the same array, so mutating one affects the other. A shallow copy using the spread operator would create a new array container, although nested objects would still share references."
 
-That last part is the difference between basic and strong JavaScript knowledge.
-
-16. Your evaluator vocabulary
-
-Start naturally using these words:
+# 16. Your evaluator vocabulary
 
 Instead of:
 
 This code is bad.
-
 Say:
-
 "This implementation has a potential failure mode."
 
 Instead of:
-
 This is wrong.
-
 Say:
-
 "The assumption here is unsafe because..."
 
 Instead of:
-
 Optimize it.
-
 Say:
-
 "I would first verify whether this is an actual bottleneck before optimizing."
 
 Instead of:
-
 Add try-catch.
-
 Say:
-
 "The error propagation strategy isn't clearly defined."
 
 Instead of:
-
 It might crash.
-
 Say:
-
 "This can produce a runtime exception when..."
 
 Instead of:
-
 AI made a mistake.
-
 Say:
-
 "The implementation reaches the correct pattern but misses an important edge case."
 
-This vocabulary makes you sound much more professional.
 
-17. The single most important answer to memorize
-Q: How would you evaluate AI-generated JavaScript code?
-Writing
+# 17. How would you evaluate AI-generated JavaScript code?
 
 I would evaluate it systematically rather than judging only the final output.
 
@@ -764,8 +713,6 @@ Finally, I would propose improvements and verify them with tests or reproducible
 The key distinction for me is that code that works for one example isn't necessarily robust code. I would evaluate whether the implementation behaves correctly under realistic conditions.
 
 SECTION 1 CHEAT SHEET
-
-Memorize these lines:
 
 ⭐ 1
 
@@ -796,46 +743,55 @@ A good review explains not just what is wrong, but why it fails and how the impr
 I would measure performance before optimizing rather than applying generic optimizations.
 
 
-SECTION 2: Advanced JavaScript Fundamentals
-1. var, let, and const
+# SECTION 2: Advanced JavaScript Fundamentals
+
+## 18. var, let, and const
+
 var
-Function scoped
-Can be redeclared
+
+Function scoped ,
+Can be redeclared ,
 Avoid in modern JavaScript
+```js
 var name = "John";
 var name = "Mike";
 
 console.log(name); // Mike
+```
 let
-Block scoped
-Can be reassigned
+
+Block scoped ,
+Can be reassigned , 
 Cannot be redeclared in the same scope
+```js
 let age = 20;
 
 age = 21;
+```
+
 const
-Block scoped
-Cannot be reassigned
+
+Block scoped,
+Cannot be reassigned,
 Use by default
+```js 
 const name = "John";
 
 // name = "Mike"; ❌ Error
-Easy rule to remember
+```
 
 Use const by default. Use let when the value changes. Avoid var.
 
-Interview answer
-
 "var is function scoped, while let and const are block scoped. I generally use const by default and let when reassignment is needed."
 
-2. Scope
+## 19. Scope
 
 Scope means:
 
 Where can a variable be accessed?
 
 Example:
-
+```js
 function test() {
   const message = "Hello";
 
@@ -843,7 +799,7 @@ function test() {
 }
 
 console.log(message); // Error
-
+```
 There are mainly:
 
 Global scope
@@ -851,39 +807,43 @@ Function scope
 Block scope
 
 Example of block scope:
-
+```js
 if (true) {
   let name = "John";
 }
 
 console.log(name); // Error
-
+```
 Because name exists only inside the {} block.
 
-3. Hoisting
+## 20. Hoisting
 
 Hoisting means JavaScript processes declarations before executing code.
 
 var
+```js
 console.log(x);
 
 var x = 10;
-
+```
 Output:
-
+```
 undefined
+```
 let
+```js
 console.log(x);
 
 let x = 10;
-
+```
 Output:
-
+```
 ReferenceError
-Easy way to remember
+```
 var → accessible before declaration but gives undefined
+
 let / const → cannot access before initialization
-Important interview point
+
 
 Technically, let and const are also hoisted.
 
@@ -893,20 +853,15 @@ Temporal Dead Zone (TDZ)
 
 Until they are initialized.
 
-Professional answer
 
 "var is hoisted and initialized with undefined. let and const are also hoisted but cannot be accessed before initialization because of the Temporal Dead Zone."
 
-4. Closures
+## 21. Closures
 
-This is one of the most important JavaScript interview questions.
-
-Simple definition
-
-A closure happens when a function remembers variables from its outer function.
+> A closure happens when a function remembers variables from its outer function.
 
 Example:
-
+```js
 function createCounter() {
   let count = 0;
 
@@ -921,38 +876,36 @@ const counter = createCounter();
 console.log(counter()); // 1
 console.log(counter()); // 2
 console.log(counter()); // 3
-
+```
 Even though createCounter() has finished, the inner function still remembers:
 
 count
 
 That is a closure.
 
-Easy memory trick
-
 Closure = Function remembers its surrounding variables.
 
-Real-life uses
-Event listeners
-Timers
-Debouncing
-Private variables
-Callbacks
-Memoization
-Interview answer
+Real-life uses - 
+
+Event listeners ,
+Timers ,
+Debouncing ,
+Private variables  ,
+Callbacks ,
+Memoization ,
 
 "A closure is when a function retains access to variables from its outer lexical scope even after the outer function has finished executing."
 
-5. Closure Bug with var
+## 22. Closure Bug with var
 
-Consider:
-
+Consider:'
+```js
 for (var i = 0; i < 3; i++) {
   setTimeout(() => {
     console.log(i);
   }, 1000);
 }
-
+```
 What will print?
 
 3
@@ -969,28 +922,28 @@ i === 3
 Fix
 
 Use let.
-
+```js
 for (let i = 0; i < 3; i++) {
   setTimeout(() => {
     console.log(i);
   }, 1000);
 }
-
+```
 Output:
-
+```
 0
 1
 2
-Professional explanation
+```
 
 "All callbacks share the same var binding. Using let creates a separate binding for each iteration."
 
-6. this Keyword
+## 23. this Keyword
 
 The value of this usually depends on how a function is called.
 
 Example:
-
+```js
 const user = {
   name: "John",
 
@@ -1000,11 +953,11 @@ const user = {
 };
 
 user.greet();
-
+```
 Output:
-
+```
 John
-
+```
 Here:
 
 this
@@ -1012,13 +965,15 @@ this
 refers to:
 
 user
-7. Arrow Function and this
+
+## 24. Arrow Function and this
 
 Arrow functions do NOT have their own this.
 
 They use this from their surrounding scope.
 
 Common mistake
+```js
 const user = {
   name: "John",
 
@@ -1028,10 +983,11 @@ const user = {
 };
 
 user.greet();
-
+```
 This may not print "John".
 
 Better
+```js
 const user = {
   name: "John",
 
@@ -1039,22 +995,22 @@ const user = {
     console.log(this.name);
   }
 };
+```
 Easy rule
 
 Don't use arrow functions when you need the object's own this.
 
-Interview answer
 
 "Arrow functions don't create their own this. They inherit it from the surrounding lexical scope."
 
-8. call, apply, and bind
+## 25. call, apply, and bind
 
 These are used to control this.
 
 call
 
 Calls immediately.
-
+```js
 function greet(city) {
   console.log(`${this.name} from ${city}`);
 }
@@ -1064,28 +1020,31 @@ const user = {
 };
 
 greet.call(user, "Delhi");
+```
 apply
 
 Similar to call, but arguments are passed as an array.
-
+```js
 greet.apply(user, ["Delhi"]);
+```
 bind
 
 Returns a new function.
-
+```js
 const newGreet = greet.bind(user);
-
 newGreet("Delhi");
-Easy memory
-call  → Call now
-apply → Call now with array
+```
+
+call  → Call now ,
+apply → Call now with array ,
 bind  → Bind and call later
-9. Prototypes
+
+## 26. Prototypes
 
 JavaScript uses prototypes for inheritance.
 
 Example:
-
+```js
 function Person(name) {
   this.name = name;
 }
@@ -1097,17 +1056,18 @@ Person.prototype.greet = function () {
 const person = new Person("John");
 
 console.log(person.greet());
+```
 
 The greet function is shared through the prototype.
 
-Simple meaning
 
 Prototype allows objects to share properties and methods.
 
-10. Classes
+
+## 27. Classes
 
 Classes are a cleaner way to work with objects.
-
+```js
 class Person {
   constructor(name) {
     this.name = name;
@@ -1121,20 +1081,15 @@ class Person {
 const person = new Person("John");
 
 console.log(person.greet());
-Important interview point
-
+```
 JavaScript classes are built on prototypes.
-
-Interview answer
 
 "JavaScript uses prototype-based inheritance. Classes provide cleaner syntax on top of the prototype system."
 
-11. Shallow Copy vs Deep Copy
-
-Very important for React and JavaScript.
+## 28. Shallow Copy vs Deep Copy
 
 Consider:
-
+```js
 const user = {
   name: "John",
   address: {
@@ -1147,7 +1102,7 @@ const copy = { ...user };
 copy.address.city = "Delhi";
 
 console.log(user.address.city);
-
+```
 Output:
 
 Delhi
@@ -1163,6 +1118,7 @@ creates only a shallow copy.
 The nested object is still shared.
 
 Easy understanding
+
 Original Object
       │
       ▼
@@ -1170,17 +1126,17 @@ Address Object ◄──── Copy Object
 
 Both point to the same nested object.
 
-Important line
-
 Shallow copy copies the first level, but nested objects still share references.
 
-12. Spread Operator
+
+## 29. Spread Operator
+```js
 const numbers = [1, 2, 3];
 
 const newNumbers = [...numbers];
-
+```
 Objects:
-
+```js
 const user = {
   name: "John"
 };
@@ -1189,10 +1145,12 @@ const newUser = {
   ...user,
   age: 25
 };
-13. Rest Operator
+```
+
+## 30. Rest Operator
 
 Collects multiple values.
-
+```js
 function sum(...numbers) {
   return numbers.reduce(
     (total, num) => total + num,
@@ -1201,21 +1159,21 @@ function sum(...numbers) {
 }
 
 console.log(sum(1, 2, 3));
-Easy memory
+```
+
 Spread → Opens values
 Rest   → Collects values
-14. || vs ??
 
-Very important.
+## 31. || vs ??
 
 ||
 
 Uses fallback for any falsy value.
-
+```js
 const value = 0;
 
 console.log(value || 10);
-
+```
 Output:
 
 10
@@ -1226,39 +1184,40 @@ Because 0 is falsy.
 
 Only uses fallback when value is:
 
-null
-undefined
+null ,
+undefined ,
 const value = 0;
-
+```js
 console.log(value ?? 10);
-
+```
 Output:
 
 0
-Easy memory
+
 || → Any falsy value
 ?? → Only null or undefined
-15. Optional Chaining ?.
+
+## 32. Optional Chaining ?.
 
 Without optional chaining:
-
+```js
 console.log(user.address.city);
-
+```
 If address doesn't exist:
 
-💥 Error.
+ Error.
 
 With optional chaining:
-
+```js
 console.log(user?.address?.city);
-
+```
 Returns:
 
 undefined
 
 Instead of crashing.
 
-Common mistake
+Common mistake - 
 user?.address.city
 
 Only protects user.
@@ -1266,41 +1225,40 @@ Only protects user.
 Correct:
 
 user?.address?.city
-16. map()
+
+
+## 33. map()
 
 Used to transform an array.
-
+```js
 const numbers = [1, 2, 3];
 
 const doubled = numbers.map(number => {
   return number * 2;
 });
-
 console.log(doubled);
-
+```
 Output:
-
+```
 [2, 4, 6]
-Remember
-
+```
 map() = Transform every item.
 
-17. forEach()
+## 34. forEach()
 
 Used for doing something with each item.
-
+```js
 numbers.forEach(number => {
   console.log(number);
 });
-
-Important:
-
+```
+```js
 const result = numbers.forEach(
   number => number * 2
 );
 
 console.log(result);
-
+```
 Output:
 
 undefined
@@ -1308,10 +1266,10 @@ Remember
 
 forEach() does not return a new transformed array.
 
-18. filter()
+## 35. filter()
 
 Returns all matching items.
-
+```js
 const users = [
   { name: "John", age: 20 },
   { name: "Mike", age: 15 }
@@ -1320,30 +1278,33 @@ const users = [
 const adults = users.filter(user => {
   return user.age >= 18;
 });
-
+```
 Result:
-
+```
 [
   { name: "John", age: 20 }
 ]
-Remember
+```
 
 filter() = Keep matching items.
 
-19. find()
+## 36. find()
 
 Returns the first matching item.
-
+```js
 const user = users.find(user => {
   return user.name === "John";
 });
-Remember
+```
+
 filter → Multiple matches
 find   → First match
-20. reduce()
+
+
+## 37. reduce()
 
 Used to combine values into one result.
-
+```js
 const numbers = [1, 2, 3];
 
 const total = numbers.reduce(
@@ -1354,16 +1315,16 @@ const total = numbers.reduce(
 );
 
 console.log(total);
-
+```
 Output:
-
+```
 6
-Remember
-
+```
 reduce() = Many values → One value.
 
-SECTION 2 QUICK INTERVIEW QUESTIONS
-What is a closure?
+# SECTION 2 QUICK INTERVIEW QUESTIONS
+
+## 38. What is a closure?
 
 "A closure is when a function remembers and can access variables from its outer scope even after the outer function has finished."
 
