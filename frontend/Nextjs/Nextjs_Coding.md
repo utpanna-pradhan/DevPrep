@@ -1,57 +1,26 @@
-Create a homepage using the Next.js App Router.
+# 1. Create a basic page in Next.js
 
+- app/page.tsx = /route
 
+```js
+export default function HomePage(){
+    return(
+        <h1>Welcome to my website </h1>
+    )
+}
+```
 
-Create an About page using file-based routing.
+# 2. Create an About page
 
+- app/about/page.tsx
+- available at /about 
+```js
+export default function AboutPage(){
+    return(
+        <h1>About Page</h1>
+    )
+}
+```
+# 3. Create a nested route
 
-
-Create a dynamic route for a blog post.
-
-
-
-Create a reusable Navbar component and use it across pages.
-
-
-
-Create a shared layout using layout.tsx.
-
-
-
-Create a client component using "use client".
-
-
-
-Fetch data in a Server Component.
-
-
-
-Create a loading UI using loading.tsx.
-
-
-
-Create an error UI using error.tsx.
-
-
-
-Add page metadata for SEO.
-
-
-
-Create a dynamic metadata function for a blog page.
-
-
-
-Display images using next/image.
-
-
-
-Create a contact form in Next.js.
-
-
-
-Create a simple API route using Route Handlers.
-
-
-
-Create a product page with dynamic routing.
+- 
