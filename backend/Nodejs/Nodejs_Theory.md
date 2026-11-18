@@ -1,7 +1,6 @@
  
-# Node.js Interview Preparation: Top 50 Theory Questions and Answers
 
-## 1. Node.js Fundamentals
+#  Node.js Fundamentals
 
 ### 1. What is Node.js?
 
