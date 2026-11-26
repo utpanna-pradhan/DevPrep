@@ -99,6 +99,7 @@ React mainly uses two types of components:
 1. Function components.
 2. Class components.
 Example:
+```js
 function Header() {
   return <h1>My Website</h1>;
 }
@@ -112,33 +113,44 @@ function App() {
   );
 }
 
-
+```
 Here, Header is reused inside App.
-7. What is the difference between functional and class components?
-Answer:
-Functional component	Class component
-Written as a JavaScript function	Written as a JavaScript class
-Uses Hooks	Uses lifecycle methods
-Easier to write and maintain	More verbose
-Does not use this	Uses this
-Recommended for modern React	Still supported
 
-Functional component:
+# 7. What is the difference between functional and class components?
+Answer:
+- Functional component	
+Written as a JavaScript function	 ,
+Uses Hooks	,
+Easier to write and maintain	,
+Does not use this	,
+Recommended for modern 
+
+- Class component
+Written as a JavaScript class ,
+Uses lifecycle methods ,
+More verbose ,
+Uses this ,
+React	Still supported
+
+- Functional component:
+```js
 function Welcome() {
   return <h1>Hello</h1>;
 }
+```
 
-
-Class component:
+- Class component:
+```js
 class Welcome extends React.Component {
   render() {
     return <h1>Hello</h1>;
   }
 }
 
-
+```
 Modern React development generally prefers functional components with Hooks.
-8. What is the Virtual DOM?
+
+# 8. What is the Virtual DOM?
 Answer:
 
 The Virtual DOM is an in-memory representation of the UI that React uses to calculate updates.
@@ -154,15 +166,25 @@ Example:
 Suppose a counter changes from 1 to 2. React updates the relevant UI instead of manually rebuilding the entire webpage.
 
 Important: Never claim that the Virtual DOM is always faster than the real DOM. Its main benefit is efficient, declarative UI management.
-9. What is the difference between Real DOM and Virtual DOM?
-Answer:
-Real DOM	Virtual DOM
-Represents actual webpage elements	Represents UI in memory
-Directly interacts with the browser	Used by React to calculate updates
-DOM changes can trigger layout and rendering work	Helps determine necessary DOM changes
-Managed through browser APIs	Managed through React
 
-10. What is reconciliation in React?
+# 9. What is the difference between Real DOM and Virtual DOM?
+Answer:
+
+- Real DOM	
+
+Represents actual webpage elements ,
+Directly interacts with the browser	 ,
+DOM changes can trigger layout and rendering work	 ,
+Managed through browser APIs	
+
+- Virtual DOM
+
+Represents UI in memory ,
+Used by React to calculate updates , 
+Helps determine necessary DOM changes ,
+Managed through React
+
+# 10. What is reconciliation in React?
 Answer:
 
 Reconciliation is the process React uses to compare the previous UI description with the new one and determine what needs to change.
@@ -183,8 +205,8 @@ React identifies the change and updates the necessary UI.
 
 Remember: Rendering calculates what the UI should look like. Reconciliation determines how the result relates to the previous UI.
 
-Part 2: Props, State and Components
-11. What are Props in React?
+
+# 11. What are Props in React?
 Answer:
 
 Props (properties) are used to pass data from a parent component to a child component.
@@ -192,6 +214,7 @@ Props (properties) are used to pass data from a parent component to a child comp
 Props are read-only. A child should not directly modify the props it receives.
 
 Example:
+```js
 function User({ name }) {
   return <h2>Hello, {name}</h2>;
 }
@@ -199,10 +222,12 @@ function User({ name }) {
 function App() {
   return <User name="Utpanna" />;
 }
-
+```
 
 Here, name is passed from the parent to the child.
-12. What is State in React?
+
+# 12. What is State in React?
+
 Answer:
 
 State is data that a component manages internally and that can change over time.
@@ -210,6 +235,7 @@ State is data that a component manages internally and that can change over time.
 When state changes through its setter, React schedules a re-render so the UI can reflect the new value.
 
 Example:
+```js
 import { useState } from "react";
 
 function Counter() {
@@ -225,20 +251,32 @@ function Counter() {
   );
 }
 
-
+```
 Here, count is state.
-13. What is the difference between Props and State?
+
+# 13. What is the difference between Props and State?
+
 Answer:
-Props	State
-Passed from parent to child	Managed by a component
-Read-only for the receiving component	Updated using a setter or reducer
-Used to pass data	Used to store changing data
-Changes when parent provides new values	Changes through state updates
+
+- Props	
+
+Passed from parent to child	,
+Read-only for the receiving component	,
+Used to pass data	,
+Changes when parent provides new values	
+
+- State
+
+Managed by a component ,
+Updated using a setter or reducer ,
+Used to store changing data , 
+Changes through state updates
 
 Example:
 - Props: Passing a user's name to a profile component.
 - State: Storing whether a dropdown is open or closed.
-14. What is one-way data binding in React?
+
+# 14. What is one-way data binding in React?
 Answer:
 
 One-way data binding means data flows in one direction, from parent components to child components through props.
@@ -246,6 +284,7 @@ One-way data binding means data flows in one direction, from parent components t
 If a child needs to update parent-owned data, the parent passes a callback function to the child.
 
 Example:
+```js
 function Child({ updateName }) {
   return (
     <button onClick={() => updateName("John")}>
@@ -264,9 +303,9 @@ function App() {
     </>
   );
 }
+```
 
-
-15. What is prop drilling?
+# 15. What is prop drilling?
 Answer:
 
 Prop drilling happens when data is passed through multiple components just to reach a deeply nested child component.
@@ -283,7 +322,8 @@ Solutions:
 - Context API.
 - State management libraries such as Redux or Zustand.
 - Component composition.
-16. What is lifting state up?
+
+# 16. What is lifting state up?
 Answer:
 
 Lifting state up means moving shared state from child components to their nearest common parent.
@@ -627,18 +667,28 @@ function Counter() {
 }
 
 
-31. What is the difference between useState and useReducer?
+# 31. What is the difference between useState and useReducer?
 Answer:
-useState	useReducer
-Best for simple state	Useful for complex state logic
-Direct setter function	Uses dispatch and reducer
-Less code	More structured logic
-Good for simple values	Good for related state transitions
+
+- useState:
+
+Best for simple state	,
+Direct setter function	,
+Less code	 ,
+Good for simple values	
+
+-  useReducer:
+
+Useful for complex state logic ,
+Uses dispatch and reducer ,
+More structured logic ,
+Good for related state transitions
 
 Example:
 - useState: Toggle button, input value, counter.
 - useReducer: Shopping cart, multi-step form, complex state transitions.
-32. What is useMemo?
+
+# 32. What is useMemo?
 Answer:
 
 useMemo is a Hook that caches the result of a calculation between renders.
@@ -646,17 +696,19 @@ useMemo is a Hook that caches the result of a calculation between renders.
 It helps avoid repeating expensive calculations when dependencies have not changed.
 
 Example:
+```js
 const filteredUsers = useMemo(() => {
   return users.filter((user) =>
     user.name.toLowerCase().includes(search.toLowerCase())
   );
 }, [users, search]);
-
+```
 
 React recalculates the value when users or search changes.
 
 Important: Use it when there is a meaningful performance benefit, not for every variable.
-33. What is useCallback?
+
+# 33. What is useCallback?
 Answer:
 
 useCallback is a Hook that caches a function reference between renders until its dependencies change.
@@ -664,32 +716,41 @@ useCallback is a Hook that caches a function reference between renders until its
 It is useful when passing callbacks to memoized child components or when a stable function reference is needed.
 
 Example:
+```js
 const handleClick = useCallback(() => {
   setCount((prev) => prev + 1);
 }, []);
 
+```
 
-34. What is the difference between useMemo and useCallback?
+# 34. What is the difference between useMemo and useCallback?
 Answer:
 
 Both Hooks help with memoization, but they cache different things.
-useMemo	useCallback
-Caches a calculated value	Caches a function reference
-Returns the calculation result	Returns the function
-Used for expensive calculations	Used for stable callbacks
+- useMemo
+Caches a calculated value	 ,
+Returns the calculation result	 ,
+Used for expensive calculations	
+
+- 	useCallback:
+Caches a function reference ,
+Returns the function ,
+Used for stable callbacks
 
 Example:
+```js
 const total = useMemo(() => price * quantity, [price, quantity]);
 
 const handleClick = useCallback(() => {
   console.log("Clicked");
 }, []);
-
+```
 
 Easy trick:
 - useMemo = Memoize a value.
 - useCallback = Memoize a function.
-35. What is useLayoutEffect?
+
+# 35. What is useLayoutEffect?
 Answer:
 
 useLayoutEffect is similar to useEffect, but it runs after React updates the DOM and before the browser paints the screen.
@@ -697,19 +758,21 @@ useLayoutEffect is similar to useEffect, but it runs after React updates the DOM
 It is useful when we need to measure or synchronously adjust layout before the user sees it.
 
 Example:
+```js
 useLayoutEffect(() => {
   const height = ref.current.getBoundingClientRect().height;
   console.log(height);
 }, []);
-
+```
 
 Difference:
 - useEffect: Usually runs after the browser paints.
 - useLayoutEffect: Runs before the browser paints.
+
 Use useEffect by default. useLayoutEffect can block painting.
 
-Part 4: Rendering and Performance
-36. What causes a component to re-render in React?
+
+# 36. What causes a component to re-render in React?
 Answer:
 
 A component generally re-renders when:
@@ -718,7 +781,8 @@ A component generally re-renders when:
 3. A context value it consumes changes.
 4. An external store subscription it uses reports an update.
 Important: A re-render does not always mean the actual DOM changes. React may calculate the same UI and commit no meaningful DOM updates.
-37. What is React.memo?
+
+# 37. What is React.memo?
 Answer:
 
 React.memo is a higher-order component that can prevent a function component from re-rendering when its props have not changed.
@@ -726,6 +790,7 @@ React.memo is a higher-order component that can prevent a function component fro
 It performs a shallow comparison of props by default.
 
 Example:
+```js
 import { memo } from "react";
 
 const User = memo(function User({ name }) {
@@ -734,27 +799,30 @@ const User = memo(function User({ name }) {
   return <h2>{name}</h2>;
 });
 
-
+```
 If the props remain unchanged, React can skip rendering this component when its parent re-renders.
 
 Important: React.memo is an optimization, not a guarantee. It does not prevent re-renders caused by the component's own state or consumed context.
-38. What is batching in React?
+
+# 38. What is batching in React?
 Answer:
 
 Batching means React groups multiple state updates together to reduce unnecessary rendering work.
 
 Example:
+```js
 function handleClick() {
   setName("John");
   setAge(25);
   setCity("Delhi");
 }
-
+```
 
 React can batch these updates so they do not each require a separate render.
 
 Modern React supports automatic batching across many asynchronous contexts as well.
-39. What is React StrictMode?
+
+# 39. What is React StrictMode?
 Answer:
 
 StrictMode is a development-only tool that helps identify potential problems in React applications.
@@ -764,7 +832,9 @@ It helps detect:
 - Missing Effect cleanup.
 - Deprecated API usage.
 - Unsafe side effects.
+
 Example:
+```js
 import { StrictMode } from "react";
 
 createRoot(document.getElementById("root")).render(
@@ -772,10 +842,11 @@ createRoot(document.getElementById("root")).render(
     <App />
   </StrictMode>
 );
-
+```
 
 Important: Strict Mode may run components and Effects through additional development checks. This does not mean production automatically runs them twice.
-40. What is lazy loading in React?
+
+# 40. What is lazy loading in React?
 Answer:
 
 Lazy loading means loading a component only when it is needed instead of including all components in the initial JavaScript bundle.
@@ -785,6 +856,7 @@ It helps reduce initial loading time.
 React provides lazy() and Suspense for this.
 
 Example:
+```js
 import { lazy, Suspense } from "react";
 
 const Dashboard = lazy(() => import("./Dashboard"));
@@ -797,8 +869,8 @@ function App() {
   );
 }
 
-
-41. What is Suspense in React?
+```
+# 41. What is Suspense in React?
 Answer:
 
 Suspense is a React component that displays fallback UI while its children are waiting for supported content to become available.
@@ -807,14 +879,17 @@ It is commonly used with:
 - Lazy-loaded components.
 - Suspense-enabled data sources.
 - Framework integrations and Server Components.
+
 Example:
+```js
 <Suspense fallback={<h2>Loading...</h2>}>
   <Dashboard />
 </Suspense>
-
+```
 
 While the lazy-loaded component is loading, React displays the fallback.
-42. What is code splitting?
+
+# 42. What is code splitting?
 Answer:
 
 Code splitting means dividing application JavaScript into smaller bundles that can be loaded when needed.
@@ -826,7 +901,8 @@ Benefits:
 - Faster initial loading.
 - Better application performance.
 React supports code splitting through React.lazy() and dynamic imports.
-43. How do you optimize React application performance?
+
+# 43. How do you optimize React application performance?
 Answer:
 
 I use the following techniques:
@@ -841,7 +917,8 @@ I use the following techniques:
 9. Avoid unnecessary Context updates.
 10. Use React DevTools Profiler to identify actual performance problems.
 Interview tip: Always measure performance before optimizing. Adding memoization everywhere can make code more complicated without making it faster.
-44. What is React Fiber?
+
+# 44. What is React Fiber?
 Answer:
 
 React Fiber is the internal reconciliation architecture introduced in React 16.
@@ -858,7 +935,8 @@ Simple example:
 Imagine a webpage performing a heavy rendering task while the user is typing. Fiber helps React manage rendering work so urgent updates can receive priority.
 
 Remember: Fiber is an internal React implementation detail, not a Hook or an API you directly use.
-45. What is the difference between rendering and committing in React?
+
+# 45. What is the difference between rendering and committing in React?
 Answer:
 
 React updates UI in two main phases:
@@ -876,8 +954,8 @@ Easy way to remember:
 - Commit = Apply changes.
 The render phase can be repeated or interrupted in concurrent rendering. The commit phase applies the finished update.
 
-Part 5: Advanced React concepts
-46. What is a Custom Hook in React?
+
+# 46. What is a Custom Hook in React?
 Answer:
 
 A Custom Hook is a JavaScript function that allows us to reuse stateful logic between multiple components.
@@ -885,6 +963,7 @@ A Custom Hook is a JavaScript function that allows us to reuse stateful logic be
 Its name must start with use.
 
 Example:
+```js
 import { useState } from "react";
 
 function useCounter() {
@@ -897,8 +976,9 @@ function useCounter() {
   return { count, increment };
 }
 
-
+```
 Using the Custom Hook:
+```js
 function App() {
   const { count, increment } = useCounter();
 
@@ -909,14 +989,15 @@ function App() {
     </>
   );
 }
-
+```
 
 Benefits:
 - Reuse logic.
 - Reduce code duplication.
 - Keep components clean.
 - Improve maintainability.
-47. What is the difference between controlled and uncontrolled components?
+
+# 47. What is the difference between controlled and uncontrolled components?
 Answer:
 
 These terms usually refer to how form inputs are managed.
@@ -924,6 +1005,7 @@ These terms usually refer to how form inputs are managed.
 Controlled component:
 
 The input value is controlled by React state.
+```js
 function App() {
   const [name, setName] = useState("");
 
@@ -934,11 +1016,12 @@ function App() {
     />
   );
 }
-
+```
 
 Uncontrolled component:
 
 The input maintains its own value in the DOM. We access it using a ref.
+```js
 function App() {
   const nameRef = useRef(null);
 
@@ -953,15 +1036,21 @@ function App() {
     </>
   );
 }
+```
 
+- Controlled	
+Uses React state	,
+Uses value	,
+Uses onChange	,
+Easier validation	
 
-Controlled	Uncontrolled
-Uses React state	Uses DOM to store input value
-Uses value	Commonly uses defaultValue
-Uses onChange	Can use refs
-Easier validation	Useful for simpler forms
+- Uncontrolled
+Uses DOM to store input value ,
+Commonly uses defaultValue ,
+Can use refs ,
+Useful for simpler forms 
 
-48. What are Portals in React?
+# 48. What are Portals in React?
 Answer:
 
 Portals allow us to render a component's UI into a different DOM location outside its parent DOM hierarchy.
@@ -972,6 +1061,7 @@ They are useful for:
 - Tooltips.
 - Dialog boxes.
 Example:
+```js
 import { createPortal } from "react-dom";
 
 function Modal() {
@@ -982,10 +1072,11 @@ function Modal() {
     document.getElementById("modal-root")
   );
 }
-
+```
 
 Even though the modal is rendered elsewhere in the DOM, it remains part of the React component tree.
-49. What are Error Boundaries in React?
+
+# 49. What are Error Boundaries in React?
 Answer:
 
 Error Boundaries are React components that catch JavaScript errors in their child component tree during rendering and display fallback UI instead of allowing the affected part of the application to crash.
@@ -995,6 +1086,7 @@ They are useful for:
 - Displaying fallback screens.
 - Improving application reliability.
 Example:
+```js
 class ErrorBoundary extends React.Component {
   constructor(props) {
     super(props);
@@ -1014,7 +1106,7 @@ class ErrorBoundary extends React.Component {
     return this.props.children;
   }
 }
-
+```
 
 Usage:
 <ErrorBoundary>
@@ -1023,7 +1115,8 @@ Usage:
 
 
 Important: Error Boundaries do not automatically catch errors in event handlers, asynchronous callbacks or ordinary server-side code.
-50. What is React Server Components (RSC)?
+
+# 50. What is React Server Components (RSC)?
 Answer:
 
 React Server Components are components that render on the server.
@@ -1036,6 +1129,8 @@ Benefits:
 - Improve initial loading opportunities.
 - Separate server and client responsibilities.
 Example (Next.js App Router):
+
+```js
 // app/users/page.jsx
 
 async function UsersPage() {
@@ -1055,7 +1150,7 @@ async function UsersPage() {
 }
 
 export default UsersPage;
-
+```
 
 In Next.js App Router, components are Server Components by default unless marked with "use client".
 
